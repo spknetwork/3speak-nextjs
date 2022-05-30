@@ -13,6 +13,7 @@ const LoginPage = () => {
   return (
     <Flex
       justifyContent="center"
+      px="1rem"
       alignItems={{ _: "flex-start", tablet: "center" }}
       backgroundColor="#F5F5F5"
       minHeight="100vh"
