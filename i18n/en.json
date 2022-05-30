@@ -1,0 +1,10 @@
+{
+  "required": "Required!",
+  "login": {
+    "disclaimer": "Please check your spam folder as some services wrongly label our emails.",
+    "title": "Login",
+    "notValidEmail": "Not a valid email address",
+    "email": "Enter your email address",
+    "password": "Enter your password"
+  }
+}
