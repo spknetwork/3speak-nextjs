@@ -6,5 +6,14 @@
     "notValidEmail": "Not a valid email address",
     "email": "Enter your email address",
     "password": "Enter your password"
+  },
+  "register": {
+    "passwordRules": [
+      "Password must contain a lower case letter",
+      "Password must contain an upper case letter",
+      "Password must contain a special character",
+      "Password must contain a number",
+      "Password must contain at least 8 characters"
+    ]
   }
 }

@@ -1,14 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import ReactJWPlayer from "react-jw-player";
 import { Formik } from "formik";
 import { Box } from "components/Box";
 import { Flex } from "components/Flex";
 import { useTranslation } from "next-export-i18n";
 import { Typography } from "components/Typography";
-import styled from "styled-components";
+import { getPost } from "utils/hive";
+import { useDispatch } from "react-redux";
 
 const RegisterPage = () => {
   const { t } = useTranslation();
+  const user = useUser();
+  const dispatch = useDispatch();
+  const [playlist, setPlaylist] = useState([]);
+
+  useEffect(() => {
+    getPost("something", "something").then((response) => {
+      console.log(response);
+    });
+  }, []);
 
   return (
     <Flex
@@ -37,7 +49,20 @@ const RegisterPage = () => {
           border="1px solid #f5c6cb"
         >
           <Typography textAlign="center" color="#721c24">
-            {t("register.disclaimer")}
+            {t("register.disclaimer.1")}
+          </Typography>
+        </Box>
+        <Box
+          width="100%"
+          borderRadius="0.25rem"
+          mt="0.5rem"
+          py="0.75rem"
+          px="1.25rem"
+          backgroundColor="#f8d7da"
+          border="1px solid #f5c6cb"
+        >
+          <Typography textAlign="center" color="#721c24">
+            {t("register.disclaimer.2")}
           </Typography>
         </Box>
         <Typography textAlign="center" fontSize="2rem" mt="1rem">
@@ -107,22 +132,28 @@ const RegisterPage = () => {
                     {errors.password}
                   </Typography>
                 )}
+                <Box
+                  width="100%"
+                  borderRadius="0.25rem"
+                  mt="0.5rem"
+                  px="1rem"
+                  backgroundColor="#d1ecf1"
+                  border="2px solid #bee5eb"
+                >
+                  <Typography fontSize="0.75rem" color="#0c5460">
+                    <StyledList>
+                      {(t("register.passwordRules") as string[]).map((rule) => (
+                        <li key={rule}>{rule}</li>
+                      ))}
+                    </StyledList>
+                  </Typography>
+                </Box>
+                <Box>
+                  <ReactJWPlayer />
+                </Box>
               </Box>
               <Flex width="100%" justifyContent="center" mt="1rem">
-                <StyledButton type="submit">Log in</StyledButton>
-              </Flex>
-              <Flex width="100%" justifyContent="center" mt="0.5rem">
-                <StyledButton type="submit">
-                  Sign up with existing HIVE account
-                </StyledButton>
-              </Flex>
-              <Flex width="100%" justifyContent="center" mt="0.5rem">
-                <StyledButton
-                  colors={{ init: "grey", active: "#D3D3D3", hover: "#d1d1d1" }}
-                  type="submit"
-                >
-                  PasswordReset
-                </StyledButton>
+                <StyledButton type="submit">Sign up</StyledButton>
               </Flex>
             </form>
           )}
@@ -131,6 +162,10 @@ const RegisterPage = () => {
     </Flex>
   );
 };
+
+const StyledList = styled.ul`
+  padding-left: 0.5rem;
+`;
 
 const StyledButton = styled.button<{
   colors?: { init: string; hover: string; active: string };

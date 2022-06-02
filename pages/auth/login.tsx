@@ -6,8 +6,12 @@ import { Flex } from "components/Flex";
 import { useTranslation } from "next-export-i18n";
 import { Typography } from "components/Typography";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { useUser } from "state/selectors/user";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const user = useUser();
   const { t } = useTranslation();
 
   return (
