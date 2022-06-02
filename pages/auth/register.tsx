@@ -9,6 +9,7 @@ import { useTranslation } from "next-export-i18n";
 import { Typography } from "components/Typography";
 import { getPost } from "utils/hive";
 import { useDispatch } from "react-redux";
+import { useUser } from "state/selectors/user";
 
 const RegisterPage = () => {
   const { t } = useTranslation();
