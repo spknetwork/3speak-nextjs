@@ -1,13 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { Formik } from "formik";
-import { Typography, Box, Flex } from "components";
-import { useTranslation } from "next-export-i18n";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { Formik } from "formik";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-export-i18n";
+import { Typography, Box, Flex } from "components";
 import { useUser } from "state/selectors/user";
 
 const LoginPage = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const user = useUser();
   const { t } = useTranslation();
@@ -114,10 +116,27 @@ const LoginPage = () => {
             </form>
           )}
         </Formik>
+        <GetAccountText
+          textAlign="center"
+          mt="0.5rem"
+          onClick={() => router.push("/auth/register")}
+          color="#007bff"
+        >
+          {t("login.noAccount")}
+        </GetAccountText>
       </Box>
     </Flex>
   );
 };
+
+const GetAccountText = styled(Typography)`
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+    color: #001fff;
+  }
+`;
 
 const StyledButton = styled.button<{
   colors?: { init: string; hover: string; active: string };

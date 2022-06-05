@@ -8,9 +8,11 @@ import { useTranslation } from "next-export-i18n";
 import { getPost } from "utils/hive";
 import { useDispatch } from "react-redux";
 import { useUser } from "state/selectors/user";
+import { useRouter } from "next/router";
 
 const RegisterPage = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   const user = useUser();
   const dispatch = useDispatch();
   const [playlist, setPlaylist] = useState([]);
@@ -157,10 +159,27 @@ const RegisterPage = () => {
             </form>
           )}
         </Formik>
+        <GetAccountText
+          textAlign="center"
+          mt="0.5rem"
+          onClick={() => router.push("/auth/login")}
+          color="#007bff"
+        >
+          {t("register.hasAccount")}
+        </GetAccountText>
       </Box>
     </Flex>
   );
 };
+
+const GetAccountText = styled(Typography)`
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+    color: #001fff;
+  }
+`;
 
 const StyledList = styled.ul`
   padding-left: 0.5rem;

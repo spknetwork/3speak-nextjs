@@ -50,19 +50,22 @@ export const Sidebar = () => {
   const { user } = useUser();
   const router = useRouter();
   const [communitiesPopup, setCommunitiesPopup] = useState(false);
+  const [search, setSearch] = useState("");
   const { t } = useTranslation();
 
   return (
     <Flex p="1rem" flexDirection="column">
       <Flex justifyContent="center" width="100%">
-        <Box maxWidth="10.75rem">
-          <Image
-            width={1000}
-            height={500}
-            src="/main_logo.svg"
-            alt="3speak logo"
-          />
-        </Box>
+        <StyledLink href="/">
+          <Box maxWidth="10.75rem">
+            <Image
+              width={1000}
+              height={500}
+              src="/main_logo.svg"
+              alt="3speak logo"
+            />
+          </Box>
+        </StyledLink>
       </Flex>
       <Box mb="1rem" width="100%">
         {user ? (
@@ -93,9 +96,69 @@ export const Sidebar = () => {
           </StyledNav>
         ))}
       </Box>
+      <Flex width="100%" alignItems="center" mt="1rem">
+        <Box maxWidth="2rem">
+          <Image
+            alt="search icon"
+            src="/nav/search.svg"
+            width={45}
+            height={45}
+          />
+        </Box>
+        <StyledInput
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) =>
+            e.key === "Enter" &&
+            router.push(`/search?q=${search.split(" ").join("+")}`)
+          }
+          placeholder="Search"
+          type="text"
+        />
+      </Flex>
+      <Typography mb="0.5rem" mt="1rem" fontSize="1.25rem">
+        3Speak
+      </Typography>
+      <Box ml="0.5rem" mt="1rem">
+        <AboutText
+          onClick={() => router.push("/about-us")}
+          color="rgba(0,0,0,0.5)"
+          mb="1rem"
+        >
+          {t("aboutUs")}
+        </AboutText>
+        <AboutText
+          onClick={() => router.push("/faq")}
+          color="rgba(0,0,0,0.5)"
+          mb="1rem"
+        >
+          {t("faq")}
+        </AboutText>
+      </Box>
     </Flex>
   );
 };
+
+const AboutText = styled(Typography)`
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+
+  &:hover {
+    color: black;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  cursor: pointer;
+`;
+
+const StyledInput = styled.input`
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 1rem 0.5rem 0.5rem;
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
+`;
 
 const StyledNav = styled(Flex)`
   cursor: pointer;

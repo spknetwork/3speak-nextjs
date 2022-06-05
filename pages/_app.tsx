@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 const StyledGrid = styled(Box)`
   display: grid;
-  grid-template-columns: 0.75fr 3fr;
+  grid-template-columns: 0.5fr 3fr;
   grid-template-rows: 1fr;
   width: 100%;
   min-height: 100vh;
