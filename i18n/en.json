@@ -1,5 +1,6 @@
 {
   "required": "Required!",
+  "mainLogin": "LOG IN / SIGN UP",
   "login": {
     "disclaimer": "Please check your spam folder as some services wrongly label our emails.",
     "title": "Login",
@@ -15,5 +16,14 @@
       "Password must contain a number",
       "Password must contain at least 8 characters"
     ]
+  },
+  "nav": {
+    "home": "Home",
+    "first": "First Uploads",
+    "trending": "Trending Content",
+    "new": "New Content",
+    "desktop": "Desktop App",
+    "communities": "Communities",
+    "leaderboard": "Leaderboard"
   }
 }

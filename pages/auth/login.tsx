@@ -1,10 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { Formik } from "formik";
-import { Box } from "components/Box";
-import { Flex } from "components/Flex";
+import { Typography, Box, Flex } from "components";
 import { useTranslation } from "next-export-i18n";
-import { Typography } from "components/Typography";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useUser } from "state/selectors/user";
