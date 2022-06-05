@@ -1,10 +1,33 @@
 {
   "required": "Required!",
+  "mainLogin": "LOG IN / SIGN UP",
+  "aboutUs": "About us",
+  "faq": "FAQ",
   "login": {
     "disclaimer": "Please check your spam folder as some services wrongly label our emails.",
     "title": "Login",
     "notValidEmail": "Not a valid email address",
     "email": "Enter your email address",
-    "password": "Enter your password"
+    "password": "Enter your password",
+    "noAccount": "No 3Speak acount? Signup here!"
+  },
+  "register": {
+    "passwordRules": [
+      "Password must contain a lower case letter",
+      "Password must contain an upper case letter",
+      "Password must contain a special character",
+      "Password must contain a number",
+      "Password must contain at least 8 characters"
+    ],
+    "hasAccount": "Already have an account? Login here!"
+  },
+  "nav": {
+    "home": "Home",
+    "first": "First Uploads",
+    "trending": "Trending Content",
+    "new": "New Content",
+    "desktop": "Desktop App",
+    "communities": "Communities",
+    "leaderboard": "Leaderboard"
   }
 }

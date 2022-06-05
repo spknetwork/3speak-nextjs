@@ -1,18 +1,27 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import ReactJWPlayer from "react-jw-player";
 import { Formik } from "formik";
-import { useRouter } from "next/router";
+import { Box, Flex, Typography } from "components";
 import { useTranslation } from "next-export-i18n";
-import { Typography, Box, Flex } from "components";
+import { getPost } from "utils/hive";
+import { useDispatch } from "react-redux";
 import { useUser } from "state/selectors/user";
+import { useRouter } from "next/router";
 
-const LoginPage = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const user = useUser();
+const RegisterPage = () => {
   const { t } = useTranslation();
+  const router = useRouter();
+  const user = useUser();
+  const dispatch = useDispatch();
+  const [playlist, setPlaylist] = useState([]);
+
+  useEffect(() => {
+    getPost("something", "something").then((response) => {
+      console.log(response);
+    });
+  }, []);
 
   return (
     <Flex
@@ -40,15 +49,28 @@ const LoginPage = () => {
           backgroundColor="#f8d7da"
           border="1px solid #f5c6cb"
         >
-          <Typography fontColor="1.75rem" textAlign="center" color="#721c24">
-            {t("login.disclaimer")}
+          <Typography textAlign="center" color="#721c24">
+            {t("register.disclaimer.1")}
+          </Typography>
+        </Box>
+        <Box
+          width="100%"
+          borderRadius="0.25rem"
+          mt="0.5rem"
+          py="0.75rem"
+          px="1.25rem"
+          backgroundColor="#f8d7da"
+          border="1px solid #f5c6cb"
+        >
+          <Typography textAlign="center" color="#721c24">
+            {t("register.disclaimer.2")}
           </Typography>
         </Box>
         <Typography textAlign="center" fontSize="2rem" mt="1rem">
-          {t("login.title")}
+          {t("register.title")}
         </Typography>
         <Formik
-          initialValues={{ password: "", email: "" }}
+          initialValues={{ password: "", email: "", hiveUsername: "" }}
           validate={({ password, email }) => {
             const errors: any = {};
 
@@ -70,7 +92,7 @@ const LoginPage = () => {
               <Box mb="0.125rem" mt="1.5rem" width="100%">
                 <StyledInput
                   type="string"
-                  placeholder={t("login.email")}
+                  placeholder={t("register.email")}
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -85,7 +107,22 @@ const LoginPage = () => {
               <Box width="100%">
                 <StyledInput
                   type="string"
-                  placeholder={t("login.password")}
+                  placeholder={t("register.hiveUsername")}
+                  value={values.hiveUsername}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={!!errors.hiveUsername}
+                />
+                {!!errors.hiveUsername && (
+                  <Typography mt="0.25rem" color="#FF3333">
+                    {errors.hiveUsername}
+                  </Typography>
+                )}
+              </Box>
+              <Box width="100%">
+                <StyledInput
+                  type="string"
+                  placeholder={t("register.password")}
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -96,22 +133,28 @@ const LoginPage = () => {
                     {errors.password}
                   </Typography>
                 )}
+                <Box
+                  width="100%"
+                  borderRadius="0.25rem"
+                  mt="0.5rem"
+                  px="1rem"
+                  backgroundColor="#d1ecf1"
+                  border="2px solid #bee5eb"
+                >
+                  <Typography fontSize="0.75rem" color="#0c5460">
+                    <StyledList>
+                      {(t("register.passwordRules") as string[]).map((rule) => (
+                        <li key={rule}>{rule}</li>
+                      ))}
+                    </StyledList>
+                  </Typography>
+                </Box>
+                <Box>
+                  <ReactJWPlayer />
+                </Box>
               </Box>
               <Flex width="100%" justifyContent="center" mt="1rem">
-                <StyledButton type="submit">Log in</StyledButton>
-              </Flex>
-              <Flex width="100%" justifyContent="center" mt="0.5rem">
-                <StyledButton type="submit">
-                  Sign up with existing HIVE account
-                </StyledButton>
-              </Flex>
-              <Flex width="100%" justifyContent="center" mt="0.5rem">
-                <StyledButton
-                  colors={{ init: "grey", active: "#D3D3D3", hover: "#d1d1d1" }}
-                  type="submit"
-                >
-                  PasswordReset
-                </StyledButton>
+                <StyledButton type="submit">Sign up</StyledButton>
               </Flex>
             </form>
           )}
@@ -119,10 +162,10 @@ const LoginPage = () => {
         <GetAccountText
           textAlign="center"
           mt="0.5rem"
-          onClick={() => router.push("/auth/register")}
+          onClick={() => router.push("/auth/login")}
           color="#007bff"
         >
-          {t("login.noAccount")}
+          {t("register.hasAccount")}
         </GetAccountText>
       </Box>
     </Flex>
@@ -136,6 +179,10 @@ const GetAccountText = styled(Typography)`
     text-decoration: underline;
     color: #001fff;
   }
+`;
+
+const StyledList = styled.ul`
+  padding-left: 0.5rem;
 `;
 
 const StyledButton = styled.button<{
@@ -187,4 +234,4 @@ const StyledInput = styled.input<{ error: boolean }>`
   border: 1px solid ${({ error }) => (error ? "#FF3333" : "#2f2d2d")};
 `;
 
-export default LoginPage;
+export default RegisterPage;
