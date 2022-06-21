@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-mongoose.connect(process.env.MONGO_LINK!, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGO_LINK!);
 
 const UserAccountSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
@@ -19,6 +19,6 @@ const UserAccountSchema = new mongoose.Schema({
   timestamps: true,
   autoCreate: true
 })
+const UserAccount = mongoose.model('UserAccount', UserAccountSchema);
 
-export const UserAccount = mongoose.model('UserAccount', UserAccountSchema);
-
+export default UserAccount;

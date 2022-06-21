@@ -115,7 +115,7 @@ export const Sidebar = () => {
           type="text"
         />
       </Flex>
-      <Typography mb="0.5rem" mt="1rem" fontSize="1.25rem">
+      <Typography mb="0.5rem" mt="1rem" fontSize={"1.25rem" as any}>
         3Speak
       </Typography>
       <Box ml="0.5rem" mt="1rem">
