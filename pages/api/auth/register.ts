@@ -1,6 +1,5 @@
 import { validateCaptchaToken, UserAccount, signup } from 'utils/db';
-
-const JWT_SECRET = process.env.JWT_SECRET ?? '';
+import { hiveUsernameAvailable, validateAccountName } from 'utils/hive';
 
 const registerHandler = async (req: any, res: any) => {
   const { email, username, password } = req.body;
@@ -11,7 +10,7 @@ const registerHandler = async (req: any, res: any) => {
 
   const systemErrors: string[] = [];
   const errors = [];
-  const usernameValidationResult = hive.validateAccountName(username);
+  const usernameValidationResult = validateAccountName(username);
 
   if (validRecaptcha === false) {
     errors.push("reCaptcha validation failed.")
@@ -21,7 +20,7 @@ const registerHandler = async (req: any, res: any) => {
     errors.push(usernameValidationResult)
   }
 
-  if (await hive.hiveUsernameAvailable(username) === false) {
+  if (await hiveUsernameAvailable(username) === false) {
     errors.push(`The username is already taken. <a href="/2/signupHive?username=${username}">If this is your username click here</a>`)
   }
 
@@ -53,17 +52,7 @@ const registerHandler = async (req: any, res: any) => {
         console.log("[mailer]", "confirm_signup", email, err, info)
     });*/
 
-    mg.messages().send({
-      from: fromEmail,
-      to: email,
-      subject: subject,
-      html: body,
-    }, (err, info) => {
-      console.log("[mailer]", "confirm_signup", email, err, info)
-    });
-
-
-  } catch (e) {
+  } catch (e: any) {
     console.log(e)
     errors.push(e.message);
   }

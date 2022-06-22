@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { serialize } from 'cookie';
-import UserAccount from 'utils/db';
+import { UserAccount } from 'utils/db';
 import { APP_ALLOWED_REDIRECT_URLS, getRedirectUrl } from 'utils/server';
 import { OAUTH2_CLIENTS } from "../../../constants";
 
