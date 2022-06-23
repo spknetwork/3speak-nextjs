@@ -1,5 +1,8 @@
 import { validateCaptchaToken, UserAccount, signup } from 'utils/db';
-import { hiveUsernameAvailable, validateAccountName } from 'utils/hive';
+import { validateAccountName, hiveUsernameAvailable } from 'utils/hive';
+import { mg } from 'utils/mg';
+
+const fromEmail = '3Speak noreply <noreply@3speak.tv>';
 
 const registerHandler = async (req: any, res: any) => {
   const { email, username, password } = req.body;
@@ -51,6 +54,15 @@ const registerHandler = async (req: any, res: any) => {
     }, (err, info) => {
         console.log("[mailer]", "confirm_signup", email, err, info)
     });*/
+
+    mg.messages().send({
+      from: fromEmail,
+      to: email,
+      subject: subject,
+      html: '<div><h1>Hello</h1></div>',
+    }, (err: any, info: any) => {
+      console.log("[mailer]", "confirm_signup", email, err, info)
+    });
 
   } catch (e: any) {
     console.log(e)

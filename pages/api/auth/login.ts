@@ -66,7 +66,7 @@ const loginHandler = async ({ query, body }: any, res: any) => {
 
   const passwordValid = bcrypt.compareSync(password, account.password);
 
-  if (passwordValid === false) {
+  if (!passwordValid) {
     errors.push("Incorrect username or password.")
     return res.status(404).json({
       errors,
