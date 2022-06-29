@@ -8,6 +8,7 @@ import { useUser } from "state/selectors/user";
 import { Typography } from "./Typography";
 import { useTranslation } from "next-export-i18n";
 import { useRouter } from "next/router";
+import { ModalWrapper } from "./ModalWrapper.tsx";
 
 const NAVIGATION = [
   {
@@ -50,6 +51,7 @@ export const Sidebar = () => {
   const { user } = useUser();
   const router = useRouter();
   const [communitiesPopup, setCommunitiesPopup] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   const [search, setSearch] = useState("");
   const { t } = useTranslation();
 
@@ -71,9 +73,9 @@ export const Sidebar = () => {
         {user ? (
           <>Hello {user.name}</>
         ) : (
-          <Link href="/auth/login">
-            <StyledButton py={3}>{t("mainLogin")}</StyledButton>
-          </Link>
+          <StyledButton onClick={() => setShowLogin(true)} py={3}>
+            {t("mainLogin")}
+          </StyledButton>
         )}
       </Box>
       <Box>
@@ -134,6 +136,11 @@ export const Sidebar = () => {
           {t("faq")}
         </AboutText>
       </Box>
+      {showLogin && (
+        <ModalWrapper onClose={() => setShowLogin(false)}>
+          <h1>Login</h1>
+        </ModalWrapper>
+      )}
     </Flex>
   );
 };

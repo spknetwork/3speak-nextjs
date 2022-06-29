@@ -35,3 +35,84 @@ export const OAUTH2_CLIENTS = {
     ],
   }
 }
+
+export const HIVESQL_USERNAME = process.env.HIVESQL_USERNAME || 'HIVESQL_USERNAME_FILLIN'
+export const HIVESQL_PASSWORD = process.env.HIVESQL_PASSWORD || 'HIVESQL_PASSWORD_FILLIN'
+
+export interface RefLinkSource {
+  value: string
+  type: string
+}
+
+export class Reflink {
+  link: any
+  source: RefLinkSource | undefined
+  constructor(link: any) {
+    this.link = link
+
+    if (this.link[0]) {
+      const mid = this.link[0]
+      const source = {} as any
+      switch (mid[0]) {
+        case '$': {
+          source.value = mid.slice(1)
+          source.type = 'state'
+          break
+        }
+        case '#': {
+          source.value = mid.slice(1)
+          source.type = 'tag'
+          break
+        }
+        default: {
+          source.value = mid
+          source.type = 'source'
+        }
+      }
+      this.source = source
+    }
+  }
+  get type() {
+    switch (this.link.length) {
+      case 3: {
+        return 'permlink'
+      }
+      case 2: {
+        return 'root'
+      }
+      case 1: {
+        return 'source'
+      }
+    }
+  }
+  get permlink() {
+    return this.link[2]
+  }
+  get root() {
+    return this.link[1]
+  }
+  toString() {
+    return this.link.join(':')
+  }
+  static isValid(link: any) {
+    try {
+      Reflink.parse(link)
+      return true
+    } catch {
+      return false
+    }
+  }
+  static parse(link: any) {
+    if (link instanceof Reflink) {
+      return link
+    }
+    if (typeof link !== 'string') {
+      throw new Error('Invalid reflink')
+    }
+    link = link.split(':')
+    return new Reflink(link)
+  }
+}
+
+export const IPFS_SELF_MULTIADDR = '/ip4/127.0.0.1/tcp/5001'
+export const IPFS_HOST = '127.0.0.1'

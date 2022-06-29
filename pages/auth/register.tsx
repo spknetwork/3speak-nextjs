@@ -5,7 +5,6 @@ import ReactJWPlayer from "react-jw-player";
 import { Formik } from "formik";
 import { Box, Flex, Typography } from "components";
 import { useTranslation } from "next-export-i18n";
-import { getPost } from "utils/hive";
 import { useDispatch } from "react-redux";
 import { useUser } from "state/selectors/user";
 import { useRouter } from "next/router";
@@ -16,12 +15,6 @@ const RegisterPage = () => {
   const user = useUser();
   const dispatch = useDispatch();
   const [playlist, setPlaylist] = useState([]);
-
-  useEffect(() => {
-    getPost("something", "something").then((response) => {
-      console.log(response);
-    });
-  }, []);
 
   return (
     <Flex
