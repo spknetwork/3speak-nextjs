@@ -3,11 +3,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Reflink } from "../../constants";
 import DateTime from "date-and-time";
-import PlaySVG from "../../assets/img/play.svg";
+import PlaySVG from "../../public/play.svg";
 import { FaUser } from "react-icons/fa";
 import convert from "convert-units";
-import nsfwWarning from "../../assets/img/nsfw.png";
-import IpfsLogo from "../../assets/img/ipfs-logo-vector-ice.svg";
+import nsfwWarning from "../../public/nsfw.png";
+import IpfsLogo from "../../public/ipfs-logo-vector-ice.svg";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { VideoService } from "../../services/video.service";
 

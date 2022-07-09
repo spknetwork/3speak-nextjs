@@ -8,7 +8,7 @@ import { useUser } from "state/selectors/user";
 import { Typography } from "./Typography";
 import { useTranslation } from "next-export-i18n";
 import { useRouter } from "next/router";
-import { ModalWrapper } from "./ModalWrapper.tsx";
+import { ModalWrapper } from "./ModalWrapper";
 
 const NAVIGATION = [
   {
