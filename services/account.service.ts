@@ -1,11 +1,8 @@
 import hive from '@hiveio/hive-js'
 import axios from 'axios'
 import ArraySearch from 'arraysearch'
-import { CommentOp } from '../../common/models/comments.model'
-import { HiveInfo } from '../../common/models/hive.model'
-import { IpfsService } from './ipfs.service'
 import { hiveClient } from '../singletons/hive-client.singleton'
-import { VideoInfo, VideoSource } from '../../common/models/video.model'
+import { VideoInfo, VideoSource } from '../common/models/video.model'
 import RefLink from '../../main/RefLink'
 
 const Finder = ArraySearch.Finder
@@ -62,15 +59,15 @@ export class AccountService {
     return getAccounts
   }
 
-  static async getAccount(profileID) {
+  static async getAccount(profileID: any) {
     const getAccount = await PromiseIPC.send('accounts.get', profileID)
     return getAccount
   }
-  static async logout(profileID) {
+  static async logout(profileID: any) {
     await PromiseIPC.send('accounts.deleteProfile', profileID)
     return
   }
-  static async voteHandler(voteOp) {
+  static async voteHandler(voteOp: { accountType: any; weight: number; wif: any; voter: any; author: any; permlink: any }) {
     switch (voteOp.accountType) {
       case 'hive': {
         const weight = voteOp.weight * 100
@@ -81,7 +78,7 @@ export class AccountService {
           voteOp.author,
           voteOp.permlink,
           weight,
-          function (error, succeed) {
+          function (error: any, succeed: any) {
             if (error) {
               console.error(error)
               console.error('Error encountered')
@@ -95,7 +92,7 @@ export class AccountService {
       }
     }
   }
-  static async followHandler(profileID, followOp) {
+  static async followHandler(profileID: any, followOp: { accountType: any; author: any; what: any }) {
     switch (followOp.accountType) {
       case 'hive': {
         //const profile = await acctOps.getAccount(profileID);
@@ -122,7 +119,7 @@ export class AccountService {
           [username],
           'follow',
           JSON.stringify(jsonObj),
-          async (error, succeed) => {
+          async (error: any, succeed: any) => {
             if (error) {
               console.error(error)
               console.error('Error encountered broadcsting custom json')
@@ -138,93 +135,7 @@ export class AccountService {
       }
     }
   }
-  static async postComment(commentOp: CommentOp) {
-    switch (commentOp.accountType) {
-      case 'hive': {
-        const profileID = window.localStorage.getItem('SNProfileID') as any
-        const getAccount = (await PromiseIPC.send('accounts.get', profileID)) as any
-        const hiveInfo = Finder.one.in(getAccount.keyring).with({ type: 'hive' }) as HiveInfo
-
-        console.log(`posting comment with profile ID`, profileID)
-        console.log(`account`, getAccount)
-        console.log(`hiveInfo`, hiveInfo)
-        console.log(`comment op`, commentOp)
-
-        if (!commentOp.json_metadata) {
-          commentOp.json_metadata = {}
-        }
-
-        let json_metadata
-        if (typeof commentOp.json_metadata === 'object') {
-          //Note: this is for peakd/hive.blog to display a video preview
-          if (!commentOp.parent_author) {
-            commentOp.json_metadata.video.info = {
-              author: hiveInfo.username,
-              permlink: commentOp.permlink,
-            }
-          }
-          json_metadata = JSON.stringify(commentOp.json_metadata)
-        } else {
-          throw new Error('commentOp.json_metadata must be an object')
-        }
-
-        let body: string
-
-        if (!commentOp.parent_author) {
-          let header: string
-          if (commentOp.json_metadata.sourceMap) {
-            const thumbnailSource = Finder.one.in(commentOp.json_metadata.sourceMap).with({
-              type: 'thumbnail',
-            })
-            console.log(`thumbnail source`, thumbnailSource)
-            try {
-              const cid = IpfsService.urlToCID(thumbnailSource.url)
-              const gateway = await IpfsService.getGateway(cid, true)
-              const imgSrc = gateway + IpfsService.urlToIpfsPath(thumbnailSource.url)
-              header = `[![](${imgSrc})](https://3speak.tv/watch?v=${hiveInfo.username}/${commentOp.permlink})<br/>`
-            } catch (ex) {
-              console.error(`Error getting IPFS info`, ex)
-              throw ex
-            }
-          }
-          if (header) {
-            body = `${header} ${commentOp.body} <br/> [▶️Watch on 3Speak Dapp](https://3speak.tv/openDapp?uri=hive:${hiveInfo.username}:${commentOp.permlink})`
-          } else {
-            body = `${commentOp.body} <br/> [▶️Watch on 3Speak Dapp](https://3speak.tv/openDapp?uri=hive:${hiveInfo.username}:${commentOp.permlink})`
-          }
-        } else {
-          body = commentOp.body
-        }
-
-        if (!json_metadata) {
-          throw new Error(`Cannot publish comment to hive with no metadata!`)
-        }
-        console.log(`POSTING TO HIVE WITH JSON METADATA`, json_metadata)
-
-        try {
-          const out = await hive.broadcast.comment(
-            hiveInfo.privateKeys.posting_key,
-            commentOp.parent_author || '',
-            commentOp.parent_permlink || commentOp.tags[0] || 'threespeak', //parentPermlink
-            hiveInfo.username,
-            commentOp.permlink,
-            commentOp.title,
-            body,
-            json_metadata,
-          )
-
-          console.log(`comment broadcasted to hive!  return:`)
-          console.log(out)
-
-          return [`hive:${hiveInfo.username}:${commentOp.permlink}`, out]
-        } catch (err: any) {
-          console.error(`Error broadcasting comment to hive! ${err.message}`)
-          throw err
-        }
-      }
-    }
-  }
-  static async createPost(postOp: any) {
+  static async createPost(postOp: { accountType: any; wif: any; parentPermlink: any; author: any; permlink: any; title: any; body: any; jsonMetadata: any }) {
     switch (postOp.accountType) {
       case 'hive': {
         const theWif = postOp.wif
@@ -238,7 +149,7 @@ export class AccountService {
           postOp.title,
           postOp.body,
           postOp.jsonMetadata,
-          function (error, succeed) {
+          function (error: any, succeed: any) {
             console.log('Bout to check')
             if (error) {
               console.error(error)
@@ -281,7 +192,7 @@ export class AccountService {
     return out
   }
 
-  static async convertLight(val) {
+  static async convertLight(val: { json_metadata: string }) {
     if (typeof val.json_metadata === 'object') {
       val.json_metadata = JSON.parse(val.json_metadata)
     }
@@ -295,7 +206,7 @@ export class AccountService {
    * Retrieves post information from reflink.
    * @param {String|RefLink} reflink
    */
-  static async permalinkToPostInfo(reflink) {
+  static async permalinkToPostInfo(reflink: { toString: () => any }) {
     if (!(reflink instanceof RefLink)) {
       reflink = RefLink.parse(reflink)
     }
@@ -308,7 +219,7 @@ export class AccountService {
    * Retrieves post information as videoInfo from reflink.
    * @param {String|RefLink} reflink
    */
-  static async permalinkToVideoInfo(reflink, options: any = {}): Promise<VideoInfo> {
+  static async permalinkToVideoInfo(reflink: { toString: () => any; source: { value: any }; permlink: any }, options: any = {}): Promise<VideoInfo> {
     if (!reflink) return undefined
 
     if (!(reflink instanceof RefLink)) {
@@ -414,7 +325,7 @@ export class AccountService {
       }
     }
   }
-  static async getProfileBackgroundImageUrl(reflink): Promise<string> {
+  static async getProfileBackgroundImageUrl(reflink: { toString: () => any }): Promise<string> {
     if (!(reflink instanceof RefLink)) {
       reflink = RefLink.parse(reflink)
     }
@@ -449,7 +360,7 @@ export class AccountService {
    * @todo Future item: Pull image from URL, then store locally for later use.
    * @param {String|RefLink} reflink
    */
-  static async getProfilePictureURL(reflink) {
+  static async getProfilePictureURL(reflink: { root: any }) {
     if (!(reflink instanceof RefLink)) {
       reflink = RefLink.parse(reflink)
     }
@@ -472,7 +383,7 @@ export class AccountService {
    * Retrieves Follower count.
    * @param {String|RefLink} reflink
    */
-  static async getFollowerCount(reflink) {
+  static async getFollowerCount(reflink: { source: { value: any }; toString: () => any }) {
     if (!(reflink instanceof RefLink)) {
       reflink = RefLink.parse(reflink)
     }
@@ -493,7 +404,7 @@ export class AccountService {
    * Retrieves "about" text for user profiles
    * @param {String|RefLink} reflink
    */
-  static async getProfileAbout(reflink) {
+  static async getProfileAbout(reflink: { source: { value: any }; root: any }) {
     if (!(reflink instanceof RefLink)) {
       reflink = RefLink.parse(reflink)
     }
@@ -525,7 +436,7 @@ export class AccountService {
    * Retrieves balances for user
    * @param {String|RefLink} reflink
    */
-  static async getAccountBalances(reflink) {
+  static async getAccountBalances(reflink: { source: { value: any }; root: any }) {
     if (!(reflink instanceof RefLink)) {
       reflink = RefLink.parse(reflink)
     }

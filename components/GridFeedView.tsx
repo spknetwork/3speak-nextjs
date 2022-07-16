@@ -10,12 +10,10 @@ export const GridFeedView: React.FC<IProps> = ({ type }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (type === "home") {
-      axios.get(`https://3speak.tv/apiv2/feeds/${type}`).then(({ data }) => {
-        console.log(data);
-        setData(data);
-      });
-    }
+    axios.get(`https://3speak.tv/apiv2/feeds/${type}`).then(({ data }) => {
+      console.log(data);
+      setData(data);
+    });
   }, []);
 
   return (
