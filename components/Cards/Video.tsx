@@ -28,7 +28,7 @@ export function Video(props: any) {
       if (props.isNsfw === true) {
         thumbnail = nsfwWarning.toString();
       } else {
-        const [, author, permlink] = props.reflink.split(":");
+        const [, author, permlink] = props.reflink?.split(":");
         thumbnail = (
           await VideoService.getNewThumbnailURL(author, permlink)
         ).toString();
@@ -84,7 +84,7 @@ export function Video(props: any) {
           <b>
             <a href={`#/user/${props.reflink}`}>
               {" "}
-              <FaUser /> {reflink.root}
+              <FaUser /> {reflink?.root}
             </a>
           </b>
         </span>

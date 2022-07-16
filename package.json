@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@hiveio/dhive": "^1.2.2",
     "@hiveio/hive-js": "^2.0.4",
     "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^1.8.2",

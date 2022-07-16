@@ -107,7 +107,8 @@ export class Reflink {
       return link
     }
     if (typeof link !== 'string') {
-      throw new Error('Invalid reflink')
+      console.log('invalid reflink')
+      return;
     }
     link = link.split(':')
     return new Reflink(link)

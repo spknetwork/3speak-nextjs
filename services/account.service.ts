@@ -1,9 +1,9 @@
 import hive from '@hiveio/hive-js'
 import axios from 'axios'
 import ArraySearch from 'arraysearch'
-import { hiveClient } from '../singletons/hive-client.singleton'
-import { VideoInfo, VideoSource } from '../common/models/video.model'
-import RefLink from '../../main/RefLink'
+import { hiveClient } from 'singletons/hive-client.singleton'
+import { VideoInfo, VideoSource } from 'common/models/video.model'
+import RefLink from 'constants';
 
 const Finder = ArraySearch.Finder
 
