@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import { Video } from "./Cards/Video";
 
 interface IProps {
@@ -17,10 +18,17 @@ export const GridFeedView: React.FC<IProps> = ({ type }) => {
   }, []);
 
   return (
-    <div>
+    <GridView>
       {data.map((video: any) => (
         <Video key={video.permlink} {...video} />
       ))}
-    </div>
+    </GridView>
   );
 };
+
+const GridView = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 25px;
+  padding: 1rem;
+`;

@@ -56,7 +56,7 @@ export const Sidebar = () => {
   const { t } = useTranslation();
 
   return (
-    <Flex p="1rem" flexDirection="column">
+    <Flex minWidth="250px" p="1rem" flexDirection="column">
       <Flex justifyContent="center" width="100%">
         <StyledLink href="/">
           <Box maxWidth="10.75rem">

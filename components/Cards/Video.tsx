@@ -1,98 +1,78 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useMemo, useState } from "react";
-import { Reflink } from "../../constants";
 import DateTime from "date-and-time";
-import PlaySVG from "../../public/play.svg";
 import { FaUser } from "react-icons/fa";
+import { BsPlayFill } from "react-icons/bs";
 import convert from "convert-units";
-import nsfwWarning from "../../public/nsfw.png";
 import IpfsLogo from "../../public/ipfs-logo-vector-ice.svg";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { VideoService } from "../../services/video.service";
+import styled from "styled-components";
+import Link from "next/link";
+import { Box } from "components/Box";
 
 export function Video(props: any) {
-  const video_info = useMemo(() => {
-    return props;
-  }, []);
-
-  const reflink = useMemo(() => {
-    return Reflink.parse(props.reflink);
-  }, [props.reflink]);
-
-  const [thumbnailUrl, setThumbnailUrl] = useState("");
-
-  useEffect(() => {
-    const load = async () => {
-      let thumbnail: string;
-      if (props.isNsfw === true) {
-        thumbnail = nsfwWarning.toString();
-      } else {
-        const [, author, permlink] = props.reflink?.split(":");
-        thumbnail = (
-          await VideoService.getNewThumbnailURL(author, permlink)
-        ).toString();
-      }
-
-      setThumbnailUrl(thumbnail);
-    };
-
-    void load();
-  }, []);
+  const [hovering, setHovering] = useState(false);
 
   return (
-    <div className=" col-lg-3 col-md-4 col-xl-2 col-xxl-2     col-6 p-2 mb-3 marg_bot1 videowidget-padding">
-      <div className="teaser_holder text-center">
-        <div className="card-label card-label-views">
-          <img className="play_i" src={PlaySVG} height="11px" />
-          <span>{props.views}</span>
-        </div>
-        <div className="card-label">
-          {(() => {
-            const pattern = DateTime.compile("mm:ss");
-            return DateTime.format(
-              new Date(video_info.duration * 1000),
-              pattern
-            );
-          })()}
-        </div>
-        <a href={`#/watch/${props.reflink}`}>
+    <div>
+      <ThumbnailContainer
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
+      >
+        {!hovering && (
+          <>
+            <PlayIconViews>
+              <BsPlayFill />
+              <span>{props.views}</span>
+            </PlayIconViews>
+            <VideoTime>
+              {(() => {
+                const pattern = DateTime.compile("mm:ss");
+                return DateTime.format(
+                  new Date(props.duration * 1000),
+                  pattern
+                );
+              })()}
+            </VideoTime>
+          </>
+        )}
+        <Link href={`/watch?v=${props.author}/${props.permlink}`}>
           <img
             style={{
-              width: "100% !important",
-              padding: "5px",
+              width: "100%",
+              height: "100%",
               maxHeight: "13em",
             }}
             className="img-fluid bg-dark"
-            src={thumbnailUrl}
+            src={props.images.thumbnail}
           />
-        </a>
-      </div>
-      <a href={`#/watch/${props.reflink}`}>
-        <b
+        </Link>
+      </ThumbnailContainer>
+      <Link href={`/watch?v=${props.author}/${props.permlink}`}>
+        <Title
           data-toggle="tooltip"
           data-placement="bottom"
-          title={video_info.title}
-          className="max-lines word-break"
-          data-original-title={video_info.title}
+          title={props.title}
+          data-original-title={props.title}
         >
-          {video_info.title}
-        </b>
-      </a>
-      <div className="mt-2">
+          {props.title.split("").length > 25
+            ? `${props.title.substring(0, 25)}...`
+            : props.title}
+        </Title>
+      </Link>
+      <Box marginTop="7px">
         <span className="black_col">
-          <b>
-            <a href={`#/user/${props.reflink}`}>
-              {" "}
-              <FaUser /> {reflink?.root}
-            </a>
-          </b>
+          <a href={`/user/${props.author}`}>
+            {" "}
+            <FaUser width="10px" /> {props.author}
+          </a>
         </span>
         <br />
         <span>
           {(() => {
             const dateBest = convert(
-              new Date().getTime() - (new Date(video_info.created) as any) / 1
+              new Date().getTime() - (new Date(props.created) as any) / 1
             )
               .from("ms")
               .toBest();
@@ -114,7 +94,39 @@ export function Video(props: any) {
             </OverlayTrigger>
           </div>
         ) : null}
-      </div>
+      </Box>
     </div>
   );
 }
+
+const Title = styled.a`
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+`;
+
+const PlayIconViews = styled.div`
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  left: 0;
+  background: #e8e8e8 none repeat scroll 0 0;
+  border-radius: 5px;
+`;
+
+const VideoTime = styled.div`
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  right: 0;
+  background: #e8e8e8 none repeat scroll 0 0;
+  border-radius: 5px;
+`;
+
+const ThumbnailContainer = styled.div`
+  position: relative;
+  height: 110px;
+  border: 3px solid #222;
+  cursor: pointer;
+`;
