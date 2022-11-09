@@ -1,0 +1,77 @@
+import mongoose from 'mongoose'
+
+const VideoSchema = new mongoose.Schema({
+  filename: {type: String, required: true},
+  skynet: String,
+  originalFilename: {type: String, required: true},
+  thumbnail: String,
+  score: {type: Number, required: true, default: 0},
+  title: String,
+  tags: String,
+  description: String,
+  lowRc: {type: Boolean, default: false, required: true},
+  status: {
+    type: String,
+    enum: ['uploaded', 'encoding', 'saving', 'published', 'deleted', 'encoding_failed', 'encoding_queued', 'encoding_halted_time', 'encoding_queued_vod', 'scheduled', 'encoding_ipfs'],
+    default: 'uploaded',
+    required: true
+  },
+  raw_description: String,
+  size: {type: Number, required: true},
+  permlink: {type: String, required: true},
+  duration: {type: Number, required: false},
+  isVOD: {type: Boolean, required: true, default: false},
+  created: {type: Date, required: true, default: Date.now()},
+  published: Date,
+  pipeline: String,
+  owner: {type: String, required: true},
+  isB2: {type: Boolean, required: true, default: false},
+  pinned: {type: Boolean, required: true, default: false},
+  b2Permlink: {type: String},
+  is3CJContent: {type: Boolean, required: false, default: false},
+  isNsfwContent: {type: Boolean, required: true, default: false},
+  language: {type: String, required: false, default: 'en'},
+  category: {type: String, required: false, default: 'general'},
+  firstUpload: {type: Boolean, default: false},
+  hive: {type: String, default: 'hive-181335'},
+  showDownload: {type: Boolean},
+  encoding_price_steem: {type: String, required: true, default: '0.000'},
+  paid: {type: Boolean, default: false, required: true}, //only ever true when there was a manual payment!
+  indexed: {type: Boolean, default: false},
+  views: {type: Number, default: 0},
+  recommended: {type: Boolean, default: false},
+  curationComplete: {type: Boolean, default: false},
+  upvoteEligible: {type: Boolean, default: true},
+  app: String,
+  badges: {
+    type: [String],
+    default: []
+  },
+  hasTorrent: {type: Boolean, required: true, default: false},
+  receipt: String,
+  publish_type: {type: String, default: 'publish', enum: ['publish', 'schedule'], required: true},
+  publish_data: {type: Date},
+  declineRewards: {type: Boolean, default: false},
+  rewardPowerup: {type: Boolean, default: false},
+  publishFailed: {type: Boolean, default: false, required: true},
+  steemPosted: Boolean,
+  beneficiaries: {type: String, default: '[]'},
+  score_boost: Number,
+  ipfs: String,
+  needsHiveUpdate: Boolean,
+  hasAudioOnlyVersion: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  reducedUpvote: {type: Boolean, default: false},
+  donations: {type: Boolean, default: false},
+  postToHiveBlog: {type: Boolean, default: false},
+  tags_v2: [String],
+  upload_type: {type: String},
+  job_id: {type: String},
+  video_v2: {type: String},
+  podcast_transfered: {type: Boolean}
+});
+
+export default mongoose.models.Video || mongoose.model('Video', VideoSchema)
