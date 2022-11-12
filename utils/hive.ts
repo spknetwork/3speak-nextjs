@@ -1,11 +1,18 @@
-import hive from '@hiveio/hive-js';
+import { Client } from "@hiveio/dhive";
 
-export const getPost = async (username: string, permlink: string) => {
-  await hive.api.getContent(username, permlink, (err: any, result: any) => {
-    if (err) {
-      return { data: null, error: err }
-    }
+const client = new Client(["https://api.deathwing.me"]);
 
-    return { data: result }
-  })
+interface Authorperm {
+  author: string;
+  permlink: string;
+}
+
+export const getPost = async (authorperm: Authorperm) => {
+  return await client.database.call('get_content', [authorperm.author, authorperm.permlink])
+}
+
+export const getPosts = async (authorperms: Authorperm[]): Promise<any[]> => {
+  return await Promise.all(
+    authorperms.map(async (ap) => (getPost(ap)))
+  )
 }

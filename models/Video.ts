@@ -1,6 +1,69 @@
 import mongoose from 'mongoose'
 
-const VideoSchema = new mongoose.Schema({
+export interface IVideo {
+  filename: string,
+  skynet?: string,
+  originalFilename: string,
+  thumbnail: string,
+  score: number,
+  title: string,
+  tags?: string,
+  description: string,
+  lowRc: boolean,
+  status: 'uploaded' | 'encoding' | 'saving' | 'published' | 'deleted' | 'encoding_failed' | 'encoding_queued' | 'encoding_halted_time' | 'encoding_queued_vod' | 'scheduled' | 'encoding_ipfs'
+  raw_description?: string,
+  size: number,
+  permlink: string,
+  duration?: number,
+  isVOD: boolean,
+  created: Date,
+  published?: Date,
+  pipeline?: string,
+  owner: string,
+  isB2: boolean,
+  pinned: boolean,
+  b2Permlink?: string,
+  is3CJContent?: boolean,
+  isNsfwContent: boolean,
+  language?: string,
+  category?: string,
+  firstUpload: boolean,
+  hive: string,
+  showDownload?: boolean,
+  encoding_price_steem: string,
+  paid: boolean,
+  indexed: boolean,
+  views: number,
+  recommended: boolean,
+  curationComplete: boolean,
+  upvoteEligible: boolean,
+  app?: string,
+  badges: string[],
+  hasTorrent: boolean,
+  receipt?: string,
+  publish_type: 'publish' | 'schedule',
+  publish_data?: Date,
+  declineRewards: boolean,
+  rewardPowerup: boolean,
+  publishFailed: boolean,
+  steemPosted?: boolean,
+  beneficiaries: string,
+  score_boost?: number,
+  ipfs?: string,
+  needsHiveUpdate?: boolean,
+  hasAudioOnlyVersion: boolean,
+  reducedUpvote: boolean,
+  donations: boolean,
+  postToHiveBlog: boolean,
+  tags_v2?: string[],
+  upload_type?: string,
+  job_id?: string,
+  video_v2?: string,
+  podcast_transfered?: boolean,
+  thumbUrl: string
+}
+
+const VideoSchema = new mongoose.Schema<IVideo>({
   filename: {type: String, required: true},
   skynet: String,
   originalFilename: {type: String, required: true},
@@ -74,4 +137,4 @@ const VideoSchema = new mongoose.Schema({
   podcast_transfered: {type: Boolean}
 });
 
-export default mongoose.models.Video || mongoose.model('Video', VideoSchema)
+export default mongoose.models?.Video || mongoose.model<IVideo>('Video', VideoSchema)

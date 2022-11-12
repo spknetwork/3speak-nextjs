@@ -1,8 +1,14 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
+import { Languages } from 'models/LanguageSetting'
 
-const LanguageSchema = new mongoose.Schema({
-  code: {type: String, required: true},
-  language: {type: String, required: true}
+export interface ILanguage {
+  code: Languages;
+  language: string;
+}
+
+const LanguageSchema = new mongoose.Schema<ILanguage>({
+  code: { type: String, required: true },
+  language: { type: String, required: true },
 });
 
-export default mongoose.models.Language || mongoose.model('Language', LanguageSchema)
+export default mongoose.models.Language || mongoose.model<ILanguage>('Language', LanguageSchema);
