@@ -9,7 +9,6 @@ function getPayoutFromMetadata(content: any) {
 }
 export async function applyPayouts(videos: (IVideo)[]) {
   const hivePosts: any[] = await getPosts(videos.map(v => ({ author: v.owner, permlink: v.permlink })));
-  console.log(hivePosts)
   return hivePosts.map((post: IVideo, index) => ({
     ...videos[index],
     payout: getPayoutFromMetadata(post)
