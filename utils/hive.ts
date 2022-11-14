@@ -8,11 +8,15 @@ interface Authorperm {
 }
 
 export const getPost = async (authorperm: Authorperm) => {
-  return await client.database.call('get_content', [authorperm.author, authorperm.permlink])
+  try {
+    return await client.database.call('get_content', [authorperm.author, authorperm.permlink])
+  } catch {
+    return
+  }
 }
 
 export const getPosts = async (authorperms: Authorperm[]): Promise<any[]> => {
-  return await Promise.all(
+  return (await Promise.all(
     authorperms.map(async (ap) => (getPost(ap)))
-  )
+  )).filter(post => !!post)
 }

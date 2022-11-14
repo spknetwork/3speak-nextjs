@@ -52,6 +52,7 @@ export default function Trending({ trending }: { trending: (IVideo & { payout: n
 
   return (
     <Grid>
+      <h1>Trending</h1>
       <InfiniteScroll
         dataLength={trendingPosts.length}
         next={getMoreVideos}
