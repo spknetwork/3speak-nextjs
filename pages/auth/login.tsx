@@ -40,11 +40,11 @@ const LoginPage = () => {
           backgroundColor="#f8d7da"
           border="1px solid #f5c6cb"
         >
-          <Typography fontColor="1.75rem" textAlign="center" color="#721c24">
+          <Typography textAlign="center" color="#721c24">{/* fontSize="1.75rem" */}
             {t("login.disclaimer")}
           </Typography>
         </Box>
-        <Typography textAlign="center" fontSize="2rem" mt="1rem">
+        <Typography textAlign="center" mt="1rem">{/* fontSize="2rem" */}
           {t("login.title")}
         </Typography>
         <Formik

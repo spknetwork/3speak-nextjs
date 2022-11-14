@@ -59,7 +59,7 @@ export default function Trending({ trending }: { trending: (IVideo & { payout: n
         loader={<h3>Loading...</h3>}
         endMessage={<h4>Nothing more to show</h4>}
       ><Row>
-        {trendingPosts.map((video: IVideo) => (
+        {trendingPosts.map((video: IVideo & { payout: number; }) => (
           <VideoCard key={`${video.owner}/${video.permlink}`} {...video} />
         ))}
         </Row>
