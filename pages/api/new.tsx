@@ -23,7 +23,6 @@ export default async function handler(
     author: lastVideoSplit[0],
     permlink: lastVideoSplit[1]
   }
-
-  let trending = await newFeedGenerator({page: Number(page), languages: ['en'], lastVideo: lastVideoMap})// TODO: languages
-  res.send(trending)
+  
+  res.send(await newFeedGenerator({page: Number(page), languages: ['en'], lastVideo: lastVideoMap}))
 }

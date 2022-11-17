@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import dbConnect from 'lib/dbConnect';
 import trendingFeedGenerator from 'utils/getTrending';
-import processFeed from 'utils/processFeed';
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,7 +16,6 @@ export default async function handler(
 
   // TODO: uncomment
   //let languages = await getLanguageSettings(req);
-
-  let trending = await trendingFeedGenerator({page: Number(page), languages: ['en']})// TODO: languages
-  res.send(trending)
+  
+  res.send(await trendingFeedGenerator({page: Number(page), languages: ['en']}))
 }
