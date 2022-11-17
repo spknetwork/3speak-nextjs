@@ -1,5 +1,6 @@
 import { Languages } from "models/LanguageSetting";
 import Video from "models/Video";
+import { applyPayouts } from "./payouts";
 import processFeed from "./processFeed";
 import spamVideoFilter from "./spamVideoFilter";
 
@@ -41,8 +42,8 @@ export default async function getTrendingFeed({
     }, query), null, {limit: 5}).sort('-created')//.cache(30);
   }
 
-  return processFeed(spamVideoFilter([
+  return await applyPayouts(processFeed(spamVideoFilter([
     ...pinned.map(r => (r.toObject())),
     ...trending.map(r => (r.toObject()))
-  ]))
+  ])))
 }

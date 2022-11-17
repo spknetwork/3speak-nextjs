@@ -1,32 +1,15 @@
 import dbConnect from 'lib/dbConnect';
 import trendingFeedGenerator from 'utils/getTrending';
-import processFeed from 'utils/processFeed';
 import { IVideo } from "models/Video";
 import React, { useState } from 'react';
 import { VideoCard } from 'components/VideoCard';
 import { Grid, Row } from 'components/Grid';
-import { getPosts } from 'utils/hive';
 import InfiniteScroll from "react-infinite-scroll-component";
-
-function getPayoutFromMetadata(content: any) {
-  let payout = content.last_payout <= "1970-01-01T00:00:00" ? content.pending_payout_value : parseFloat(content.total_payout_value) + parseFloat(content.curator_payout_value)
-  payout = parseFloat(payout)
-  payout = payout.toFixed(2)
-  return payout
-}
-
-async function applyPayouts(videos: (IVideo)[]) {
-  const hivePosts: any[] = await getPosts(videos.map(v => ({ author: v.owner, permlink: v.permlink })))
-  return hivePosts.map((post: IVideo, index) => ({
-    ...videos[index],
-    payout: getPayoutFromMetadata(post)
-  }))
-}
+import { applyPayouts } from 'utils/payouts';
 
 export async function getServerSideProps() {
   await dbConnect();
   let trending = await trendingFeedGenerator({ languages: ['en'] })//languages);
-  trending = await applyPayouts(trending)
   return {
     props: { trending }
   }

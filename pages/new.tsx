@@ -11,7 +11,6 @@ import { applyPayouts } from '../utils/payouts';
 export async function getServerSideProps() {
   await dbConnect();
   let created: IVideo[] = await newFeedGenerator({ languages: ['en'] })//languages);
-  created = await applyPayouts(created)
   return {
     props: { created }
   }

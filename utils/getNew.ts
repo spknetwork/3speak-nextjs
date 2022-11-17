@@ -1,5 +1,6 @@
 import { Languages } from "models/LanguageSetting";
 import Video, { IVideo } from "models/Video";
+import { applyPayouts } from "./payouts";
 import processFeed from "./processFeed";
 import spamVideoFilter from "./spamVideoFilter";
 
@@ -26,5 +27,5 @@ export default async function getNewFeed({
     created = created.slice(indexOfLastVideo + 1, created.length)
   }
   
-  return processFeed(spamVideoFilter(created));
+  return await applyPayouts(processFeed(spamVideoFilter(created)));
 }
