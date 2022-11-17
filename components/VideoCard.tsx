@@ -1,5 +1,4 @@
 import { IVideo } from "models/Video"
-import Image from 'next/image'
 import Link from "next/link"
 import { Box } from "./Box"
 import { VideoCol } from "./Grid"
@@ -17,22 +16,21 @@ export const TextCutoff = styled.div`
 export const VideoCard = (props: (IVideo & {payout: number})) => {
   return (
     <VideoCol size={1} style={{margin: '5px 5px'}}>
-      
-        <Box style={{width: 340}}>
-          <Link href={`/u/${props.owner}/videos/${props.permlink}`}>
-            <a><img style={{width: '100%', border: '5px solid #555'}} src={props.thumbUrl} alt={`${props.owner}'s photo for the video titled ${props.title}`} /></a>
-            {/* TODO: Use the next Image component here (weird it requires a pixel with) */}
-          </Link>
-          <div>
-            <TextCutoff>
-              <Link href={`/u/${props.owner}/videos/${props.permlink}`}>
-                <a>
-                  {props.title}
-                </a>
-              </Link>
-            </TextCutoff>
-          </div>
-        </Box>
+      <Box style={{width: 340}}>
+        <Link href={`/u/${props.owner}/videos/${props.permlink}`}>
+          <a><img style={{width: '100%', border: '5px solid #555'}} src={props.thumbUrl} alt={`${props.owner}'s photo for the video titled ${props.title}`} /></a>
+          {/* TODO: Use the next Image component here (weird it requires a pixel with) */}
+        </Link>
+        <div>
+          <TextCutoff>
+            <Link href={`/u/${props.owner}/videos/${props.permlink}`}>
+              <a>
+                {props.title}
+              </a>
+            </Link>
+          </TextCutoff>
+        </div>
+      </Box>
       
       <b><Link href={`/u/${props.owner}`}><a>@{props.owner}</a></Link></b>
       <div>{timeSince(new Date(props.created))}</div>

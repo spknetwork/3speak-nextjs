@@ -10,7 +10,6 @@ export const Grid = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
-  overflow-y: scroll;
 `;
 
 export const Col = styled.div`
