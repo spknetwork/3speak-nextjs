@@ -26,7 +26,6 @@ async function applyPayouts(videos: (IVideo)[]) {
 export async function getServerSideProps() {
   await dbConnect();
   let trending = await trendingFeedGenerator({ languages: ['en'] })//languages);
-  trending = processFeed(trending);
   trending = await applyPayouts(trending)
   return {
     props: { trending }

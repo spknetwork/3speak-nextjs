@@ -19,6 +19,5 @@ export default async function handler(
   //let languages = await getLanguageSettings(req);
 
   let trending = await trendingFeedGenerator({page: Number(page), languages: ['en']})// TODO: languages
-  trending = processFeed(trending);
   res.send(trending)
 }

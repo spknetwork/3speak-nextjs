@@ -25,6 +25,5 @@ export default async function handler(
   }
 
   let trending = await newFeedGenerator({page: Number(page), languages: ['en'], lastVideo: lastVideoMap})// TODO: languages
-  trending = processFeed(trending);
   res.send(trending)
 }
