@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { VideoCard } from 'components/VideoCard';
 import { Grid, Row } from 'components/Grid';
 import InfiniteScroll from "react-infinite-scroll-component";
-import { applyPayouts } from 'utils/payouts';
 
 export async function getServerSideProps() {
   await dbConnect();
@@ -24,11 +23,9 @@ export default function Trending({ trending }: { trending: (IVideo & { payout: n
       page: `${page}`
     }))
       .then((res) => res.json())
-      .then((data: IVideo[]) => {
-        applyPayouts(data).then(videos => {
-          setPage(page + 1)
-          setPosts([...trendingPosts, ...videos]);
-        })
+      .then((videos: (IVideo & { payout: number; })[]) => {
+        setPage(page + 1)
+        setPosts([...trendingPosts, ...videos]);
       })
   };
 

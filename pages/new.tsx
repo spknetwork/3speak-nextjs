@@ -1,12 +1,10 @@
 import dbConnect from 'lib/dbConnect';
 import newFeedGenerator from 'utils/getNew';
-import processFeed from 'utils/processFeed';
 import { IVideo } from "models/Video";
 import React, { useState } from 'react';
 import { VideoCard } from 'components/VideoCard';
 import { Grid, Row } from 'components/Grid';
 import InfiniteScroll from "react-infinite-scroll-component";
-import { applyPayouts } from '../utils/payouts';
 
 export async function getServerSideProps() {
   await dbConnect();
@@ -27,11 +25,9 @@ export default function New({ created }: { created: (IVideo & { payout: number; 
       lastVideo: `${lastVideo.owner}/${lastVideo.permlink}`
     }))
       .then((res) => res.json())
-      .then((data: IVideo[]) => {
-        applyPayouts(data).then(videos => {
-          setPage(page + 1)
-          setVideos([...createdVideos, ...videos]);
-        })
+      .then((videos: (IVideo & { payout: number; })[]) => {
+        setPage(page + 1)
+        setVideos([...createdVideos, ...videos]);
       })
   };
 

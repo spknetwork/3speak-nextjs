@@ -1,10 +1,9 @@
 import dbConnect from 'lib/dbConnect';
-import Video, { IVideo } from "models/Video";
+import { IVideo } from "models/Video";
 import React, { useState } from 'react';
 import { VideoCard } from 'components/VideoCard';
 import { Grid, Row } from 'components/Grid';
 import InfiniteScroll from "react-infinite-scroll-component";
-import { applyPayouts } from '../utils/payouts';
 import newcomerFeedGenerator from 'utils/getNewcomers';
 
 export async function getServerSideProps() {
@@ -26,11 +25,9 @@ export default function Newcomers({ newcomers }: { newcomers: (IVideo & { payout
       page: `${page}`
     }))
       .then((res) => res.json())
-      .then((data: IVideo[]) => {
-        applyPayouts(data).then(videos => {
-          setPage(page + 1)
-          setVideos([...newcomerVideos, ...videos]);
-        })
+      .then((videos: (IVideo & { payout: number; })[]) => {
+        setPage(page + 1)
+        setVideos([...newcomerVideos, ...videos]);
       })
   };
 
