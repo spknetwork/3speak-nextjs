@@ -5,7 +5,7 @@ export async function getServerSideProps(context: any) {
   return {
     redirect: {
       permanent: false,
-      destination: `/u/${author}/videos/${permlink}`,
+      destination: `/@${author}/${permlink}`,
     },
     props:{},
   };

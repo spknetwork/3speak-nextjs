@@ -17,13 +17,13 @@ export const VideoCard = (props: (IVideo & {payout: number})) => {
   return (
     <VideoCol size={1} style={{margin: '5px 5px'}}>
       <Box style={{width: 340}}>
-        <Link href={`/u/${props.owner}/videos/${props.permlink}`}>
+        <Link href={`/@${props.owner}/${props.permlink}`}>
           <a><img style={{width: '100%', border: '5px solid #555'}} src={props.thumbUrl} alt={`${props.owner}'s photo for the video titled ${props.title}`} /></a>
           {/* TODO: Use the next Image component here (weird it requires a pixel with) */}
         </Link>
         <div>
           <TextCutoff>
-            <Link href={`/u/${props.owner}/videos/${props.permlink}`}>
+            <Link href={`/@${props.owner}/${props.permlink}`}>
               <a>
                 {props.title}
               </a>
@@ -32,7 +32,7 @@ export const VideoCard = (props: (IVideo & {payout: number})) => {
         </div>
       </Box>
       
-      <b><Link href={`/u/${props.owner}`}><a>@{props.owner}</a></Link></b>
+      <b><Link href={`/@${props.owner}`}><a>@{props.owner}</a></Link></b>
       <div>{timeSince(new Date(props.created))}</div>
       <div><b>${props.payout}</b></div>
     </VideoCol>

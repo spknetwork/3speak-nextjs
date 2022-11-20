@@ -7,10 +7,18 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.hive.blog',
         port: '',
-        pathname: '/p/**',
+        pathname: '/**',
       },
     ],
-  }
+  },
+  async rewrites() {
+    return [
+        {
+            source: '/@:author',
+            destination: '/:author'
+        }
+    ];
+}
 }
 
 module.exports = nextConfig
