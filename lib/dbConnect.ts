@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
-const MONGODB_URI = process.env.NEXT_PUBLIC_MONGODB_URI || ''
+const MONGODB_URI = process.env.MONGODB_URI || ''
 
 if (!MONGODB_URI) {
-  console.log('Please provide the NEXT_PUBLIC_MONGODB_URI in .env.local to get db functionality')
+  console.log('Please provide the MONGODB_URI in .env.local to get db functionality')
 }
 
 /**
