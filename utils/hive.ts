@@ -1,6 +1,9 @@
 import { Client } from "@hiveio/dhive";
+import { IVideo } from "models/Video";
+import hive from '@hiveio/hive-js';
+import { formatChainData } from "./payouts";
 
-const client = new Client(["https://api.deathwing.me"]);
+const client = new Client([process.env.DEFAULT_HIVE_NODE || '']);
 
 interface Authorperm {
   author: string;
@@ -19,7 +22,26 @@ export const getPosts = async (authorperms: Authorperm[]): Promise<any[]> => {
   return (await Promise.all(
     authorperms.map(async (ap) => (getPost(ap)))
   )).filter(post => !!post)
-}export const getFollowerInfo = async (video: IVideo, user?: string) => {
+}
+
+export const getCommunity = async (video: IVideo) => {
+  const communityQuery = {
+    jsonrpc: "2.0",
+    method: "bridge.get_community",
+    params: {
+      name: video.hive, 
+      observer: "threespeak" // TODO: get logged in username
+    },
+    id: 1
+  }
+  return (await (await fetch(process.env.DEFAULT_HIVE_NODE || '', {
+    method: 'post',
+    body: JSON.stringify(communityQuery),
+    headers: {'Content-Type': 'application/json'},
+  })).json()).result
+}
+
+export const getFollowerInfo = async (video: IVideo, user?: string) => {
   const data = await client.call('follow_api', 'get_followers', [video.owner]);
 
   return {
@@ -40,3 +62,17 @@ export const getReplies = async (authorperm: Authorperm) => {
   return formatChainData(replies, replies, true, true).sort((a, b) => b.payout - a.payout);
 }
 
+export const getCommunities = async (last) => {
+  let reqBody = {
+    "id": 1,
+    "jsonrpc": "2.0",
+    "method": "bridge.list_communities",
+    "params": {last, limit: 100}
+  };
+
+  let communities = await (await fetch(`{{ HIVE_SECURE_NODE_PREFIX }}://{{ HIVE_DEFAULT_NODE }}`, {
+    method: 'post',
+    body: JSON.stringify(reqBody),
+    headers: {'Content-Type': 'application/json'},
+  })).json();
+}

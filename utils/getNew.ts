@@ -27,5 +27,5 @@ export default async function getNewFeed({
     created = created.slice(indexOfLastVideo + 1, created.length)
   }
   
-  return await applyPayouts(processFeed(spamVideoFilter(created)));
+  return await applyPayouts({ videos: processFeed(spamVideoFilter(created)) });
 }

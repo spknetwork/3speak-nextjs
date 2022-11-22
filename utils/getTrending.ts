@@ -42,8 +42,10 @@ export default async function getTrendingFeed({
     }, query), null, {limit: 5}).sort('-created')//.cache(30);
   }
 
-  return await applyPayouts(processFeed(spamVideoFilter([
-    ...pinned.map(r => (r.toObject())),
-    ...trending.map(r => (r.toObject()))
-  ])))
+  return await applyPayouts({
+    videos: processFeed(spamVideoFilter([
+      ...pinned.map(r => (r.toObject())),
+      ...trending.map(r => (r.toObject()))
+    ]))
+  })
 }

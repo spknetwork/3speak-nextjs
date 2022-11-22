@@ -20,5 +20,5 @@ export default async function getNewFeed({
     owner: { $ne: 'guest-account' }
   }, null, { limit, skip }).sort('-created')//.cache(300);
   
-  return await applyPayouts(processFeed(newbies));
+  return await applyPayouts({ videos: processFeed(newbies) });
 }
