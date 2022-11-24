@@ -62,7 +62,7 @@ export const getReplies = async (authorperm: Authorperm) => {
   return formatChainData(replies, replies, true, true).sort((a, b) => b.payout - a.payout);
 }
 
-export const getCommunities = async (last) => {
+export const getCommunities = async (last: any) => {
   let reqBody = {
     "id": 1,
     "jsonrpc": "2.0",
