@@ -14,6 +14,8 @@ import getOtherVideosByOwner from 'utils/getOtherVideosByOwner';
 import { IVideo } from "models/Video";
 import CommentSection from "components/CommentSection";
 import { Button } from "@mui/material";
+import HiveMarkdown from "components/HiveMarkdown";
+import ReadMore from "components/ReadMore";
 
 export async function getServerSideProps(context: GetServerSidePropsContext<{ author: string; permlink: string; }>) {
   await dbConnect();
@@ -76,6 +78,11 @@ const Watch = ({
               <br /><br />
               <Button href={`/openDapp?uri=hive:${video.owner}:${video.permlink}`}>Open in the desktop app</Button>
             </Col>
+          </Row>
+          <Row>
+            <HiveMarkdown>
+              {video.description}
+            </HiveMarkdown>
           </Row>
           <Row>
             <h1>Comments</h1>
