@@ -1,6 +1,5 @@
 import { Client } from "@hiveio/dhive";
 import { IVideo } from "models/Video";
-import hive from '@hiveio/hive-js';
 import { formatChainData } from "./payouts";
 
 const client = new Client([process.env.DEFAULT_HIVE_NODE || '']);
