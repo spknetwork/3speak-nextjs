@@ -15,7 +15,7 @@ export default function VoteModal(props: any) {
 
   return (
     <span>
-      <span onClick={handleOpen}>{props.children}</span>
+      <span onClick={handleOpen} style={{cursor: 'pointer'}}>{props.children}</span>
       <Modal
         open={open}
         onClose={handleClose}

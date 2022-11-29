@@ -14,14 +14,14 @@ export const VoteCommentPayout = (props: any) => {
       <VotesPopover votes={props.upvotes} type={'Upvote'} owner={props.owner} />
 
       <VoteModal type={'Downvote'} {...props}>
-        <FontAwesomeIcon style={{marginRight: 6, marginLeft: 20}} icon={faThumbsDown} size={'lg'} />
+        <FontAwesomeIcon icon={faThumbsDown} style={{marginRight: 6, marginLeft: 20}} size={'lg'} />
       </VoteModal>
       <VotesPopover votes={props.downvotes} type={'Downvote'} owner={props.owner} />
 
       <span style={{marginLeft: 15}}>${props.payout}</span>
 
       <CommentModal owner={props.owner}>
-        <span style={{marginLeft: 10}}>reply</span>
+        <span style={{marginLeft: 10, cursor: 'pointer'}}>reply</span>
       </CommentModal>
     </>
   )

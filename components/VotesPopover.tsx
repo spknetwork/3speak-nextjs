@@ -9,9 +9,9 @@ export const VotesPopover = (props: any) => {
     <PopupState variant="popover" popupId="demo-popup-popover">
       {(popupState) => (
         <span style={{fontSize: '69'}}>
-          <a {...bindTrigger(popupState)}>
+          <span {...bindTrigger(popupState)} style={{cursor: 'pointer'}}>
             {props.votes.length}
-          </a>
+          </span>
           <Popover
             {...bindPopover(popupState)}
             anchorOrigin={{
@@ -27,7 +27,6 @@ export const VotesPopover = (props: any) => {
             <div style={{padding: '5px 5px'}}>
               <Typography sx={{ p: 2 }}>{props.type}s for {props.voter}</Typography>
               {props.votes.map((vote: any) => {
-                console.log(vote.payout)
                 return <div key={`vote/${vote.voter}/${vote.weight}`}><Link href={`https://peakd.com/@${vote.voter}`}><a>@{vote.voter}</a></Link>: ${vote.payout}</div>
               })}
             </div>
