@@ -3,6 +3,7 @@ import timeSince from "utils/timeSince";
 import { UserPicture } from "./UserPicture";
 import { VoteCommentPayout } from "./VoteCommentPayout";
 import HiveMarkdown from "./HiveMarkdown";
+import Link from "next/link";
 
 export default function Comment(reply: any) {
   return (<Paper style={{ padding: "15px 15px", margin: 10, width: '100%' }}>
@@ -11,7 +12,11 @@ export default function Comment(reply: any) {
         <UserPicture owner={reply.author} />
       </Grid>
       <Grid justifyContent="left" item xs zeroMinWidth>
-        <h4 style={{ margin: 0, textAlign: "left" }}>{reply.author}</h4>
+        <Link href={`/@${reply.author}`}>
+          <a>
+            <h4 style={{ margin: 0, textAlign: "left" }}>{reply.author}</h4>
+          </a>
+        </Link>
         <HiveMarkdown>{reply.body}</HiveMarkdown>
         <p style={{ textAlign: "left", color: "gray" }}>
           {timeSince(new Date(reply.created))}
