@@ -6,7 +6,10 @@ import { useState } from "react";
 export default function HiveMarkdown(props: any) {
   const [expanded, setExpanded] = useState(false);
   
-  const body = props.children.replace(/(?!>|\[)(@\b[a-zA-Z]*)\b(?!<|\])/g, (username: string) => (`[${username}](/${username})`))
+  const body = props.children.replace(
+    /(@\b[a-zA-Z]*)\b(?![^[]*\])(?![^>]*\<\/ ?a)/g,
+    (username: string) => (`[${username}](/${username})`)
+  )
   const maxLength = 300
 
   return (
