@@ -59,10 +59,10 @@ export const Sidebar = () => {
         <StyledLink href="/">
           <Box maxWidth="10.75rem">
             <Image
-              width={1000}
-              height={500}
               src="/main_logo.svg"
               alt="3speak logo"
+              width={200}
+              height={100}
             />
           </Box>
         </StyledLink>
@@ -115,7 +115,7 @@ export const Sidebar = () => {
           type="text"
         />
       </Flex>
-      <Typography mb="0.5rem" mt="1rem" fontSize="1.25rem">
+      <Typography mb="0.5rem" mt="1rem">
         3Speak
       </Typography>
       <Box ml="0.5rem" mt="1rem">

@@ -17,12 +17,6 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
   const [playlist, setPlaylist] = useState([]);
 
-  useEffect(() => {
-    getPost("something", "something").then((response) => {
-      console.log(response);
-    });
-  }, []);
-
   return (
     <Flex
       justifyContent="center"
@@ -66,7 +60,7 @@ const RegisterPage = () => {
             {t("register.disclaimer.2")}
           </Typography>
         </Box>
-        <Typography textAlign="center" fontSize="2rem" mt="1rem">
+        <Typography textAlign="center" mt="1rem">{/* fontSize="2rem" */}
           {t("register.title")}
         </Typography>
         <Formik
@@ -141,7 +135,7 @@ const RegisterPage = () => {
                   backgroundColor="#d1ecf1"
                   border="2px solid #bee5eb"
                 >
-                  <Typography fontSize="0.75rem" color="#0c5460">
+                  <Typography color="#0c5460">{/* fontSize="0.75rem" */}
                     <StyledList>
                       {(t("register.passwordRules") as string[]).map((rule) => (
                         <li key={rule}>{rule}</li>
