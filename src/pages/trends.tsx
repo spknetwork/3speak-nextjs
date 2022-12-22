@@ -1,9 +1,9 @@
-import dbConnect from 'lib/dbConnect';
-import trendingFeedGenerator from 'utils/getTrending';
-import { IVideo } from "src/models/Video";
+import dbConnect from '../utils/dbConnect';
+import trendingFeedGenerator from '../utils/getTrending';
+import { IVideo } from "../models/Video";
 import React, { useState } from 'react';
-import { VideoCard } from 'src/components/VideoCard';
-import { Grid, Row } from 'src/components/Grid';
+import { VideoCard } from '../components/VideoCard';
+import { Grid, Row } from '../components/Grid';
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export async function getServerSideProps() {

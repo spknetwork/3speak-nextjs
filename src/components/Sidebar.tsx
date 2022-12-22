@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Box } from "./Box";
 import { Flex } from "./Flex";
-import { useUser } from "state/selectors/user";
+import { useUser } from "../state/selectors/user";
 import { Typography } from "./Typography";
 import { useTranslation } from "next-export-i18n";
 import { useRouter } from "next/router";

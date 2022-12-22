@@ -1,9 +1,9 @@
-import dbConnect from 'lib/dbConnect';
-import homeFeedGenerator from 'utils/getHomepage';
+import dbConnect from '../utils/dbConnect';
+import homeFeedGenerator from '../utils/getHomepage';
 import { IVideo } from "src/models/Video";
 import React from 'react';
-import { VideoCard } from 'src/components/VideoCard';
-import { Grid, Row } from 'src/components/Grid';
+import { VideoCard } from '../components/VideoCard';
+import { Grid, Row } from '../components/Grid';
 
 export async function getServerSideProps() {
   await dbConnect();

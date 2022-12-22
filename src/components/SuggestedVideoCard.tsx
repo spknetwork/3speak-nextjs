@@ -1,6 +1,6 @@
 import { IVideo } from "src/models/Video";
 import Link from "next/link";
-import timeSince from "utils/timeSince";
+import timeSince from "../utils/timeSince";
 import { Col, Row } from "./Grid";
 
 export const SuggestedVideoCard = (video: IVideo & {payout: number;}) => {

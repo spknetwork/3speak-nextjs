@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Box } from "./Box"
 import { VideoCol } from "./Grid"
 import styled from "styled-components";
-import timeSince from "utils/timeSince"
+import timeSince from "../utils/timeSince"
 
 export const TextCutoff = styled.div`
   text-overflow: 'ellipsis';

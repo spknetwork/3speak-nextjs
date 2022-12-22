@@ -1,5 +1,5 @@
 import { Divider, Grid, Paper } from "@mui/material";
-import timeSince from "utils/timeSince";
+import timeSince from "../utils/timeSince";
 import { UserPicture } from "./UserPicture";
 import { VoteCommentPayout } from "./VoteCommentPayout";
 import HiveMarkdown from "./HiveMarkdown";
