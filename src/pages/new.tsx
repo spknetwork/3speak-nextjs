@@ -1,5 +1,5 @@
-import dbConnect from 'lib/dbConnect';
-import newFeedGenerator from 'utils/getNew';
+import dbConnect from '../utils/dbConnect';
+import newFeedGenerator from '../utils/getNew';
 import { IVideo } from "src/models/Video";
 import React, { useState } from 'react';
 import { VideoCard } from 'src/components/VideoCard';

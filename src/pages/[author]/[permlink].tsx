@@ -1,21 +1,20 @@
 import React from "react";
 import JWPlayer from 'react-jw-player';
-import dbConnect from "lib/dbConnect";
+import dbConnect from "@/utils/dbConnect";
 import { GetServerSidePropsContext } from "next";
 import { Col, Grid, Row } from "src/components/Grid";
 import Link from "next/link";
 import { SuggestedVideoCard } from "src/components/SuggestedVideoCard";
 import { VoteCommentPayout } from "src/components/VoteCommentPayout";
 import { Subscribe } from "src/components/Subscribe";
-import { getFollowerInfo, getReplies } from "utils/hive";
-import getVideo from "utils/getVideo";
-import getSimilarVideos from "utils/getSimilarVideos";
-import getOtherVideosByOwner from 'utils/getOtherVideosByOwner';
+import { getFollowerInfo, getReplies } from "@/utils/hive";
+import getVideo from "@/utils/getVideo";
+import getSimilarVideos from "@/utils/getSimilarVideos";
+import getOtherVideosByOwner from '@/utils/getOtherVideosByOwner';
 import { IVideo } from "src/models/Video";
 import CommentSection from "src/components/CommentSection";
 import { Button } from "@mui/material";
 import HiveMarkdown from "src/components/HiveMarkdown";
-import ReadMore from "@/components/ReadMore";
 
 export async function getServerSideProps(context: GetServerSidePropsContext<{ author: string; permlink: string; }>) {
   await dbConnect();

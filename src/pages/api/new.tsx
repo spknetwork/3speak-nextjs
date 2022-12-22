@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import dbConnect from 'lib/dbConnect';
-import newFeedGenerator from 'utils/getNew';
-import processFeed from 'utils/processFeed';
+import dbConnect from '../../utils/dbConnect';
+import newFeedGenerator from '../../utils/getNew';
 
 export default async function handler(
   req: NextApiRequest,
