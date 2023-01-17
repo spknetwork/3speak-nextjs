@@ -82,7 +82,9 @@ export const Sidebar = () => {
           <>Hello {user.name}</>
         ) : (
           <Link href="/auth/login">
-            <StyledButton py={3}>{t("mainLogin")}</StyledButton>
+            <StyledButton className={"rounded-full"} py={3}>
+              {t("mainLogin")}
+            </StyledButton>
           </Link>
         )}
       </Box>
