@@ -20,7 +20,12 @@ export const VideoCard = (props: IVideo & { payout: number }) => {
         <Link href={`/@${props.owner}/${props.permlink}`}>
           <a>
             <img
-              style={{ width: "100%", border: "5px solid #555" }}
+              style={{
+                width: "100%",
+                border: "5px solid #555",
+                maxHeight: "200px",
+                objectFit: "cover",
+              }}
               src={
                 "https://ipfs.3speak.tv/ipfs/" + props.thumbnail.split("://")[1]
               }
