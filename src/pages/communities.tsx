@@ -1,27 +1,45 @@
-import dbConnect from '../utils/dbConnect';
-import homeFeedGenerator from '../utils/getHomepage';
-import { IVideo } from "src/models/Video";
-import React from 'react';
-import { VideoCard } from '../components/VideoCard';
-import { Grid, Row } from '../components/Grid';
+import React, { useEffect, useState } from "react";
+import { Button, Container, Row } from "react-bootstrap";
+import { CommunityTile } from "../components/widgets/CommunityTile";
+const { Client: HiveClient } = require("@hiveio/dhive");
+const client = new HiveClient("https://api.openhive.network");
 
-export async function getServerSideProps() {
-  await dbConnect();
-  let homepageVideos: IVideo[] = await homeFeedGenerator()//languages);
-  return {
-    props: { homepageVideos }
-  }
-}
+export default function CommunitiesView() {
+  const [data, setData] = useState([]);
 
-export default function Communities({ homepageVideos }: { homepageVideos: (IVideo & { payout: number; })[] }) {
+  const generate = async () => {
+    const res = await client.call("bridge", "list_communities", {
+      last: "",
+      limit: 100,
+    });
+    setData(res);
+  };
+  useEffect(() => {
+    document.title = "3Speak - Tokenised video communities";
+    generate();
+  }, []);
   return (
-    <Grid>
-      <h1>Communities</h1>
+    <Container fluid>
       <Row>
-        {homepageVideos.map((video: IVideo & { payout: number; }) => (
-          <VideoCard key={`${video.owner}/${video.permlink}`} {...video} />
+        <div className="col-12">
+          <h3 style={{ display: "inline-block" }}>Communities</h3>
+          <span className="float-right mb-3">
+            <Button id="communityCreate" variant="primary" disabled>
+              Create +
+            </Button>
+          </span>
+        </div>
+      </Row>
+      <Row>
+        {data.map((value: any) => (
+          <CommunityTile
+            key={value.name}
+            name={value.name}
+            reflink={`hive:${value.name}`}
+            info={value}
+          />
         ))}
       </Row>
-    </Grid>
-  )
+    </Container>
+  );
 }

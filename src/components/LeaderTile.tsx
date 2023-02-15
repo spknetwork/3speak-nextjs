@@ -20,7 +20,7 @@ export function LeaderTile(props: LeaderTileProps) {
   useEffect(() => {
     const load = async () => {
       console.log(`displaying leader tile`, props);
-      let color: string;
+      let color: string = "";
       switch (props.info.rank) {
         case 1: {
           color = "#d4af37 solid 6px";
