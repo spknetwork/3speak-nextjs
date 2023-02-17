@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Box } from "./Box";
 import { Flex } from "./Flex";
-import { useUser } from "../state/selectors/user";
 import { Typography } from "./Typography";
 import { useTranslation } from "next-export-i18n";
 import { useRouter } from "next/router";
@@ -57,7 +56,6 @@ const NAVIGATION = [
 ];
 
 export const Sidebar = () => {
-  const { user } = useUser();
   const router = useRouter();
   const [communitiesPopup, setCommunitiesPopup] = useState(false);
   const [search, setSearch] = useState("");
@@ -78,13 +76,14 @@ export const Sidebar = () => {
         </StyledLink>
       </Flex>
       <Box mb="1rem" width="100%">
-        {user ? (
+        {null}
+        {/* {user ? (
           <>Hello {user.name}</>
         ) : (
           <Link href="/auth/login">
             <StyledButton py={3}>{t("mainLogin")}</StyledButton>
           </Link>
-        )}
+        )} */}
       </Box>
       <Box>
         {NAVIGATION.map(({ img, title, route }) => (
