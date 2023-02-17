@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
 
+
 const LoginPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -38,24 +39,26 @@ const LoginPage = () => {
           backgroundColor="#f8d7da"
           border="1px solid #f5c6cb"
         >
-          <Typography textAlign="center" color="#721c24">{/* fontSize="1.75rem" */}
+          <Typography textAlign="center" color="#721c24">
+            {/* fontSize="1.75rem" */}
             {t("login.disclaimer")}
           </Typography>
         </Box>
-        <Typography textAlign="center" mt="1rem">{/* fontSize="2rem" */}
+        <Typography textAlign="center" mt="1rem">
+          {/* fontSize="2rem" */}
           {t("login.title")}
         </Typography>
         <Formik
           initialValues={{ password: "", email: "" }}
-          validate={({ password, email }) => {
+          validate={(props) => {
             const errors: any = {};
 
-            if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)) {
+            if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(props.email)) {
               errors.email = t("login.notValidEmail");
             }
 
-            if (!password) errors.password = t("required");
-            if (!email) errors.email = t("required");
+            if (!props.password) errors.password = t("required");
+            if (!props.email) errors.email = t("required");
 
             return errors;
           }}
@@ -63,20 +66,21 @@ const LoginPage = () => {
             console.log(values, "submit");
           }}
         >
-          {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
+          {(props) => (
+            <form onSubmit={props.handleSubmit}>
               <Box mb="0.125rem" mt="1.5rem" width="100%">
                 <StyledInput
                   type="string"
                   placeholder={t("login.email")}
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={!!errors.email}
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  error={!!props.errors.email}
+                  name="email"
+                  id="email"
                 />
-                {!!errors.email && (
+                {!!props.errors.email && (
                   <Typography color="#FF3333" mt="0.25rem">
-                    {errors.email}
+                    {props.errors.email}
                   </Typography>
                 )}
               </Box>
@@ -84,14 +88,15 @@ const LoginPage = () => {
                 <StyledInput
                   type="string"
                   placeholder={t("login.password")}
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={!!errors.password}
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  error={!!props.errors.password}
+                  name="password"
+                  id="password"
                 />
-                {!!errors.password && (
+                {!!props.errors.password && (
                   <Typography mt="0.25rem" color="#FF3333">
-                    {errors.password}
+                    {props.errors.password}
                   </Typography>
                 )}
               </Box>

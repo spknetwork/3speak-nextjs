@@ -1,8 +1,14 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import { Provider } from "react-redux";
+import { store } from "../state/store";
 import { useRouter } from "next/router";
 import { Box, Sidebar } from "src/components";
 import styled from "styled-components";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
@@ -26,4 +32,4 @@ const StyledGrid = styled(Box)`
   min-height: 100vh;
 `;
 
-export default MyApp
+export default MyApp;
