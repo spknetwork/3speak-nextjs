@@ -14,8 +14,8 @@ export async function applyPayouts({
   includeVotes?: boolean;
   includeReplies?: boolean;
 }) {
-  const hivePosts: any[] = await getPosts(videos.map(v => ({ author: v.owner, permlink: v.permlink })));
-  return formatChainData(videos, hivePosts, includeVotes, includeReplies);
+  // const hivePosts: any[] = await getPosts(videos.map(v => ({ author: v.owner, permlink: v.permlink })));
+  return formatChainData(videos, [], includeVotes, includeReplies);
 }
 
 export const formatChainData = (applyTo: any[], hivePosts: any[], includeVotes = false, includeReplies = false) => hivePosts.map((post, index) => ({
