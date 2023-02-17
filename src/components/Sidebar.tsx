@@ -47,6 +47,7 @@ const NAVIGATION = [
   {
     img: "nav/communities.svg",
     title: "nav.communities",
+    route: "/communities",
   },
   {
     img: "nav/leaderboard.svg",
