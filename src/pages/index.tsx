@@ -7,8 +7,11 @@ import { Grid, Row } from "../components/Grid";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export async function getServerSideProps() {
-  await dbConnect();
-  let homepageVideos: IVideo[] = await homeFeedGenerator(); //languages);
+
+  // await dbConnect();
+  console.log('Got here')
+  let homepageVideos: IVideo[] = await homeFeedGenerator()//languages);
+  console.log('Got here 2')
   return {
     props: { homepageVideos },
   };

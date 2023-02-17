@@ -7,13 +7,11 @@ import { Box, Flex, Typography } from "src/components";
 import { useTranslation } from "next-export-i18n";
 import { getPost } from "utils/hive";
 import { useDispatch } from "react-redux";
-import { useUser } from "state/selectors/user";
 import { useRouter } from "next/router";
 
 const RegisterPage = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const user = useUser();
   const dispatch = useDispatch();
   const [playlist, setPlaylist] = useState([]);
 

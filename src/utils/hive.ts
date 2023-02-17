@@ -2,7 +2,7 @@ import { Client } from "@hiveio/dhive";
 import { IVideo } from "src/models/Video";
 import { formatChainData } from "./payouts";
 
-const client = new Client([process.env.DEFAULT_HIVE_NODE || '']);
+const client = new Client([process.env.DEFAULT_HIVE_NODE || 'https://api.hive.blog']);
 
 interface Authorperm {
   author: string;
