@@ -6,12 +6,10 @@ import { Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
-import { useUser } from "state/selectors/user";
 
 const LoginPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const user = useUser();
   const { t } = useTranslation();
 
   return (

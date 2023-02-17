@@ -1,5 +1,5 @@
-const APP_BUNNY_IPFS_CDN = process.env.APP_BUNNY_IPFS_CDN
-const APP_VIDEO_CDN_DOMAIN = process.env.APP_VIDEO_CDN_DOMAIN
+const APP_BUNNY_IPFS_CDN = process.env.APP_BUNNY_IPFS_CDN || "https://ipfs.3speak.tv"
+const APP_VIDEO_CDN_DOMAIN = process.env.APP_VIDEO_CDN_DOMAIN 
 const APP_IMAGE_CDN_DOMAIN = process.env.APP_IMAGE_CDN_DOMAIN
 
 import { binary_to_base58 } from 'base58-js'

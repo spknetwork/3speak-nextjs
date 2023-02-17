@@ -6,8 +6,10 @@ import { VideoCard } from '../components/VideoCard';
 import { Grid, Row } from '../components/Grid';
 
 export async function getServerSideProps() {
-  await dbConnect();
+  // await dbConnect();
+  console.log('Got here')
   let homepageVideos: IVideo[] = await homeFeedGenerator()//languages);
+  console.log('Got here 2')
   return {
     props: { homepageVideos }
   }
