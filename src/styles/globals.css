@@ -2,6 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
+  font-size: 13px !important;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
@@ -34,6 +35,38 @@ a {
   top: 15px;
   right: 15px;
 }
+.channels-card {
+  background: #fff none repeat scroll 0 0;
+  border-radius: 2px;
+  box-shadow: 0 0 11px #ececec;
+  padding: 5px 12px;
+  position: relative;
+  text-align: center;
+  transition-duration: 0.4s;
+}
+
+.channels-card::after {
+  background: #dcdcdc none repeat scroll 0 0;
+  border-radius: 0 0 5px 6px;
+  bottom: -4px;
+  content: "";
+  height: 4px;
+  left: 15px;
+  position: absolute;
+  right: 15px;
+  z-index: 0;
+}
+
+/* style=
+  {{
+    background: "#fff none repeat scroll 0 0",
+    borderRadius: "border-radius:2px",
+    boxShadow: "0 0 11px #ececec;",
+    padding: "5px 12px",
+    position: "relative",
+    textAlign: "center",
+    transitionDuration: ".4s",
+  }} */
 
 .header_sec {
   padding: 5px;
@@ -47,6 +80,13 @@ a {
 
 .bg-color-eff4f5 {
   background-color: #eff4f5;
+}
+
+h1 {
+  font-size: 39px !important;
+  text-transform: uppercase;
+  line-height: 38px !important;
+  font-weight: 200 !important;
 }
 
 * {
