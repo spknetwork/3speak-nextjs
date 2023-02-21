@@ -48,33 +48,47 @@ export function LeaderTile(props: LeaderTileProps) {
   }, []);
 
   return (
-    <div className="channels-card" style={{ borderLeft: borderLeftCode }}>
-      <div className="channels-card-image">
-        <a href={`#/user/${props.reflink.toString()}`}>
-          <img className="img-fluid" src={profilePicture} alt="" />
-        </a>
-        <div className="channels-card-image-btn">
-          <a
-            href={`#/user/${reflink.toString()}`}
-            className="btn btn-outline-primary btn-sm"
-          >
-            View Channel
+    <div
+      className="channels-card card pt-4"
+      style={{ borderLeft: borderLeftCode }}
+    >
+      <div className="card-body">
+        <div className="channels-card-image text-center">
+          <a href={`#/user/${props.reflink.toString()}`}>
+            <img
+              className="img-fluid shadow-sm rounded-circle mb-2 w-80"
+              src={profilePicture}
+              alt=""
+            />
           </a>
+          <div className="channels-card-image-btn my-2">
+            <a
+              href={`#/user/${reflink.toString()}`}
+              className="btn btn-outline-default btn-sm border shadow-sm text-dark"
+            >
+              View Channel
+            </a>
+          </div>
         </div>
-      </div>
-      <div className="channels-card-body">
-        <div className="channels-title">
-          <a href={`#/user/${reflink.toString()}`}>{reflink.root}</a>
+        <div className="channels-card-body text-center ">
+          <div className="channels-title">
+            <a
+              className="text-decoration-none text-dark"
+              href={`#/user/${reflink.toString()}`}
+            >
+              {reflink.root}
+            </a>
+          </div>
+          <div>
+            <i></i>
+          </div>
         </div>
-        <div>
-          <i></i>
+        <div className="channels-card-rank badge rounded-pill text-bg-dark text-white fs-75">
+          Rank: {props.info.rank}
         </div>
-      </div>
-      <div className="channels-card-rank badge badge-dark text-white">
-        Rank: {props.info.rank}
-      </div>
-      <div className="channels-card-score badge badge-dark text-white">
-        Score: {Math.round(props.info.score)}
+        <div className="channels-card-score badge rounded-pill text-bg-dark text-white text-sm-start fs-75">
+          Score: {Math.round(props.info.score)}
+        </div>
       </div>
     </div>
   );

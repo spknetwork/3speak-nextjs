@@ -6,9 +6,47 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+.alert-primary {
+  background: #2196f3 linear-gradient(180deg, #42a6f5, #2196f3) repeat-x;
+}
+
+.color-primary {
+  background: #2196f3 linear-gradient(180deg, #42a6f5, #2196f3) repeat-x;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.w-80 {
+  width: 80px;
+}
+
+.channels-card-rank {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+.channels-card-score {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.header_sec {
+  padding: 5px;
+  padding-top: 10px;
+  background-color: #e8e8e8;
+}
+
+.fs-75 {
+  font-size: 0.55rem !important;
+}
+
+.bg-color-eff4f5 {
+  background-color: #eff4f5;
 }
 
 * {
