@@ -1,25 +1,44 @@
+// size by 10px
+$size-10px: 10px;
+
+// background color primary
+$color-primary-background:  #2196f3 linear-gradient(180deg, #42a6f5, #2196f3) repeat-x;
+
+// width by 80px;
+$width-80px: 80px;
+
+// font size by 13px
+$font-size-13px: 13px !important;
+
+// 1em
+$one-em:1em;
+
+// repeat by 3 by 1fr;
+$repeat-3-1fr: repeat(3, 1fr);
+
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-size: 13px !important;
+  font-size: $font-size-13px;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 .grid-3-column {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 10px;
-  row-gap: 1em;
+  grid-template-columns: $repeat-3-1fr;
+  column-gap: $size-10px;
+  row-gap: $one-em;
 }
 
 .alert-primary {
-  background: #2196f3 linear-gradient(180deg, #42a6f5, #2196f3) repeat-x;
+  background:$color-primary-background;
 }
 
 .color-primary {
-  background: #2196f3 linear-gradient(180deg, #42a6f5, #2196f3) repeat-x;
+  background:$color-primary-background;
 }
 
 a {
@@ -28,7 +47,7 @@ a {
 }
 
 .w-80 {
-  width: 80px;
+  width: $width-80px;
 }
 
 .channels-card-rank {

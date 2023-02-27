@@ -252,7 +252,6 @@ const StyledNav = styled(Flex)`
 const StyledImage = styled(Image)`
   svg {
     color: rgba(0, 0, 0, 0.5);
-    dadadadada
   }
 `;
 
