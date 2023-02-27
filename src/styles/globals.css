@@ -7,6 +7,13 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+.grid-3-column {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 10px;
+  row-gap: 1em;
+}
+
 .alert-primary {
   background: #2196f3 linear-gradient(180deg, #42a6f5, #2196f3) repeat-x;
 }

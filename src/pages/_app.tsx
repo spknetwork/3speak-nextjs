@@ -1,4 +1,3 @@
-
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
@@ -16,12 +15,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   const isAuth = pathname.includes("/auth");
 
   return (
-      <StyledGrid>
-        <Box>{!isAuth && <Sidebar />}</Box>
-        <Box backgroundColor="#fafafa">
-          <Component {...pageProps} />
-        </Box>
-      </StyledGrid>
+    <StyledGrid>
+      <Box>{!isAuth && <Sidebar />}</Box>
+      <Box backgroundColor="#fafafa">
+        <Component {...pageProps} />
+      </Box>
+    </StyledGrid>
   );
 }
 

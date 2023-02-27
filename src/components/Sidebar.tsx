@@ -66,7 +66,7 @@ export const Sidebar = () => {
     <Flex p="1rem" flexDirection="column">
       <Flex justifyContent="center" width="100%">
         <StyledLink href="/">
-          <Box maxWidth="10.75rem">
+          <Box width={"180px"}>
             <Image
               src="/main_logo.svg"
               alt="3speak logo"
@@ -77,14 +77,9 @@ export const Sidebar = () => {
         </StyledLink>
       </Flex>
       <Box mb="1rem" width="100%">
-        {null}
-        {/* {user ? (
-          <>Hello {user.name}</>
-        ) : (
-          <Link href="/auth/login">
-            <StyledButton py={3}>{t("mainLogin")}</StyledButton>
-          </Link>
-        )} */}
+        <Link href="/auth/login">
+          <StyledButton py={3}>{t("mainLogin")}</StyledButton>
+        </Link>
       </Box>
       <Box>
         {NAVIGATION.map(({ img, title, route }) => (
@@ -144,68 +139,73 @@ export const Sidebar = () => {
           {t("faq")}
         </AboutText>
       </Box>
-      <Box ml="0.5rem" mt="1rem">
-        <a
+
+      <Box ml="0.5rem" mt="1rem" className="grid-3-column">
+        <Link
           className="keychainify-checked"
           target="_blank"
           href="https://twitter.com/3speakonline?utm_source=3speak.tv"
         >
           <FontAwesomeIcon className="fa-2x" icon={faTwitter} />
-        </a>
-        <a
+        </Link>
+        <Link
           className="ml-2 keychainify-checked"
           target="_blank"
           href="https://t.me/threespeak?utm_source=3speak.tv"
         >
           <FontAwesomeIcon className="fa-2x" icon={faTelegram} />
-        </a>
-        <a
+        </Link>
+        <Link
           className="ml-2 keychainify-checked"
           target="_blank"
           href="https://discord.gg/NSFS2VGj83"
         >
           <FontAwesomeIcon className="fa-2x" icon={faDiscord} />
-        </a>
-        <a
+        </Link>
+        <Link
           className="ml-2 keychainify-checked"
           target="_blank"
           title="Visit Our Blog"
           href="https://hive.blog/@threespeak"
         >
-          <StyledImage
-            src="/nav/blog.png"
-            alt={"3speak blog"}
-            width={30}
-            height={30}
-          />
-        </a>
-        <a
+          <div>
+            <StyledImage
+              src="/nav/blog.png"
+              alt={"3speak blog"}
+              width={30}
+              height={30}
+            />
+          </div>
+        </Link>
+        <Link
           className="ml-2 keychainify-checked"
           target="_blank"
           title="SPK Network"
           href="https://spk.network"
         >
-          <StyledImage
-            src="/nav/spk_network.png"
-            alt={"SPK Network"}
-            width={30}
-            height={30}
-          />
-        </a>
-        <a
+          <div>
+            <StyledImage
+              src="/nav/spk_network.png"
+              alt={"SPK Network"}
+              width={30}
+              height={30}
+            />
+          </div>
+        </Link>
+        <Link
           className="ml-2 keychainify-checked"
           target="_blank"
           href="https://testflight.apple.com/join/0tipqwsZ"
         >
           <FontAwesomeIcon className="fa-2x" icon={faAppStoreIos} />
-        </a>
-        <a
+        </Link>
+        <Link
           className="ml-2 keychainify-checked"
           target="_blank"
           href="https://appdistribution.firebase.dev/i/047cfb506633e639"
         >
           <FontAwesomeIcon className="fa-2x" icon={faAndroid} />
-        </a>
+        </Link>
       </Box>
     </Flex>
   );
