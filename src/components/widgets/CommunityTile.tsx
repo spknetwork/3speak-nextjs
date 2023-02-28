@@ -41,7 +41,7 @@ export function CommunityTile(props: any) {
             }}
           >
             <div className="text-dark fw-bold font-smaller">
-              Pending payouts{" "}
+              Pending payouts
             </div>
             <div className="text-end">
               <span className="text-success fw-bold">${props.sum_pending}</span>
