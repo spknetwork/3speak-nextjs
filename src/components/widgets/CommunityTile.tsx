@@ -30,7 +30,11 @@ export function CommunityTile(props: any) {
                 "https://images.hive.blog/u/" + props.name + "/avatar?size=icon"
               }
             />
-            <span className="ps-1 fw-bold">{props.info.title}</span>
+            <span className="ps-1 fw-bold">
+              {props.info.title.length > 15
+                ? props.info.title.substr(0, 15) + "..."
+                : props.info.title}
+            </span>
           </div>
           <div
             className="text-end"
