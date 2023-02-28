@@ -32,7 +32,7 @@ export default function CommunitiesView() {
           </div>
         </Container>
       </div>
-      <Container fluid className="p-3 bg-color-eff4f5">
+      <Container fluid className="p-5 bg-color-eff4f5">
         {/* <Row>
           <div className="col-md-12">
 

@@ -2,7 +2,8 @@
 $size-10px: 10px;
 
 // background color primary
-$color-primary-background:  #2196f3 linear-gradient(180deg, #42a6f5, #2196f3) repeat-x;
+$color-primary-background: #2196f3 linear-gradient(180deg, #42a6f5, #2196f3)
+  repeat-x;
 
 // width by 80px;
 $width-80px: 80px;
@@ -11,11 +12,12 @@ $width-80px: 80px;
 $font-size-13px: 13px !important;
 
 // 1em
-$one-em:1em;
+$one-em: 1em;
 
 // repeat by 3 by 1fr;
 $repeat-3-1fr: repeat(3, 1fr);
 
+$smaller: smaller;
 
 html,
 body {
@@ -34,11 +36,11 @@ body {
 }
 
 .alert-primary {
-  background:$color-primary-background;
+  background: $color-primary-background;
 }
 
 .color-primary {
-  background:$color-primary-background;
+  background: $color-primary-background;
 }
 
 a {
@@ -48,6 +50,10 @@ a {
 
 .w-80 {
   width: $width-80px;
+}
+
+.font-smaller {
+  font-size: $smaller;
 }
 
 .channels-card-rank {

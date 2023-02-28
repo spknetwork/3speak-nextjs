@@ -40,7 +40,9 @@ export function CommunityTile(props: any) {
               float: "right",
             }}
           >
-            <div className="text-dark fw-bold">Pending payouts </div>
+            <div className="text-dark fw-bold font-smaller">
+              Pending payouts{" "}
+            </div>
             <div className="text-end">
               <span className="text-success fw-bold">${props.sum_pending}</span>
               <span className="text-dark mx-2 fw-bold">
