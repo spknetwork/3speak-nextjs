@@ -145,36 +145,37 @@ export const Sidebar = () => {
           {t("faq")}
         </AboutText>
       </Box>
-
-      <Box ml="0.5rem" mt="1rem" className="grid-3-column">
+      <Box className="nav-item text-center ">
         <Link
-          className="keychainify-checked"
           target="_blank"
           href="https://twitter.com/3speakonline?utm_source=3speak.tv"
         >
-          <FontAwesomeIcon className="fa-2x" icon={faTwitter} />
+          <FontAwesomeIcon
+            className="fa-2x text-secondary ms-3 mb-1"
+            icon={faTwitter}
+          />
         </Link>
         <Link
-          className="ml-2 keychainify-checked"
           target="_blank"
           href="https://t.me/threespeak?utm_source=3speak.tv"
         >
-          <FontAwesomeIcon className="fa-2x" icon={faTelegram} />
+          <FontAwesomeIcon
+            className="fa-2x text-secondary ms-3 mb-1"
+            icon={faTelegram}
+          />
+        </Link>
+        <Link target="_blank" href="https://discord.gg/NSFS2VGj83">
+          <FontAwesomeIcon
+            className="fa-2x text-secondary ms-3 mb-1"
+            icon={faDiscord}
+          />
         </Link>
         <Link
-          className="ml-2 keychainify-checked"
-          target="_blank"
-          href="https://discord.gg/NSFS2VGj83"
-        >
-          <FontAwesomeIcon className="fa-2x" icon={faDiscord} />
-        </Link>
-        <Link
-          className="ml-2 keychainify-checked"
           target="_blank"
           title="Visit Our Blog"
           href="https://hive.blog/@threespeak"
         >
-          <div>
+          <span className="ms-3">
             <StyledImage
               src="/nav/blog.png"
               alt={"3speak blog"}
@@ -182,15 +183,10 @@ export const Sidebar = () => {
               height={30}
               style={navblog}
             />
-          </div>
+          </span>
         </Link>
-        <Link
-          className="ml-2 keychainify-checked"
-          target="_blank"
-          title="SPK Network"
-          href="https://spk.network"
-        >
-          <div>
+        <Link target="_blank" title="SPK Network" href="https://spk.network">
+          <span className="ms-3">
             <StyledImage
               src="/nav/spk_network.png"
               alt={"SPK Network"}
@@ -198,21 +194,22 @@ export const Sidebar = () => {
               style={threespeak}
               height={30}
             />
-          </div>
+          </span>
+        </Link>
+        <Link target="_blank" href="https://testflight.apple.com/join/0tipqwsZ">
+          <FontAwesomeIcon
+            className="fa-2x text-secondary ms-3"
+            icon={faAppStoreIos}
+          />
         </Link>
         <Link
-          className="ml-2 keychainify-checked"
-          target="_blank"
-          href="https://testflight.apple.com/join/0tipqwsZ"
-        >
-          <FontAwesomeIcon className="fa-2x" icon={faAppStoreIos} />
-        </Link>
-        <Link
-          className="ml-2 keychainify-checked"
           target="_blank"
           href="https://appdistribution.firebase.dev/i/047cfb506633e639"
         >
-          <FontAwesomeIcon className="fa-2x" icon={faAndroid} />
+          <FontAwesomeIcon
+            className="fa-2x text-secondary ms-3"
+            icon={faAndroid}
+          />
         </Link>
       </Box>
     </Flex>
