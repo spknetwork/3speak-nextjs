@@ -39,8 +39,7 @@ export default function CommunitiesView() {
           </div>
         </Row> */}
         <Row>
-          <div className="col-12 d-flex flex-row justify-content-between">
-            <h3 style={{ display: "inline-block" }}>Communities</h3>
+          <div className="col-12 d-flex flex-row justify-content-end">
             <span className="float-right mb-3">
               <Button
                 className="color-primary p-3"
