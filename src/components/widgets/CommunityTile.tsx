@@ -14,20 +14,9 @@ export function CommunityTile(props: any) {
   return (
     <Col className="col-md-3 col-sm-3 mb-3" md={3} sm={3}>
       <a href={`#/community/${props.reflink}`} className="font-weight-bold">
-        <div
-          className="community-card channels-card"
-          style={{
-            background: "#fff none repeat scroll 0 0",
-            borderRadius: "border-radius:2px",
-            boxShadow: "0 0 11px #ececec;",
-            padding: "5px 12px",
-            position: "relative",
-            textAlign: "center",
-            transitionDuration: ".4s",
-          }}
-        >
+        <div className="community-card channels-card shadow-sm">
           <div
-            className="text-left"
+            className="text-left text-dark"
             style={{ display: "inline-block", float: "left" }}
           >
             <img
@@ -41,18 +30,41 @@ export function CommunityTile(props: any) {
                 "https://images.hive.blog/u/" + props.name + "/avatar?size=icon"
               }
             />
-            {props.info.title}
+            <span className="ps-1 fw-bold">
+              {props.info.title.length > 15
+                ? props.info.title.substr(0, 15) + "..."
+                : props.info.title}
+            </span>
           </div>
           <div
-            className="text-right"
+            className="text-end"
             style={{
               display: "inline-block",
               paddingTop: "2px",
               float: "right",
             }}
           >
-            <div></div>
-            <span className="text-success"></span>
+            <div className="text-dark fw-bold font-smaller">
+              Pending payouts
+            </div>
+            <div className="text-end">
+              <span className="text-success fw-bold">${props.sum_pending}</span>
+              <span className="text-dark mx-2 fw-bold">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className="bi bi-chevron-right"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+                  />
+                </svg>
+              </span>
+            </div>
           </div>
           <div style={{ clear: "both" }}></div>
         </div>

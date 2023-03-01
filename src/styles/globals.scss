@@ -1,0 +1,126 @@
+// size by 10px
+$size-10px: 10px;
+
+// background color primary
+$color-primary-background: #2196f3 linear-gradient(180deg, #42a6f5, #2196f3)
+  repeat-x;
+
+// width by 80px;
+$width-80px: 80px;
+
+// font size by 13px
+$font-size-13px: 13px !important;
+
+// 1em
+$one-em: 1em;
+
+// repeat by 3 by 1fr;
+$repeat-3-1fr: repeat(3, 1fr);
+
+$smaller: smaller;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-size: $font-size-13px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.grid-3-column {
+  display: grid;
+  grid-template-columns: $repeat-3-1fr;
+  column-gap: $size-10px;
+  row-gap: $one-em;
+}
+
+.alert-primary {
+  background: $color-primary-background;
+}
+
+.color-primary {
+  background: $color-primary-background;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.w-80 {
+  width: $width-80px;
+}
+
+.font-smaller {
+  font-size: $smaller;
+}
+
+.channels-card-rank {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+.channels-card-score {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+.channels-card {
+  background: #fff none repeat scroll 0 0;
+  border-radius: 2px;
+  box-shadow: 0 0 11px #ececec;
+  padding: 5px 12px;
+  position: relative;
+  text-align: center;
+  transition-duration: 0.4s;
+}
+
+.channels-card::after {
+  background: #dcdcdc none repeat scroll 0 0;
+  border-radius: 0 0 5px 6px;
+  bottom: -4px;
+  content: "";
+  height: 4px;
+  left: 15px;
+  position: absolute;
+  right: 15px;
+  z-index: 0;
+}
+
+/* style=
+  {{
+    background: "#fff none repeat scroll 0 0",
+    borderRadius: "border-radius:2px",
+    boxShadow: "0 0 11px #ececec;",
+    padding: "5px 12px",
+    position: "relative",
+    textAlign: "center",
+    transitionDuration: ".4s",
+  }} */
+
+.header_sec {
+  padding: 5px;
+  padding-top: 10px;
+  background-color: #e8e8e8;
+}
+
+.fs-75 {
+  font-size: 0.55rem !important;
+}
+
+.bg-color-eff4f5 {
+  background-color: #eff4f5;
+}
+
+h1 {
+  font-size: 39px !important;
+  text-transform: uppercase;
+  line-height: 38px !important;
+  font-weight: 200 !important;
+}
+
+* {
+  box-sizing: border-box;
+}

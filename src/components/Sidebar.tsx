@@ -17,7 +17,13 @@ import {
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import { faMobileAndroid } from "@fortawesome/free-solid-svg-icons";
-
+const threespeak = {
+  filter: "drop-shadow(2px 4px 6px black)",
+  imageRendering: "pixelated",
+};
+const navblog = {
+  filter: "brightness(0.45)",
+};
 const NAVIGATION = [
   {
     img: "nav/home.svg",
@@ -66,7 +72,7 @@ export const Sidebar = () => {
     <Flex p="1rem" flexDirection="column">
       <Flex justifyContent="center" width="100%">
         <StyledLink href="/">
-          <Box maxWidth="10.75rem">
+          <Box width={"180px"}>
             <Image
               src="/main_logo.svg"
               alt="3speak logo"
@@ -77,14 +83,9 @@ export const Sidebar = () => {
         </StyledLink>
       </Flex>
       <Box mb="1rem" width="100%">
-        {null}
-        {/* {user ? (
-          <>Hello {user.name}</>
-        ) : (
-          <Link href="/auth/login">
-            <StyledButton py={3}>{t("mainLogin")}</StyledButton>
-          </Link>
-        )} */}
+        <Link href="/auth/login">
+          <StyledButton py={3}>{t("mainLogin")}</StyledButton>
+        </Link>
       </Box>
       <Box>
         {NAVIGATION.map(({ img, title, route }) => (
@@ -144,68 +145,72 @@ export const Sidebar = () => {
           {t("faq")}
         </AboutText>
       </Box>
-      <Box ml="0.5rem" mt="1rem">
-        <a
-          className="keychainify-checked"
+      <Box className="nav-item text-center ">
+        <Link
           target="_blank"
           href="https://twitter.com/3speakonline?utm_source=3speak.tv"
         >
-          <FontAwesomeIcon className="fa-2x" icon={faTwitter} />
-        </a>
-        <a
-          className="ml-2 keychainify-checked"
+          <FontAwesomeIcon
+            className="fa-2x text-secondary ms-3 mb-1"
+            icon={faTwitter}
+          />
+        </Link>
+        <Link
           target="_blank"
           href="https://t.me/threespeak?utm_source=3speak.tv"
         >
-          <FontAwesomeIcon className="fa-2x" icon={faTelegram} />
-        </a>
-        <a
-          className="ml-2 keychainify-checked"
-          target="_blank"
-          href="https://discord.gg/NSFS2VGj83"
-        >
-          <FontAwesomeIcon className="fa-2x" icon={faDiscord} />
-        </a>
-        <a
-          className="ml-2 keychainify-checked"
+          <FontAwesomeIcon
+            className="fa-2x text-secondary ms-3 mb-1"
+            icon={faTelegram}
+          />
+        </Link>
+        <Link target="_blank" href="https://discord.gg/NSFS2VGj83">
+          <FontAwesomeIcon
+            className="fa-2x text-secondary ms-3 mb-1"
+            icon={faDiscord}
+          />
+        </Link>
+        <Link
           target="_blank"
           title="Visit Our Blog"
           href="https://hive.blog/@threespeak"
         >
-          <StyledImage
-            src="/nav/blog.png"
-            alt={"3speak blog"}
-            width={30}
-            height={30}
+          <span className="ms-3">
+            <StyledImage
+              src="/nav/blog.png"
+              alt={"3speak blog"}
+              width={30}
+              height={30}
+              style={navblog}
+            />
+          </span>
+        </Link>
+        <Link target="_blank" title="SPK Network" href="https://spk.network">
+          <span className="ms-3">
+            <StyledImage
+              src="/nav/spk_network.png"
+              alt={"SPK Network"}
+              width={30}
+              style={threespeak}
+              height={30}
+            />
+          </span>
+        </Link>
+        <Link target="_blank" href="https://testflight.apple.com/join/0tipqwsZ">
+          <FontAwesomeIcon
+            className="fa-2x text-secondary ms-3"
+            icon={faAppStoreIos}
           />
-        </a>
-        <a
-          className="ml-2 keychainify-checked"
-          target="_blank"
-          title="SPK Network"
-          href="https://spk.network"
-        >
-          <StyledImage
-            src="/nav/spk_network.png"
-            alt={"SPK Network"}
-            width={30}
-            height={30}
-          />
-        </a>
-        <a
-          className="ml-2 keychainify-checked"
-          target="_blank"
-          href="https://testflight.apple.com/join/0tipqwsZ"
-        >
-          <FontAwesomeIcon className="fa-2x" icon={faAppStoreIos} />
-        </a>
-        <a
-          className="ml-2 keychainify-checked"
+        </Link>
+        <Link
           target="_blank"
           href="https://appdistribution.firebase.dev/i/047cfb506633e639"
         >
-          <FontAwesomeIcon className="fa-2x" icon={faAndroid} />
-        </a>
+          <FontAwesomeIcon
+            className="fa-2x text-secondary ms-3"
+            icon={faAndroid}
+          />
+        </Link>
       </Box>
     </Flex>
   );
