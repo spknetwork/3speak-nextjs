@@ -10,16 +10,21 @@ export default async function getVideo(authorperm: { owner: string; permlink: st
       notFound: true,
     };
   }
+  video['upvotes'] = []
+  video['downvotes'] = []
+  video['replies'] = []
   video = processFeed(
-    await applyPayouts({
-      videos: [
-        video
-      ],
-      includeVotes: true,
-      includeReplies: true
-    })
+    // await applyPayouts({
+    //   videos: [
+    //     video
+    //   ],
+    //   includeVotes: true,
+    //   includeReplies: true
+    // })
+    [video]
   )[0];
-  video.community = (await getCommunity(video))?.title || null
+  console.log('22', video)
+  // video.community = (await getCommunity(video))?.title || null
 
   return video
 }

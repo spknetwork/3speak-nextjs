@@ -10,9 +10,10 @@ export default async function getSimilarVideos(video: IVideo, author: string) {
     $or: [],
     owner: { $ne: author }
   };
-  if (video.language !== '') {
-    query.language = video.language;
-  }
+  // if (video.language !== '') {
+  //   query.language = video.language;
+  // }
+  console.log(video)
   if (video.category !== '') {
     query.$or.push({ category: video.category });
   }

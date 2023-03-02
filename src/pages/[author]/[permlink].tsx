@@ -25,9 +25,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ au
 
   const video = await getVideo(authorperm);
   const otherVideosByOwner = await getOtherVideosByOwner(authorperm)
-  const similarVideos = await getSimilarVideos(video, author)
-  const followerInfo = await getFollowerInfo(video);
-  const replies = await getReplies({author, permlink});
+  // const similarVideos = await getSimilarVideos(video, author)
+  // const followerInfo = await getFollowerInfo(video);
+  // const replies = await getReplies({author, permlink});
+  const similarVideos: any[] = []
+  const followerInfo: any[] = []
+  const replies: any[] = []
+
 
   return {
     props: { video, otherVideosByOwner, similarVideos, followerInfo, replies }
