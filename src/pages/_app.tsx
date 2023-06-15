@@ -1,13 +1,21 @@
 import "../styles/globals.scss";
+
+import "../styles/styles.css";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
-import { store } from "../state/store";
+import { store } from "../app/store";
 import { useRouter } from "next/router";
-import { Box, Sidebar } from "src/components";
+import { Sidebar } from "src/components";
 import styled from "styled-components";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "bootstrap/dist/css/bootstrap.css";
+
+import { Box, ChakraProvider, Flex } from "@chakra-ui/react";
+
+import { ApolloProvider } from "@apollo/client";
+import client from "../lib/apolloClient";
+import { css } from "@emotion/react";
 config.autoAddCss = false;
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -15,21 +23,39 @@ function MyApp({ Component, pageProps }: AppProps) {
   const isAuth = pathname.includes("/auth");
 
   return (
-    <StyledGrid>
-      <Box>{!isAuth && <Sidebar />}</Box>
-      <Box backgroundColor="#fafafa">
-        <Component {...pageProps} />
-      </Box>
-    </StyledGrid>
+    <Provider store={store}>
+      {/* <StyledGrid> */}
+      <Flex
+        css={css`
+          @media (max-width: 768px) {
+            flex-direction: column;
+          }
+
+          @media (min-width: 769px) {
+            flex-direction: row;
+          }
+        `}
+      >
+        <Box>{!isAuth && <Sidebar />}</Box>
+        <Box width={"100%"} backgroundColor="#EFF4F6">
+          <ChakraProvider>
+            <ApolloProvider client={client}>
+              <Component {...pageProps} />
+            </ApolloProvider>
+          </ChakraProvider>
+        </Box>
+      </Flex>
+
+      {/* </StyledGrid> */}
+    </Provider>
   );
 }
 
 const StyledGrid = styled(Box)`
-  display: grid;
+  display: flex;
   grid-template-columns: 0.5fr 3fr;
   grid-template-rows: 1fr;
   width: 100%;
-  min-height: 100vh;
 `;
 
 export default MyApp;

@@ -28,7 +28,7 @@ export const getCommunity = async (video: IVideo) => {
     jsonrpc: "2.0",
     method: "bridge.get_community",
     params: {
-      name: (video as any).hive, 
+      name: video.hive, 
       observer: "threespeak" // TODO: get logged in username
     },
     id: 1

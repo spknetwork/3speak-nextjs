@@ -5,7 +5,7 @@ import ReactJWPlayer from "react-jw-player";
 import { Formik } from "formik";
 import { Box, Flex, Typography } from "src/components";
 import { useTranslation } from "next-export-i18n";
-import { getPost } from "utils/hive";
+// import { getPost } from "utils/hive";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
@@ -58,7 +58,8 @@ const RegisterPage = () => {
             {t("register.disclaimer.2")}
           </Typography>
         </Box>
-        <Typography textAlign="center" mt="1rem">{/* fontSize="2rem" */}
+        <Typography textAlign="center" mt="1rem">
+          {/* fontSize="2rem" */}
           {t("register.title")}
         </Typography>
         <Formik
@@ -133,7 +134,8 @@ const RegisterPage = () => {
                   backgroundColor="#d1ecf1"
                   border="2px solid #bee5eb"
                 >
-                  <Typography color="#0c5460">{/* fontSize="0.75rem" */}
+                  <Typography color="#0c5460">
+                    {/* fontSize="0.75rem" */}
                     <StyledList>
                       {(t("register.passwordRules") as string[]).map((rule) => (
                         <li key={rule}>{rule}</li>

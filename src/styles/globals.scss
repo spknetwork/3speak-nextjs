@@ -1,3 +1,8 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 // size by 10px
 $size-10px: 10px;
 
@@ -21,6 +26,7 @@ $smaller: smaller;
 
 html,
 body {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
   font-size: $font-size-13px;

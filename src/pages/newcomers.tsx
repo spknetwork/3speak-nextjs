@@ -1,34 +1,39 @@
-import dbConnect from 'lib/dbConnect';
+// import dbConnect from 'lib/dbConnect';
 import { IVideo } from "src/models/Video";
-import React, { useState } from 'react';
-import { VideoCard } from 'src/components/VideoCard';
-import { Grid, Row } from 'src/components/Grid';
+import React, { useState } from "react";
+import { VideoCard } from "src/components/VideoCard";
+import { Grid, Row } from "src/components/Grid";
 import InfiniteScroll from "react-infinite-scroll-component";
-import newcomerFeedGenerator from 'utils/getNewcomers';
+// import newcomerFeedGenerator from 'utils/getNewcomers';
 
-export async function getServerSideProps() {
-  await dbConnect();
-  
-  const newcomers = await newcomerFeedGenerator({})
+// export async function getServerSideProps() {
+//   await dbConnect();
+//   const newcomers = await newcomerFeedGenerator({})
+//   return {
+//     props: { newcomers }
+//   }
+// }
 
-  return {
-    props: { newcomers }
-  }
-}
-
-export default function Newcomers({ newcomers }: { newcomers: (IVideo & { payout: number; })[] }) {
+export default function Newcomers({
+  newcomers,
+}: {
+  newcomers: (IVideo & { payout: number })[];
+}) {
   const [newcomerVideos, setVideos] = useState(newcomers);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
 
   const getMoreVideos = async () => {
-    fetch(`/api/newcomers?` + new URLSearchParams({
-      page: `${page}`
-    }))
+    fetch(
+      `/api/newcomers?` +
+        new URLSearchParams({
+          page: `${page}`,
+        })
+    )
       .then((res) => res.json())
-      .then((videos: (IVideo & { payout: number; })[]) => {
-        setPage(page + 1)
+      .then((videos: (IVideo & { payout: number })[]) => {
+        setPage(page + 1);
         setVideos([...newcomerVideos, ...videos]);
-      })
+      });
   };
 
   return (
@@ -42,11 +47,11 @@ export default function Newcomers({ newcomers }: { newcomers: (IVideo & { payout
         endMessage={<h4>Nothing more to show</h4>}
       >
         <Row>
-          {newcomerVideos.map((video: IVideo & { payout: number; }) => (
+          {newcomerVideos.map((video: IVideo & { payout: number }) => (
             <VideoCard key={`${video.owner}/${video.permlink}`} {...video} />
           ))}
         </Row>
       </InfiniteScroll>
     </Grid>
-  )
+  );
 }
