@@ -457,6 +457,7 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledInput = styled.input`
+  width: 100% !important;
   outline: none;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
