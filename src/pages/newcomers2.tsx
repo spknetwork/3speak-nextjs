@@ -1,3 +1,4 @@
+import Name from "@/components/user/Name";
 import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 
@@ -94,9 +95,7 @@ const NewComers2 = () => {
             >
               {video.title}
             </Text>
-            <Text fontWeight={"bold"} marginTop={"10px"} as="h3">
-              {video.username}
-            </Text>
+            <Name username={`${video.username}`}/>
             <Text as="p">a day ago</Text>
             <Text fontWeight={"bold"} as="p">
               $ 10.10
