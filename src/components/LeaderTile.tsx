@@ -53,7 +53,7 @@ export function LeaderTile(props: LeaderTileProps) {
       style={{ borderLeft: borderLeftCode }}
     >
       <div className="card-body">
-        <div className="channels-card-image text-center">
+        <div className="channels-card-image text-center d-flex justify-content-center align-items-center flex-column">
           <a href={`#/user/${props.reflink.toString()}`}>
             <img
               className="img-fluid shadow-sm rounded-circle mb-2 w-80"
