@@ -69,7 +69,12 @@ const FirstTime = () => {
           FIRST TIME UPLOADS
         </Text>
       </Box>
-      <Grid padding={"20px"} templateColumns="repeat(4, 1fr)" gap={6}>
+      <Grid padding={"20px"} templateColumns={{
+          base: "repeat(2, 1fr)",
+          md: "repeat(2, 1fr)",
+          lg: "repeat(3, 1fr)",
+          xl: "repeat(4, 1fr)",
+        }} gap={6}>
         {/* {videos.length} */}
         {videos.map((video, index) => (
           <GridItem w="100%" h="100%" key={index}>
