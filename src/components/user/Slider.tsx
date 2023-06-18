@@ -4,7 +4,7 @@ import {
   FormControl,
   FormLabel,
   Text,
-  Slider,
+  // Slider,
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
