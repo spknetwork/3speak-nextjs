@@ -1,3 +1,4 @@
+import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
 import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -72,11 +73,14 @@ const FirstTime = () => {
         {/* {videos.length} */}
         {videos.map((video, index) => (
           <GridItem w="100%" h="100%" key={index}>
-            <Image padding={'5px'} backgroundColor={'#222 !important'} alt="test" src={`${video.thumbnail}`} />
-            <Text fontSize={'13px'} fontWeight={"bold"} marginY={"10px"} as="h3">
-              {video.title}
-            </Text>
-            <Name username={`${video.username}`}/>
+            <Image
+              padding={"5px"}
+              backgroundColor={"#222 !important"}
+              alt="test"
+              src={`${video.thumbnail}`}
+            />
+            <VideosTitle title={`${video.title}`} />
+            <Name username={`${video.username}`} />
             <Text as="p">a day ago</Text>
             <Text fontWeight={"bold"} as="p">
               $ 10.10
