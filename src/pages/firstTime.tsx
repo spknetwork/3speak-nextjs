@@ -79,9 +79,11 @@ const FirstTime = () => {
               alt="test"
               src={`${video.thumbnail}`}
             />
-            <VideosTitle title={`${video.title}`} />
+           <VideosTitle title={`${video.title}`} />
             <Name username={`${video.username}`} />
-            <Text as="p">a day ago</Text>
+            <Text as="p" margin={"1px"}>
+              a day ago
+            </Text>
             <Text fontWeight={"bold"} as="p">
               $ 10.10
             </Text>
