@@ -4,7 +4,7 @@ import React from "react";
 const Name = (props: {username:string}) => {
   return (
     <div>
-      <Text margin={'1px'} fontWeight={"bold"} marginTop={"10px"}>
+      <Text margin={'1px'} fontWeight={"bold"} >
         {props.username}
       </Text>
     </div>
