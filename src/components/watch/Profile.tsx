@@ -14,7 +14,7 @@ const Profile = () => {
           />
           <Flex flexDirection={"column"} className="ms-4">
             <Link fontWeight={"bolder"}>stellamartinez</Link>
-            <Flex justifyContent={"start"}>
+            {/* <Flex justifyContent={"start"}>
               <Box bg="white" p={4} paddingLeft="0px" color="black">
                 <Text marginBottom={"10px"} fontSize={"11px"}>
                   Community
@@ -32,7 +32,7 @@ const Profile = () => {
                   </Flex>
                 </Flex>
               </Box>
-            </Flex>
+            </Flex> */}
           </Flex>
         </Flex>
       </Box>
