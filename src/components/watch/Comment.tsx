@@ -10,6 +10,7 @@ import {
 import React, { useState } from "react";
 import { FaCommentAlt } from "react-icons/fa";
 import CommentFooter from "./CommentFooter";
+import { BiComment } from "react-icons/bi";
 const Comment = () => {
   const [comment, setComment] = useState("");
 
@@ -105,7 +106,7 @@ const Comment = () => {
         fontWeight={"500"}
         lineHeight="1.2"
       >
-        <FaCommentAlt fontSize={"15px"} />{" "}
+        <BiComment fontSize={"15px"} />{" "}
         <Text fontSize={"15px"} marginLeft={"5px"}>
           Comments:
         </Text>

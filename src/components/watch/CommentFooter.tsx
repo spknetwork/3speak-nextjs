@@ -8,6 +8,7 @@ import {
   FaRegThumbsUp,
   FaRegThumbsDown,
 } from "react-icons/fa";
+import { BiComment, BiShare } from "react-icons/bi";
 const CommentFooter = () => {
   const [comment, setComment] = useState(false);
 
@@ -61,7 +62,7 @@ const CommentFooter = () => {
             color={"black"}
           >
             {/* <Button variant="outline"> */}
-            <FaRegThumbsDown /> <Text marginLeft={"5px"}> Dislike</Text>
+            <FaRegThumbsDown /> <Text marginBottom={'0px'} marginLeft={"5px"}> Dislike</Text>
             {/* </Button> */}
           </Flex>
         </Box>
@@ -86,7 +87,7 @@ const CommentFooter = () => {
               alignItems="center"
             >
               {/* <Button onClick={showComment} variant="outline"> */}
-              <FaCommentAlt /> <Text marginLeft={"3px"}>Comments</Text>
+              <BiComment fontSize={'14px'}  /> <Text marginBottom={'0px'} marginLeft={"3px"}>Comments</Text>
               {/* </Button> */}
             </Flex>
           </Box>
@@ -99,7 +100,7 @@ const CommentFooter = () => {
           <Box color={"black"} marginLeft={"10px"}>
             <Flex justifyContent={"center"} alignItems="center">
               {/* <Button variant="outline"> */}
-              <FaShare /> <Text marginLeft={"3px"}>Share</Text>
+              <BiShare fontSize={'15px'} /> <Text marginBottom={'0px'} marginLeft={"3px"}>Share</Text>
               {/* </Button> */}
             </Flex>
           </Box>
