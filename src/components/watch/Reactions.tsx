@@ -9,13 +9,13 @@ const Reactions = () => {
     <Flex justifyContent={"center"}>
       <Flex justifyContent={"center"} alignItems="center" className="mr-4">
         <FaRegThumbsUp />
-        <Text fontWeight={"bolder"} marginLeft={"10px"}>
+        <Text marginBottom={'0px !important'} fontWeight={"bolder"} marginLeft={"10px"}>
           123
         </Text>
       </Flex>
       <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
         <FaRegThumbsDown />
-        <Text fontWeight={"bolder"} marginLeft={"10px"}>
+        <Text marginBottom={'0px !important'} fontWeight={"bolder"} marginLeft={"10px"}>
           10
         </Text>
       </Flex>

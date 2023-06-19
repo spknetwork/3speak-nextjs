@@ -31,6 +31,7 @@ const MenuButtons = () => {
             display="flex"
             justifyContent={"center"}
             alignItems="center"
+            marginBottom={'0px !important'}
           >
             <FaEllipsisV />
           </Text>

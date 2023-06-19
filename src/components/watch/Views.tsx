@@ -4,7 +4,7 @@ import React from "react";
 
 const Views = () => {
   return (
-    <Text>
+    <Text marginBottom={'0px !important'}>
       <ViewIcon fontSize={"20px"} />
       <span className="ms-1">38</span>
     </Text>
