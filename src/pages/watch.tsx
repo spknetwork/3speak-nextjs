@@ -97,8 +97,8 @@ export default function Watch() {
           </Box>
         </Box>
         {/* borderRadius={4} boxShadow="base" mr={2} flex="1" bg="white" */}
-        <Box
-          w="33%"
+        {/* <Box
+          w={{ base:  "100%", md: "33%", lg: "33%" }}
           bg="white"
           color={"black"}
           marginTop="15px"
@@ -106,8 +106,32 @@ export default function Watch() {
           boxShadow="base"
           marginLeft={"10px"}
           paddingTop="10px"
+          paddingX={'10px'}
         >
-          <Grid templateColumns="repeat(1, 1fr)" gap={2}>
+           <Video videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVcJpKJDN8sx7ZjXNkfrVDtAkjdi59a6bGJtSa9MJdsqxYnqALaV6iRcMCMd5TL4RfZMhnbb6e?format=jpeg&mode=cover&width=340&height=191" />
+        </Box> */}
+        <Box
+          w={{ base:  "100%", md: "33%", lg: "33%" }}
+          bg="white"
+          color={"black"}
+          marginTop="15px"
+          borderRadius={4}
+          boxShadow="base"
+          marginLeft={"10px"}
+          paddingTop="10px"
+          paddingX={'10px'}
+        >
+            <Box margin={'15px'}>
+            <Text
+              as="h2"
+              fontWeight={'bolder'}
+              lineHeight='1.2'
+              fontSize={'1.5rem'}
+            >
+              Suggested video you may like
+            </Text>
+          </Box>
+          <Grid display={{base:'inline-table', md: 'inline-table', lg: 'inline-table'}} templateColumns="repeat(1, 1fr)" gap={2}>
             <GridItem
               marginTop={"1px !important"}
               m={5}
@@ -124,6 +148,24 @@ export default function Watch() {
               <Video videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbGs8rF69qxxfW7SdHLkQcmo3YEiD4agxV19oco2hcKTPS49UMjd93Xc8X8yvLreZtFoEEgr2?format=jpeg&mode=cover&width=340&height=191" />
             </GridItem>
           </Grid>
+          <Box margin={'15px'}>
+            <Text
+              as="h2"
+              fontWeight={'bolder'}
+              lineHeight='1.2'
+              fontSize={'1.5rem'}
+            >
+              More from (username)
+            </Text>
+            <Text
+              padding={'15px'}
+              background='black'
+              borderRadius={'10px'}
+              color='white'
+            >
+              (username) has no more videos yet.
+            </Text>
+          </Box>
         </Box>
       </Flex>
     </Box>
