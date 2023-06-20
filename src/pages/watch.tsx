@@ -148,7 +148,7 @@ export default function Watch() {
               <Video videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbGs8rF69qxxfW7SdHLkQcmo3YEiD4agxV19oco2hcKTPS49UMjd93Xc8X8yvLreZtFoEEgr2?format=jpeg&mode=cover&width=340&height=191" />
             </GridItem>
           </Grid>
-          <Box margin={'15px'}>
+          <Box margin={'15px'} marginTop='35px'>
             <Text
               as="h2"
               fontWeight={'bolder'}
