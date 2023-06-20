@@ -24,11 +24,23 @@ import Tags from "@/components/watch/Tags";
 import Title from "@/components/watch/Title";
 import VideoPlayer from "@/components/watch/VideoPlayer";
 import Community from "@/components/watch/Community";
+import { css } from "@emotion/react";
 
 export default function Watch() {
   return (
     <Box background={"#EFF4F5"}>
-      <Flex color="white" padding={"10px"}>
+      <Flex 
+         css={css`
+         @media (max-width: 768px) {
+           flex-direction: column;
+         }
+
+         @media (min-width: 769px) {
+           flex-direction: row;
+         }
+       `}
+      
+      color="white" padding={"10px"}>
         <Box flex="1">
           <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg="white">
             <Box
