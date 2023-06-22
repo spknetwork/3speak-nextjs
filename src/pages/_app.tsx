@@ -36,13 +36,25 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
         `}
       >
-        <Box>{!isAuth && <Sidebar />}</Box>
+        <nav>
+          <Box>{!isAuth && <Sidebar />}</Box>
+        </nav>
+
         <Box width={"100%"} backgroundColor="#EFF4F6">
           <ChakraProvider>
             <ApolloProvider client={client}>
               <Component {...pageProps} />
             </ApolloProvider>
           </ChakraProvider>
+          {/* <Box
+            position={"absolute"}
+            bottom="20px"
+            width={"-webkit-fill-available"}
+            border="1px solid"
+            height={"100px"}
+          >
+            footer here
+          </Box> */}
         </Box>
       </Flex>
 
