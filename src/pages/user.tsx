@@ -2,6 +2,7 @@ import About from "@/components/user/About";
 import Achievements from "@/components/user/Achievements";
 import Earnings from "@/components/user/Earnings";
 import Livestream from "@/components/user/Livestream";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -12,15 +13,29 @@ import {
   Text,
   UnorderedList,
 } from "@chakra-ui/react";
+import { css } from "@emotion/react";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const UserPage = () => {
   const [showFeed, setShowFeed] = useState<number>(1);
-
+  const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
+  const [showNav, setShowNav] = useState(true);
   const updateShowFeed = (number: number) => {
     setShowFeed(number);
   };
+
+  useEffect(() => {
+    console.log("isMobile", isMobile);
+    if (isMobile) {
+      setShowNav(true);
+      console.log("showNav", showNav);
+    } else {
+      setShowNav(false);
+      console.log("showNav", showNav);
+    }
+  }, [isMobile]);
 
   const [videos] = useState([
     {
@@ -51,7 +66,7 @@ const UserPage = () => {
   ]);
   return (
     <div>
-      <Box minHeight={'250px'} position={"relative"}>
+      <Box minHeight={"280px"} position={"relative"}>
         <Image
           alt="image"
           src={"https://media.3speak.tv/user/thestrollingmind/cover.png"}
@@ -68,6 +83,7 @@ const UserPage = () => {
           position="absolute"
           alignItems={"end"}
           padding="1rem 30px"
+          justifyContent={{ base: "center", md: "center", lg: "start" }}
         >
           <Image
             alt="image"
@@ -99,13 +115,14 @@ const UserPage = () => {
         </Flex>
       </Box>
       <Box
-        padding={"0 30px 0"}
+        padding={"0 0px "}
         boxShadow="0 0 11px #ececec"
         background={"#fff none repeat scroll 0 0!important"}
       >
         {/* nav */}
         <Box
-          padding={"0"}
+          padding={"10px"}
+          paddingRight="0px"
           boxShadow="0 1px 2px transparent!important"
           border={"none"}
           display="flex"
@@ -113,8 +130,151 @@ const UserPage = () => {
           alignItems="center"
           position={"relative"}
           flexFlow="row nowrap"
+          flexDirection={{ base: "column", md: "column", lg: "row" }}
         >
-          <Link
+          {/* flexDirection={{base:"column", md: "column", lg:"row"}} */}
+          <Flex
+            css={css`
+              @media (max-width: 1023px) {
+                justify-content: space-between;
+                flex-direction: row;
+                align-items: center;
+              }
+
+              @media (min-width: 1024px) {
+                justify-content: start;
+                flex-direction: row;
+                align-items: center;
+              }
+            `}
+            width="100%"
+          >
+            <Link
+              href="#"
+              fontSize={"16px"}
+              fontWeight="700"
+              transition={"all 0.2s"}
+              backgroundColor="transparent"
+              textDecoration={"none !important"}
+            >
+              thestrollingmind
+            </Link>
+            {isMobile && (
+              <Button
+                variant={"ghost"}
+                onClick={() => setShowNav(!showNav)}
+                colorScheme="black"
+              >
+                <HamburgerIcon boxSize={"3rem"} />
+              </Button>
+            )}
+            {!isMobile && (
+              <Box marginLeft={'10px'}>
+                {/* marginRight="auto !important" */}
+                <UnorderedList
+                  width={"100%"}
+                  listStyleType={"none"}
+                  paddingLeft="0"
+                  display={"flex"}
+                  justifyContent={{ base: "start", md: "start", lg: "start" }}
+                  marginBottom={"0px"}
+                  marginLeft={{ base: "0px", md: "0px" }}
+                  flexDirection={{ base: "column", md: "column", lg: "row" }}
+                >
+                  <ListItem>
+                    <Link
+                      href="#"
+                      _hover={{
+                        borderBottom: "2px solid red",
+                        color: `${"black"} `,
+                      }}
+                      _focus={{
+                        color: `${"black"} `,
+                      }}
+                      color={showFeed == 1 ? "black" : "rgba(0,0,0,0.7)"}
+                      borderColor={"red"}
+                      textDecoration="none"
+                      borderBottom={showFeed == 1 ? "2px solid red" : ""}
+                      display={"block"}
+                      margin="0 7px"
+                      padding={"14px 0 !important"}
+                      onClick={() => updateShowFeed(1)}
+                    >
+                      Videos
+                    </Link>
+                  </ListItem>
+                  <ListItem>
+                    <Link
+                      href="#"
+                      _hover={{
+                        borderBottom: "2px solid red",
+                        color: `${"black"} `,
+                      }}
+                      _focus={{
+                        color: `${"black"} `,
+                      }}
+                      color={showFeed == 2 ? "black" : "rgba(0,0,0,0.7)"}
+                      borderColor={"red"}
+                      textDecoration="none"
+                      borderBottom={showFeed == 2 ? "2px solid red" : ""}
+                      display={"block"}
+                      margin="0 7px"
+                      padding={"14px 0 !important"}
+                      onClick={() => updateShowFeed(2)}
+                    >
+                      Earnings
+                    </Link>
+                  </ListItem>
+                  <ListItem>
+                    <Link
+                      href="#"
+                      _hover={{
+                        borderBottom: "2px solid red",
+                        color: `${"black"} `,
+                      }}
+                      _focus={{
+                        color: `${"black"} `,
+                      }}
+                      color={showFeed == 3 ? "black" : "rgba(0,0,0,0.7)"}
+                      borderColor={"red"}
+                      textDecoration="none"
+                      borderBottom={showFeed == 3 ? "2px solid red" : ""}
+                      display={"block"}
+                      margin="0 7px"
+                      padding={"14px 0 !important"}
+                      onClick={() => updateShowFeed(3)}
+                    >
+                      About
+                    </Link>
+                  </ListItem>
+
+                  <ListItem>
+                    <Link
+                      href="#"
+                      _hover={{
+                        borderBottom: "2px solid red",
+                        color: `${"black"} `,
+                      }}
+                      _focus={{
+                        color: `${"black"} `,
+                      }}
+                      color={showFeed == 5 ? "black" : "rgba(0,0,0,0.7)"}
+                      borderColor={"red"}
+                      textDecoration="none"
+                      borderBottom={showFeed == 5 ? "2px solid red" : ""}
+                      display={"block"}
+                      margin="0 7px"
+                      padding={"14px 0 !important"}
+                      onClick={() => updateShowFeed(5)}
+                    >
+                      Achievements
+                    </Link>
+                  </ListItem>
+                </UnorderedList>
+              </Box>
+            )}
+          </Flex>
+          {/* <Link
             href="#"
             fontSize={"16px"}
             fontWeight="700"
@@ -123,124 +283,144 @@ const UserPage = () => {
             textDecoration={"none !important"}
           >
             thestrollingmind
-          </Link>
-          <Box
-            display={"flex"}
-            flexBasis="auto"
-            flexGrow={"1"}
-            alignItems="center"
-          >
-            <UnorderedList
-              listStyleType={"none"}
-              paddingLeft="0"
+          </Link> */}
+          {!showNav && (
+            <Box
               display={"flex"}
-              marginRight="auto !important"
-              marginBottom={"0px"}
-              flexDirection={"row"}
+              flexBasis="auto"
+              flexGrow={"1"}
+              alignItems="center"
+              width={{ base: "100%", md: "100%" }}
+              flexDirection={{ base: "column", md: "column", lg: "row" }}
             >
-              <ListItem>
-                <Link
-                  href="#"
-                  _hover={{
-                    borderBottom: "2px solid red",
-                    color: `${"black"} `,
-                  }}
-                  _focus={{
-                    color: `${"black"} `,
-                  }}
-                  color={showFeed == 1 ? "black" : "rgba(0,0,0,0.7)"}
-                  borderColor={"red"}
-                  textDecoration="none"
-                  borderBottom={showFeed == 1 ? "2px solid red" : ""}
-                  display={"block"}
-                  margin="0 7px"
-                  padding={"14px 0 !important"}
-                  onClick={() => updateShowFeed(1)}
+              {isMobile && (
+                <Box
+                  width={"100%"}
+                  paddingLeft="0"
+                  display={"flex"}
+                  justifyContent={{ base: "start", md: "start", lg: "start" }}
+                  marginBottom={"0px"}
+                  marginLeft={{ base: "0px", md: "0px" }}
+                  flexDirection={{ base: "column", md: "column", lg: "row" }}
                 >
-                  Videos
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link
-                  href="#"
-                  _hover={{
-                    borderBottom: "2px solid red",
-                    color: `${"black"} `,
-                  }}
-                  _focus={{
-                    color: `${"black"} `,
-                  }}
-                  color={showFeed == 2 ? "black" : "rgba(0,0,0,0.7)"}
-                  borderColor={"red"}
-                  textDecoration="none"
-                  borderBottom={showFeed == 2 ? "2px solid red" : ""}
-                  display={"block"}
-                  margin="0 7px"
-                  padding={"14px 0 !important"}
-                  onClick={() => updateShowFeed(2)}
+                  {/* marginRight="auto !important" */}
+                  <UnorderedList
+                    width={"100%"}
+                    listStyleType={"none"}
+                    paddingLeft="0"
+                    display={"flex"}
+                    justifyContent={{ base: "start", md: "start", lg: "start" }}
+                    marginBottom={"0px"}
+                    marginLeft={{ base: "0px", md: "0px" }}
+                    flexDirection={{ base: "column", md: "column", lg: "row" }}
+                  >
+                    <ListItem>
+                      <Link
+                        href="#"
+                        _hover={{
+                          borderBottom: "2px solid red",
+                          color: `${"black"} `,
+                        }}
+                        _focus={{
+                          color: `${"black"} `,
+                        }}
+                        color={showFeed == 1 ? "black" : "rgba(0,0,0,0.7)"}
+                        borderColor={"red"}
+                        textDecoration="none"
+                        borderBottom={showFeed == 1 ? "2px solid red" : ""}
+                        display={"block"}
+                        margin="0 7px"
+                        padding={"14px 0 !important"}
+                        onClick={() => updateShowFeed(1)}
+                      >
+                        Videos
+                      </Link>
+                    </ListItem>
+                    <ListItem>
+                      <Link
+                        href="#"
+                        _hover={{
+                          borderBottom: "2px solid red",
+                          color: `${"black"} `,
+                        }}
+                        _focus={{
+                          color: `${"black"} `,
+                        }}
+                        color={showFeed == 2 ? "black" : "rgba(0,0,0,0.7)"}
+                        borderColor={"red"}
+                        textDecoration="none"
+                        borderBottom={showFeed == 2 ? "2px solid red" : ""}
+                        display={"block"}
+                        margin="0 7px"
+                        padding={"14px 0 !important"}
+                        onClick={() => updateShowFeed(2)}
+                      >
+                        Earnings
+                      </Link>
+                    </ListItem>
+                    <ListItem>
+                      <Link
+                        href="#"
+                        _hover={{
+                          borderBottom: "2px solid red",
+                          color: `${"black"} `,
+                        }}
+                        _focus={{
+                          color: `${"black"} `,
+                        }}
+                        color={showFeed == 3 ? "black" : "rgba(0,0,0,0.7)"}
+                        borderColor={"red"}
+                        textDecoration="none"
+                        borderBottom={showFeed == 3 ? "2px solid red" : ""}
+                        display={"block"}
+                        margin="0 7px"
+                        padding={"14px 0 !important"}
+                        onClick={() => updateShowFeed(3)}
+                      >
+                        About
+                      </Link>
+                    </ListItem>
+
+                    <ListItem>
+                      <Link
+                        href="#"
+                        _hover={{
+                          borderBottom: "2px solid red",
+                          color: `${"black"} `,
+                        }}
+                        _focus={{
+                          color: `${"black"} `,
+                        }}
+                        color={showFeed == 5 ? "black" : "rgba(0,0,0,0.7)"}
+                        borderColor={"red"}
+                        textDecoration="none"
+                        borderBottom={showFeed == 5 ? "2px solid red" : ""}
+                        display={"block"}
+                        margin="0 7px"
+                        padding={"14px 0 !important"}
+                        onClick={() => updateShowFeed(5)}
+                      >
+                        Achievements
+                      </Link>
+                    </ListItem>
+                  </UnorderedList>
+                </Box>
+              )}
+              <Box marginRight={{base:'0px', md:"0px", lg:"10px"}} display={'flex'} justifyContent={{base:"start", md:"start", lg: "end"}} width={{ base: "100%", md: "100%" }}>
+                <Button
+                  textTransform={"uppercase"}
+                  border="none"
+                  boxShadow={"0 1px 4px rgba(0,0,0,0.4)"}
+                  transition="all 0.4s"
+                  variant={"outline"}
+                  colorScheme="white"
+                  fontWeight={'100'}
                 >
-                  Earnings
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link
-                  href="#"
-                  _hover={{
-                    borderBottom: "2px solid red",
-                    color: `${"black"} `,
-                  }}
-                  _focus={{
-                    color: `${"black"} `,
-                  }}
-                  color={showFeed == 3 ? "black" : "rgba(0,0,0,0.7)"}
-                  borderColor={"red"}
-                  textDecoration="none"
-                  borderBottom={showFeed == 3 ? "2px solid red" : ""}
-                  display={"block"}
-                  margin="0 7px"
-                  padding={"14px 0 !important"}
-                  onClick={() => updateShowFeed(3)}
-                >
-                  About
-                </Link>
-              </ListItem>
-              
-              <ListItem>
-                <Link
-                  href="#"
-                  _hover={{
-                    borderBottom: "2px solid red",
-                    color: `${"black"} `,
-                  }}
-                  _focus={{
-                    color: `${"black"} `,
-                  }}
-                  color={showFeed == 5 ? "black" : "rgba(0,0,0,0.7)"}
-                  borderColor={"red"}
-                  textDecoration="none"
-                  borderBottom={showFeed == 5 ? "2px solid red" : ""}
-                  display={"block"}
-                  margin="0 7px"
-                  padding={"14px 0 !important"}
-                  onClick={() => updateShowFeed(5)}
-                >
-                  Achievements
-                </Link>
-              </ListItem>
-            </UnorderedList>
-            <Box>
-              <Button
-                textTransform={"uppercase"}
-                border="none"
-                boxShadow={"0 1px 4px rgba(0,0,0,0.4)"}
-                transition="all 0.4s"
-                variant={"outline"}
-                colorScheme="white"
-              >
-                Follow 66
-              </Button>
+                  Follow  <Text margin={'0px'} marginLeft='5px' fontWeight={'bold'}>66.5k</Text> 
+                </Button>
+              </Box>
             </Box>
-          </Box>
+          )}
         </Box>
       </Box>
       <Box padding={"15px"}>
