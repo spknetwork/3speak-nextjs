@@ -25,8 +25,11 @@ import Title from "@/components/watch/Title";
 import VideoPlayer from "@/components/watch/VideoPlayer";
 import Community from "@/components/watch/Community";
 import { css } from "@emotion/react";
+import { useState } from "react";
 
 export default function Watch() {
+  const [count, setCount] = useState<number>(0);
+  console.log(count)
   return (
     <Box background={"#EFF4F5"}>
       <Flex 

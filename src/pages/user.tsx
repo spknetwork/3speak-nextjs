@@ -51,7 +51,7 @@ const UserPage = () => {
   ]);
   return (
     <div>
-      <Box position={"relative"}>
+      <Box minHeight={'250px'} position={"relative"}>
         <Image
           alt="image"
           src={"https://media.3speak.tv/user/thestrollingmind/cover.png"}
@@ -204,28 +204,7 @@ const UserPage = () => {
                   About
                 </Link>
               </ListItem>
-              <ListItem>
-                <Link
-                  href="#"
-                  _hover={{
-                    borderBottom: "2px solid red",
-                    color: `${"black"} `,
-                  }}
-                  _focus={{
-                    color: `${"black"} `,
-                  }}
-                  color={showFeed == 4 ? "black" : "rgba(0,0,0,0.7)"}
-                  borderColor={"red"}
-                  textDecoration="none"
-                  borderBottom={showFeed == 4 ? "2px solid red" : ""}
-                  display={"block"}
-                  margin="0 7px"
-                  padding={"14px 0 !important"}
-                  onClick={() => updateShowFeed(4)}
-                >
-                  Livestream
-                </Link>
-              </ListItem>
+              
               <ListItem>
                 <Link
                   href="#"
@@ -382,7 +361,7 @@ const UserPage = () => {
                         marginTop="0.5rem !important"
                         justifyContent={"justify !important"}
                       >
-                        <p className="black_col">
+                        <p className="black_col mb-0">
                           <b>
                             <Link href="/user/cttpodcast">
                               <i className="fa fa-user"></i>
@@ -390,7 +369,7 @@ const UserPage = () => {
                             </Link>
                           </b>
                         </p>
-                        <p>a day ago</p>
+                        <p className="mb-0">a day ago</p>
                         <p>
                           <b>$63.17</b>
                         </p>
