@@ -39,14 +39,26 @@ function MyApp({ Component, pageProps }: AppProps) {
         <nav>
           <Box>{!isAuth && <Sidebar />}</Box>
         </nav>
+        <Flex
+          css={css`
+            @media (max-width: 768px) {
+              flex-direction: column;
+            }
 
-        <Box width={"100%"} backgroundColor="#EFF4F6">
-          <ChakraProvider>
-            <ApolloProvider client={client}>
-              <Component {...pageProps} />
-            </ApolloProvider>
-          </ChakraProvider>
-          {/* <Box
+            @media (min-width: 769px) {
+              flex-direction: column;
+            }
+          `}
+          
+        >
+          <main>
+            <Box width={"100%"} backgroundColor="#EFF4F6">
+              <ChakraProvider>
+                <ApolloProvider client={client}>
+                  <Component {...pageProps} />
+                </ApolloProvider>
+              </ChakraProvider>
+              {/* <Box
             position={"absolute"}
             bottom="20px"
             width={"-webkit-fill-available"}
@@ -55,7 +67,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           >
             footer here
           </Box> */}
-        </Box>
+            </Box>
+          </main>
+
+          <Box marginTop={'auto'}>Footer body</Box>
+        </Flex>
       </Flex>
 
       {/* </StyledGrid> */}
