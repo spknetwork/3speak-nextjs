@@ -137,7 +137,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   }
                 `}>
                   <Text fontWeight={"bold"} margin={"0px"} marginBottom="20px">
-                    company
+                    Company
                   </Text>
                   <Link href="#">
                     <Text fontWeight={"500"} margin={"0px"}>
