@@ -20,8 +20,19 @@ const SignUp = () => {
     // apply to form data
   };
 
-  const handleSubmit = () => {
-    console.log("test");
+  const handleSubmit = async (values: any) => {
+    console.log("test", values);
+    try {
+      const response = await fetch("https://acela.us-west.web3telekom.xyz/api/v1/auth/register", {
+        method: "POST",
+        body: JSON.stringify(values),
+      });
+
+      console.log('response',response);
+      // Handle the response here
+    } catch (error) {
+      console.error("API call error:", error);
+    }
   };
   return (
     <div>
