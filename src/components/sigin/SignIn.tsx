@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
@@ -21,6 +21,20 @@ const SignIn = () => {
     const token = await recaptchaRefSignIn.current.executeAsync();
     console.log(token);
     // apply to form data
+  };
+  const handleSubmit = async (values: any) => {
+    console.log("test", values);
+    try {
+      const response = await fetch("https://acela.us-west.web3telekom.xyz/api/v1/auth/login", {
+        method: "POST",
+        body: JSON.stringify(values),
+      });
+
+      console.log('response',response);
+      // Handle the response here
+    } catch (error) {
+      console.error("API call error:", error);
+    }
   };
   return (
     <Box width="100%">
@@ -46,12 +60,11 @@ const SignIn = () => {
 
           return errors;
         }}
-        onSubmit={(values) => {
-          console.log(values, "submit");
-        }}
+        onSubmit={handleSubmit}
       >
         {(props) => (
-          <form onSubmit={onSubmitWithReCAPTCHASignIn}>
+          // <form onSubmit={onSubmitWithReCAPTCHASignIn}>
+          <Form>
             <Box mb="2rem" mt="1.5rem" width="100%">
               <fieldset className="Fieldset">
                 <label className="Label" htmlFor="currentPassword">
@@ -129,7 +142,8 @@ const SignIn = () => {
                 </StyledButton>
               </Link>
             </Flex>
-          </form>
+          {/* </form> */}
+          </Form>
         )}
       </Formik>
     </Box>
