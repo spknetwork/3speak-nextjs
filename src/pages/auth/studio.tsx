@@ -157,7 +157,7 @@ export default function SidebarWithHeader({
               Welcome back eroyjunehive1!
             </Text>
           </Flex>
-          <Box display={"flex"} flexWrap="wrap">
+          <Box display={"flex"} flexWrap="wrap" flexDirection={{sm:"column", md: "column", lg: "row"}}>
             {/* for 3 cards */}
             <Box
               width={"100%"}
@@ -345,7 +345,7 @@ export default function SidebarWithHeader({
             </Box>
           </Box>
           <Box marginTop={"3%"}>
-            <SimpleGrid columns={2} spacing={10}>
+            <SimpleGrid columns={{sm:1, md:1, lg:2}} spacing={10}>
               <Box>
                 <Card>
                   <CardHeader
