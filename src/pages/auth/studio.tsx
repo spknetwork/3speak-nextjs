@@ -165,7 +165,7 @@ export default function SidebarWithHeader({
               paddingRight={"0.75rem"}
               paddingLeft={"0.75rem"}
               flex={"0 0 33.33333%"}
-              maxWidth="33.33333%"
+              maxWidth={{sm:"100%", md: "100%", lg: "33.33333%"}}
             >
               {/* <Box
                 borderLeft={"0.25rem solid #4e73df !important"}
@@ -227,7 +227,7 @@ export default function SidebarWithHeader({
               paddingRight={"0.75rem"}
               paddingLeft={"0.75rem"}
               flex={"0 0 33.33333%"}
-              maxWidth="33.33333%"
+              maxWidth={{sm:"100%", md: "100%", lg: "33.33333%"}}
             >
               {/* <Box
                 borderLeft={"0.25rem solid #4e73df !important"}
@@ -288,7 +288,7 @@ export default function SidebarWithHeader({
               paddingRight={"0.75rem"}
               paddingLeft={"0.75rem"}
               flex={"0 0 33.33333%"}
-              maxWidth="33.33333%"
+              maxWidth={{sm:"100%", md: "100%", lg: "33.33333%"}}
             >
               {/* <Box
                 borderLeft={"0.25rem solid #4e73df !important"}
