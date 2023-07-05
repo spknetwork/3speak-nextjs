@@ -165,6 +165,7 @@ export default function SidebarWithHeader({
               paddingRight={"0.75rem"}
               paddingLeft={"0.75rem"}
               flex={"0 0 33.33333%"}
+              marginTop=".5rem !important"
               maxWidth={{sm:"100%", md: "100%", lg: "33.33333%"}}
             >
               {/* <Box
@@ -227,6 +228,7 @@ export default function SidebarWithHeader({
               paddingRight={"0.75rem"}
               paddingLeft={"0.75rem"}
               flex={"0 0 33.33333%"}
+              marginTop=".5rem !important"
               maxWidth={{sm:"100%", md: "100%", lg: "33.33333%"}}
             >
               {/* <Box
@@ -288,6 +290,7 @@ export default function SidebarWithHeader({
               paddingRight={"0.75rem"}
               paddingLeft={"0.75rem"}
               flex={"0 0 33.33333%"}
+              marginTop=".5rem !important"
               maxWidth={{sm:"100%", md: "100%", lg: "33.33333%"}}
             >
               {/* <Box
