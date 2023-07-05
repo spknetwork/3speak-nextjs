@@ -157,7 +157,11 @@ export default function SidebarWithHeader({
               Welcome back eroyjunehive1!
             </Text>
           </Flex>
-          <Box display={"flex"} flexWrap="wrap" flexDirection={{sm:"column", md: "column", lg: "row"}}>
+          <Box
+            display={"flex"}
+            flexWrap="wrap"
+            flexDirection={{ sm: "column", md: "column", lg: "row" }}
+          >
             {/* for 3 cards */}
             <Box
               width={"100%"}
@@ -166,7 +170,7 @@ export default function SidebarWithHeader({
               paddingLeft={"0.75rem"}
               flex={"0 0 33.33333%"}
               marginTop=".5rem !important"
-              maxWidth={{sm:"100%", md: "100%", lg: "33.33333%"}}
+              maxWidth={{ sm: "100%", md: "100%", lg: "33.33333%" }}
             >
               {/* <Box
                 borderLeft={"0.25rem solid #4e73df !important"}
@@ -229,7 +233,7 @@ export default function SidebarWithHeader({
               paddingLeft={"0.75rem"}
               flex={"0 0 33.33333%"}
               marginTop=".5rem !important"
-              maxWidth={{sm:"100%", md: "100%", lg: "33.33333%"}}
+              maxWidth={{ sm: "100%", md: "100%", lg: "33.33333%" }}
             >
               {/* <Box
                 borderLeft={"0.25rem solid #4e73df !important"}
@@ -291,7 +295,7 @@ export default function SidebarWithHeader({
               paddingLeft={"0.75rem"}
               flex={"0 0 33.33333%"}
               marginTop=".5rem !important"
-              maxWidth={{sm:"100%", md: "100%", lg: "33.33333%"}}
+              maxWidth={{ sm: "100%", md: "100%", lg: "33.33333%" }}
             >
               {/* <Box
                 borderLeft={"0.25rem solid #4e73df !important"}
@@ -348,7 +352,7 @@ export default function SidebarWithHeader({
             </Box>
           </Box>
           <Box marginTop={"3%"}>
-            <SimpleGrid columns={{sm:1, md:1, lg:2}} spacing={10}>
+            <SimpleGrid columns={{ sm: 1, md: 1, lg: 2 }} spacing={10}>
               <Box>
                 <Card>
                   <CardHeader
@@ -554,14 +558,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         icon={<FiMenu />}
       />
 
-      <Text
-        display={{ base: "flex", md: "none" }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold"
-      >
-        Logo
-      </Text>
+      <Image src="/main_logo.svg" alt="3speak logo" width={100} height={100} />
 
       <HStack spacing={{ base: "0", md: "6" }}>
         <IconButton
