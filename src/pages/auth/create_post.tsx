@@ -215,46 +215,46 @@ export default function SidebarWithHeader({
                     alignItems="center"
                   >
                     <Box
-                      width={"10px"}
-                      height="10px"
+                      width={"32px"}
+                      height="13px"
                       border={"2px solid blue"}
                       background="blue"
                       borderRadius="10px"
                     ></Box>
                     <Box
-                      width={"420px"}
+                      width={"inherit"}
                       height="2px"
                       background="grey"
                       alignSelf={"center"}
                     ></Box>
                     <Box
-                      width={"10px"}
-                      height="10px"
+                      width={"32px"}
+                      height="13px"
                       border={"2px solid grey"}
                       borderRadius="10px"
                       background="grey"
                     ></Box>
                     <Box
-                      width={"430px"}
+                      width={"inherit"}
                       height="2px"
                       background="grey"
                       alignSelf={"center"}
                     ></Box>
                     <Box
-                      width={"10px"}
-                      height="10px"
+                      width={"32px"}
+                      height="13px"
                       border={"1px solid black"}
                       borderRadius="10px"
                     ></Box>
                     <Box
-                      width={"440px"}
+                      width={"inherit"}
                       height="2px"
                       background="grey"
                       alignSelf={"center"}
                     ></Box>
                     <Box
-                      width={"10px"}
-                      height="10px"
+                     width={"32px"}
+                     height="13px"
                       border={"1px solid black"}
                       borderRadius="10px"
                     ></Box>

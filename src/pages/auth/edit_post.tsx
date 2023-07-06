@@ -363,50 +363,50 @@ export default function SidebarWithHeader({
                   </Flex>
                   <Flex
                     width={"100%"}
-                    justifyContent={"start"}
+                    justifyContent={"space-between"}
                     alignItems="center"
                   >
                     <Box
-                      width={"10px"}
-                      height="10px"
+                      width={"32px"}
+                      height="13px"
                       border={"2px solid blue"}
                       background="blue"
                       borderRadius="10px"
                     ></Box>
                     <Box
-                      width={"420px"}
-                      height="2px"
-                      background="blue"
-                      alignSelf={"center"}
-                    ></Box>
-                    <Box
-                      width={"10px"}
-                      height="10px"
-                      border={"2px solid blue"}
-                      borderRadius="10px"
-                      background="blue"
-                    ></Box>
-                    <Box
-                      width={"430px"}
+                      width={"inherit"}
                       height="2px"
                       background="grey"
                       alignSelf={"center"}
                     ></Box>
                     <Box
-                      width={"10px"}
-                      height="10px"
+                      width={"32px"}
+                      height="13px"
+                      border={"2px solid grey"}
+                      borderRadius="10px"
+                      background="grey"
+                    ></Box>
+                    <Box
+                      width={"inherit"}
+                      height="2px"
+                      background="grey"
+                      alignSelf={"center"}
+                    ></Box>
+                    <Box
+                      width={"32px"}
+                      height="13px"
                       border={"1px solid black"}
                       borderRadius="10px"
                     ></Box>
                     <Box
-                      width={"440px"}
+                      width={"inherit"}
                       height="2px"
                       background="grey"
                       alignSelf={"center"}
                     ></Box>
                     <Box
-                      width={"10px"}
-                      height="10px"
+                     width={"32px"}
+                     height="13px"
                       border={"1px solid black"}
                       borderRadius="10px"
                     ></Box>
