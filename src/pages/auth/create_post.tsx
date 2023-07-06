@@ -189,7 +189,7 @@ export default function SidebarWithHeader({
                 borderRadius={"10px"}
                 background="white"
                 marginTop={"10px"}
-                height={"15vh"}
+                height={"auto"}
                 width={"100%"}
               >
                 <Flex
@@ -211,7 +211,7 @@ export default function SidebarWithHeader({
                   </Flex>
                   <Flex
                     width={"100%"}
-                    justifyContent={"start"}
+                    justifyContent={"space-between"}
                     alignItems="center"
                   >
                     <Box
