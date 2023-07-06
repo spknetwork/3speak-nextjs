@@ -40,6 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Box>{!isAuth && <Sidebar />}</Box>
         </nav>
         <Flex
+          width={"100%"}
           css={css`
             @media (max-width: 768px) {
               flex-direction: column;
