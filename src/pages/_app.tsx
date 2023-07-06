@@ -69,8 +69,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           </Box> */}
             </Box>
           </main>
-
-          <Box
+          {!isAuth && (
+            <Box
             backgroundColor={"#e8e8e8"}
             padding="5px"
             marginBottom={'10px'}
@@ -184,6 +184,8 @@ function MyApp({ Component, pageProps }: AppProps) {
               </Flex>
             </Box>
           </Box>
+          )}
+          
         </Flex>
       </Flex>
 
