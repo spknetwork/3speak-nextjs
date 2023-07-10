@@ -1,5 +1,7 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import styled from "styled-components";
+import Dropzone from 'react-dropzone';
+import axios from 'axios';
 
 import {
   IconButton,
