@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import styled from "styled-components";
-import Dropzone from 'react-dropzone';
-import axios from 'axios';
+import { DropzoneOptions, useDropzone } from "react-dropzone";
+import axios from "axios";
 
 import {
   IconButton,
@@ -74,12 +74,46 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "My Channel", icon: FaExternalLinkAlt },
   { name: "Logout", icon: FaSignOutAlt },
 ];
+type FilePreview = {
+  file: File;
+  previewUrl: string;
+};
 
-export default function SidebarWithHeader({
-  children,
-}: {
-  children: ReactNode;
-}) {
+const SidebarWithHeader: React.FC = () => {
+  const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
+
+  const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
+    const file = acceptedFiles[0];
+    const previewUrl = URL.createObjectURL(file);
+    setSelectedFile({ file, previewUrl });
+  };
+
+  const handleFileUpload = (): void => {
+    if (selectedFile) {
+      const { file } = selectedFile;
+      const formData = new FormData();
+      formData.append("file", file);
+
+      axios
+        .post("http://your-upload-url", formData)
+        .then((response) => {
+          // Handle successful upload
+          console.log(response);
+        })
+        .catch((error) => {
+          // Handle upload error
+          console.error(error);
+        });
+    }
+  };
+
+  const dropzoneOptions: DropzoneOptions = {
+    accept: ["image/*"],
+    onDrop: handleFileDrop,
+  };
+
+  const { getRootProps, getInputProps } = useDropzone(dropzoneOptions);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
@@ -102,8 +136,8 @@ export default function SidebarWithHeader({
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4">
-        {children}
+      <Box className="hellotesting" ml={{ base: 0, md: 60 }} p="4">
+        {/* {children} */}
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">
           <Box>
             <Card background={"#ededed"}>
@@ -138,7 +172,10 @@ export default function SidebarWithHeader({
                           paddingY={"40px"}
                           borderRadius={"5px"}
                         >
+                          {/* <div {...getRootProps()} className="dropzone"> */}
                           <Flex
+                            {...getRootProps()}
+                            className="dropzone"
                             borderRadius={"5px"}
                             width={"100%"}
                             height="100%"
@@ -147,7 +184,16 @@ export default function SidebarWithHeader({
                             border={"1px dotted grey"}
                             fontSize={{ base: "60px", md: "60px", lg: "100px" }}
                           >
-                            <FaUpload color="grey" />
+                            <input {...getInputProps()} />
+                            {selectedFile ? (
+                              <img
+                                src={selectedFile.previewUrl}
+                                alt="Preview"
+                                className="preview"
+                              />
+                            ) : (
+                              <FaUpload color="grey" />
+                            )}
                           </Flex>
                         </Flex>
                       </Box>
@@ -255,8 +301,8 @@ export default function SidebarWithHeader({
                       alignSelf={"center"}
                     ></Box>
                     <Box
-                     width={"32px"}
-                     height="13px"
+                      width={"32px"}
+                      height="13px"
                       border={"1px solid black"}
                       borderRadius="10px"
                     ></Box>
@@ -276,7 +322,7 @@ export default function SidebarWithHeader({
       </Box>
     </Box>
   );
-}
+};
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
@@ -457,3 +503,5 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 const StyledLink = styled(Link)`
   cursor: pointer;
 `;
+
+export default SidebarWithHeader;
