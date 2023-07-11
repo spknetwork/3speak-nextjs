@@ -37,6 +37,8 @@ import {
   Textarea,
   Input,
   Spinner,
+  RadioGroup,
+  Radio,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -104,7 +106,9 @@ const SidebarWithHeader: React.FC = () => {
       setUploadingVideo(false);
     }, 5000);
   };
-
+  const proccedtoStep3 = () => {
+    setSteps(2);
+  };
   const handleFileUpload = (): void => {
     if (selectedFile) {
       const { file } = selectedFile;
@@ -568,8 +572,250 @@ const SidebarWithHeader: React.FC = () => {
                         <Button size={"lg"} colorScheme="gray" color={"black"}>
                           Go Back
                         </Button>
-                        <Button size={"lg"} colorScheme="blue">
+                        <Button
+                          onClick={proccedtoStep3}
+                          size={"lg"}
+                          colorScheme="blue"
+                        >
                           Next Step
+                        </Button>
+                      </Flex>
+                    </Flex>
+                  </Box>
+                </CardBody>
+              )}
+
+              {steps == 2 && (
+                <CardBody borderRadius="10px" background={"white"}>
+                  <Box
+                    height={{ base: "auto", md: "auto", lg: "65vh" }}
+                    width={"100%"}
+                  >
+                    <Flex
+                      margin={"auto"}
+                      height={"100%"}
+                      width={"70%"}
+                      flexDirection="column"
+                      justifyContent={"center"}
+                    >
+                      <Flex
+                        flexDirection={{
+                          base: "column",
+                          md: "column",
+                          lg: "row",
+                        }}
+                        height={"100%"}
+                      >
+                        <Box
+                          width={{ base: "100%", md: "100%", lg: "70%" }}
+                          padding="20px"
+                          paddingY={"10px"}
+                        >
+                          <Flex
+                            width={"100%"}
+                            height="100%"
+                            justifyContent="start"
+                            alignItems={"start"}
+                            flexDirection="column"
+                          >
+                            <Text textAlign={"start"} as="h3">
+                              Visibility
+                            </Text>
+                            <Text marginBottom={"10px"} as="label">
+                              Choose when to publish and who can see your video
+                            </Text>
+                            <Box
+                              borderRadius={"10px"}
+                              height={"300px"}
+                              border="1px solid"
+                              width={{ base: "100%", md: "100%", lg: "100%" }}
+                            >
+                              <Box
+                                marginTop={"40px"}
+                                width="80%"
+                                marginX={"auto"}
+                              >
+                                <Box marginBottom={'15px'}>
+                                  <RadioGroup defaultValue="2">
+                                    <Stack spacing={5} direction="row">
+                                      <Radio value="2">Save or publish</Radio>
+                                    </Stack>
+                                  </RadioGroup>
+                                  <Text as="label">
+                                    Make your video public, unlisted, or private
+                                  </Text>
+                                </Box>
+                                <Box marginBottom={'15px'} marginLeft={'20px'}>
+                                  <RadioGroup defaultValue="2">
+                                    <Stack spacing={5} direction="row">
+                                      <Radio value="1">Private</Radio>
+                                    </Stack>
+                                  </RadioGroup>
+                                  <Text as="label">
+                                    Only you and people you choose can watch your video
+                                  </Text>
+                                </Box>
+                                <Box marginBottom={'15px'} marginLeft={'20px'}>
+                                  <RadioGroup defaultValue="2">
+                                    <Stack spacing={5} direction="row">
+                                      <Radio value="1">Unlisted</Radio>
+                                    </Stack>
+                                  </RadioGroup>
+                                  <Text as="label">
+                                    Anyone with the video link can watch your video
+                                  </Text>
+                                </Box>
+                                <Box marginBottom={'15px'} marginLeft={'20px'}>
+                                  <RadioGroup defaultValue="1">
+                                    <Stack spacing={5} direction="row">
+                                      <Radio value="1">Public</Radio>
+                                    </Stack>
+                                  </RadioGroup>
+                                  <Text as="label">
+                                    Everyone can watch your video
+                                  </Text>
+                                </Box>
+                              </Box>
+                            </Box>
+                            {/* <Text as={"fieldset"} className="w-100 mb-3">
+                              <Text
+                                as={"legend"}
+                                fontSize="15px"
+                                className="fw-bold"
+                              >
+                                Video Title
+                              </Text>
+                              <Input
+                                placeholder="Video Title"
+                                width={{ base: "89%", md: "89%", lg: "97%" }}
+                              />
+                              <Text as={"label"}>
+                                Your video title, 2-55 characters
+                              </Text>
+                            </Text> */}
+                          </Flex>
+                        </Box>
+                        <Box
+                          paddingTop={'74px'}
+                          width={{ base: "100%", md: "100%", lg: "40%" }}
+                          paddingX="20px"
+                          paddingBottom={"10px"}
+                        >
+                          <Flex
+                            width={"100%"}
+                            height="200px"
+                            border={"1px solid"}
+                            justifyContent="center"
+                            background={"black"}
+                            alignItems={"center"}
+                            borderRadius="10px 10px 0px 0px"
+                          >
+                            {/* juneroy */}
+                            {selectedFile ? (
+                              <>
+                                {selectedFile.file.type.startsWith("image/") ? (
+                                  <img
+                                    src={selectedFile.previewUrl}
+                                    alt="Preview"
+                                    className="preview"
+                                  />
+                                ) : (
+                                  <video
+                                    src={selectedFile.previewUrl}
+                                    className="preview"
+                                    controls
+                                  />
+                                )}
+                              </>
+                            ) : (
+                              <SlPicture
+                                width={"100px"}
+                                color="white"
+                                fontSize="70px"
+                              />
+                            )}
+                          </Flex>
+                          <Flex
+                            background={"grey"}
+                            width={"100%"}
+                            height="100px"
+                            justifyContent="start"
+                            alignItems={"start"}
+                            flexDirection="column"
+                            borderRadius="0px 0px 10px 10px"
+                          >
+                            <Text
+                              fontSize={"12px"}
+                              fontWeight="bold"
+                              marginLeft="10px"
+                              color={"whiteAlpha.900"}
+                            >
+                              File Name
+                            </Text>
+                            <Text
+                              fontSize={{
+                                base: "10px",
+                                md: "10px",
+                                lg: "12px",
+                              }}
+                              fontWeight="bold"
+                              color={"whiteAlpha.900"}
+                              marginLeft={{
+                                base: "0px",
+                                md: "0px",
+                                lg: "10px",
+                              }}
+                              padding={{
+                                base: "0px 10px",
+                                md: "0px 10px",
+                                lg: "10px",
+                              }}
+                              width={{ base: "100%", md: "100%", lg: "100%" }}
+                            >
+                              {selectedFile?.file?.name
+                                ? selectedFile.file.name
+                                : ""}
+                            </Text>
+                            <Flex
+                              marginTop={{ base: "5px", md: "5px", lg: "20px" }}
+                              justifyContent="center"
+                              alignItems={"center"}
+                              marginLeft={{
+                                base: "2px",
+                                md: "2px",
+                                lg: "10px",
+                              }}
+                            >
+                              <SlCheck fontSize={"20px"} color="white" />
+                              <Text
+                                fontSize={{
+                                  base: "12px",
+                                  md: "12px",
+                                  lg: "15px",
+                                }}
+                                fontWeight="bold"
+                                color={"whiteAlpha.900"}
+                                marginLeft={{
+                                  base: "5px",
+                                  md: "5px",
+                                  lg: "10px",
+                                }}
+                              >
+                                Video upload complete. No issues found.
+                              </Text>
+                            </Flex>
+                          </Flex>
+                        </Box>
+                      </Flex>
+                      <Flex
+                        justifyContent={"space-between"}
+                        alignItems="center"
+                      >
+                        <Button size={"lg"} colorScheme="gray" color={"black"}>
+                          Go Back
+                        </Button>
+                        <Button size={"lg"} colorScheme="blue">
+                          Save
                         </Button>
                       </Flex>
                     </Flex>
