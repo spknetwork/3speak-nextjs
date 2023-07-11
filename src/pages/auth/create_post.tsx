@@ -84,11 +84,12 @@ type FilePreview = {
 
 const SidebarWithHeader: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
-  const [steps, setSteps] = useState<number>(1);
+  const [steps, setSteps] = useState<number>(0);
   const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
     setSelectedFile({ file, previewUrl });
+    setSteps(1);
   };
 
   const handleFileUpload = (): void => {
@@ -297,11 +298,30 @@ const SidebarWithHeader: React.FC = () => {
                             alignItems={"center"}
                             borderRadius="10px 10px 0px 0px"
                           >
-                            <SlPicture
-                              width={"100px"}
-                              color="white"
-                              fontSize="70px"
-                            />
+                            {/* juneroy */}
+                            {selectedFile ? (
+                              <>
+                                {selectedFile.file.type.startsWith("image/") ? (
+                                  <img
+                                    src={selectedFile.previewUrl}
+                                    alt="Preview"
+                                    className="preview"
+                                  />
+                                ) : (
+                                  <video
+                                    src={selectedFile.previewUrl}
+                                    className="preview"
+                                    controls
+                                  />
+                                )}
+                              </>
+                            ) : (
+                              <SlPicture
+                                width={"100px"}
+                                color="white"
+                                fontSize="70px"
+                              />
+                            )}
                           </Flex>
                           <Flex
                             background={"grey"}
