@@ -34,6 +34,8 @@ import {
   Stack,
   StackDivider,
   Button,
+  Textarea,
+  Input,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -61,6 +63,7 @@ import {
   FaVideo,
   FaWallet,
 } from "react-icons/fa";
+import { SlCheck, SlPicture } from "react-icons/sl";
 
 interface LinkItemProps {
   name: string;
@@ -81,7 +84,7 @@ type FilePreview = {
 
 const SidebarWithHeader: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
-  const [steps, setSteps] = useState<number>(0);
+  const [steps, setSteps] = useState<number>(1);
   const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
@@ -254,6 +257,249 @@ const SidebarWithHeader: React.FC = () => {
                             </Button>
                           </Flex>
                         </Box>
+                      </Flex>
+                    </Flex>
+                  </Box>
+                </CardBody>
+              )}
+
+              {steps == 1 && (
+                <CardBody borderRadius="10px" background={"white"}>
+                  <Box
+                    height={{ base: "auto", md: "auto", lg: "65vh" }}
+                    width={"100%"}
+                  >
+                    <Flex
+                      height={"100%"}
+                      width={"100%"}
+                      flexDirection="column"
+                      justifyContent={"center"}
+                    >
+                      <Flex
+                        flexDirection={{
+                          base: "column",
+                          md: "column",
+                          lg: "row",
+                        }}
+                        height={"100%"}
+                      >
+                        <Box
+                          width={{ base: "100%", md: "100%", lg: "30%" }}
+                          padding="20px"
+                          paddingY={"10px"}
+                        >
+                          <Flex
+                            width={"100%"}
+                            height="200px"
+                            border={"1px solid"}
+                            justifyContent="center"
+                            background={"black"}
+                            alignItems={"center"}
+                            borderRadius="10px 10px 0px 0px"
+                          >
+                            <SlPicture
+                              width={"100px"}
+                              color="white"
+                              fontSize="70px"
+                            />
+                          </Flex>
+                          <Flex
+                            background={"grey"}
+                            width={"100%"}
+                            height="100px"
+                            justifyContent="start"
+                            alignItems={"start"}
+                            flexDirection="column"
+                            borderRadius="0px 0px 10px 10px"
+                          >
+                            <Text
+                              fontSize={"12px"}
+                              fontWeight="bold"
+                              marginLeft="10px"
+                              color={"whiteAlpha.900"}
+                            >
+                              File Name
+                            </Text>
+                            <Text
+                              fontSize={{
+                                base: "10px",
+                                md: "10px",
+                                lg: "12px",
+                              }}
+                              fontWeight="bold"
+                              color={"whiteAlpha.900"}
+                              marginLeft={{
+                                base: "0px",
+                                md: "0px",
+                                lg: "10px",
+                              }}
+                              padding={{
+                                base: "0px 10px",
+                                md: "0px 10px",
+                                lg: "10px",
+                              }}
+                              width={{ base: "100%", md: "100%", lg: "100%" }}
+                            >
+                              2asf2344124febvzxq312324fdsfgsdg3dddqeqw
+                            </Text>
+                            <Flex
+                              marginTop={{ base: "5px", md: "5px", lg: "20px" }}
+                              justifyContent="center"
+                              alignItems={"center"}
+                              marginLeft={{
+                                base: "2px",
+                                md: "2px",
+                                lg: "10px",
+                              }}
+                            >
+                              <SlCheck fontSize={"20px"} color="white" />
+                              <Text
+                                fontSize={{
+                                  base: "12px",
+                                  md: "12px",
+                                  lg: "15px",
+                                }}
+                                fontWeight="bold"
+                                color={"whiteAlpha.900"}
+                                marginLeft={{
+                                  base: "5px",
+                                  md: "5px",
+                                  lg: "10px",
+                                }}
+                              >
+                                Video upload complete. No issues found.
+                              </Text>
+                            </Flex>
+                          </Flex>
+                        </Box>
+                        <Box
+                          width={{ base: "100%", md: "100%", lg: "70%" }}
+                          padding="20px"
+                          paddingY={"10px"}
+                        >
+                          <Flex
+                            width={"100%"}
+                            height="100%"
+                            justifyContent="start"
+                            alignItems={"start"}
+                            flexDirection="column"
+                          >
+                            <Text as={"fieldset"} className="w-100 mb-3">
+                              <Text
+                                as={"legend"}
+                                fontSize="15px"
+                                className="fw-bold"
+                              >
+                                Video Title
+                              </Text>
+                              <Input
+                                placeholder="Video Title"
+                                width={{ base: "89%", md: "89%", lg: "97%" }}
+                              />
+                              <Text as={"label"}>
+                                Your video title, 2-55 characters
+                              </Text>
+                            </Text>
+                            <fieldset className="w-100 mb-4 ">
+                              <Text
+                                as={"legend"}
+                                fontSize="15px"
+                                className="fw-bold"
+                              >
+                                Video Description
+                              </Text>
+                              <Textarea placeholder="Here is a sample placeholder" />
+                            </fieldset>
+                            <fieldset className="w-100 mb-3">
+                              <Text
+                                as={"legend"}
+                                fontSize="15px"
+                                className="fw-bold"
+                                marginBottom={"0px"}
+                              >
+                                Thumbnail
+                              </Text>
+                              <Text fontSize={"15px"}>
+                                Select or upload a picture that shows what`s in
+                                your video. A good thumbnail stands out and
+                                draws viewer`s attention
+                              </Text>
+                            </fieldset>
+                            <Flex
+                              flexDirection={{
+                                base: "column",
+                                md: "column",
+                                lg: "row",
+                              }}
+                              width={"100%"}
+                              height={{ base: "100%", md: "100%", lg: "150px" }}
+                            >
+                              <Flex
+                                width={"250px"}
+                                height="100%"
+                                border={"2px dotted"}
+                                justifyContent="center"
+                                alignItems={"center"}
+                                flexDirection="column"
+                                borderRadius={"10px"}
+                              >
+                                <SlPicture
+                                  width={"100px"}
+                                  color="black"
+                                  fontSize="70px"
+                                />
+                                <Text>Upload Thumbnail</Text>
+                              </Flex>
+                              <Flex
+                                width={"250px"}
+                                marginX={{ base: "0px", md: "0px", lg: "10px" }}
+                                height="100%"
+                                paddingY={{ base: "5px", md: "5px", lg: "0px" }}
+                              >
+                                <Image
+                                  borderRadius={"10px"}
+                                  src="https://marketplace.canva.com/EAEqfS4X0Xw/1/0/1600w/canva-most-attractive-youtube-thumbnail-wK95f3XNRaM.jpg"
+                                  alt="Dan Abramov"
+                                />
+                              </Flex>
+                              <Flex
+                                width={"250px"}
+                                marginX={{ base: "0px", md: "0px", lg: "10px" }}
+                                height="100%"
+                                paddingY={{ base: "5px", md: "5px", lg: "0px" }}
+                              >
+                                <Image
+                                  borderRadius={"10px"}
+                                  src="https://i.ytimg.com/vi/a4AtoGyjPVo/maxresdefault.jpg"
+                                  alt="Dan Abramov"
+                                />
+                              </Flex>
+                              <Flex
+                                width={"250px"}
+                                marginX={{ base: "0px", md: "0px", lg: "10px" }}
+                                height="100%"
+                                paddingY={{ base: "5px", md: "5px", lg: "0px" }}
+                              >
+                                <Image
+                                  borderRadius={"10px"}
+                                  src="https://i.ytimg.com/vi/-q4M9yf_ABY/mqdefault.jpg"
+                                  alt="Dan Abramov"
+                                />
+                              </Flex>
+                            </Flex>
+                          </Flex>
+                        </Box>
+                      </Flex>
+                      <Flex
+                        justifyContent={"space-between"}
+                        alignItems="center"
+                      >
+                        <Button size={"lg"} colorScheme="gray" color={"black"}>
+                          Go Back
+                        </Button>
+                        <Button size={"lg"} colorScheme="blue">
+                          Next Step
+                        </Button>
                       </Flex>
                     </Flex>
                   </Box>
