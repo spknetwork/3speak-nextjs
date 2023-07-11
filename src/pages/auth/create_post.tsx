@@ -65,6 +65,7 @@ import {
 } from "react-icons/fa";
 import { SlCheck, SlPicture } from "react-icons/sl";
 
+import { VideoThumbnailGenerator } from 'video-thumbnail-generator';
 interface LinkItemProps {
   name: string;
   icon: IconType;
@@ -89,6 +90,10 @@ const SidebarWithHeader: React.FC = () => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
     setSelectedFile({ file, previewUrl });
+
+    // const thumbnailGenerator = new VideoThumbnailGenerator({
+    //   sourcePath: URL.createObjectURL(file),
+    // });
     // console.log('file',file)
     // console.log('previewUrl',previewUrl)
     setSteps(1);
@@ -479,6 +484,7 @@ const SidebarWithHeader: React.FC = () => {
                                 paddingY={{ base: "5px", md: "5px", lg: "0px" }}
                               >
                                 <Image
+                                  objectFit={'cover'}
                                   borderRadius={"10px"}
                                   src="https://marketplace.canva.com/EAEqfS4X0Xw/1/0/1600w/canva-most-attractive-youtube-thumbnail-wK95f3XNRaM.jpg"
                                   alt="Dan Abramov"
@@ -491,6 +497,7 @@ const SidebarWithHeader: React.FC = () => {
                                 paddingY={{ base: "5px", md: "5px", lg: "0px" }}
                               >
                                 <Image
+                                  objectFit={'cover'}
                                   borderRadius={"10px"}
                                   src="https://i.ytimg.com/vi/a4AtoGyjPVo/maxresdefault.jpg"
                                   alt="Dan Abramov"
@@ -503,6 +510,7 @@ const SidebarWithHeader: React.FC = () => {
                                 paddingY={{ base: "5px", md: "5px", lg: "0px" }}
                               >
                                 <Image
+                                  objectFit={'cover'}
                                   borderRadius={"10px"}
                                   src="https://i.ytimg.com/vi/-q4M9yf_ABY/mqdefault.jpg"
                                   alt="Dan Abramov"
