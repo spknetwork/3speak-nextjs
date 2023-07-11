@@ -90,6 +90,8 @@ const SidebarWithHeader: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
   const [steps, setSteps] = useState<number>(0);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
+  const [uploadingVideoLabel, setUploadingVideoLabel] =
+    useState<String>("Uploading Video...");
   const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
@@ -107,7 +109,12 @@ const SidebarWithHeader: React.FC = () => {
     }, 5000);
   };
   const proccedtoStep3 = () => {
-    setSteps(2);
+    setUploadingVideoLabel("Adding Video Details...");
+    setUploadingVideo(true);
+    setTimeout(() => {
+      setSteps(2);
+      setUploadingVideo(false);
+    }, 5000);
   };
   const handleFileUpload = (): void => {
     if (selectedFile) {
@@ -176,7 +183,7 @@ const SidebarWithHeader: React.FC = () => {
             justifyContent={"center"}
             alignItems="center"
             backgroundColor={"blackAlpha.900"}
-            opacity="0.5"
+            opacity="0.9"
             width="100%"
             height={"90vh"}
           >
@@ -187,7 +194,7 @@ const SidebarWithHeader: React.FC = () => {
               emptyColor="gray.200"
               color="black.500"
             />
-            <Text color={"white"}>Uploading Video...</Text>
+            <Text color={"white"}>{uploadingVideoLabel}</Text>
           </Flex>
         )}
 
@@ -335,9 +342,10 @@ const SidebarWithHeader: React.FC = () => {
                         height={"100%"}
                       >
                         <Box
+                          paddingTop={"50px"}
                           width={{ base: "100%", md: "100%", lg: "30%" }}
-                          padding="20px"
-                          paddingY={"10px"}
+                          paddingX="20px"
+                          paddingBottom={"10px"}
                         >
                           <Flex
                             width={"100%"}
@@ -635,7 +643,7 @@ const SidebarWithHeader: React.FC = () => {
                                 width="80%"
                                 marginX={"auto"}
                               >
-                                <Box marginBottom={'15px'}>
+                                <Box marginBottom={"15px"}>
                                   <RadioGroup defaultValue="2">
                                     <Stack spacing={5} direction="row">
                                       <Radio value="2">Save or publish</Radio>
@@ -645,27 +653,29 @@ const SidebarWithHeader: React.FC = () => {
                                     Make your video public, unlisted, or private
                                   </Text>
                                 </Box>
-                                <Box marginBottom={'15px'} marginLeft={'20px'}>
+                                <Box marginBottom={"15px"} marginLeft={"20px"}>
                                   <RadioGroup defaultValue="2">
                                     <Stack spacing={5} direction="row">
                                       <Radio value="1">Private</Radio>
                                     </Stack>
                                   </RadioGroup>
                                   <Text as="label">
-                                    Only you and people you choose can watch your video
+                                    Only you and people you choose can watch
+                                    your video
                                   </Text>
                                 </Box>
-                                <Box marginBottom={'15px'} marginLeft={'20px'}>
+                                <Box marginBottom={"15px"} marginLeft={"20px"}>
                                   <RadioGroup defaultValue="2">
                                     <Stack spacing={5} direction="row">
                                       <Radio value="1">Unlisted</Radio>
                                     </Stack>
                                   </RadioGroup>
                                   <Text as="label">
-                                    Anyone with the video link can watch your video
+                                    Anyone with the video link can watch your
+                                    video
                                   </Text>
                                 </Box>
-                                <Box marginBottom={'15px'} marginLeft={'20px'}>
+                                <Box marginBottom={"15px"} marginLeft={"20px"}>
                                   <RadioGroup defaultValue="1">
                                     <Stack spacing={5} direction="row">
                                       <Radio value="1">Public</Radio>
@@ -696,7 +706,7 @@ const SidebarWithHeader: React.FC = () => {
                           </Flex>
                         </Box>
                         <Box
-                          paddingTop={'74px'}
+                          paddingTop={"74px"}
                           width={{ base: "100%", md: "100%", lg: "40%" }}
                           paddingX="20px"
                           paddingBottom={"10px"}
