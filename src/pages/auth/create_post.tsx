@@ -64,7 +64,7 @@ import {
   FaWallet,
 } from "react-icons/fa";
 import { SlCheck, SlPicture } from "react-icons/sl";
-import { VideoThumbnailGenerator } from 'video-thumbnail-generator';
+
 interface LinkItemProps {
   name: string;
   icon: IconType;
@@ -89,9 +89,6 @@ const SidebarWithHeader: React.FC = () => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
     setSelectedFile({ file, previewUrl });
-    const thumbnailGenerator = new VideoThumbnailGenerator({
-      sourcePath: URL.createObjectURL(file),
-    });
     // console.log('file',file)
     // console.log('previewUrl',previewUrl)
     setSteps(1);
