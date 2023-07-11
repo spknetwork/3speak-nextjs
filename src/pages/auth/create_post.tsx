@@ -89,6 +89,8 @@ const SidebarWithHeader: React.FC = () => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
     setSelectedFile({ file, previewUrl });
+    // console.log('file',file)
+    // console.log('previewUrl',previewUrl)
     setSteps(1);
   };
 
@@ -360,7 +362,7 @@ const SidebarWithHeader: React.FC = () => {
                               }}
                               width={{ base: "100%", md: "100%", lg: "100%" }}
                             >
-                              2asf2344124febvzxq312324fdsfgsdg3dddqeqw
+                             { selectedFile?.file?.name ? selectedFile.file.name: "" } 
                             </Text>
                             <Flex
                               marginTop={{ base: "5px", md: "5px", lg: "20px" }}
