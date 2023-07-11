@@ -81,7 +81,7 @@ type FilePreview = {
 
 const SidebarWithHeader: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
-
+  const [steps, setSteps] = useState<number>(0);
   const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
@@ -141,110 +141,125 @@ const SidebarWithHeader: React.FC = () => {
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">
           <Box>
             <Card background={"#ededed"}>
-              <CardBody borderRadius="10px" background={"white"}>
-                <Box height={"60vh"} width={"100%"}>
-                  <Flex
-                    height={"100%"}
-                    width={"100%"}
-                    flexDirection="column"
-                    justifyContent={"center"}
-                  >
+              {steps == 0 && (
+                <CardBody borderRadius="10px" background={"white"}>
+                  <Box height={"60vh"} width={"100%"}>
                     <Flex
                       height={"100%"}
-                      flexDirection={{
-                        base: "column-reverse",
-                        md: "column-reverse",
-                        lg: "row",
-                      }}
+                      width={"100%"}
+                      flexDirection="column"
+                      justifyContent={"center"}
                     >
-                      <Box
-                        width={{ base: "100%", md: "100%", lg: "40%" }}
-                        padding="20px"
-                        paddingY={{ base: "5px", md: "5px", lg: "40px" }}
+                      <Flex
+                        height={"100%"}
+                        flexDirection={{
+                          base: "column-reverse",
+                          md: "column-reverse",
+                          lg: "row",
+                        }}
                       >
-                        <Flex
-                          width={"100%"}
-                          height="100%"
-                          justifyContent="center"
-                          alignItems={"center"}
-                          border={"1px solid black"}
+                        <Box
+                          width={{ base: "100%", md: "100%", lg: "40%" }}
                           padding="20px"
-                          paddingY={"40px"}
-                          borderRadius={"5px"}
+                          paddingY={{ base: "5px", md: "5px", lg: "40px" }}
                         >
-                          {/* <div {...getRootProps()} className="dropzone"> */}
                           <Flex
-                            {...getRootProps()}
-                            className="dropzone"
-                            borderRadius={"5px"}
                             width={"100%"}
                             height="100%"
                             justifyContent="center"
                             alignItems={"center"}
-                            border={"1px dotted grey"}
-                            fontSize={{ base: "60px", md: "60px", lg: "100px" }}
+                            border={"1px solid black"}
+                            padding="20px"
+                            paddingY={"40px"}
+                            borderRadius={"5px"}
                           >
-                            <input {...getInputProps()} />
-                            {selectedFile ? (
-                              <>
-                                {selectedFile.file.type.startsWith("image/") ? (
-                                  <img
-                                    src={selectedFile.previewUrl}
-                                    alt="Preview"
-                                    className="preview"
-                                  />
-                                ) : (
-                                  <video
-                                    src={selectedFile.previewUrl}
-                                    className="preview"
-                                    controls
-                                  />
-                                )}
-                              </>
-                            ) : (
-                              <FaUpload color="grey" />
-                            )}
+                            {/* <div {...getRootProps()} className="dropzone"> */}
+                            <Flex
+                              {...getRootProps()}
+                              className="dropzone"
+                              borderRadius={"5px"}
+                              width={"100%"}
+                              height="100%"
+                              justifyContent="center"
+                              alignItems={"center"}
+                              border={"1px dotted grey"}
+                              fontSize={{
+                                base: "60px",
+                                md: "60px",
+                                lg: "100px",
+                              }}
+                            >
+                              <input {...getInputProps()} />
+                              {selectedFile ? (
+                                <>
+                                  {selectedFile.file.type.startsWith(
+                                    "image/"
+                                  ) ? (
+                                    <img
+                                      src={selectedFile.previewUrl}
+                                      alt="Preview"
+                                      className="preview"
+                                    />
+                                  ) : (
+                                    <video
+                                      src={selectedFile.previewUrl}
+                                      className="preview"
+                                      controls
+                                    />
+                                  )}
+                                </>
+                              ) : (
+                                <FaUpload color="grey" />
+                              )}
+                            </Flex>
                           </Flex>
-                        </Flex>
-                      </Box>
-                      <Box
-                        width={{ base: "100%", md: "100%", lg: "60%" }}
-                        padding="20px"
-                        paddingY={{ base: "5px", md: "5px", lg: "40px" }}
-                      >
-                        <Flex
-                          width={"100%"}
-                          height="100%"
-                          justifyContent="center"
-                          alignItems={"start"}
-                          flexDirection="column"
+                        </Box>
+                        <Box
+                          width={{ base: "100%", md: "100%", lg: "60%" }}
+                          padding="20px"
+                          paddingY={{ base: "5px", md: "5px", lg: "40px" }}
                         >
-                          <Text
-                            as={"h1"}
-                            fontSize={{
-                              base: "25px !important",
-                              sm: "25px !important",
-                              lg: "39px",
-                            }}
+                          <Flex
+                            width={"100%"}
+                            height="100%"
+                            justifyContent="center"
+                            alignItems={"start"}
+                            flexDirection="column"
                           >
-                            Drag and drop video files to upload
-                          </Text>
-                          <Text
-                            fontSize={{ base: "12px", md: "12px", lg: "16px" }}
-                          >
-                            your videos will be private until you publish them
-                          </Text>
-                          <Button
-                           {...getRootProps()}
-                          size={"lg"} colorScheme="twitter">
-                            Select media
-                          </Button>
-                        </Flex>
-                      </Box>
+                            <Text
+                              as={"h1"}
+                              fontSize={{
+                                base: "25px !important",
+                                sm: "25px !important",
+                                lg: "39px",
+                              }}
+                            >
+                              Drag and drop video files to upload
+                            </Text>
+                            <Text
+                              fontSize={{
+                                base: "12px",
+                                md: "12px",
+                                lg: "16px",
+                              }}
+                            >
+                              your videos will be private until you publish them
+                            </Text>
+                            <Button
+                              {...getRootProps()}
+                              size={"lg"}
+                              colorScheme="twitter"
+                            >
+                              Select media
+                            </Button>
+                          </Flex>
+                        </Box>
+                      </Flex>
                     </Flex>
-                  </Flex>
-                </Box>
-              </CardBody>
+                  </Box>
+                </CardBody>
+              )}
+
               <Box
                 borderRadius={"10px"}
                 background="white"
