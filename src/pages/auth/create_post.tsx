@@ -36,6 +36,7 @@ import {
   Button,
   Textarea,
   Input,
+  Spinner,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -65,7 +66,7 @@ import {
 } from "react-icons/fa";
 import { SlCheck, SlPicture } from "react-icons/sl";
 
-import { VideoThumbnailGenerator } from 'video-thumbnail-generator';
+import { VideoThumbnailGenerator } from "video-thumbnail-generator";
 interface LinkItemProps {
   name: string;
   icon: IconType;
@@ -86,17 +87,22 @@ type FilePreview = {
 const SidebarWithHeader: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
   const [steps, setSteps] = useState<number>(0);
+  const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
     setSelectedFile({ file, previewUrl });
-
+    setUploadingVideo(true);
     // const thumbnailGenerator = new VideoThumbnailGenerator({
     //   sourcePath: URL.createObjectURL(file),
     // });
     // console.log('file',file)
     // console.log('previewUrl',previewUrl)
-    setSteps(1);
+    // setSteps(1);
+    setTimeout(() => {
+      setSteps(1);
+      setUploadingVideo(false);
+    }, 5000);
   };
 
   const handleFileUpload = (): void => {
@@ -147,7 +153,40 @@ const SidebarWithHeader: React.FC = () => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
-      <Box className="hellotesting" ml={{ base: 0, md: 60 }} p="4">
+
+      <Box
+        position={"relative"}
+        className="hellotesting"
+        ml={{ base: 0, md: 60 }}
+        p="4"
+      >
+        {uploadingVideo && (
+          <Flex
+            top={0}
+            left="0"
+            right={0}
+            bottom="0"
+            zIndex={"999"}
+            position={"absolute"}
+            flexDirection={"column"}
+            justifyContent={"center"}
+            alignItems="center"
+            backgroundColor={"blackAlpha.900"}
+            opacity="0.5"
+            width="100%"
+            height={"90vh"}
+          >
+            <Spinner
+              size="xl"
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="black.500"
+            />
+            <Text color={"white"}>Uploading Video...</Text>
+          </Flex>
+        )}
+
         {/* {children} */}
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">
           <Box>
@@ -367,7 +406,9 @@ const SidebarWithHeader: React.FC = () => {
                               }}
                               width={{ base: "100%", md: "100%", lg: "100%" }}
                             >
-                             { selectedFile?.file?.name ? selectedFile.file.name: "" } 
+                              {selectedFile?.file?.name
+                                ? selectedFile.file.name
+                                : ""}
                             </Text>
                             <Flex
                               marginTop={{ base: "5px", md: "5px", lg: "20px" }}
@@ -484,7 +525,7 @@ const SidebarWithHeader: React.FC = () => {
                                 paddingY={{ base: "5px", md: "5px", lg: "0px" }}
                               >
                                 <Image
-                                  objectFit={'cover'}
+                                  objectFit={"cover"}
                                   borderRadius={"10px"}
                                   src="https://marketplace.canva.com/EAEqfS4X0Xw/1/0/1600w/canva-most-attractive-youtube-thumbnail-wK95f3XNRaM.jpg"
                                   alt="Dan Abramov"
@@ -497,7 +538,7 @@ const SidebarWithHeader: React.FC = () => {
                                 paddingY={{ base: "5px", md: "5px", lg: "0px" }}
                               >
                                 <Image
-                                  objectFit={'cover'}
+                                  objectFit={"cover"}
                                   borderRadius={"10px"}
                                   src="https://i.ytimg.com/vi/a4AtoGyjPVo/maxresdefault.jpg"
                                   alt="Dan Abramov"
@@ -510,7 +551,7 @@ const SidebarWithHeader: React.FC = () => {
                                 paddingY={{ base: "5px", md: "5px", lg: "0px" }}
                               >
                                 <Image
-                                  objectFit={'cover'}
+                                  objectFit={"cover"}
                                   borderRadius={"10px"}
                                   src="https://i.ytimg.com/vi/-q4M9yf_ABY/mqdefault.jpg"
                                   alt="Dan Abramov"
