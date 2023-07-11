@@ -108,7 +108,7 @@ const SidebarWithHeader: React.FC = () => {
   };
 
   const dropzoneOptions: DropzoneOptions = {
-    accept: ["image/*"],
+    accept: ["image/*", "video/*"],
     onDrop: handleFileDrop,
   };
 
@@ -186,11 +186,21 @@ const SidebarWithHeader: React.FC = () => {
                           >
                             <input {...getInputProps()} />
                             {selectedFile ? (
-                              <img
-                                src={selectedFile.previewUrl}
-                                alt="Preview"
-                                className="preview"
-                              />
+                              <>
+                                {selectedFile.file.type.startsWith("image/") ? (
+                                  <img
+                                    src={selectedFile.previewUrl}
+                                    alt="Preview"
+                                    className="preview"
+                                  />
+                                ) : (
+                                  <video
+                                    src={selectedFile.previewUrl}
+                                    className="preview"
+                                    controls
+                                  />
+                                )}
+                              </>
                             ) : (
                               <FaUpload color="grey" />
                             )}
@@ -224,7 +234,9 @@ const SidebarWithHeader: React.FC = () => {
                           >
                             your videos will be private until you publish them
                           </Text>
-                          <Button size={"lg"} colorScheme="twitter">
+                          <Button
+                           {...getRootProps()}
+                          size={"lg"} colorScheme="twitter">
                             Select media
                           </Button>
                         </Flex>
