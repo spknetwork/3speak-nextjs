@@ -46,7 +46,7 @@ const SignUp = () => {
         </Box>
 
         <Formik
-          initialValues={{ password: "", email: "", username: "" }}
+          initialValues={{ password: "", email: "" }}
           validate={(props) => {
             const errors: any = {};
 
@@ -55,7 +55,7 @@ const SignUp = () => {
             }
 
             if (!props.password) errors.password = t("required");
-            if (!props.username) errors.username = t("username");
+            // if (!props.username) errors.username = t("username");
             if (!props.email) errors.email = t("required");
 
             return errors;
@@ -85,7 +85,7 @@ const SignUp = () => {
                   )}
                 </fieldset>
               </Box>
-              <Box width="100%">
+              {/* <Box width="100%">
                 <fieldset className="Fieldset">
                   <label className="Label" htmlFor="username">
                     Hive username
@@ -93,19 +93,16 @@ const SignUp = () => {
                   <input
                     className="Input"
                     id="username"
-                    name="username"
                     placeholder="hive username"
                     type="text"
-                    onChange={props.handleChange}
-                    onBlur={props.handleBlur}
-                  />
-                  {!!props.errors.username && (
+                  /> */}
+                  {/* {!!props.errors.username && (
                     <Typography color="#FF3333">
                       {props.errors.username}
                     </Typography>
-                  )}
-                </fieldset>
-              </Box>
+                  )} */}
+                {/* </fieldset>
+              </Box> */}
               <Box width="100%">
                 <fieldset className="Fieldset">
                   <label className="Label" htmlFor="newPassword">
