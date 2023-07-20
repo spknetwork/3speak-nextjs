@@ -40,14 +40,14 @@ export default function Newcomers({
     <Grid>
       <h1>First Time Uploads</h1>
       <InfiniteScroll
-        dataLength={newcomerVideos.length}
+        dataLength={newcomerVideos?.length}
         next={getMoreVideos}
         hasMore={true}
         loader={<h3>Loading...</h3>}
         endMessage={<h4>Nothing more to show</h4>}
       >
         <Row>
-          {newcomerVideos.map((video: IVideo & { payout: number }) => (
+          {newcomerVideos?.map((video: IVideo & { payout: number }) => (
             <VideoCard key={`${video.owner}/${video.permlink}`} {...video} />
           ))}
         </Row>

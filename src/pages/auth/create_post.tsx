@@ -68,7 +68,6 @@ import {
 } from "react-icons/fa";
 import { SlCheck, SlPicture } from "react-icons/sl";
 
-import { VideoThumbnailGenerator } from "video-thumbnail-generator";
 interface LinkItemProps {
   name: string;
   icon: IconType;
@@ -136,7 +135,6 @@ const SidebarWithHeader: React.FC = () => {
   };
 
   const dropzoneOptions: DropzoneOptions = {
-    accept: ["image/*", "video/*"],
     onDrop: handleFileDrop,
   };
 
