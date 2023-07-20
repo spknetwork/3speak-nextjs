@@ -64,7 +64,8 @@ export default function CommunitiesView() {
               key={value.name}
               name={value.name}
               sum_pending={value.sum_pending}
-              reflink={`hive:${value.name}`}
+              // reflink={`hive:${value.name}`}
+              reflink={`${value.name}`}
               info={value}
             />
           ))}

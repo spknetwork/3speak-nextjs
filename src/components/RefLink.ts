@@ -5,8 +5,8 @@ export interface RefLinkSource {
 
 export default class RefLink {
   link: any;
-  source: RefLinkSource;
-  constructor(link) {
+  source: RefLinkSource = { value: "", type: "" };
+  constructor(link: {}) {
     this.link = link;
 
     if (this.link[0]) {
@@ -53,7 +53,7 @@ export default class RefLink {
   toString() {
     return this.link.join(":");
   }
-  static isValid(link) {
+  static isValid(link: any) {
     try {
       RefLink.parse(link);
       return true;
@@ -61,7 +61,7 @@ export default class RefLink {
       return false;
     }
   }
-  static parse(link) {
+  static parse(link: any) {
     if (link instanceof RefLink) {
       return link;
     }
