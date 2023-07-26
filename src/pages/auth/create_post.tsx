@@ -206,7 +206,7 @@ const CreatePost: React.FC = () => {
                                   {selectedFile.file.type.startsWith(
                                     "image/"
                                   ) ? (
-                                    <img
+                                    <Image
                                       src={selectedFile.previewUrl}
                                       alt="Preview"
                                       className="preview"
@@ -330,7 +330,7 @@ const CreatePost: React.FC = () => {
                             {selectedFile ? (
                               <>
                                 {selectedFile.file.type.startsWith("image/") ? (
-                                  <img
+                                  <Image
                                     src={selectedFile.previewUrl}
                                     alt="Preview"
                                     className="preview"
@@ -699,7 +699,7 @@ const CreatePost: React.FC = () => {
                             {selectedFile ? (
                               <>
                                 {selectedFile.file.type.startsWith("image/") ? (
-                                  <img
+                                  <Image
                                     src={selectedFile.previewUrl}
                                     alt="Preview"
                                     className="preview"
