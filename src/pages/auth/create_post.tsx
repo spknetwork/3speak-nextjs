@@ -4,35 +4,17 @@ import { DropzoneOptions, useDropzone } from "react-dropzone";
 import axios from "axios";
 
 import {
-  IconButton,
-  Avatar,
   Box,
-  CloseButton,
   Flex,
-  HStack,
-  VStack,
-  Icon,
   useColorModeValue,
-  Link,
   Drawer,
   DrawerContent,
   Text,
   useDisclosure,
-  BoxProps,
-  FlexProps,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
   Image,
-  Heading,
   Card,
   CardBody,
-  SimpleGrid,
-  CardHeader,
   Stack,
-  StackDivider,
   Button,
   Textarea,
   Input,
@@ -40,31 +22,9 @@ import {
   RadioGroup,
   Radio,
 } from "@chakra-ui/react";
+
 import {
-  FiHome,
-  FiUpload,
-  FiVideo,
-  FiUsers,
-  FiSettings,
-  FiMenu,
-  FiBell,
-  FiChevronDown,
-} from "react-icons/fi";
-import { IconType } from "react-icons";
-import { ReactText } from "react";
-import {
-  FaArchive,
-  FaChartLine,
-  FaCloudUploadAlt,
-  FaCog,
-  FaExternalLinkAlt,
-  FaRegEye,
-  FaSignOutAlt,
   FaUpload,
-  FaUserAlt,
-  FaUsers,
-  FaVideo,
-  FaWallet,
 } from "react-icons/fa";
 import { SlCheck, SlPicture } from "react-icons/sl";
 import { useRouter } from "next/router";
@@ -76,7 +36,7 @@ type FilePreview = {
   previewUrl: string;
 };
 
-const SidebarWithHeader: React.FC = () => {
+const CreatePost: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
   const [steps, setSteps] = useState<number>(0);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
@@ -944,10 +904,4 @@ const SidebarWithHeader: React.FC = () => {
   );
 };
 
-
-
-const StyledLink = styled(Link)`
-  cursor: pointer;
-`;
-
-export default SidebarWithHeader;
+export default CreatePost;
