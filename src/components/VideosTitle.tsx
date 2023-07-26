@@ -1,12 +1,19 @@
 import { Text } from "@chakra-ui/react";
 import { css } from "@emotion/react";
+import { useRouter } from "next/router";
 import React from "react";
 
 const VideosTitle = (props: { title: string }) => {
+  const router = useRouter();
+  const redirectWatchPage = () => {
+    router.push("/watch")
+  }
   return (
     <div>
       <Text
+        onClick={() => redirectWatchPage()}
         css={css`
+          cursor: pointer;
           font-weight: bold;
           font-size: 13px;
           overflow-wrap: break-word;
