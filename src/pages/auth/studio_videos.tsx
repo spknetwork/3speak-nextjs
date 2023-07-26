@@ -88,18 +88,24 @@ import {
 } from "react-icons/fa";
 import { SlPicture } from "react-icons/sl";
 import { useAppStore } from "../../lib/store";
+import { useRouter } from "next/router";
 
 interface LinkItemProps {
   name: string;
   icon: IconType;
+  route?: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Dashboard", icon: FiHome },
-  { name: "Upload", icon: FaCloudUploadAlt },
-  { name: "Videos", icon: FaVideo },
+  {
+    name: "Dashboard",
+    icon: FiHome,
+    route: "/auth/studio",
+  },
+  { name: "Upload", icon: FaCloudUploadAlt, route: "/auth/upload" },
+  { name: "Videos", icon: FaVideo, route: "/auth/studio_videos" },
 
-  { name: "My Channel", icon: FaExternalLinkAlt },
-  { name: "Logout", icon: FaSignOutAlt },
+  { name: "My Channel", icon: FaExternalLinkAlt, route: "/auth/studio_videos" },
+  { name: "Logout", icon: FaSignOutAlt, route: "/auth/studio_videos" },
 ];
 
 export default function StudioVideos({ children }: { children: ReactNode }) {
@@ -265,11 +271,14 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
   );
 }
 
+
 interface SidebarProps extends BoxProps {
   onClose: () => void;
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+ 
+
   return (
     <Box
       transition="3s ease"
@@ -281,29 +290,17 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       h="full"
       {...rest}
     >
-      <Flex
-        h="20"
-        alignItems="center"
-        mx="8"
-        justifyContent="space-between"
-        marginBottom={"100px"}
-      >
+      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         {/* <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
           Logo
         </Text> */}
-        <Flex
-          flexDirection={"column"}
-          justifyContent="center"
-          alignItems={"center"}
-          width="100%"
-        >
-          <StyledLink href="/">
+        <Flex justifyContent="center" alignItems={"center"} width="100%">
+          <StyledLink href="/auth/studio">
             <Box
               display={"flex"}
               justifyContent="center"
               alignItems={"center"}
               width={"180px"}
-              marginTop="100px"
             >
               <Image
                 src="/main_logo.svg"
@@ -313,15 +310,13 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
               />
             </Box>
           </StyledLink>
-          <Button width={"100%"} padding="10px">
-            LOG IN / SIGN UP
-          </Button>
         </Flex>
-
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem color={"#6e707e"} key={link.name} icon={link.icon}>
+        <NavItem
+          route={link.route}
+          color={"#6e707e"} key={link.name} icon={link.icon}>
           {link.name}
         </NavItem>
       ))}
@@ -331,21 +326,25 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
 interface NavItemProps extends FlexProps {
   icon: IconType;
+  route: string | any;
   children: ReactText;
 }
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, route, children, ...rest }: NavItemProps) => {
+  const router = useRouter();
   return (
-    <Link
-      href="#"
-      style={{ textDecoration: "none" }}
-      _focus={{ boxShadow: "none" }}
-    >
-      {/* _hover=
-      {{
-        bg: "gray.400",
-        color: "white",
-      }} */}
+    // // <Link
+   
+    // //   href="#"
+    // //   style={{ textDecoration: "none" }}
+    // //   _focus={{ boxShadow: "none" }}
+    // // >
+    //   {/* _hover=
+    //   {{
+    //     bg: "gray.400",
+    //     color: "white",
+    //   }} */}
       <Flex
+        onClick={() => router.push(route) }
         align="center"
         p="4"
         mx="4"
@@ -366,7 +365,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
         )}
         {children}
       </Flex>
-    </Link>
+    // </Link>
   );
 };
 
