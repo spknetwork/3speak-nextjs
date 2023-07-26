@@ -68,24 +68,8 @@ import {
 } from "react-icons/fa";
 import { SlCheck, SlPicture } from "react-icons/sl";
 import { useRouter } from "next/router";
+import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 
-interface LinkItemProps {
-  name: string;
-  icon: IconType;
-  route?: string;
-}
-const LinkItems: Array<LinkItemProps> = [
-  {
-    name: "Dashboard",
-    icon: FiHome,
-    route: "/auth/studio",
-  },
-  { name: "Upload", icon: FaCloudUploadAlt, route: "/auth/upload" },
-  { name: "Videos", icon: FaVideo, route: "/auth/studio_videos" },
-
-  { name: "My Channel", icon: FaExternalLinkAlt, route: "/auth/studio_videos" },
-  { name: "Logout", icon: FaSignOutAlt, route: "/auth/studio_videos" },
-];
 type FilePreview = {
   file: File;
   previewUrl: string;
@@ -325,11 +309,16 @@ const SidebarWithHeader: React.FC = () => {
                         justifyContent={"space-between"}
                         alignItems="center"
                       >
-                        <Button onClick={() => router.push("/auth/upload")} size={"lg"} colorScheme="gray" color={"black"}>
+                        <Button
+                          onClick={() => router.push("/auth/upload")}
+                          size={"lg"}
+                          colorScheme="gray"
+                          color={"black"}
+                        >
                           Go Back
                         </Button>
                         <Button
-                          onClick={() => setSteps(1)} 
+                          onClick={() => setSteps(1)}
                           size={"lg"}
                           colorScheme="blue"
                         >
@@ -597,7 +586,12 @@ const SidebarWithHeader: React.FC = () => {
                         justifyContent={"space-between"}
                         alignItems="center"
                       >
-                        <Button onClick={() => setSteps(0)} size={"lg"} colorScheme="gray" color={"black"}>
+                        <Button
+                          onClick={() => setSteps(0)}
+                          size={"lg"}
+                          colorScheme="gray"
+                          color={"black"}
+                        >
                           Go Back
                         </Button>
                         <Button
@@ -841,7 +835,12 @@ const SidebarWithHeader: React.FC = () => {
                         justifyContent={"space-between"}
                         alignItems="center"
                       >
-                        <Button onClick={() => setSteps(1)} size={"lg"} colorScheme="gray" color={"black"}>
+                        <Button
+                          onClick={() => setSteps(1)}
+                          size={"lg"}
+                          colorScheme="gray"
+                          color={"black"}
+                        >
                           Go Back
                         </Button>
                         <Button size={"lg"} colorScheme="blue">
@@ -941,103 +940,6 @@ const SidebarWithHeader: React.FC = () => {
         </Box>
       </Box>
     </Box>
-  );
-};
-
-interface SidebarProps extends BoxProps {
-  onClose: () => void;
-}
-
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
- 
-
-  return (
-    <Box
-      transition="3s ease"
-      bg={useColorModeValue("white", "gray.900")}
-      borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
-      w={{ base: "full", md: 60 }}
-      pos="fixed"
-      h="full"
-      {...rest}
-    >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        {/* <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text> */}
-        <Flex justifyContent="center" alignItems={"center"} width="100%">
-          <StyledLink href="/auth/studio">
-            <Box
-              display={"flex"}
-              justifyContent="center"
-              alignItems={"center"}
-              width={"180px"}
-            >
-              <Image
-                src="/main_logo.svg"
-                alt="3speak logo"
-                width={100}
-                height={100}
-              />
-            </Box>
-          </StyledLink>
-        </Flex>
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
-      </Flex>
-      {LinkItems.map((link) => (
-        <NavItem
-          route={link.route}
-          color={"#6e707e"} key={link.name} icon={link.icon}>
-          {link.name}
-        </NavItem>
-      ))}
-    </Box>
-  );
-};
-
-interface NavItemProps extends FlexProps {
-  icon: IconType;
-  route: string | any;
-  children: ReactText;
-}
-const NavItem = ({ icon, route, children, ...rest }: NavItemProps) => {
-  const router = useRouter();
-  return (
-    // // <Link
-   
-    // //   href="#"
-    // //   style={{ textDecoration: "none" }}
-    // //   _focus={{ boxShadow: "none" }}
-    // // >
-    //   {/* _hover=
-    //   {{
-    //     bg: "gray.400",
-    //     color: "white",
-    //   }} */}
-      <Flex
-        onClick={() => router.push(route) }
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        {...rest}
-      >
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: "black",
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
-    // </Link>
   );
 };
 
