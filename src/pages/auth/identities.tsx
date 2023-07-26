@@ -61,24 +61,6 @@ import {
 import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 
-interface LinkItemProps {
-  name: string;
-  icon: IconType;
-  route?: string;
-}
-const LinkItems: Array<LinkItemProps> = [
-  {
-    name: "Dashboard",
-    icon: FiHome,
-    route: "/auth/studio",
-  },
-  { name: "Upload", icon: FaCloudUploadAlt, route: "/auth/upload" },
-  { name: "Videos", icon: FaVideo, route: "/auth/studio_videos" },
-
-  { name: "My Channel", icon: FaExternalLinkAlt, route: "/auth/studio_videos" },
-  { name: "Logout", icon: FaSignOutAlt, route: "/auth/studio_videos" },
-];
-
 export default function Identities({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
