@@ -27,6 +27,9 @@ const SignIn = () => {
     try {
       const response = await fetch("https://acela.us-west.web3telekom.xyz/api/v1/auth/login", {
         method: "POST",
+        "headers": {
+          "content-type": "application/json",
+        },
         body: JSON.stringify({
            ...values,
            username: values.email
