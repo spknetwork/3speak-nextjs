@@ -27,7 +27,7 @@ import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 
 
 
-export default function SidebarWithHeader({
+export default function StudioPage({
   children,
 }: {
   children: ReactNode;

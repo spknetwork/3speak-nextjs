@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 
-export default function SidebarWithHeader({
+export default function StudioUploadPage({
   children,
 }: {
   children: ReactNode;
@@ -191,3 +191,4 @@ export default function SidebarWithHeader({
     </Box>
   );
 }
+
