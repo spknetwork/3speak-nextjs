@@ -10,6 +10,7 @@ import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
+import { API_URL } from "@/utils/config";
 
 const SignIn = () => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const SignIn = () => {
   const handleSubmit = async (values: any) => {
     console.log("test", values);
     try {
-      const response = await fetch("https://acela.us-west.web3telekom.xyz/api/v1/auth/login", {
+      const response = await fetch(API_URL+"/v1/auth/login", {
         method: "POST",
         "headers": {
           "content-type": "application/json",
