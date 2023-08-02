@@ -7,6 +7,8 @@ import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
+import axios from "axios";
+import { API_URL } from '../../utils/config';
 // import ReCAPTCHA from "react-google-recaptcha";
 const SignUp = () => {
   const router = useRouter();
@@ -23,10 +25,27 @@ const SignUp = () => {
   const handleSubmit = async (values: any) => {
     console.log("test", values);
     try {
-      const response = await fetch("https://acela.us-west.web3telekom.xyz/api/v1/auth/register", {
-        method: "POST",
-        body: JSON.stringify(values),
-      });
+   
+      const requestBody = JSON.stringify({
+        ...values,
+        username: values.email
+     })
+      // Make a POST request using Axios with headers and body
+      const response = await axios.post(
+        API_URL+"/v1/auth/register",
+        requestBody,
+        {
+          headers: {
+            // Set your custom headers here
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      // const response = await fetch("https://acela.us-west.web3telekom.xyz/api/v1/auth/register", {
+      //   method: "POST",
+
+      //   body: JSON.stringify(values),
+      // });
 
       console.log('response',response);
       // Handle the response here
@@ -96,12 +115,12 @@ const SignUp = () => {
                     placeholder="hive username"
                     type="text"
                   /> */}
-                  {/* {!!props.errors.username && (
+              {/* {!!props.errors.username && (
                     <Typography color="#FF3333">
                       {props.errors.username}
                     </Typography>
                   )} */}
-                {/* </fieldset>
+              {/* </fieldset>
               </Box> */}
               <Box width="100%">
                 <fieldset className="Fieldset">
