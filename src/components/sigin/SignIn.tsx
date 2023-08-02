@@ -10,7 +10,9 @@ import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
-import { API_URL } from "@/utils/config";
+import { API_URL_FROM_WEST } from '../../utils/config';
+import axios from "axios";
+
 
 const SignIn = () => {
   const router = useRouter();
@@ -26,17 +28,20 @@ const SignIn = () => {
   const handleSubmit = async (values: any) => {
     console.log("test", values);
     try {
-      const response = await fetch(API_URL+"/v1/auth/login", {
-        method: "POST",
-        "headers": {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-           ...values,
-           username: values.email
-        }),
-      });
-
+      const requestBody = JSON.stringify({
+        ...values,
+        username: values.email
+     })
+      const response = await axios.post(
+        API_URL_FROM_WEST+"/v1/auth/login",
+        requestBody,
+        {
+          headers: {
+            // Set your custom headers here
+            "Content-Type": "application/json",
+          },
+        }
+      )
       console.log('response',response);
       // Handle the response here
     } catch (error) {

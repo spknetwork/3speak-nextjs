@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
 import axios from "axios";
-import { API_URL } from '../../utils/config';
+import { API_URL_FROM_WEST } from '../../utils/config';
 // import ReCAPTCHA from "react-google-recaptcha";
 const SignUp = () => {
   const router = useRouter();
@@ -32,12 +32,13 @@ const SignUp = () => {
      })
       // Make a POST request using Axios with headers and body
       const response = await axios.post(
-        API_URL+"/v1/auth/register",
+        API_URL_FROM_WEST+"/v1/auth/register",
         requestBody,
         {
           headers: {
             // Set your custom headers here
             "Content-Type": "application/json",
+            // "Access-Control-Allow-Origin": "*",
           },
         }
       );
