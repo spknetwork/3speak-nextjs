@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 import {
   Box,
@@ -15,16 +15,49 @@ import { SlPicture } from "react-icons/sl";
 import { useRouter } from "next/router";
 import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
+import { api } from "@/utils/api";
 
 export default function StudioUploadPage({
   children,
 }: {
   children: ReactNode;
 }) {
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
+
+  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token"); // Retrieve the token from your storage or context
+    if (token) {
+      api.auth.checkAuthentication(token).then((isAuthenticated) => {
+        setAuthenticated(isAuthenticated);
+      });
+    } else {
+      setAuthenticated(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (authenticated == false && authenticated != null) {
+      router.push("/auth/login");
+    }
+  }, [authenticated, router]);
+
+  const colorModeValue = useColorModeValue(
+    authenticated ? "gray.100" : "gray.100",
+    authenticated ? "gray.900" : "gray.900"
+  );
+  if (authenticated === null) {
+    return <Box>Loading...</Box>;
+  }
+
+  if (authenticated === false) {
+    return <Box>Unauthorized access, please login first</Box>;
+  }
+
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box minH="100vh" bg={colorModeValue}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -191,4 +224,3 @@ export default function StudioUploadPage({
     </Box>
   );
 }
-
