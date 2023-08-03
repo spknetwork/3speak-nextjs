@@ -64,6 +64,7 @@ const NAVIGATION = [
   {
     img: "nav/communities.svg",
     title: "nav.communities",
+    route: "communities",
   },
   {
     img: "nav/leaderboard.svg",
@@ -246,7 +247,7 @@ export const Sidebar = () => {
                   //   </MenuList>
                   // </Menu>
                 )}
-                {title == "nav.communities" && (
+                {/* {title == "nav.communities" && (
                   <Box position="relative">
                     <Menu>
                       <MenuButton>Communities</MenuButton>
@@ -289,7 +290,7 @@ export const Sidebar = () => {
                       </MenuList>
                     </Menu>
                   </Box>
-                )}
+                )} */}
                 {title == "about_3speak" && (
                   <Box position="relative">
                     <Menu>
@@ -335,7 +336,7 @@ export const Sidebar = () => {
                 )}
                 {title != "download_apps" &&
                   title != "about_3speak" &&
-                  title != "nav.communities" && (
+                  (
                     <Typography>{t(title)}</Typography>
                   )}
               </StyledNav>
