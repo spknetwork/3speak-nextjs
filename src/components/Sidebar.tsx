@@ -31,6 +31,7 @@ import { useMediaQuery } from "react-responsive";
 import { css } from "@emotion/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { FaAppStoreIos, FaInfo, FaInfoCircle } from "react-icons/fa";
+import { api } from "@/utils/api";
 const threespeak = {
   filter: "drop-shadow(2px 4px 6px black)",
 };
@@ -88,7 +89,18 @@ export const Sidebar = () => {
   const [showNav, setShowNav] = useState(true);
 
   // const isMedium = useBreakpointValue({ base: false, md: true });
+  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
+  useEffect(() => {
+    const token = localStorage.getItem("access_token"); // Retrieve the token from your storage or context
+    if (token) {
+      api.auth.checkAuthentication(token).then((isAuthenticated) => {
+        setAuthenticated(isAuthenticated);
+      });
+    } else {
+      setAuthenticated(false);
+    }
+  }, []);
   useEffect(() => {
     console.log("isMobile", isMobile);
     if (isMobile) {
@@ -98,7 +110,7 @@ export const Sidebar = () => {
       setShowNav(false);
       console.log("showNav", showNav);
     }
-  }, [isMobile]);
+  }, [isMobile, showNav]);
   return (
     <Flex p="1rem" flexDirection="column">
       <Flex
@@ -136,9 +148,17 @@ export const Sidebar = () => {
       {!showNav && (
         <Box>
           <Box mb="1rem" width="100%">
-            <Link href="/auth/login">
-              <StyledButton py={3}>{t("mainLogin")}</StyledButton>
-            </Link>
+            {!authenticated && (
+              <Link href="/auth/login">
+                <StyledButton py={3}>{t("mainLogin")}</StyledButton>
+              </Link>
+            )}
+
+            {authenticated && (
+              <Link href="/studio">
+                <StyledButton py={3}>Upload Video</StyledButton>
+              </Link>
+            )}
           </Box>
           <Box>
             {NAVIGATION.map(({ img, title, route }) => (
