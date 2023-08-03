@@ -25,7 +25,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
   const logout = () => {
     localStorage.removeItem("access_token"); //
-    router.push("/auth/login2");
+    router.push("/auth/login");
   };
   return (
     <Flex
