@@ -31,13 +31,13 @@ const LinkItems: Array<LinkItemProps> = [
   {
     name: "Dashboard",
     icon: FiHome,
-    route: "/auth/studio",
+    route: "/studio",
   },
-  { name: "Upload", icon: FaCloudUploadAlt, route: "/auth/upload" },
-  { name: "Videos", icon: FaVideo, route: "/auth/studio_videos" },
+  { name: "Upload", icon: FaCloudUploadAlt, route: "/studio/upload" },
+  { name: "Videos", icon: FaVideo, route: "/studio/studio_videos" },
 
-  { name: "My Channel", icon: FaExternalLinkAlt, route: "/auth/studio_videos" },
-  { name: "Logout", icon: FaSignOutAlt, route: "/auth/studio_videos" },
+  { name: "My Channel", icon: FaExternalLinkAlt, route: "/studio/studio_videos" },
+  { name: "Logout", icon: FaSignOutAlt, route: "/studio/studio_videos" },
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
@@ -57,7 +57,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             Logo
           </Text> */}
         <Flex justifyContent="center" alignItems={"center"} width="100%">
-          <StyledLink href="/auth/studio">
+          <StyledLink href="/studio">
             <Box
               display={"flex"}
               justifyContent="center"
