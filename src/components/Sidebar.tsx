@@ -43,22 +43,22 @@ const NAVIGATION = [
   {
     img: "nav/home.svg",
     title: "nav.home",
-    route: "/newindex",
+    route: "/",
   },
   {
     img: "nav/smile.svg",
     title: "nav.first",
-    route: "/firstTime",
+    route: "/first_upload",
   },
   {
     img: "nav/fire.svg",
     title: "nav.trending",
-    route: "/newcomers2",
+    route: "/trends",
   },
   {
     img: "nav/play.svg",
     title: "nav.new",
-    route: "/new2",
+    route: "/new",
   },
 
   {
