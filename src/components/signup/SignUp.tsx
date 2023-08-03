@@ -9,8 +9,10 @@ import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
 import axios from "axios";
 import { API_URL_FROM_WEST } from '../../utils/config';
+import { useToast } from "@chakra-ui/react";
 // import ReCAPTCHA from "react-google-recaptcha";
 const SignUp = () => {
+  const toast = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -49,9 +51,25 @@ const SignUp = () => {
       // });
 
       console.log('response',response);
+      toast({
+        position: 'top-right',
+        title: "Successfully registered",
+        description: "You can now try to sign in",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
       // Handle the response here
-    } catch (error) {
-      console.error("API call error:", error);
+    } catch (error:any) {
+      toast({
+        position: 'top-right',
+        title: "Something went wrong",
+        description: error?.response?.data?.reason,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      console.error("API call error:", error?.response?.data?.reason);
     }
   };
   return (
