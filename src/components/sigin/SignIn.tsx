@@ -25,6 +25,22 @@ const SignIn = () => {
     console.log(token);
     // apply to form data
   };
+  const checkLogin = async (values:any) => {
+    const requestBody = JSON.stringify({
+   })
+    const response = await axios.post(
+      API_URL_FROM_WEST+"/v1/auth/check",requestBody,
+      {
+        headers: {
+          // Set your custom headers here
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${values}`,
+        },
+      }
+    )
+
+    console.log('checkLogin',response);
+  }
   const handleSubmit = async (values: any) => {
     console.log("test", values);
     try {
@@ -43,6 +59,7 @@ const SignIn = () => {
         }
       )
       console.log('response',response);
+      checkLogin(response.data.access_token)
       // Handle the response here
     } catch (error) {
       console.error("API call error:", error);
