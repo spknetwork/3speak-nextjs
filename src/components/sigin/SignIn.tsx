@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -10,9 +10,9 @@ import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
-import { API_URL_FROM_WEST } from '../../utils/config';
+import { API_URL_FROM_WEST } from "../../utils/config";
 import axios from "axios";
-
+import { api } from "@/utils/api";
 
 const SignIn = () => {
   const router = useRouter();
@@ -25,11 +25,31 @@ const SignIn = () => {
     console.log(token);
     // apply to form data
   };
-  const checkLogin = async (values:any) => {
-    const requestBody = JSON.stringify({
-   })
+
+  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token"); // Retrieve the token from your storage or context
+    if (token) {
+      api.auth.checkAuthentication(token).then((isAuthenticated) => {
+        setAuthenticated(isAuthenticated);
+      });
+    } else {
+      setAuthenticated(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (authenticated) {
+      router.push("/");
+    }
+  }, [authenticated, router]);
+
+  const checkLogin = async (values: any) => {
+    const requestBody = JSON.stringify({});
     const response = await axios.post(
-      API_URL_FROM_WEST+"/v1/auth/check",requestBody,
+      API_URL_FROM_WEST + "/v1/auth/check",
+      requestBody,
       {
         headers: {
           // Set your custom headers here
@@ -37,19 +57,22 @@ const SignIn = () => {
           Authorization: `Bearer ${values}`,
         },
       }
-    )
+    );
 
-    console.log('checkLogin',response);
-  }
+    if (response.data.ok) {
+      console.log("can proceed to home now", response);
+      router.push("/");
+    }
+  };
   const handleSubmit = async (values: any) => {
     console.log("test", values);
     try {
       const requestBody = JSON.stringify({
         ...values,
-        username: values.email
-     })
+        username: values.email,
+      });
       const response = await axios.post(
-        API_URL_FROM_WEST+"/v1/auth/login",
+        API_URL_FROM_WEST + "/v1/auth/login",
         requestBody,
         {
           headers: {
@@ -57,14 +80,16 @@ const SignIn = () => {
             "Content-Type": "application/json",
           },
         }
-      )
-      console.log('response',response);
-      checkLogin(response.data.access_token)
+      );
+      console.log("response", response);
+      localStorage.setItem("access_token", response.data.access_token);
+      checkLogin(response.data.access_token);
       // Handle the response here
     } catch (error) {
       console.error("API call error:", error);
     }
   };
+
   return (
     <Box width="100%">
       <Box mx="auto" maxWidth="9rem">
@@ -171,7 +196,7 @@ const SignIn = () => {
                 </StyledButton>
               </Link>
             </Flex>
-          {/* </form> */}
+            {/* </form> */}
           </Form>
         )}
       </Formik>
