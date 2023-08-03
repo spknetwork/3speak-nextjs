@@ -21,6 +21,7 @@ config.autoAddCss = false;
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
   const isAuth = pathname.includes("/auth");
+  const isStudio = pathname.includes("/studio");
 
   return (
     <Provider store={store}>
@@ -37,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         `}
       >
         <nav>
-          <Box>{!isAuth && <Sidebar />}</Box>
+          <Box>{!isAuth && !isStudio && <Sidebar />}</Box>
         </nav>
         <Flex
           width={"100%"}
