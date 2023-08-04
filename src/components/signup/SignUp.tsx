@@ -10,6 +10,7 @@ import { Typography, Box, Flex } from "src/components";
 import axios from "axios";
 import { API_URL_FROM_WEST } from '../../utils/config';
 import { useToast } from "@chakra-ui/react";
+import { useAppStore } from "@/lib/store";
 // import ReCAPTCHA from "react-google-recaptcha";
 const SignUp = () => {
   const toast = useToast();
@@ -23,46 +24,21 @@ const SignUp = () => {
     console.log(token);
     // apply to form data
   };
-
+  const { register } = useAppStore();
   const handleSubmit = async (values: any) => {
-    console.log("test", values);
     try {
-   
-      const requestBody = JSON.stringify({
-        ...values,
-        username: values.email
-     })
-      // Make a POST request using Axios with headers and body
-      const response = await axios.post(
-        API_URL_FROM_WEST+"/v1/auth/register",
-        requestBody,
-        {
-          headers: {
-            // Set your custom headers here
-            "Content-Type": "application/json",
-            // "Access-Control-Allow-Origin": "*",
-          },
-        }
-      );
-      // const response = await fetch("https://acela.us-west.web3telekom.xyz/api/v1/auth/register", {
-      //   method: "POST",
-
-      //   body: JSON.stringify(values),
-      // });
-
-      console.log('response',response);
+      await register(values);
       toast({
-        position: 'top-right',
+        position: "top-right",
         title: "Successfully registered",
         description: "You can now try to sign in",
         status: "success",
         duration: 9000,
         isClosable: true,
       });
-      // Handle the response here
-    } catch (error:any) {
+    }  catch (error: any) {
       toast({
-        position: 'top-right',
+        position: "top-right",
         title: "Something went wrong",
         description: error?.response?.data?.reason,
         status: "error",

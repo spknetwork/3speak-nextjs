@@ -15,7 +15,7 @@ import { SlPicture } from "react-icons/sl";
 import { useRouter } from "next/router";
 import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
-import { api } from "@/utils/api";
+import { useAppStore } from "@/lib/store";
 
 export default function StudioUploadPage({
   children,
@@ -25,18 +25,18 @@ export default function StudioUploadPage({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
+  const { allowAccess } = useAppStore();
+  // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token"); // Retrieve the token from your storage or context
-    if (token) {
-      api.auth.checkAuthentication(token).then((isAuthenticated) => {
-        setAuthenticated(isAuthenticated);
-      });
+    if (allowAccess == true) {
+      setAuthenticated(allowAccess);
+      // return
     } else {
       setAuthenticated(false);
     }
-  }, []);
+  }, [allowAccess]);
 
   useEffect(() => {
     if (authenticated == false && authenticated != null) {

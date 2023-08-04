@@ -13,6 +13,7 @@ import Link from "next/link";
 import { API_URL_FROM_WEST } from "../../utils/config";
 import axios from "axios";
 import { api } from "@/utils/api";
+import { useAppStore } from "@/lib/store";
 
 const SignIn = () => {
   const router = useRouter();
@@ -26,18 +27,18 @@ const SignIn = () => {
     // apply to form data
   };
 
+  const { allowAccess, login, checkAuth } = useAppStore();
+  // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token"); // Retrieve the token from your storage or context
-    if (token) {
-      api.auth.checkAuthentication(token).then((isAuthenticated) => {
-        setAuthenticated(isAuthenticated);
-      });
+    if (allowAccess == true) {
+      setAuthenticated(allowAccess);
+      // return
     } else {
       setAuthenticated(false);
     }
-  }, []);
+  }, [allowAccess]);
 
   useEffect(() => {
     if (authenticated) {
@@ -45,49 +46,9 @@ const SignIn = () => {
     }
   }, [authenticated, router]);
 
-  const checkLogin = async (values: any) => {
-    const requestBody = JSON.stringify({});
-    const response = await axios.post(
-      API_URL_FROM_WEST + "/v1/auth/check",
-      requestBody,
-      {
-        headers: {
-          // Set your custom headers here
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${values}`,
-        },
-      }
-    );
-
-    if (response.data.ok) {
-      console.log("can proceed to home now", response);
-      router.push("/");
-    }
-  };
   const handleSubmit = async (values: any) => {
-    console.log("test", values);
-    try {
-      const requestBody = JSON.stringify({
-        ...values,
-        username: values.email,
-      });
-      const response = await axios.post(
-        API_URL_FROM_WEST + "/v1/auth/login",
-        requestBody,
-        {
-          headers: {
-            // Set your custom headers here
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("response", response);
-      localStorage.setItem("access_token", response.data.access_token);
-      checkLogin(response.data.access_token);
-      // Handle the response here
-    } catch (error) {
-      console.error("API call error:", error);
-    }
+    await login(values);
+    checkAuth();
   };
 
   return (

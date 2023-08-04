@@ -32,6 +32,8 @@ import { css } from "@emotion/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { FaAppStoreIos, FaInfo, FaInfoCircle } from "react-icons/fa";
 import { api } from "@/utils/api";
+import { useAppStore } from '../lib/store'
+
 const threespeak = {
   filter: "drop-shadow(2px 4px 6px black)",
 };
@@ -89,19 +91,23 @@ export const Sidebar = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const [showNav, setShowNav] = useState(true);
 
+  const { allowAccess } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
-  useEffect(() => {
-    const token = localStorage.getItem("access_token"); // Retrieve the token from your storage or context
-    if (token) {
-      api.auth.checkAuthentication(token).then((isAuthenticated) => {
-        setAuthenticated(isAuthenticated);
-      });
-    } else {
-      setAuthenticated(false);
-    }
-  }, []);
+  useEffect(()  =>  {
+      if (allowAccess == true) {
+        setAuthenticated(allowAccess)
+        // return
+      }else{
+        setAuthenticated(false)
+      }
+
+      console.log('authenticated',authenticated)
+     
+  }, [allowAccess]);
+
+
   useEffect(() => {
     console.log("isMobile", isMobile);
     if (isMobile) {
@@ -334,11 +340,9 @@ export const Sidebar = () => {
                     </Menu>
                   </Box>
                 )}
-                {title != "download_apps" &&
-                  title != "about_3speak" &&
-                  (
-                    <Typography>{t(title)}</Typography>
-                  )}
+                {title != "download_apps" && title != "about_3speak" && (
+                  <Typography>{t(title)}</Typography>
+                )}
               </StyledNav>
             ))}
           </Box>

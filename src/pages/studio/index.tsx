@@ -31,18 +31,18 @@ export default function StudioPage({ children }: { children: ReactNode }) {
   const [mViewsCount, setMViewsCount] = useState<Number>();
 
   const router = useRouter();
+  const { allowAccess } = useAppStore();
+  // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token"); // Retrieve the token from your storage or context
-    if (token) {
-      api.auth.checkAuthentication(token).then((isAuthenticated) => {
-        setAuthenticated(isAuthenticated);
-      });
+    if (allowAccess == true) {
+      setAuthenticated(allowAccess);
+      // return
     } else {
       setAuthenticated(false);
     }
-  }, []);
+  }, [allowAccess]);
 
   useEffect(() => {
     if (authenticated == false && authenticated != null) {
@@ -76,11 +76,11 @@ export default function StudioPage({ children }: { children: ReactNode }) {
     authenticated ? "gray.900" : "gray.900"
   );
   if (authenticated === null) {
-    return <Box >Loading...</Box>;
+    return <Box>Loading...</Box>;
   }
 
   if (authenticated === false) {
-    return <Box >Unauthorized access, please login first</Box>;
+    return <Box>Unauthorized access, please login first</Box>;
   }
 
   return (

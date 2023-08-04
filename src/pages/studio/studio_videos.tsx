@@ -31,6 +31,7 @@ import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
+import { useAppStore } from "@/lib/store";
 
 export default function StudioVideos({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -42,18 +43,18 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
 
   const router = useRouter();
 
+  const { allowAccess } = useAppStore();
+  // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token"); // Retrieve the token from your storage or context
-    if (token) {
-      api.auth.checkAuthentication(token).then((isAuthenticated) => {
-        setAuthenticated(isAuthenticated);
-      });
+    if (allowAccess == true) {
+      setAuthenticated(allowAccess);
+      // return
     } else {
       setAuthenticated(false);
     }
-  }, []);
+  }, [allowAccess]);
 
   useEffect(() => {
     if (authenticated == false && authenticated != null) {

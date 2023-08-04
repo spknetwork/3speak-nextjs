@@ -25,7 +25,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
   const logout = () => {
     localStorage.removeItem("access_token"); //
-    router.push("/auth/login");
+    // in order to reset the localstorage it needs to refresh the whole page
+    location.reload(); 
   };
   return (
     <Flex

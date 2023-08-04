@@ -7,6 +7,7 @@ import {
   Link,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { IconType } from "react-icons";
 import {
   FaCloudUploadAlt,
@@ -41,6 +42,7 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const router = useRouter();
   return (
     <Box
       transition="3s ease"
@@ -57,8 +59,10 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             Logo
           </Text> */}
         <Flex justifyContent="center" alignItems={"center"} width="100%">
-          <StyledLink href="/studio">
+         
             <Box
+              cursor={'pointer'}
+              onClick={() => router.push("/studio")}
               display={"flex"}
               justifyContent="center"
               alignItems={"center"}
@@ -71,7 +75,6 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 height={100}
               />
             </Box>
-          </StyledLink>
         </Flex>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
