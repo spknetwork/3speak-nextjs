@@ -99,7 +99,15 @@ const CreatePost: React.FC = () => {
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
   const changeCurrentStep = (step: number) => {
-    setSteps(step);
+    if (step > 0 && selectedFile) {
+      setSteps(step);
+      return;
+    }
+
+    if (step <= 0) {
+      setSteps(step);
+      return;
+    }
   };
 
   const [publishValue, setPublishValue] = useState<string>("1");
@@ -306,25 +314,24 @@ const CreatePost: React.FC = () => {
                           </Flex>
                         </Box>
                       </Flex>
-                      <Flex
-                        justifyContent={"space-between"}
-                        alignItems="center"
-                      >
-                        <Button
+                      <Flex justifyContent={"end"} alignItems="center">
+                        {/* <Button
                           onClick={() => router.push("/studio/upload")}
                           size={"lg"}
                           colorScheme="gray"
                           color={"black"}
                         >
                           Go Back
-                        </Button>
-                        <Button
-                          onClick={() => setSteps(1)}
-                          size={"lg"}
-                          colorScheme="blue"
-                        >
-                          Next Step
-                        </Button>
+                        </Button> */}
+                        {selectedFile && (
+                          <Button
+                            onClick={() => setSteps(1)}
+                            size={"lg"}
+                            colorScheme="blue"
+                          >
+                            Next Step
+                          </Button>
+                        )}
                       </Flex>
                     </Flex>
                   </Box>
