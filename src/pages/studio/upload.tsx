@@ -121,7 +121,7 @@ export default function StudioUploadPage({
                           fontSize={{ base: "25px", md: "25px", lg: "36px" }}
                           color="gray"
                         >
-                          Edit your draft post
+                          Edit your draft video
                         </Text>
                         <Text
                           fontWeight={"400"}
@@ -129,7 +129,7 @@ export default function StudioUploadPage({
                           fontSize={{ base: "25px", md: "25px", lg: "36px" }}
                           color="gray"
                         >
-                          Post title
+                          Video title
                         </Text>
                       </Flex>
                       {/* <Flex
@@ -171,7 +171,7 @@ export default function StudioUploadPage({
                       </Box>
                       <Flex
                         cursor={"pointer"}
-                        onClick={() => router.push("/auth/create_post")}
+                        onClick={() => router.push("/studio/create_post")}
                         width={{ base: "300px", md: "300px", lg: "372px" }}
                         height={{ base: "200px", md: "200px", lg: "332px" }}
                         border={"2px dotted"}
@@ -192,7 +192,7 @@ export default function StudioUploadPage({
                           fontSize={{ base: "25px", md: "25px", lg: "36px" }}
                           color="gray"
                         >
-                          Create a new Post
+                          Create a new Video
                         </Text>
                       </Flex>
                       {/* <Flex
