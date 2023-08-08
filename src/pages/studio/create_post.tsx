@@ -98,6 +98,12 @@ const CreatePost: React.FC = () => {
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
+  const changeCurrentStep = (step: number) => {
+    setSteps(step);
+  };
+
+  const [publishValue, setPublishValue] = useState<string>("1");
+
   useEffect(() => {
     if (allowAccess == true) {
       setAuthenticated(allowAccess);
@@ -303,7 +309,7 @@ const CreatePost: React.FC = () => {
                         alignItems="center"
                       >
                         <Button
-                          onClick={() => router.push("/auth/upload")}
+                          onClick={() => router.push("/studio/upload")}
                           size={"lg"}
                           colorScheme="gray"
                           color={"black"}
@@ -645,54 +651,56 @@ const CreatePost: React.FC = () => {
                               border="1px solid"
                               width={{ base: "100%", md: "100%", lg: "100%" }}
                             >
-                              <Box
-                                marginTop={"40px"}
-                                width="80%"
-                                marginX={"auto"}
+                              <RadioGroup
+                                onChange={setPublishValue}
+                                value={publishValue}
                               >
-                                <Box marginBottom={"15px"}>
-                                  <RadioGroup defaultValue="2">
-                                    <Stack spacing={5} direction="row">
-                                      <Radio value="2">Save or publish</Radio>
-                                    </Stack>
-                                  </RadioGroup>
-                                  <Text as="label">
-                                    Make your video public, unlisted, or private
-                                  </Text>
-                                </Box>
-                                <Box marginBottom={"15px"} marginLeft={"20px"}>
-                                  <RadioGroup defaultValue="2">
-                                    <Stack spacing={5} direction="row">
-                                      <Radio value="1">Private</Radio>
-                                    </Stack>
-                                  </RadioGroup>
-                                  <Text as="label">
-                                    Only you and people you choose can watch
-                                    your video
-                                  </Text>
-                                </Box>
-                                <Box marginBottom={"15px"} marginLeft={"20px"}>
-                                  <RadioGroup defaultValue="2">
-                                    <Stack spacing={5} direction="row">
-                                      <Radio value="1">Unlisted</Radio>
-                                    </Stack>
-                                  </RadioGroup>
-                                  <Text as="label">
-                                    Anyone with the video link can watch your
-                                    video
-                                  </Text>
-                                </Box>
-                                <Box marginBottom={"15px"} marginLeft={"20px"}>
-                                  <RadioGroup defaultValue="1">
+                                <Box
+                                  marginTop={"40px"}
+                                  width="80%"
+                                  marginX={"auto"}
+                                >
+                                  <Box marginBottom={"15px"}>
+                                    <Text as="h3">Publish</Text>
+                                    <Text as="label">
+                                      Make your video public now or schedule a
+                                      date
+                                    </Text>
+                                  </Box>
+                                  <Box
+                                    marginBottom={"15px"}
+                                    marginLeft={"20px"}
+                                  >
                                     <Stack spacing={5} direction="row">
                                       <Radio value="1">Public</Radio>
                                     </Stack>
-                                  </RadioGroup>
-                                  <Text as="label">
-                                    Everyone can watch your video
-                                  </Text>
+
+                                    <Text as="label">
+                                      Publish it now and everyone can watch your
+                                      video
+                                    </Text>
+                                  </Box>
+                                  <Box
+                                    marginBottom={"15px"}
+                                    marginLeft={"20px"}
+                                  >
+                                    <Stack spacing={5} direction="row">
+                                      <Radio value="2">Schedule</Radio>
+                                    </Stack>
+                                    <Text as="label">
+                                      Set a date when do you want publish this
+                                      video
+                                    </Text>
+                                    {publishValue == "2" && (
+                                      <Input
+                                        width={'50%'}
+                                        type="date"
+                                        placeholder="select date"
+                                      />
+                                    )}
+                                  </Box>
                                 </Box>
-                              </Box>
+                              </RadioGroup>
                             </Box>
                             {/* <Text as={"fieldset"} className="w-100 mb-3">
                               <Text
@@ -845,6 +853,7 @@ const CreatePost: React.FC = () => {
                 </CardBody>
               )}
 
+              {/* card for wizard */}
               <Box
                 borderRadius={"10px"}
                 background="white"
@@ -854,78 +863,84 @@ const CreatePost: React.FC = () => {
               >
                 <Flex
                   height={"119px"}
-                  justifyContent={"start"}
+                  justifyContent={"center"}
                   alignItems="center"
                   paddingX={"30px"}
-                  flexDirection="column"
+                  flexDirection="row"
                 >
                   <Flex
-                    marginTop={"40px"}
-                    width={"100%"}
-                    justifyContent="space-between"
-                  >
-                    <Text>Upload</Text>
-                    <Text>Details</Text>
-                    <Text>Video Elements</Text>
-                    <Text>Visibility</Text>
-                  </Flex>
-                  <Flex
-                    width={"100%"}
-                    justifyContent={"space-between"}
+                    onClick={() => changeCurrentStep(0)}
+                    cursor={"pointer"}
+                    border="none"
+                    color={steps == 0 ? "#fff" : "white"}
+                    background="#1DA1F2"
+                    borderColor={"#1DA1F2"}
+                    justifyContent={"center"}
                     alignItems="center"
+                    borderRadius={"50%"}
+                    width={"250px"}
+                    height="100px"
                   >
-                    <Box
-                      width={"32px"}
-                      height="13px"
-                      border={"2px solid blue"}
-                      background="blue"
-                      borderRadius="10px"
-                    ></Box>
-                    <Box
-                      width={"inherit"}
-                      height="2px"
-                      background="grey"
-                      alignSelf={"center"}
-                    ></Box>
-                    <Box
-                      width={"32px"}
-                      height="13px"
-                      border={"2px solid grey"}
-                      borderRadius="10px"
-                      background="grey"
-                    ></Box>
-                    <Box
-                      width={"inherit"}
-                      height="2px"
-                      background="grey"
-                      alignSelf={"center"}
-                    ></Box>
-                    <Box
-                      width={"32px"}
-                      height="13px"
-                      border={"1px solid black"}
-                      borderRadius="10px"
-                    ></Box>
-                    <Box
-                      width={"inherit"}
-                      height="2px"
-                      background="grey"
-                      alignSelf={"center"}
-                    ></Box>
-                    <Box
-                      width={"32px"}
-                      height="13px"
-                      border={"1px solid black"}
-                      borderRadius="10px"
-                    ></Box>
+                    {/* for upload */}
+                    <Text fontWeight={"bold"}>Upload</Text>
                   </Flex>
 
-                  {/* <Box
-                          width={"100px"}
-                          height="2px"
-                          background="black"
-                          alignSelf={"center"}
-                        ></Box> */}
+                  {/* border={'1px solid black'} */}
+                  <Flex
+                    border={steps > 0 ? "1px solid #1DA1F2" : "1px solid black"}
+                    background={steps > 0 ? "#1DA1F2" : "#fff"}
+                    width={"95%"}
+                    height="5px"
+                  >
+                    {/* for line1 */}
+                  </Flex>
+
+                  <Flex
+                    onClick={() => changeCurrentStep(1)}
+                    cursor={"pointer"}
+                    border={steps > 0 ? "1px solid #fff" : "1px solid #fff"}
+                    color={steps > 0 ? "#fff" : "#000"}
+                    background={steps > 0 ? "#1DA1F2" : "#fff"}
+                    borderColor={steps > 0 ? "#1DA1F2" : "#000"}
+                    justifyContent={"center"}
+                    alignItems="center"
+                    borderRadius={"50%"}
+                    width={"250px"}
+                    height="100px"
+                  >
+                    {/* for Details */}
+                    <Text fontWeight={"bold"}>Details</Text>
+                  </Flex>
+
+                  <Flex
+                    border={
+                      steps == 2 ? "1px solid #1DA1F2" : "1px solid black"
+                    }
+                    background={steps == 2 ? "#1DA1F2" : "#fff"}
+                    width={"95%"}
+                    height="5px"
+                  >
+                    {/* for line2 */}
+                  </Flex>
+
+                  <Flex
+                    onClick={() => changeCurrentStep(2)}
+                    cursor={"pointer"}
+                    border={
+                      steps == 2 ? "1px solid #1DA1F2" : "1px solid black"
+                    }
+                    color={steps == 2 ? "#fff" : "#000"}
+                    background={steps == 2 ? "#1DA1F2" : "white"}
+                    borderColor={steps == 2 ? "#1DA1F2" : "#000"}
+                    justifyContent={"center"}
+                    alignItems="center"
+                    borderRadius={"50%"}
+                    width={"250px"}
+                    height="100px"
+                  >
+                    {/* visibility */}
+                    <Text fontWeight={"bold"}>Visibility</Text>
+                  </Flex>
                 </Flex>
               </Box>
             </Card>
