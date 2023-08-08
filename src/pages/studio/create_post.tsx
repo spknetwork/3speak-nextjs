@@ -107,11 +107,11 @@ const CreatePost: React.FC = () => {
   useEffect(() => {
     if (allowAccess == true) {
       setAuthenticated(allowAccess);
-      return
-    } 
+      return;
+    }
     if (allowAccess == false) {
       setAuthenticated(false);
-      return
+      return;
     }
   }, [allowAccess]);
 
@@ -401,6 +401,7 @@ const CreatePost: React.FC = () => {
                             borderRadius="0px 0px 10px 10px"
                           >
                             <Text
+                              marginTop={{ base: "5px", md: "5px", lg: "5px" }}
                               fontSize={"12px"}
                               fontWeight="bold"
                               marginLeft="10px"
@@ -408,30 +409,32 @@ const CreatePost: React.FC = () => {
                             >
                               File Name
                             </Text>
-                            <Text
-                              fontSize={{
-                                base: "10px",
-                                md: "10px",
-                                lg: "12px",
-                              }}
-                              fontWeight="bold"
-                              color={"whiteAlpha.900"}
-                              marginLeft={{
-                                base: "0px",
-                                md: "0px",
-                                lg: "10px",
-                              }}
-                              padding={{
-                                base: "0px 10px",
-                                md: "0px 10px",
-                                lg: "10px",
-                              }}
-                              width={{ base: "100%", md: "100%", lg: "100%" }}
-                            >
-                              {selectedFile?.file?.name
-                                ? selectedFile.file.name
-                                : ""}
-                            </Text>
+                            {selectedFile?.file?.name && (
+                              <Text
+                                fontSize={{
+                                  base: "10px",
+                                  md: "10px",
+                                  lg: "12px",
+                                }}
+                                fontWeight="bold"
+                                color={"whiteAlpha.900"}
+                                marginLeft={{
+                                  base: "0px",
+                                  md: "0px",
+                                  lg: "10px",
+                                }}
+                                padding={{
+                                  base: "0px 10px",
+                                  md: "0px 10px",
+                                  lg: "10px",
+                                }}
+                                width={{ base: "100%", md: "100%", lg: "100%" }}
+                              >
+                                {selectedFile?.file?.name
+                                  ? selectedFile.file.name
+                                  : ""}
+                              </Text>
+                            )}
                             <Flex
                               marginTop={{ base: "5px", md: "5px", lg: "20px" }}
                               justifyContent="center"
@@ -695,7 +698,7 @@ const CreatePost: React.FC = () => {
                                     </Text>
                                     {publishValue == "2" && (
                                       <Input
-                                        width={'50%'}
+                                        width={"50%"}
                                         type="date"
                                         placeholder="select date"
                                       />
@@ -772,6 +775,7 @@ const CreatePost: React.FC = () => {
                             borderRadius="0px 0px 10px 10px"
                           >
                             <Text
+                              marginTop={{ base: "5px", md: "5px", lg: "5px" }}
                               fontSize={"12px"}
                               fontWeight="bold"
                               marginLeft="10px"
@@ -779,30 +783,32 @@ const CreatePost: React.FC = () => {
                             >
                               File Name
                             </Text>
-                            <Text
-                              fontSize={{
-                                base: "10px",
-                                md: "10px",
-                                lg: "12px",
-                              }}
-                              fontWeight="bold"
-                              color={"whiteAlpha.900"}
-                              marginLeft={{
-                                base: "0px",
-                                md: "0px",
-                                lg: "10px",
-                              }}
-                              padding={{
-                                base: "0px 10px",
-                                md: "0px 10px",
-                                lg: "10px",
-                              }}
-                              width={{ base: "100%", md: "100%", lg: "100%" }}
-                            >
-                              {selectedFile?.file?.name
-                                ? selectedFile.file.name
-                                : ""}
-                            </Text>
+                            {selectedFile?.file?.name && (
+                              <Text
+                                fontSize={{
+                                  base: "10px",
+                                  md: "10px",
+                                  lg: "12px",
+                                }}
+                                fontWeight="bold"
+                                color={"whiteAlpha.900"}
+                                marginLeft={{
+                                  base: "0px",
+                                  md: "0px",
+                                  lg: "10px",
+                                }}
+                                padding={{
+                                  base: "0px 10px",
+                                  md: "0px 10px",
+                                  lg: "10px",
+                                }}
+                                width={{ base: "100%", md: "100%", lg: "100%" }}
+                              >
+                                {selectedFile?.file?.name
+                                  ? selectedFile.file.name
+                                  : ""}
+                              </Text>
+                            )}
                             <Flex
                               marginTop={{ base: "5px", md: "5px", lg: "20px" }}
                               justifyContent="center"
