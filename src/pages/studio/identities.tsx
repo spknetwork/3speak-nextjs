@@ -111,9 +111,11 @@ export default function Identities({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (allowAccess == true) {
       setAuthenticated(allowAccess);
-      // return
-    } else {
+      return
+    } 
+    if (allowAccess == false) {
       setAuthenticated(false);
+      return
     }
   }, [allowAccess]);
 

@@ -107,9 +107,11 @@ const CreatePost: React.FC = () => {
   useEffect(() => {
     if (allowAccess == true) {
       setAuthenticated(allowAccess);
-      // return
-    } else {
+      return
+    } 
+    if (allowAccess == false) {
       setAuthenticated(false);
+      return
     }
   }, [allowAccess]);
 
