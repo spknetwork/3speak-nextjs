@@ -194,7 +194,7 @@ export default function StudioUploadPage({
                           fontSize={{ base: "25px", md: "25px", lg: "36px" }}
                           color="gray"
                         >
-                          Create a new Video
+                          Create a new video
                         </Text>
                       </Flex>
                       {/* <Flex
