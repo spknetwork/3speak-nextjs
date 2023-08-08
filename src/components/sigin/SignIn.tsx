@@ -153,7 +153,7 @@ const SignIn = () => {
                   }}
                   type="button"
                 >
-                  Password Reset
+                  Forgot password
                 </StyledButton>
               </Link>
             </Flex>
