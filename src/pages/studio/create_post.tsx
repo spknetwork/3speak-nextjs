@@ -903,9 +903,11 @@ const CreatePost: React.FC = () => {
                   {/* border={'1px solid black'} */}
                   <Flex
                     border={steps > 0 ? "1px solid #1DA1F2" : "1px solid black"}
-                    background={steps > 0 ? "#1DA1F2" : "#fff"}
+                    borderRight='none'
+                    borderLeft='none'
+                    background={steps > 0 ? "#1DA1F2" : "#000"}
                     width={"95%"}
-                    height="5px"
+                    height="3px"
                   >
                     {/* for line1 */}
                   </Flex>
@@ -931,9 +933,11 @@ const CreatePost: React.FC = () => {
                     border={
                       steps == 2 ? "1px solid #1DA1F2" : "1px solid black"
                     }
-                    background={steps == 2 ? "#1DA1F2" : "#fff"}
+                    borderRight='none'
+                    borderLeft='none'
+                    background={steps == 2 ? "#1DA1F2" : "#000"}
                     width={"95%"}
-                    height="5px"
+                    height="3px"
                   >
                     {/* for line2 */}
                   </Flex>
