@@ -29,6 +29,7 @@
     "@radix-ui/react-popover": "1.0.4",
     "@radix-ui/react-tabs": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.4",
+    "@rajesh896/video-thumbnails-generator": "^2.3.9",
     "@reduxjs/toolkit": "^1.8.2",
     "axios": "^1.4.0",
     "babel-plugin-macros": "^3.1.0",

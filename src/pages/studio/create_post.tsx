@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import styled from "styled-components";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 import axios from "axios";
+import {generateVideoThumbnails} from '@rajesh896/video-thumbnails-generator'
 
 import {
   Box,
@@ -42,9 +43,20 @@ const CreatePost: React.FC = () => {
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
     useState<String>("Uploading Video...");
+
+  const [previewThumbnails, setPreviewThumbnails] = useState<string[]>([])
+
   const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
+
+
+    const thumbs = await generateVideoThumbnails(file, 3, 'url')
+    console.log(thumbs)
+
+    setPreviewThumbnails(thumbs.slice(1))
+
+    console.log('dropped file check', file)
     setSelectedFile({ file, previewUrl });
     setUploadingVideo(true);
     // const thumbnailGenerator = new VideoThumbnailGenerator({
@@ -219,6 +231,7 @@ const CreatePost: React.FC = () => {
                       >
                         <Box
                           width={{ base: "100%", md: "100%", lg: "40%" }}
+                          height={{ base: "100%", md: "100%", lg: "40%" }}
                           padding="20px"
                           paddingY={{ base: "5px", md: "5px", lg: "40px" }}
                         >
@@ -550,20 +563,25 @@ const CreatePost: React.FC = () => {
                                 />
                                 <Text>Upload Thumbnail</Text>
                               </Flex>
-                              <Flex
-                                width={"250px"}
-                                marginX={{ base: "0px", md: "0px", lg: "10px" }}
-                                height="100%"
-                                paddingY={{ base: "5px", md: "5px", lg: "0px" }}
-                              >
-                                <Image
-                                  objectFit={"cover"}
-                                  borderRadius={"10px"}
-                                  src="https://marketplace.canva.com/EAEqfS4X0Xw/1/0/1600w/canva-most-attractive-youtube-thumbnail-wK95f3XNRaM.jpg"
-                                  alt="Dan Abramov"
-                                />
-                              </Flex>
-                              <Flex
+
+                              {
+                                previewThumbnails.map(e => (<Flex
+                                key={e}
+                                  width={"250px"}
+                                  marginX={{ base: "0px", md: "0px", lg: "10px" }}
+                                  height="100%"
+                                  paddingY={{ base: "5px", md: "5px", lg: "0px" }}
+                                >
+                                  <Image
+                                    objectFit={"cover"}
+                                    borderRadius={"10px"}
+                                    src={e}
+                                    alt="Thumbnail preview"
+                                  />
+                                </Flex>))
+                              }
+                              
+                              {/* <Flex
                                 width={"250px"}
                                 marginX={{ base: "0px", md: "0px", lg: "10px" }}
                                 height="100%"
@@ -588,7 +606,7 @@ const CreatePost: React.FC = () => {
                                   src="https://i.ytimg.com/vi/-q4M9yf_ABY/mqdefault.jpg"
                                   alt="Dan Abramov"
                                 />
-                              </Flex>
+                              </Flex> */}
                             </Flex>
                           </Flex>
                         </Box>
