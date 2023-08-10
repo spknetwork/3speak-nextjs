@@ -33,6 +33,7 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import { FaAppStoreIos, FaInfo, FaInfoCircle } from "react-icons/fa";
 import { api } from "@/utils/api";
 import { useAppStore } from '../lib/store'
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 const threespeak = {
   filter: "drop-shadow(2px 4px 6px black)",
@@ -82,6 +83,12 @@ const NAVIGATION = [
     title: "about_3speak",
   },
 ];
+
+const faAndroidIcon = faAndroid as IconProp;
+const faAppStoreIosIcon = faAppStoreIos as IconProp;
+const faDiscordIcon = faDiscord as IconProp;
+const faTelegramIcon = faTelegram as IconProp;
+const faTwitterIcon = faTwitter as IconProp;
 
 export const Sidebar = () => {
   const router = useRouter();
@@ -400,7 +407,7 @@ export const Sidebar = () => {
           >
             <FontAwesomeIcon
               className="fa-2x text-secondary ms-3 mb-1"
-              icon={faTwitter}
+              icon={faTwitterIcon}
             />
           </Link>
           <Link
@@ -409,13 +416,13 @@ export const Sidebar = () => {
           >
             <FontAwesomeIcon
               className="fa-2x text-secondary ms-3 mb-1"
-              icon={faTelegram}
+              icon={faTelegramIcon}
             />
           </Link>
           <Link target="_blank" href="https://discord.gg/NSFS2VGj83">
             <FontAwesomeIcon
               className="fa-2x text-secondary ms-3 mb-1"
-              icon={faDiscord}
+              icon={faDiscordIcon}
             />
           </Link>
           <Link
@@ -450,7 +457,7 @@ export const Sidebar = () => {
           >
             <FontAwesomeIcon
               className="fa-2x text-secondary ms-3"
-              icon={faAppStoreIos}
+              icon={faAppStoreIosIcon}
             />
           </Link>
           <Link
@@ -459,7 +466,7 @@ export const Sidebar = () => {
           >
             <FontAwesomeIcon
               className="fa-2x text-secondary ms-3"
-              icon={faAndroid}
+              icon={faAndroidIcon}
             />
           </Link>
         </Box>
