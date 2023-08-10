@@ -911,11 +911,11 @@ const CreatePost: React.FC = () => {
                     justifyContent={"center"}
                     alignItems="center"
                     borderRadius={"50%"}
-                    width={"250px"}
-                    height="100px"
+                    width={"60px"}
+                    height="60px"
                   >
                     {/* for upload */}
-                    <Text fontWeight={"bold"}>Upload</Text>
+                    <Text margin='0px' fontWeight={"bold"}>Upload</Text>
                   </Flex>
 
                   {/* border={'1px solid black'} */}
@@ -924,7 +924,7 @@ const CreatePost: React.FC = () => {
                     borderRight='none'
                     borderLeft='none'
                     background={steps > 0 ? "#1DA1F2" : "#000"}
-                    width={"95%"}
+                    width={"45%"}
                     height="3px"
                   >
                     {/* for line1 */}
@@ -940,11 +940,11 @@ const CreatePost: React.FC = () => {
                     justifyContent={"center"}
                     alignItems="center"
                     borderRadius={"50%"}
-                    width={"250px"}
-                    height="100px"
+                    width={"60px"}
+                    height="60px"
                   >
                     {/* for Details */}
-                    <Text fontWeight={"bold"}>Details</Text>
+                    <Text margin='0px' fontWeight={"bold"}>Details</Text>
                   </Flex>
 
                   <Flex
@@ -954,7 +954,7 @@ const CreatePost: React.FC = () => {
                     borderRight='none'
                     borderLeft='none'
                     background={steps == 2 ? "#1DA1F2" : "#000"}
-                    width={"95%"}
+                    width={"45%"}
                     height="3px"
                   >
                     {/* for line2 */}
@@ -972,11 +972,11 @@ const CreatePost: React.FC = () => {
                     justifyContent={"center"}
                     alignItems="center"
                     borderRadius={"50%"}
-                    width={"250px"}
-                    height="100px"
+                    width={"60px"}
+                    height="60px"
                   >
                     {/* visibility */}
-                    <Text fontWeight={"bold"}>Visibility</Text>
+                    <Text margin='0px' fontWeight={"bold"}>Visibility</Text>
                   </Flex>
                 </Flex>
               </Box>
