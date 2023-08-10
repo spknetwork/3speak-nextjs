@@ -6,25 +6,33 @@ import { Provider } from "react-redux";
 import { store } from "../app/store";
 import { useRouter } from "next/router";
 import { Sidebar } from "src/components";
-import styled from "styled-components";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "bootstrap/dist/css/bootstrap.css";
+
+import { useAppStore } from '../lib/store'
 
 import { Box, ChakraProvider, Flex, Image, Link, Text } from "@chakra-ui/react";
 import { BiEnvelope, BiGlobe } from "react-icons/bi";
 import { ApolloProvider } from "@apollo/client";
 import client from "../lib/apolloClient";
 import { css } from "@emotion/react";
+import { useEffect } from "react";
 config.autoAddCss = false;
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
   const isAuth = pathname.includes("/auth");
+  const isStudio = pathname.includes("/studio");
+
+  const { checkAuth } = useAppStore()
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   return (
     <Provider store={store}>
-      {/* <StyledGrid> */}
       <Flex
         css={css`
           @media (max-width: 768px) {
@@ -37,7 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         `}
       >
         <nav>
-          <Box>{!isAuth && <Sidebar />}</Box>
+          <Box>{!isAuth && !isStudio && <Sidebar />}</Box>
         </nav>
         <Flex
           width={"100%"}
@@ -188,17 +196,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           
         </Flex>
       </Flex>
-
-      {/* </StyledGrid> */}
     </Provider>
   );
 }
 
-const StyledGrid = styled(Box)`
-  display: flex;
-  grid-template-columns: 0.5fr 3fr;
-  grid-template-rows: 1fr;
-  width: 100%;
-`;
 
 export default MyApp;

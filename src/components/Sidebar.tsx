@@ -31,6 +31,10 @@ import { useMediaQuery } from "react-responsive";
 import { css } from "@emotion/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { FaAppStoreIos, FaInfo, FaInfoCircle } from "react-icons/fa";
+import { api } from "@/utils/api";
+import { useAppStore } from '../lib/store'
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+
 const threespeak = {
   filter: "drop-shadow(2px 4px 6px black)",
 };
@@ -42,27 +46,28 @@ const NAVIGATION = [
   {
     img: "nav/home.svg",
     title: "nav.home",
-    route: "/newindex",
+    route: "/",
   },
   {
     img: "nav/smile.svg",
     title: "nav.first",
-    route: "/firstTime",
+    route: "/first_upload",
   },
   {
     img: "nav/fire.svg",
     title: "nav.trending",
-    route: "/newcomers2",
+    route: "/trends",
   },
   {
     img: "nav/play.svg",
     title: "nav.new",
-    route: "/new2",
+    route: "/new",
   },
 
   {
     img: "nav/communities.svg",
     title: "nav.communities",
+    route: "communities",
   },
   {
     img: "nav/leaderboard.svg",
@@ -79,6 +84,12 @@ const NAVIGATION = [
   },
 ];
 
+const faAndroidIcon = faAndroid as IconProp;
+const faAppStoreIosIcon = faAppStoreIos as IconProp;
+const faDiscordIcon = faDiscord as IconProp;
+const faTelegramIcon = faTelegram as IconProp;
+const faTwitterIcon = faTwitter as IconProp;
+
 export const Sidebar = () => {
   const router = useRouter();
   const [communitiesPopup, setCommunitiesPopup] = useState(false);
@@ -87,7 +98,22 @@ export const Sidebar = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const [showNav, setShowNav] = useState(true);
 
+  const { allowAccess } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
+  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(()  =>  {
+      if (allowAccess == true) {
+        setAuthenticated(allowAccess)
+        // return
+      }else{
+        setAuthenticated(false)
+      }
+
+      console.log('authenticated',authenticated)
+     
+  }, [allowAccess]);
+
 
   useEffect(() => {
     console.log("isMobile", isMobile);
@@ -98,7 +124,7 @@ export const Sidebar = () => {
       setShowNav(false);
       console.log("showNav", showNav);
     }
-  }, [isMobile]);
+  }, [isMobile, showNav]);
   return (
     <Flex p="1rem" flexDirection="column">
       <Flex
@@ -136,9 +162,17 @@ export const Sidebar = () => {
       {!showNav && (
         <Box>
           <Box mb="1rem" width="100%">
-            <Link href="/auth/login">
-              <StyledButton py={3}>{t("mainLogin")}</StyledButton>
-            </Link>
+            {!authenticated && (
+              <Link href="/auth/login">
+                <StyledButton py={3}>{t("mainLogin")}</StyledButton>
+              </Link>
+            )}
+
+            {authenticated && (
+              <Link href="/studio">
+                <StyledButton py={3}>Upload Video</StyledButton>
+              </Link>
+            )}
           </Box>
           <Box>
             {NAVIGATION.map(({ img, title, route }) => (
@@ -226,7 +260,7 @@ export const Sidebar = () => {
                   //   </MenuList>
                   // </Menu>
                 )}
-                {title == "nav.communities" && (
+                {/* {title == "nav.communities" && (
                   <Box position="relative">
                     <Menu>
                       <MenuButton>Communities</MenuButton>
@@ -269,7 +303,7 @@ export const Sidebar = () => {
                       </MenuList>
                     </Menu>
                   </Box>
-                )}
+                )} */}
                 {title == "about_3speak" && (
                   <Box position="relative">
                     <Menu>
@@ -313,11 +347,9 @@ export const Sidebar = () => {
                     </Menu>
                   </Box>
                 )}
-                {title != "download_apps" &&
-                  title != "about_3speak" &&
-                  title != "nav.communities" && (
-                    <Typography>{t(title)}</Typography>
-                  )}
+                {title != "download_apps" && title != "about_3speak" && (
+                  <Typography>{t(title)}</Typography>
+                )}
               </StyledNav>
             ))}
           </Box>
@@ -375,7 +407,7 @@ export const Sidebar = () => {
           >
             <FontAwesomeIcon
               className="fa-2x text-secondary ms-3 mb-1"
-              icon={faTwitter}
+              icon={faTwitterIcon}
             />
           </Link>
           <Link
@@ -384,13 +416,13 @@ export const Sidebar = () => {
           >
             <FontAwesomeIcon
               className="fa-2x text-secondary ms-3 mb-1"
-              icon={faTelegram}
+              icon={faTelegramIcon}
             />
           </Link>
           <Link target="_blank" href="https://discord.gg/NSFS2VGj83">
             <FontAwesomeIcon
               className="fa-2x text-secondary ms-3 mb-1"
-              icon={faDiscord}
+              icon={faDiscordIcon}
             />
           </Link>
           <Link
@@ -425,7 +457,7 @@ export const Sidebar = () => {
           >
             <FontAwesomeIcon
               className="fa-2x text-secondary ms-3"
-              icon={faAppStoreIos}
+              icon={faAppStoreIosIcon}
             />
           </Link>
           <Link
@@ -434,7 +466,7 @@ export const Sidebar = () => {
           >
             <FontAwesomeIcon
               className="fa-2x text-secondary ms-3"
-              icon={faAndroid}
+              icon={faAndroidIcon}
             />
           </Link>
         </Box>

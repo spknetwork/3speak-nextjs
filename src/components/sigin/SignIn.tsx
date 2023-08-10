@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -10,7 +10,10 @@ import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
-import { API_URL } from "@/utils/config";
+import { API_URL_FROM_WEST } from "../../utils/config";
+import axios from "axios";
+import { api } from "@/utils/api";
+import { useAppStore } from "@/lib/store";
 
 const SignIn = () => {
   const router = useRouter();
@@ -23,26 +26,31 @@ const SignIn = () => {
     console.log(token);
     // apply to form data
   };
-  const handleSubmit = async (values: any) => {
-    console.log("test", values);
-    try {
-      const response = await fetch(API_URL+"/v1/auth/login", {
-        method: "POST",
-        "headers": {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-           ...values,
-           username: values.email
-        }),
-      });
 
-      console.log('response',response);
-      // Handle the response here
-    } catch (error) {
-      console.error("API call error:", error);
+  const { allowAccess, login, checkAuth } = useAppStore();
+  // const isMedium = useBreakpointValue({ base: false, md: true });
+  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (allowAccess == true) {
+      setAuthenticated(allowAccess);
+      // return
+    } else {
+      setAuthenticated(false);
     }
+  }, [allowAccess]);
+
+  useEffect(() => {
+    if (authenticated) {
+      router.push("/");
+    }
+  }, [authenticated, router]);
+
+  const handleSubmit = async (values: any) => {
+    await login(values);
+    checkAuth();
   };
+
   return (
     <Box width="100%">
       <Box mx="auto" maxWidth="9rem">
@@ -145,11 +153,11 @@ const SignIn = () => {
                   }}
                   type="button"
                 >
-                  Password Reset
+                  Forgot password
                 </StyledButton>
               </Link>
             </Flex>
-          {/* </form> */}
+            {/* </form> */}
           </Form>
         )}
       </Formik>

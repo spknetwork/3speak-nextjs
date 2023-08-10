@@ -7,6 +7,7 @@ import {
   Link,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { IconType } from "react-icons";
 import {
   FaCloudUploadAlt,
@@ -31,16 +32,17 @@ const LinkItems: Array<LinkItemProps> = [
   {
     name: "Dashboard",
     icon: FiHome,
-    route: "/auth/studio",
+    route: "/studio",
   },
-  { name: "Upload", icon: FaCloudUploadAlt, route: "/auth/upload" },
-  { name: "Videos", icon: FaVideo, route: "/auth/studio_videos" },
+  { name: "Upload", icon: FaCloudUploadAlt, route: "/studio/upload" },
+  { name: "Videos", icon: FaVideo, route: "/studio/studio_videos" },
 
-  { name: "My Channel", icon: FaExternalLinkAlt, route: "/auth/studio_videos" },
-  { name: "Logout", icon: FaSignOutAlt, route: "/auth/studio_videos" },
+  { name: "My Channel", icon: FaExternalLinkAlt, route: "/studio/studio_videos" },
+  { name: "Logout", icon: FaSignOutAlt, route: "/studio/studio_videos" },
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const router = useRouter();
   return (
     <Box
       transition="3s ease"
@@ -57,8 +59,10 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             Logo
           </Text> */}
         <Flex justifyContent="center" alignItems={"center"} width="100%">
-          <StyledLink href="/auth/studio">
+         
             <Box
+              cursor={'pointer'}
+              onClick={() => router.push("/studio")}
               display={"flex"}
               justifyContent="center"
               alignItems={"center"}
@@ -71,7 +75,6 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 height={100}
               />
             </Box>
-          </StyledLink>
         </Flex>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>

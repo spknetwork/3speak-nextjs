@@ -1,144 +1,74 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useRef } from "react";
+import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
-
-
-const LoginPage = () => {
+// import ReCAPTCHA from "react-google-recaptcha";
+import SignUp from "@/components/signup/SignUp";
+import Link from "next/link";
+import SignIn from "@/components/sigin/SignIn";
+import SignUpHive from "@/components/signup/SignUpHive";
+const TabsDemo = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const recaptchaRef: any = useRef();
 
+  const onSubmitWithReCAPTCHA = async () => {
+    const token = await recaptchaRef.current.executeAsync();
+    console.log(token);
+    // apply to form data
+  };
   return (
     <Flex
       justifyContent="center"
       px="1rem"
-      alignItems={{ _: "flex-start", tablet: "center" }}
+      alignItems={{ _: "flex-start", tablet: "flex-start" }}
       backgroundColor="#F5F5F5"
       minHeight="100vh"
       minWidth="100vw"
+      paddingTop="100px"
     >
-      <Box width="100%" maxWidth="18.75rem">
-        <Box mx="auto" maxWidth="9rem">
-          <img
-            src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
-            alt="3speak logo"
-            width="100%"
-          />
-        </Box>
-        <Box
-          width="100%"
-          borderRadius="0.25rem"
-          mt="1.5rem"
-          py="0.75rem"
-          px="1.25rem"
-          backgroundColor="#f8d7da"
-          border="1px solid #f5c6cb"
-        >
-          <Typography textAlign="center" color="#721c24">
-            {/* fontSize="1.75rem" */}
-            {t("login.disclaimer")}
-          </Typography>
-        </Box>
-        <Typography textAlign="center" mt="1rem">
-          {/* fontSize="2rem" */}
-          {t("login.title")}
-        </Typography>
-        <Formik
-          initialValues={{ password: "", email: "" }}
-          validate={(props) => {
-            const errors: any = {};
-
-            if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(props.email)) {
-              errors.email = t("login.notValidEmail");
-            }
-
-            if (!props.password) errors.password = t("required");
-            if (!props.email) errors.email = t("required");
-
-            return errors;
-          }}
-          onSubmit={(values) => {
-            console.log(values, "submit");
-          }}
-        >
-          {(props) => (
-            <form onSubmit={props.handleSubmit}>
-              <Box mb="0.125rem" mt="1.5rem" width="100%">
-                <StyledInput
-                  type="string"
-                  placeholder={t("login.email")}
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  error={!!props.errors.email}
-                  name="email"
-                  id="email"
-                />
-                {!!props.errors.email && (
-                  <Typography color="#FF3333" mt="0.25rem">
-                    {props.errors.email}
-                  </Typography>
-                )}
-              </Box>
-              <Box width="100%">
-                <StyledInput
-                  type="string"
-                  placeholder={t("login.password")}
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  error={!!props.errors.password}
-                  name="password"
-                  id="password"
-                />
-                {!!props.errors.password && (
-                  <Typography mt="0.25rem" color="#FF3333">
-                    {props.errors.password}
-                  </Typography>
-                )}
-              </Box>
-              <Flex width="100%" justifyContent="center" mt="1rem">
-                <StyledButton type="submit">Log in</StyledButton>
-              </Flex>
-              <Flex width="100%" justifyContent="center" mt="0.5rem">
-                <StyledButton type="submit">
-                  Sign up with existing HIVE account
-                </StyledButton>
-              </Flex>
-              <Flex width="100%" justifyContent="center" mt="0.5rem">
-                <StyledButton
-                  colors={{ init: "grey", active: "#D3D3D3", hover: "#d1d1d1" }}
-                  type="submit"
-                >
-                  PasswordReset
-                </StyledButton>
-              </Flex>
-            </form>
-          )}
-        </Formik>
-        <GetAccountText
-          textAlign="center"
-          mt="0.5rem"
-          onClick={() => router.push("/auth/register")}
-          color="#007bff"
-        >
-          {t("login.noAccount")}
-        </GetAccountText>
-      </Box>
+      <Tabs.Root className="TabsRoot" defaultValue="tab1">
+        <Tabs.List className="TabsList" aria-label="Manage your account">
+          <Tabs.Trigger className="TabsTrigger" value="tab1">
+            Sign In
+          </Tabs.Trigger>
+          <Tabs.Trigger className="TabsTrigger text-center" value="tab2">
+            Sign Up with Hive
+          </Tabs.Trigger>
+          <Tabs.Trigger className="TabsTrigger" value="tab3">
+            Sign Up
+          </Tabs.Trigger>
+        </Tabs.List>
+        <Tabs.Content className="TabsContent" value="tab1">
+          <SignIn />
+        </Tabs.Content>
+        <Tabs.Content className="TabsContent" value="tab2">
+          <SignUpHive />
+        </Tabs.Content>
+        <Tabs.Content className="TabsContent" value="tab3">
+          <SignUp />
+        </Tabs.Content>
+      </Tabs.Root>
     </Flex>
   );
 };
 
 const GetAccountText = styled(Typography)`
   cursor: pointer;
-
   &:hover {
     text-decoration: underline;
     color: #001fff;
   }
+`;
+
+const StyledList = styled.ul`
+  padding-left: 0.5rem;
 `;
 
 const StyledButton = styled.button<{
@@ -162,7 +92,7 @@ const StyledButton = styled.button<{
   font-size: 100%;
   line-height: 1.15;
   margin: 0;
-  padding: 10px 21px;
+  padding: 15px 21px;
   text-align: center;
   text-transform: none;
   transition: color 0.13s ease-in-out, background 0.13s ease-in-out,
@@ -181,13 +111,13 @@ const StyledButton = styled.button<{
 `;
 
 const StyledInput = styled.input<{ error: boolean }>`
-  min-width: 100%;
-  padding: 1rem 0.5rem;
-  margin: 0.5rem 0 0rem;
+  width: 95%;
+  padding: 1rem 1rem;
+  margin: 10px 0px;
   border-radius: 0.45rem;
   outline: none;
   border: none;
   border: 1px solid ${({ error }) => (error ? "#FF3333" : "#2f2d2d")};
 `;
 
-export default LoginPage;
+export default TabsDemo;

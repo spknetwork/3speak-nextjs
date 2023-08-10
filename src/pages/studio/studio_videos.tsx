@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 import {
   Box,
@@ -29,7 +29,9 @@ import {
 
 import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
-
+import { api } from "@/utils/api";
+import { useRouter } from "next/router";
+import { useAppStore } from "@/lib/store";
 
 export default function StudioVideos({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -39,8 +41,43 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
   }/${current.getFullYear()}`;
   // const { post } = useAppStore()
 
+  const router = useRouter();
+
+  const { allowAccess } = useAppStore();
+  // const isMedium = useBreakpointValue({ base: false, md: true });
+  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (allowAccess == true) {
+      setAuthenticated(allowAccess);
+      return
+    } 
+    if (allowAccess == false) {
+      setAuthenticated(false);
+      return
+    }
+  }, [allowAccess]);
+
+  useEffect(() => {
+    if (authenticated == false && authenticated != null) {
+      router.push("/auth/login");
+    }
+  }, [authenticated, router]);
+
+  const colorModeValue = useColorModeValue(
+    authenticated ? "gray.100" : "gray.100",
+    authenticated ? "gray.900" : "gray.900"
+  );
+  if (authenticated === null) {
+    return <Box>Loading...</Box>;
+  }
+
+  if (authenticated === false) {
+    return <Box>Unauthorized access, please login first</Box>;
+  }
+
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box minH="100vh" bg={colorModeValue}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}

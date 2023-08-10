@@ -9,6 +9,7 @@ import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
+import { FiArrowLeft } from "react-icons/fi";
 const ForgotPassword = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -38,6 +39,16 @@ const ForgotPassword = () => {
         </Tabs.List>
         <Tabs.Content className="TabsContent" value="tab1">
           <Box width="100%">
+            <Flex justifyContent={'start'}>
+              <FiArrowLeft onClick={() => router.push("/auth/login")} cursor={'pointer'} size={'30px'}/>
+            </Flex>
+            <Box mx="auto" maxWidth="9rem">
+              <img
+                src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
+                alt="3speak logo"
+                width="100%"
+              />
+            </Box>
             <Formik
               initialValues={{ password: "", email: "" }}
               validate={(props) => {
