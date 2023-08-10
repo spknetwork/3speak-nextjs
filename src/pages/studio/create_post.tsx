@@ -31,6 +31,7 @@ import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 import { api } from "@/utils/api";
 import { useAppStore } from "@/lib/store";
+import WizardSteps from "@/components/studio/WizardSteps";
 
 type FilePreview = {
   file: File;
@@ -886,100 +887,10 @@ const CreatePost: React.FC = () => {
                 </CardBody>
               )}
 
-              {/* card for wizard */}
-              <Box
-                borderRadius={"10px"}
-                background="white"
-                marginTop={"10px"}
-                height={"auto"}
-                width={"100%"}
-              >
-                <Flex
-                  height={"119px"}
-                  justifyContent={"center"}
-                  alignItems="center"
-                  paddingX={"30px"}
-                  flexDirection="row"
-                >
-                  <Flex
-                    onClick={() => changeCurrentStep(0)}
-                    cursor={"pointer"}
-                    border="none"
-                    color={steps == 0 ? "#fff" : "white"}
-                    background="#1DA1F2"
-                    borderColor={"#1DA1F2"}
-                    justifyContent={"center"}
-                    alignItems="center"
-                    borderRadius={"50%"}
-                    width={"60px"}
-                    height="60px"
-                  >
-                    {/* for upload */}
-                    <Text margin='0px' fontWeight={"bold"}>Upload</Text>
-                  </Flex>
-
-                  {/* border={'1px solid black'} */}
-                  <Flex
-                    border={steps > 0 ? "1px solid #1DA1F2" : "1px solid black"}
-                    borderRight='none'
-                    borderLeft='none'
-                    background={steps > 0 ? "#1DA1F2" : "#000"}
-                    width={"45%"}
-                    height="3px"
-                  >
-                    {/* for line1 */}
-                  </Flex>
-
-                  <Flex
-                    onClick={() => changeCurrentStep(1)}
-                    cursor={"pointer"}
-                    border={steps > 0 ? "1px solid #fff" : "1px solid #fff"}
-                    color={steps > 0 ? "#fff" : "#000"}
-                    background={steps > 0 ? "#1DA1F2" : "#fff"}
-                    borderColor={steps > 0 ? "#1DA1F2" : "#000"}
-                    justifyContent={"center"}
-                    alignItems="center"
-                    borderRadius={"50%"}
-                    width={"60px"}
-                    height="60px"
-                  >
-                    {/* for Details */}
-                    <Text margin='0px' fontWeight={"bold"}>Details</Text>
-                  </Flex>
-
-                  <Flex
-                    border={
-                      steps == 2 ? "1px solid #1DA1F2" : "1px solid black"
-                    }
-                    borderRight='none'
-                    borderLeft='none'
-                    background={steps == 2 ? "#1DA1F2" : "#000"}
-                    width={"45%"}
-                    height="3px"
-                  >
-                    {/* for line2 */}
-                  </Flex>
-
-                  <Flex
-                    onClick={() => changeCurrentStep(2)}
-                    cursor={"pointer"}
-                    border={
-                      steps == 2 ? "1px solid #1DA1F2" : "1px solid black"
-                    }
-                    color={steps == 2 ? "#fff" : "#000"}
-                    background={steps == 2 ? "#1DA1F2" : "white"}
-                    borderColor={steps == 2 ? "#1DA1F2" : "#000"}
-                    justifyContent={"center"}
-                    alignItems="center"
-                    borderRadius={"50%"}
-                    width={"60px"}
-                    height="60px"
-                  >
-                    {/* visibility */}
-                    <Text margin='0px' fontWeight={"bold"}>Visibility</Text>
-                  </Flex>
-                </Flex>
-              </Box>
+              <WizardSteps
+                changeCurrentStep={changeCurrentStep}
+                steps={steps}
+              />
             </Card>
           </Box>
         </Box>
