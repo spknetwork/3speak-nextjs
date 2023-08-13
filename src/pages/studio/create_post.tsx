@@ -22,6 +22,7 @@ import {
   Spinner,
   RadioGroup,
   Radio,
+  useToast,
 } from "@chakra-ui/react";
 
 import { FaUpload } from "react-icons/fa";
@@ -46,7 +47,7 @@ const CreatePost: React.FC = () => {
     useState<String>("Uploading Video...");
 
   const [previewThumbnails, setPreviewThumbnails] = useState<string[]>([])
-
+  const toast = useToast();
   const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
@@ -54,7 +55,15 @@ const CreatePost: React.FC = () => {
     if (!file?.type?.startsWith(
       "video/"
     )) {  
-      console.log('we dont accept any type except video')
+      console.log('Cant upload file, select a video type only')
+      toast({
+        position: "top-right",
+        title: "Cant Upload.",
+        description: "select a video type only",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
       return;
     }
 
