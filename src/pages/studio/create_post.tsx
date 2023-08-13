@@ -232,7 +232,7 @@ const CreatePost: React.FC = () => {
                       >
                         <Box
                           width={{ base: "100%", md: "100%", lg: "40%" }}
-                          height={{ base: "100%", md: "100%", lg: "40%" }}
+                          height={{ base: "100%", md: "100%", lg: "100%" }}
                           padding="20px"
                           paddingY={{ base: "5px", md: "5px", lg: "40px" }}
                         >
