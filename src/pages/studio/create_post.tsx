@@ -51,6 +51,12 @@ const CreatePost: React.FC = () => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
 
+    if (!file?.type?.startsWith(
+      "video/"
+    )) {  
+      console.log('we dont accept any type except video')
+      return;
+    }
 
     const thumbs = await generateVideoThumbnails(file, 3, 'url')
     console.log(thumbs)
