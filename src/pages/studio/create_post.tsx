@@ -2,9 +2,9 @@ import React, { ReactNode, useEffect, useState } from "react";
 import styled from "styled-components";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 import axios from "axios";
-import {generateVideoThumbnails} from '@rajesh896/video-thumbnails-generator'
-import tus, { Upload, UploadOptions } from 'tus-js-client';
-
+import { generateVideoThumbnails } from "@rajesh896/video-thumbnails-generator";
+import tus, { Upload, UploadOptions } from "tus-js-client";
+import styles from "../../components/ProgressBar.module.css";
 import {
   Box,
   Flex,
@@ -42,21 +42,21 @@ type FilePreview = {
 
 const CreatePost: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
+
+  const [uploadingProgress, setUploadingProgress] = useState<number>(0);
   const [steps, setSteps] = useState<number>(0);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
     useState<String>("Uploading Video...");
 
-  const [previewThumbnails, setPreviewThumbnails] = useState<string[]>([])
+  const [previewThumbnails, setPreviewThumbnails] = useState<string[]>([]);
   const toast = useToast();
   const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
 
-    if (!file?.type?.startsWith(
-      "video/"
-    )) {  
-      console.log('Cant upload file, select a video type only')
+    if (!file?.type?.startsWith("video/")) {
+      console.log("Cant upload file, select a video type only");
       toast({
         position: "top-right",
         title: "Cant Upload.",
@@ -68,44 +68,43 @@ const CreatePost: React.FC = () => {
       return;
     }
 
-    const thumbs = await generateVideoThumbnails(file, 3, 'url')
-    console.log(thumbs)
+    const thumbs = await generateVideoThumbnails(file, 3, "url");
+    console.log(thumbs);
 
-    setPreviewThumbnails(thumbs.slice(1))
+    setPreviewThumbnails(thumbs.slice(1));
 
-    console.log('dropped file check', file)
+    console.log("dropped file check", file);
     setSelectedFile({ file, previewUrl });
 
-
     // setUploadingVideo(true);
- 
+
     // setTimeout(() => {
     //   setSteps(1);
     //   setUploadingVideo(false);
     // }, 5000);
     if (!file) return;
-    const token = localStorage.getItem("access_token"); 
-    console.log('token', token)
+    const token = localStorage.getItem("access_token");
+    console.log("token", token);
     const options: UploadOptions = {
-      endpoint: 'http://144.48.107.2:1080/files/',
+      endpoint: "http://144.48.107.2:1080/files/",
       retryDelays: [0, 1000, 3000, 5000],
       onError: (error) => {
-        console.error('Upload error:', error);
+        console.error("Upload error:", error);
       },
       onProgress: (bytesUploaded, bytesTotal) => {
         const progress = (bytesUploaded / bytesTotal) * 100;
-        // create a loading progress  
+        // create a loading progress
+        setUploadingProgress(progress)
         console.log(`Upload progress: ${progress}%`);
       },
       onSuccess: () => {
-        console.log('Upload complete');
+        console.log("Upload complete");
       },
     };
 
     const upload = new Upload(file, options);
     upload.start();
-    console.log('upload',upload)
-
+    console.log("upload", upload);
   };
   const proccedtoStep3 = () => {
     setUploadingVideoLabel("Adding Video Details...");
@@ -385,6 +384,12 @@ const CreatePost: React.FC = () => {
                       </Flex>
                     </Flex>
                   </Box>
+                  <div className={styles.progressContainer}>
+                    <div
+                      className={styles.progressBar}
+                      style={{ width: `${uploadingProgress}%` }}
+                    ></div>
+                  </div>
                 </CardBody>
               )}
 
@@ -601,13 +606,21 @@ const CreatePost: React.FC = () => {
                                 <Text>Upload Thumbnail</Text>
                               </Flex>
 
-                              {
-                                previewThumbnails.map(e => (<Flex
-                                key={e}
+                              {previewThumbnails.map((e) => (
+                                <Flex
+                                  key={e}
                                   width={"250px"}
-                                  marginX={{ base: "0px", md: "0px", lg: "10px" }}
+                                  marginX={{
+                                    base: "0px",
+                                    md: "0px",
+                                    lg: "10px",
+                                  }}
                                   height="100%"
-                                  paddingY={{ base: "5px", md: "5px", lg: "0px" }}
+                                  paddingY={{
+                                    base: "5px",
+                                    md: "5px",
+                                    lg: "0px",
+                                  }}
                                 >
                                   <Image
                                     objectFit={"cover"}
@@ -615,9 +628,9 @@ const CreatePost: React.FC = () => {
                                     src={e}
                                     alt="Thumbnail preview"
                                   />
-                                </Flex>))
-                              }
-                              
+                                </Flex>
+                              ))}
+
                               {/* <Flex
                                 width={"250px"}
                                 marginX={{ base: "0px", md: "0px", lg: "10px" }}
