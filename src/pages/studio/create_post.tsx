@@ -58,12 +58,30 @@ const CreatePost: React.FC = () => {
 
   const [previewThumbnails, setPreviewThumbnails] = useState<string[]>([]);
   const toast = useToast();
-  const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
+  
+  const handleFileDropThumbnail = async (acceptedFiles: File[]): Promise<void> => {
+    const file = acceptedFiles[0];
+    const previewUrl = URL.createObjectURL(file);
+
+    if (!file?.type?.startsWith("image/")) {
+      console.log("Cant upload file, select a image type only");
+      toast({
+        position: "top-right",
+        title: "Cant Upload Thumbnail.",
+        description: "Select a image type only",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      return;
+    }
+  }
+    const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
 
     if (!file?.type?.startsWith("video/")) {
-      console.log("Cant upload file, select a video type only");
+      console.log("Cant upload file, Select a video type only");
       toast({
         position: "top-right",
         title: "Cant Upload.",
@@ -76,13 +94,15 @@ const CreatePost: React.FC = () => {
     }
 
     const thumbs = await generateVideoThumbnails(file, 3, "url");
-    console.log(thumbs);
+    console.log('thumbs', thumbs);
 
     setPreviewThumbnails(thumbs.slice(1));
 
     console.log("dropped file check", file);
     setSelectedFile({ file, previewUrl });
 
+
+    // upload process
     if (!file) return;
     const token = localStorage.getItem("access_token");
     console.log("token", token);
@@ -150,8 +170,12 @@ const CreatePost: React.FC = () => {
   const dropzoneOptions: DropzoneOptions = {
     onDrop: handleFileDrop,
   };
+  const dropzoneOptionsThumbnail: DropzoneOptions = {
+    onDrop: handleFileDropThumbnail,
+  };
 
   const { getRootProps, getInputProps } = useDropzone(dropzoneOptions);
+  const { getRootProps:getRootPropsThumbnail, getInputProps:getInputPropsThumbnail } = useDropzone(dropzoneOptionsThumbnail);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
@@ -596,6 +620,7 @@ const CreatePost: React.FC = () => {
                                 value={videoTitle}
                                 onChange={(e) => setVideoTitle(e.target.value)}
                               />
+                              
                               <Text as={"label"}>
                                 Your video title, 2-55 characters
                               </Text>
@@ -641,7 +666,9 @@ const CreatePost: React.FC = () => {
                               width={"100%"}
                               height={{ base: "100%", md: "100%", lg: "150px" }}
                             >
+                               <input {...getInputPropsThumbnail()} />
                               <Flex
+                                {...getRootPropsThumbnail()}
                                 width={"250px"}
                                 height="100%"
                                 border={"2px dotted"}
