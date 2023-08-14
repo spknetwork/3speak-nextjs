@@ -411,7 +411,7 @@ const CreatePost: React.FC = () => {
                         >
                           Go Back
                         </Button> */}
-                        {selectedFile && (
+                        {selectedFile && uploadStatus == true && (
                           <Button
                             onClick={() => setSteps(1)}
                             size={"lg"}
