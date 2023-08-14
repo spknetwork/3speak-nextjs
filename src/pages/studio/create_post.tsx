@@ -57,9 +57,14 @@ const CreatePost: React.FC = () => {
     useState<String>("Uploading Video...");
 
   const [previewThumbnails, setPreviewThumbnails] = useState<string[]>([]);
+  const [previewManualThumbnails, setPreviewManualThumbnails] = useState<
+    string[]
+  >([]);
   const toast = useToast();
-  
-  const handleFileDropThumbnail = async (acceptedFiles: File[]): Promise<void> => {
+
+  const handleFileDropThumbnail = async (
+    acceptedFiles: File[]
+  ): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
 
@@ -75,8 +80,11 @@ const CreatePost: React.FC = () => {
       });
       return;
     }
-  }
-    const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
+    const files = [];
+    files.push(previewUrl);
+    setPreviewManualThumbnails(files);
+  };
+  const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
 
@@ -94,13 +102,12 @@ const CreatePost: React.FC = () => {
     }
 
     const thumbs = await generateVideoThumbnails(file, 3, "url");
-    console.log('thumbs', thumbs);
+    console.log("thumbs", thumbs);
 
     setPreviewThumbnails(thumbs.slice(1));
 
     console.log("dropped file check", file);
     setSelectedFile({ file, previewUrl });
-
 
     // upload process
     if (!file) return;
@@ -130,7 +137,6 @@ const CreatePost: React.FC = () => {
     upload.start();
     console.log("upload", upload);
   };
-  
 
   const handleCreatePost = (): void => {
     // get video title
@@ -145,25 +151,74 @@ const CreatePost: React.FC = () => {
       community: "hive-101",
       language: "en",
     };
-    setSavingDetails(true)
+    setSavingDetails(true);
     const token = localStorage.getItem("access_token");
     axios
-      .post("https://acela.us-02.infra.3speak.tv/api/v1/create_upload", params,{
-        headers: {
-          Authorization: `Bearer ${token}`
+      .post(
+        "https://acela.us-02.infra.3speak.tv/api/v1/create_upload",
+        params,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
+      )
       .then((response) => {
         // Handle successful upload
-        console.log('successful',response);
-        setSavingDetails(false)
-        setSteps(2);
-
+        console.log("successful", response);
+        saveThumbnail(response);
       })
       .catch((error) => {
         // Handle upload error
-        setSavingDetails(false)
-        console.error('error',error);
+        setSavingDetails(false);
+        console.error("error", error);
+      });
+  };
+
+  const saveThumbnail = (response: any) => {
+    let thumbnail = [];
+    if (previewManualThumbnails.length > 0) {
+      thumbnail.push(previewManualThumbnails[0]);
+     
+    } else {
+      thumbnail.push(previewThumbnails[0]);
+    }
+    const blobData = new Blob([thumbnail[0]], { type: "image/jpeg" });
+    const file = new File([blobData], "image.jpg", { type: "image/jpeg" });
+    // console.log("blobData", file);
+    // console.log("saveThumbnail", thumbnail);
+    // console.log("response", response);
+    // response.data.upload_id
+
+    const token = localStorage.getItem("access_token");
+    // const params = {
+    //   file: [file],
+    //   upload_id: response.data.upload_id,
+    // };
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_id', response.data.upload_id);
+    axios
+      .post(
+        "https://acela.us-02.infra.3speak.tv/api/v1/upload_thumbnail",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        // Handle successful upload
+        console.log("successful thumbnail", response);
+        setSavingDetails(false);
+        setSteps(2);
+      })
+      .catch((error) => {
+        // Handle upload error
+        setSavingDetails(false);
+        console.error("error thumbnail", error);
       });
   };
 
@@ -175,7 +230,10 @@ const CreatePost: React.FC = () => {
   };
 
   const { getRootProps, getInputProps } = useDropzone(dropzoneOptions);
-  const { getRootProps:getRootPropsThumbnail, getInputProps:getInputPropsThumbnail } = useDropzone(dropzoneOptionsThumbnail);
+  const {
+    getRootProps: getRootPropsThumbnail,
+    getInputProps: getInputPropsThumbnail,
+  } = useDropzone(dropzoneOptionsThumbnail);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
@@ -614,13 +672,13 @@ const CreatePost: React.FC = () => {
                                 Video Title
                               </Text>
                               <Input
-                                 disabled={savingDetails == true? true:false}
+                                disabled={savingDetails == true ? true : false}
                                 placeholder="Video Title"
                                 width={{ base: "89%", md: "89%", lg: "97%" }}
                                 value={videoTitle}
                                 onChange={(e) => setVideoTitle(e.target.value)}
                               />
-                              
+
                               <Text as={"label"}>
                                 Your video title, 2-55 characters
                               </Text>
@@ -634,7 +692,7 @@ const CreatePost: React.FC = () => {
                                 Video Description
                               </Text>
                               <Textarea
-                                 disabled={savingDetails == true? true:false}
+                                disabled={savingDetails == true ? true : false}
                                 value={videoDescription}
                                 onChange={(e) =>
                                   setVideoDesription(e.target.value)
@@ -666,24 +724,51 @@ const CreatePost: React.FC = () => {
                               width={"100%"}
                               height={{ base: "100%", md: "100%", lg: "150px" }}
                             >
-                               <input {...getInputPropsThumbnail()} />
-                              <Flex
-                                {...getRootPropsThumbnail()}
-                                width={"250px"}
-                                height="100%"
-                                border={"2px dotted"}
-                                justifyContent="center"
-                                alignItems={"center"}
-                                flexDirection="column"
-                                borderRadius={"10px"}
-                              >
-                                <SlPicture
-                                  width={"100px"}
-                                  color="black"
-                                  fontSize="70px"
-                                />
-                                <Text>Upload Thumbnail</Text>
-                              </Flex>
+                              <input {...getInputPropsThumbnail()} />
+                              {previewManualThumbnails.map((e) => (
+                                <Flex
+                                  key={e}
+                                  width={"250px"}
+                                  marginX={{
+                                    base: "0px",
+                                    md: "0px",
+                                    lg: "10px",
+                                  }}
+                                  height="100%"
+                                  paddingY={{
+                                    base: "5px",
+                                    md: "5px",
+                                    lg: "0px",
+                                  }}
+                                >
+                                  <Image
+                                    objectFit={"cover"}
+                                    borderRadius={"10px"}
+                                    src={e}
+                                    alt="Thumbnail preview"
+                                  />
+                                </Flex>
+                              ))}
+
+                              {previewManualThumbnails.length <= 0 && (
+                                <Flex
+                                  {...getRootPropsThumbnail()}
+                                  width={"250px"}
+                                  height="100%"
+                                  border={"2px dotted"}
+                                  justifyContent="center"
+                                  alignItems={"center"}
+                                  flexDirection="column"
+                                  borderRadius={"10px"}
+                                >
+                                  <SlPicture
+                                    width={"100px"}
+                                    color="black"
+                                    fontSize="70px"
+                                  />
+                                  <Text>Upload Thumbnail</Text>
+                                </Flex>
+                              )}
 
                               {previewThumbnails.map((e) => (
                                 <Flex
@@ -745,7 +830,7 @@ const CreatePost: React.FC = () => {
                         alignItems="center"
                       >
                         <Button
-                          disabled={savingDetails == true? true:false}
+                          disabled={savingDetails == true ? true : false}
                           onClick={() => setSteps(0)}
                           size={"lg"}
                           colorScheme="gray"
@@ -754,13 +839,14 @@ const CreatePost: React.FC = () => {
                           Go Back
                         </Button>
                         <Button
-                          disabled={savingDetails == true? true:false}
+                          disabled={savingDetails == true ? true : false}
                           onClick={handleCreatePost}
                           size={"lg"}
                           colorScheme="blue"
                         >
-                          { savingDetails == true? 'Saving Details':'Next Step'}
-                          
+                          {savingDetails == true
+                            ? "Saving Details"
+                            : "Next Step"}
                         </Button>
                       </Flex>
                     </Flex>
