@@ -44,6 +44,7 @@ const CreatePost: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
 
   const [uploadingProgress, setUploadingProgress] = useState<number>(0);
+  const [uploadStatus, setUploadStatus] = useState<Boolean | null>(null);
   const [steps, setSteps] = useState<number>(0);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
@@ -90,6 +91,8 @@ const CreatePost: React.FC = () => {
       retryDelays: [0, 1000, 3000, 5000],
       onError: (error) => {
         console.error("Upload error:", error);
+        setUploadStatus(false)
+
       },
       onProgress: (bytesUploaded, bytesTotal) => {
         const progress = (bytesUploaded / bytesTotal) * 100;
@@ -99,6 +102,7 @@ const CreatePost: React.FC = () => {
       },
       onSuccess: () => {
         console.log("Upload complete");
+        setUploadStatus(true)
       },
     };
 
@@ -388,7 +392,23 @@ const CreatePost: React.FC = () => {
                     <div
                       className={styles.progressBar}
                       style={{ width: `${uploadingProgress}%` }}
-                    ></div>
+                    >
+                      {
+                        uploadStatus == true && (
+                          <>
+                          <Text>Upload Complete!</Text>
+                          </>
+                        )
+                      }
+
+{
+                        uploadStatus == false && (
+                          <>
+                          <Text>Error in uploading!</Text>
+                          </>
+                        )
+                      }
+                    </div>
                   </div>
                 </CardBody>
               )}
