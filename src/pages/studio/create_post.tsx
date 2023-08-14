@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 import axios from "axios";
 import {generateVideoThumbnails} from '@rajesh896/video-thumbnails-generator'
+import tus, { Upload, UploadOptions } from 'tus-js-client';
 
 import {
   Box,
@@ -74,17 +75,37 @@ const CreatePost: React.FC = () => {
 
     console.log('dropped file check', file)
     setSelectedFile({ file, previewUrl });
-    setUploadingVideo(true);
-    // const thumbnailGenerator = new VideoThumbnailGenerator({
-    //   sourcePath: URL.createObjectURL(file),
-    // });
-    // console.log('file',file)
-    // console.log('previewUrl',previewUrl)
-    // setSteps(1);
-    setTimeout(() => {
-      setSteps(1);
-      setUploadingVideo(false);
-    }, 5000);
+
+
+    // setUploadingVideo(true);
+ 
+    // setTimeout(() => {
+    //   setSteps(1);
+    //   setUploadingVideo(false);
+    // }, 5000);
+    if (!file) return;
+    const token = localStorage.getItem("access_token"); 
+    console.log('token', token)
+    const options: UploadOptions = {
+      endpoint: 'http://144.48.107.2:1080/files/',
+      retryDelays: [0, 1000, 3000, 5000],
+      onError: (error) => {
+        console.error('Upload error:', error);
+      },
+      onProgress: (bytesUploaded, bytesTotal) => {
+        const progress = (bytesUploaded / bytesTotal) * 100;
+        // create a loading progress  
+        console.log(`Upload progress: ${progress}%`);
+      },
+      onSuccess: () => {
+        console.log('Upload complete');
+      },
+    };
+
+    const upload = new Upload(file, options);
+    upload.start();
+    console.log('upload',upload)
+
   };
   const proccedtoStep3 = () => {
     setUploadingVideoLabel("Adding Video Details...");
