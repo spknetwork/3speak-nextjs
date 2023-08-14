@@ -41,6 +41,10 @@ type FilePreview = {
 };
 
 const CreatePost: React.FC = () => {
+  // video title
+  const [videoTitle, setVideoTitle] = useState<string>("");
+  const [videoDescription, setVideoDesription] = useState<string>("");
+
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
 
   const [uploadingProgress, setUploadingProgress] = useState<number>(0);
@@ -112,30 +116,42 @@ const CreatePost: React.FC = () => {
     console.log("upload", upload);
   };
   const proccedtoStep3 = () => {
-    setUploadingVideoLabel("Adding Video Details...");
-    setUploadingVideo(true);
-    setTimeout(() => {
-      setSteps(2);
-      setUploadingVideo(false);
-    }, 5000);
+    // setUploadingVideoLabel("Adding Video Details...");
+    // setUploadingVideo(true);
+    // setTimeout(() => {
+    //   setSteps(2);
+    //   setUploadingVideo(false);
+    // }, 5000);
   };
-  const handleFileUpload = (): void => {
-    if (selectedFile) {
-      const { file } = selectedFile;
-      const formData = new FormData();
-      formData.append("file", file);
+  const handleCreatePost = (): void => {
+    // get video title
+    // get video description
+    // get thumbnail
+    console.log("videotitle", videoTitle);
+    console.log("videoDescription", videoDescription);
+    const params = {
+      title: videoTitle,
+      description: videoDescription,
+      tags: ["threespeak2", "acela-core2"],
+      community: "hive-101",
+      language: "en",
+    };
 
-      axios
-        .post("http://your-upload-url", formData)
-        .then((response) => {
-          // Handle successful upload
-          console.log(response);
-        })
-        .catch((error) => {
-          // Handle upload error
-          console.error(error);
-        });
-    }
+    const token = localStorage.getItem("access_token");
+    axios
+      .post("https://acela.us-02.infra.3speak.tv/api/v1/create_upload", params,{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((response) => {
+        // Handle successful upload
+        console.log('successful',response);
+      })
+      .catch((error) => {
+        // Handle upload error
+        console.error('error',error);
+      });
   };
 
   const dropzoneOptions: DropzoneOptions = {
@@ -583,6 +599,8 @@ const CreatePost: React.FC = () => {
                               <Input
                                 placeholder="Video Title"
                                 width={{ base: "89%", md: "89%", lg: "97%" }}
+                                value={videoTitle}
+                                onChange={(e) => setVideoTitle(e.target.value)}
                               />
                               <Text as={"label"}>
                                 Your video title, 2-55 characters
@@ -596,7 +614,13 @@ const CreatePost: React.FC = () => {
                               >
                                 Video Description
                               </Text>
-                              <Textarea placeholder="Here is a sample placeholder" />
+                              <Textarea
+                                value={videoDescription}
+                                onChange={(e) =>
+                                  setVideoDesription(e.target.value)
+                                }
+                                placeholder="Here is a sample placeholder"
+                              />
                             </fieldset>
                             <fieldset className="w-100 mb-3">
                               <Text
@@ -707,7 +731,7 @@ const CreatePost: React.FC = () => {
                           Go Back
                         </Button>
                         <Button
-                          onClick={proccedtoStep3}
+                          onClick={handleCreatePost}
                           size={"lg"}
                           colorScheme="blue"
                         >
