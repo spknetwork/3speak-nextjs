@@ -44,6 +44,7 @@ const CreatePost: React.FC = () => {
   // video title
   const [videoTitle, setVideoTitle] = useState<string>("");
   const [videoDescription, setVideoDesription] = useState<string>("");
+  const [savingDetails, setSavingDetails] = useState<Boolean | null>(null);
 
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
 
@@ -136,7 +137,7 @@ const CreatePost: React.FC = () => {
       community: "hive-101",
       language: "en",
     };
-
+    setSavingDetails(true)
     const token = localStorage.getItem("access_token");
     axios
       .post("https://acela.us-02.infra.3speak.tv/api/v1/create_upload", params,{
@@ -147,9 +148,13 @@ const CreatePost: React.FC = () => {
       .then((response) => {
         // Handle successful upload
         console.log('successful',response);
+        setSavingDetails(false)
+        setSteps(2);
+
       })
       .catch((error) => {
         // Handle upload error
+        setSavingDetails(false)
         console.error('error',error);
       });
   };
@@ -597,6 +602,7 @@ const CreatePost: React.FC = () => {
                                 Video Title
                               </Text>
                               <Input
+                                 disabled={savingDetails == true? true:false}
                                 placeholder="Video Title"
                                 width={{ base: "89%", md: "89%", lg: "97%" }}
                                 value={videoTitle}
@@ -615,6 +621,7 @@ const CreatePost: React.FC = () => {
                                 Video Description
                               </Text>
                               <Textarea
+                                 disabled={savingDetails == true? true:false}
                                 value={videoDescription}
                                 onChange={(e) =>
                                   setVideoDesription(e.target.value)
@@ -723,6 +730,7 @@ const CreatePost: React.FC = () => {
                         alignItems="center"
                       >
                         <Button
+                          disabled={savingDetails == true? true:false}
                           onClick={() => setSteps(0)}
                           size={"lg"}
                           colorScheme="gray"
@@ -731,11 +739,13 @@ const CreatePost: React.FC = () => {
                           Go Back
                         </Button>
                         <Button
+                          disabled={savingDetails == true? true:false}
                           onClick={handleCreatePost}
                           size={"lg"}
                           colorScheme="blue"
                         >
-                          Next Step
+                          { savingDetails == true? 'Saving Details':'Next Step'}
+                          
                         </Button>
                       </Flex>
                     </Flex>
