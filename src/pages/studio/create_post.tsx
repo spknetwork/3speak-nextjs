@@ -91,18 +91,17 @@ const CreatePost: React.FC = () => {
       retryDelays: [0, 1000, 3000, 5000],
       onError: (error) => {
         console.error("Upload error:", error);
-        setUploadStatus(false)
-
+        setUploadStatus(false);
       },
       onProgress: (bytesUploaded, bytesTotal) => {
         const progress = (bytesUploaded / bytesTotal) * 100;
         // create a loading progress
-        setUploadingProgress(progress)
+        setUploadingProgress(progress);
         console.log(`Upload progress: ${progress}%`);
       },
       onSuccess: () => {
         console.log("Upload complete");
-        setUploadStatus(true)
+        setUploadStatus(true);
       },
     };
 
@@ -393,21 +392,31 @@ const CreatePost: React.FC = () => {
                       className={styles.progressBar}
                       style={{ width: `${uploadingProgress}%` }}
                     >
-                      {
-                        uploadStatus == true && (
-                          <>
-                          <Text>Upload Complete!</Text>
-                          </>
-                        )
-                      }
+                      {uploadStatus == true && (
+                        <>
+                          <Text
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            color="white"
+                          >
+                            Upload Complete!
+                          </Text>
+                        </>
+                      )}
 
-{
-                        uploadStatus == false && (
-                          <>
-                          <Text>Error in uploading!</Text>
-                          </>
-                        )
-                      }
+                      {uploadStatus == false && (
+                        <>
+                          <Text
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            color="white"
+                          >
+                            Error in uploading!
+                          </Text>
+                        </>
+                      )}
                     </div>
                   </div>
                 </CardBody>
