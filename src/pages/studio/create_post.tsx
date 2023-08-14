@@ -45,6 +45,7 @@ const CreatePost: React.FC = () => {
 
   const [uploadingProgress, setUploadingProgress] = useState<number>(0);
   const [uploadStatus, setUploadStatus] = useState<Boolean | null>(null);
+  const [uploading, setUploading] = useState<Boolean>(false);
   const [steps, setSteps] = useState<number>(0);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
@@ -86,6 +87,7 @@ const CreatePost: React.FC = () => {
     if (!file) return;
     const token = localStorage.getItem("access_token");
     console.log("token", token);
+    setUploading(true);
     const options: UploadOptions = {
       endpoint: "http://144.48.107.2:1080/files/",
       retryDelays: [0, 1000, 3000, 5000],
@@ -366,6 +368,40 @@ const CreatePost: React.FC = () => {
                           </Flex>
                         </Box>
                       </Flex>
+                      {uploading && (
+                        <div className={styles.progressContainer}>
+                          <div
+                            className={styles.progressBar}
+                            style={{ width: `${uploadingProgress}%` }}
+                          >
+                            {uploadStatus == true && (
+                              <>
+                                <Text
+                                  display="flex"
+                                  justifyContent="center"
+                                  alignItems="center"
+                                  color="white"
+                                >
+                                  Upload Complete!
+                                </Text>
+                              </>
+                            )}
+
+                            {uploadStatus == false && (
+                              <>
+                                <Text
+                                  display="flex"
+                                  justifyContent="center"
+                                  alignItems="center"
+                                  color="white"
+                                >
+                                  Error in uploading!
+                                </Text>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      )}
                       <Flex justifyContent={"end"} alignItems="center">
                         {/* <Button
                           onClick={() => router.push("/studio/upload")}
@@ -387,38 +423,6 @@ const CreatePost: React.FC = () => {
                       </Flex>
                     </Flex>
                   </Box>
-                  <div className={styles.progressContainer}>
-                    <div
-                      className={styles.progressBar}
-                      style={{ width: `${uploadingProgress}%` }}
-                    >
-                      {uploadStatus == true && (
-                        <>
-                          <Text
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="center"
-                            color="white"
-                          >
-                            Upload Complete!
-                          </Text>
-                        </>
-                      )}
-
-                      {uploadStatus == false && (
-                        <>
-                          <Text
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="center"
-                            color="white"
-                          >
-                            Error in uploading!
-                          </Text>
-                        </>
-                      )}
-                    </div>
-                  </div>
                 </CardBody>
               )}
 
