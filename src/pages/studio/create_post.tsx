@@ -83,12 +83,6 @@ const CreatePost: React.FC = () => {
     console.log("dropped file check", file);
     setSelectedFile({ file, previewUrl });
 
-    // setUploadingVideo(true);
-
-    // setTimeout(() => {
-    //   setSteps(1);
-    //   setUploadingVideo(false);
-    // }, 5000);
     if (!file) return;
     const token = localStorage.getItem("access_token");
     console.log("token", token);
@@ -116,14 +110,8 @@ const CreatePost: React.FC = () => {
     upload.start();
     console.log("upload", upload);
   };
-  const proccedtoStep3 = () => {
-    // setUploadingVideoLabel("Adding Video Details...");
-    // setUploadingVideo(true);
-    // setTimeout(() => {
-    //   setSteps(2);
-    //   setUploadingVideo(false);
-    // }, 5000);
-  };
+  
+
   const handleCreatePost = (): void => {
     // get video title
     // get video description
