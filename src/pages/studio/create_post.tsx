@@ -44,6 +44,7 @@ const CreatePost: React.FC = () => {
   // video title
   const [videoTitle, setVideoTitle] = useState<string>("");
   const [videoDescription, setVideoDesription] = useState<string>("");
+  const [video_upload_id, setVideoUploadId] = useState<string>("");
   const [savingDetails, setSavingDetails] = useState<Boolean | null>(null);
 
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
@@ -137,7 +138,44 @@ const CreatePost: React.FC = () => {
     upload.start();
     console.log("upload", upload);
   };
-
+  const handleEncode = () :void => {
+    // set encoding video
+    const params = {
+      upload_id: video_upload_id,
+    };
+    const token = localStorage.getItem("access_token");
+    axios
+      .post(
+        "https://acela.us-02.infra.3speak.tv/api/v1/start_encode",
+        params,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        toast({
+          position: "top-right",
+          title: "Success!",
+          description: "Encoding video, please wait",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        router.push("/studio/studio_videos");
+      })
+      .catch((error) => {
+        toast({
+          position: "top-right",
+          title: "Error!",
+          description: "Something went wrong",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  }
   const handleCreatePost = (): void => {
     // get video title
     // get video description
@@ -167,11 +205,27 @@ const CreatePost: React.FC = () => {
         // Handle successful upload
         console.log("successful", response);
         saveThumbnail(response);
+        toast({
+          position: "top-right",
+          title: "Success!",
+          description: "Successfully created video details",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
       })
       .catch((error) => {
         // Handle upload error
         setSavingDetails(false);
         console.error("error", error);
+        toast({
+          position: "top-right",
+          title: "Success!",
+          description: "Successfully created video details",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
       });
   };
 
@@ -198,6 +252,8 @@ const CreatePost: React.FC = () => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_id', response.data.upload_id);
+    // get upload_id
+    setVideoUploadId(response.data.upload_id)
     axios
       .post(
         "https://acela.us-02.infra.3speak.tv/api/v1/upload_thumbnail",
@@ -218,6 +274,7 @@ const CreatePost: React.FC = () => {
       .catch((error) => {
         // Handle upload error
         setSavingDetails(false);
+        setSteps(2);
         console.error("error thumbnail", error);
       });
   };
@@ -1095,7 +1152,9 @@ const CreatePost: React.FC = () => {
                         >
                           Go Back
                         </Button>
-                        <Button size={"lg"} colorScheme="blue">
+                        <Button 
+                          onClick={() => handleEncode()}
+                        size={"lg"} colorScheme="blue">
                           Save
                         </Button>
                       </Flex>
