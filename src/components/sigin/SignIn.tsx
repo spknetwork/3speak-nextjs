@@ -14,6 +14,7 @@ import { API_URL_FROM_WEST } from "../../utils/config";
 import axios from "axios";
 import { api } from "@/utils/api";
 import { useAppStore } from "@/lib/store";
+import { Button } from "@chakra-ui/react";
 
 const SignIn = () => {
   const router = useRouter();
@@ -50,6 +51,11 @@ const SignIn = () => {
     await login(values);
     checkAuth();
   };
+
+  const showThirdPartyLogin = () => {
+    // call the magic link function here
+    console.log('call the magic link function here')
+  }
 
   return (
     <Box width="100%">
@@ -141,7 +147,10 @@ const SignIn = () => {
             <Flex width="100%" justifyContent="center" mt="1rem">
               <StyledButton type="submit">Log in</StyledButton>
             </Flex>
-
+            <Flex width="100%" justifyContent="center" mt="1rem">
+            <Button onClick={() => showThirdPartyLogin()} width={'100%'} variant={'outline'} colorScheme='gray'>Try third party login</Button>
+            </Flex>
+           
             <Flex width="100%" justifyContent="center" mt="0.5rem">
               <Link href="/auth/forgot_password">
                 <StyledButton
