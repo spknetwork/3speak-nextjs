@@ -7,7 +7,7 @@ import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
-import ReCAPTCHA from "react-google-recaptcha";
+// import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
 import { API_URL_FROM_WEST } from "../../utils/config";
@@ -23,8 +23,8 @@ const SignIn = () => {
   const recaptchaRefSignIn: any = useRef();
 
   const onSubmitWithReCAPTCHASignIn = async () => {
-    const token = await recaptchaRefSignIn.current.executeAsync();
-    console.log(token);
+    // const token = await recaptchaRefSignIn.current.executeAsync();
+    // console.log(token);
     // apply to form data
   };
 
@@ -48,8 +48,8 @@ const SignIn = () => {
   }, [authenticated, router]);
 
   const handleSubmit = async (values: any) => {
-    const token = await recaptchaRefSignIn.current.executeAsync();
-    console.log(token);
+    // const token = await recaptchaRefSignIn.current.executeAsync();
+    // console.log(token);
     await login(values);
     checkAuth();
   };
@@ -142,14 +142,14 @@ const SignIn = () => {
                 {t("login.disclaimer")}
               </Typography>
             </Box>
-            <Box
+            {/* <Box
               marginTop={'10px'}
             >
               <ReCAPTCHA
                 ref={recaptchaRefSignIn}
                 sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
               />
-            </Box>
+            </Box> */}
 
             <Flex width="100%" justifyContent="center" mt="1rem">
               <StyledButton type="submit">Log in</StyledButton>

@@ -8,10 +8,10 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
 import axios from "axios";
-import { API_URL_FROM_WEST } from '../../utils/config';
+import { API_URL_FROM_WEST } from "../../utils/config";
 import { useToast } from "@chakra-ui/react";
 import { useAppStore } from "@/lib/store";
-// import ReCAPTCHA from "react-google-recaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
 const SignUp = () => {
   const toast = useToast();
   const router = useRouter();
@@ -20,12 +20,12 @@ const SignUp = () => {
   const recaptchaRefSignUp: any = useRef();
 
   const onSubmitWithReCAPTCHASignUp = async () => {
-    const token = await recaptchaRefSignUp.current.executeAsync();
-    console.log(token);
     // apply to form data
   };
   const { register } = useAppStore();
   const handleSubmit = async (values: any) => {
+    const token = await recaptchaRefSignUp.current.executeAsync();
+    console.log(token);
     try {
       await register(values);
       toast({
@@ -36,7 +36,7 @@ const SignUp = () => {
         duration: 9000,
         isClosable: true,
       });
-    }  catch (error: any) {
+    } catch (error: any) {
       toast({
         position: "top-right",
         title: "Something went wrong",
@@ -184,10 +184,13 @@ const SignUp = () => {
                   </Typography>
                 </Box>
               </Box>
-              {/* <ReCAPTCHA
+              <Box marginTop={"10px"}>
+                <ReCAPTCHA
                   ref={recaptchaRefSignUp}
                   sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
-                /> */}
+                />
+              </Box>
+
               <Flex width="100%" justifyContent="center" mt="1rem">
                 <StyledButton type="submit">Sign Up</StyledButton>
               </Flex>
