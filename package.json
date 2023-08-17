@@ -31,6 +31,7 @@
     "@radix-ui/react-tooltip": "^1.0.4",
     "@rajesh896/video-thumbnails-generator": "^2.3.9",
     "@reduxjs/toolkit": "^1.8.2",
+    "@types/react-google-recaptcha": "^2.1.5",
     "axios": "^1.4.0",
     "babel-plugin-macros": "^3.1.0",
     "babel-plugin-preval": "^5.1.0",

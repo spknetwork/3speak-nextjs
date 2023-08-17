@@ -7,7 +7,7 @@ import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
-// import ReCAPTCHA from "react-google-recaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
 import { API_URL_FROM_WEST } from "../../utils/config";
@@ -48,14 +48,16 @@ const SignIn = () => {
   }, [authenticated, router]);
 
   const handleSubmit = async (values: any) => {
+    const token = await recaptchaRefSignIn.current.executeAsync();
+    console.log(token);
     await login(values);
     checkAuth();
   };
 
   const showThirdPartyLogin = () => {
     // call the magic link function here
-    console.log('call the magic link function here')
-  }
+    console.log("call the magic link function here");
+  };
 
   return (
     <Box width="100%">
@@ -140,17 +142,29 @@ const SignIn = () => {
                 {t("login.disclaimer")}
               </Typography>
             </Box>
-            {/* <ReCAPTCHA
-              ref={recaptchaRefSignIn}
-              sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
-            /> */}
+            <Box
+              marginTop={'10px'}
+            >
+              <ReCAPTCHA
+                ref={recaptchaRefSignIn}
+                sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
+              />
+            </Box>
+
             <Flex width="100%" justifyContent="center" mt="1rem">
               <StyledButton type="submit">Log in</StyledButton>
             </Flex>
             <Flex width="100%" justifyContent="center" mt="1rem">
-            <Button onClick={() => showThirdPartyLogin()} width={'100%'} variant={'outline'} colorScheme='gray'>Try third party login</Button>
+              <Button
+                onClick={() => showThirdPartyLogin()}
+                width={"100%"}
+                variant={"outline"}
+                colorScheme="gray"
+              >
+                Try third party login
+              </Button>
             </Flex>
-           
+
             <Flex width="100%" justifyContent="center" mt="0.5rem">
               <Link href="/auth/forgot_password">
                 <StyledButton
