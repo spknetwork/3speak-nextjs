@@ -12,7 +12,8 @@ import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
 import SignUpHive from "@/components/signup/SignUpHive";
-const TabsDemo = () => {
+const TabsDemo = ({tab}:any) => {
+  console.log('tabhere',tab)
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -33,28 +34,17 @@ const TabsDemo = () => {
       minWidth="100vw"
       paddingTop="100px"
     >
-      <Tabs.Root className="TabsRoot" defaultValue="tab1">
-        <Tabs.List className="TabsList" aria-label="Manage your account">
-          <Tabs.Trigger className="TabsTrigger" value="tab1">
-            Sign In
-          </Tabs.Trigger>
-          <Tabs.Trigger className="TabsTrigger text-center" value="tab2">
-            Sign Up with Hive
-          </Tabs.Trigger>
-          <Tabs.Trigger className="TabsTrigger" value="tab3">
-            Sign Up
-          </Tabs.Trigger>
-        </Tabs.List>
-        <Tabs.Content className="TabsContent" value="tab1">
+    
+        <Tabs.Content className="TabsContent" value={tab}>
           <SignIn />
         </Tabs.Content>
-        <Tabs.Content className="TabsContent" value="tab2">
+        {/* <Tabs.Content className="TabsContent" value="tab2">
           <SignUpHive />
         </Tabs.Content>
         <Tabs.Content className="TabsContent" value="tab3">
           <SignUp />
-        </Tabs.Content>
-      </Tabs.Root>
+        </Tabs.Content> */}
+     
     </Flex>
   );
 };
