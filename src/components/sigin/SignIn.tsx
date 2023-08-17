@@ -51,7 +51,8 @@ const SignIn = () => {
     // const token = await recaptchaRefSignIn.current.executeAsync();
     // console.log(token);
     await login(values);
-    checkAuth();
+    router.push("/otp/enter_code");
+    // checkAuth();
   };
 
   const showThirdPartyLogin = () => {

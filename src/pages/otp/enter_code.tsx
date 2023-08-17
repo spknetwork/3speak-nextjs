@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
@@ -22,6 +22,12 @@ const ForgotPassword = () => {
     console.log(token);
     // apply to form data
   };
+
+  const handleSubmit = async (values: any) => {
+   
+    router.push("/");
+    // checkAuth();
+  };
   return (
     <Flex
       justifyContent="center"
@@ -39,51 +45,49 @@ const ForgotPassword = () => {
         </Tabs.List>
         <Tabs.Content className="TabsContent" value="tab1"> */}
           <Box width="100%">
-            <Flex justifyContent={'start'}>
+            {/* <Flex justifyContent={'start'}>
               <FiArrowLeft onClick={() => router.push("/auth/login")} cursor={'pointer'} size={'30px'}/>
-            </Flex>
+            </Flex> */}
             <Box mx="auto" maxWidth="10rem">
-            <Text as='p' fontWeight={'bold'}>Forgot password</Text>
-              <img
+            <Text as='p' fontWeight={'bold'}>Enter OTP</Text>
+              {/* <img
                 src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
                 alt="3speak logo"
                 width="100%"
-              />
+              /> */}
               
             </Box>
             <Formik
               initialValues={{ password: "", email: "" }}
-              validate={(props) => {
-                const errors: any = {};
+              // validate={(props) => {
+              //   const errors: any = {};
 
-                if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(props.email)) {
-                  errors.email = t("login.notValidEmail");
-                }
+              //   if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(props.email)) {
+              //     errors.email = t("login.notValidEmail");
+              //   }
 
-                if (!props.password) errors.password = t("required");
-                if (!props.email) errors.email = t("required");
+              //   if (!props.password) errors.password = t("required");
+              //   if (!props.email) errors.email = t("required");
 
-                return errors;
-              }}
-              onSubmit={(values) => {
-                console.log(values, "submit");
-              }}
+              //   return errors;
+              // }}
+              onSubmit={handleSubmit}
             >
               {(props) => (
-                <form onSubmit={onSubmitWithReCAPTCHA}>
+                <Form>
                   <Box mb="2rem" mt="1.5rem" width="100%">
                     <fieldset className="Fieldset">
                       <label className="Label" htmlFor="currentPassword">
-                        Email
+                        Enter Code
                       </label>
                       <input
                         className="Input"
-                        id="email"
-                        placeholder={t("login.email")}
-                        type="email"
+                        id="code"
+                        placeholder={'Enter OTP'}
+                        type="text"
                         onChange={props.handleChange}
                         onBlur={props.handleBlur}
-                        name="email"
+                        name="code"
                       />
                       {!!props.errors.email && (
                         <Typography color="#FF3333">
@@ -93,9 +97,9 @@ const ForgotPassword = () => {
                     </fieldset>
                   </Box>
                   <Flex width="100%" justifyContent="center" mt="1rem">
-                    <StyledButton type="submit">Send Email</StyledButton>
+                    <StyledButton type="submit">Verify</StyledButton>
                   </Flex>
-                </form>
+                </Form>
               )}
             </Formik>
           </Box>

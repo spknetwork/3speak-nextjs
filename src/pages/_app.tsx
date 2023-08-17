@@ -24,6 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
   const router = useRouter();
   const isAuth = pathname.includes("/auth");
+  const isOtp = pathname.includes("/otp");
   const isStudio = pathname.includes("/studio");
   const [currentAuthPage, setCurrentAuthPage] = useState<string>("tab1");
   const { checkAuth } = useAppStore();
@@ -65,9 +66,37 @@ function MyApp({ Component, pageProps }: AppProps) {
         `}
       >
         <nav>
-          <Box>{!isAuth && !isStudio && <Sidebar />}</Box>
+          <Box>{!isAuth && !isStudio && !isOtp && <Sidebar />}</Box>
         </nav>
+        {isOtp && (
+          <>
+            <Flex
+              margin='auto'
+              marginTop='30px'
+              width={"40%"}
+              css={css`
+                @media (max-width: 768px) {
+                  flex-direction: column;
+                }
 
+                @media (min-width: 769px) {
+                  flex-direction: column;
+                }
+              `}
+            >
+              <main>
+                <Box width={"100%"} backgroundColor="#EFF4F6">
+                  
+                    <ChakraProvider>
+                      <ApolloProvider client={client}>
+                        <Component tab={currentAuthPage} {...pageProps} />
+                      </ApolloProvider>
+                    </ChakraProvider>
+                </Box>
+              </main>
+            </Flex>
+          </>
+        )}
         {isAuth && (
           <>
             <Flex
@@ -125,7 +154,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </>
         )}
 
-        {!isAuth && (
+        {!isAuth && !isOtp && (
           <>
             <Flex
               width={"100%"}
