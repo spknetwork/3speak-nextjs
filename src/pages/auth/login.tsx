@@ -30,8 +30,7 @@ const TabsDemo = ({tab}:any) => {
       px="1rem"
       alignItems={{ _: "flex-start", tablet: "flex-start" }}
       backgroundColor="#F5F5F5"
-      minHeight="100vh"
-      minWidth="100vw"
+      paddingBottom="50px"
       paddingTop="100px"
     >
     

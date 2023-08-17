@@ -71,7 +71,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         {isAuth && (
           <>
             <Flex
-              width={"100%"}
+              margin='auto'
+              marginTop='30px'
+              width={"40%"}
               css={css`
                 @media (max-width: 768px) {
                   flex-direction: column;
