@@ -138,7 +138,7 @@ const CreatePost: React.FC = () => {
     upload.start();
     console.log("upload", upload);
   };
-  const handleEncode = () :void => {
+  const handleEncode = (): void => {
     // set encoding video
     const params = {
       upload_id: video_upload_id,
@@ -233,7 +233,7 @@ const CreatePost: React.FC = () => {
     let thumbnail = [];
     if (previewManualThumbnails.length > 0) {
       thumbnail.push(previewManualThumbnails[0]);
-     
+
     } else {
       thumbnail.push(previewThumbnails[0]);
     }
@@ -977,12 +977,11 @@ const CreatePost: React.FC = () => {
                                     marginLeft={"20px"}
                                   >
                                     <Stack spacing={5} direction="row">
-                                      <Radio value="1">Public</Radio>
+                                      <Radio value="1">Publish Now</Radio>
                                     </Stack>
 
                                     <Text as="label">
-                                      Publish it now and everyone can watch your
-                                      video
+                                      Publish after encoding and everyone can watch the video
                                     </Text>
                                   </Box>
                                   <Box
@@ -992,14 +991,16 @@ const CreatePost: React.FC = () => {
                                     <Stack spacing={5} direction="row">
                                       <Radio value="2">Schedule</Radio>
                                     </Stack>
-                                    <Text as="label">
-                                      Set a date when do you want publish this
-                                      video
-                                    </Text>
+                                    <Box>
+                                      <Text as="label">
+                                        Set a date and time
+                                      </Text>
+                                    </Box>
+
                                     {publishValue == "2" && (
                                       <Input
                                         width={"50%"}
-                                        type="date"
+                                        type="datetime-local"
                                         placeholder="select date"
                                       />
                                     )}
@@ -1152,9 +1153,9 @@ const CreatePost: React.FC = () => {
                         >
                           Go Back
                         </Button>
-                        <Button 
+                        <Button
                           onClick={() => handleEncode()}
-                        size={"lg"} colorScheme="blue">
+                          size={"lg"} colorScheme="blue">
                           Save
                         </Button>
                       </Flex>
