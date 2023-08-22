@@ -162,7 +162,7 @@ const SignIn = () => {
                 variant={"outline"}
                 colorScheme="gray"
               >
-                Try third party login
+                Login with Single Sign-On (SSO)
               </Button>
             </Flex>
 
