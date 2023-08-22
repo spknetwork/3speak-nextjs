@@ -12,15 +12,17 @@ import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
 
-const SignUpHive = () => {
+const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRefSignUpHive: any = useRef();
 
-  const onSubmitWithReCAPTCHASignUpHive = async () => {
-    const token = await recaptchaRefSignUpHive.current.executeAsync();
-    console.log(token);
+  const onSubmitWithReCAPTCHASignUpHive = async (e:any) => {
+    e.preventDefault()
+    // const token = await recaptchaRefSignUpHive.current.executeAsync();
+    // console.log(token);
+    requestHiveLogin()
     // apply to form data
   };
   return (
@@ -36,55 +38,18 @@ const SignUpHive = () => {
         <Box mb="2rem" mt="1.5rem" width="100%">
           <fieldset className="Fieldset">
             <label className="Label" htmlFor="emailAddress">
-              Email Address
+              Username
             </label>
             <input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="Input"
-              id="emailAddress"
-              placeholder="Enter email"
-              type="email"
-            />
-          </fieldset>
-          <fieldset className="Fieldset">
-            <label className="Label" htmlFor="username">
-              Username / Channel name
-            </label>
-            <input
-              className="Input"
-              id="username"
-              placeholder="Enter channel"
+              id="text"
+              placeholder="Enter username"
               type="text"
             />
           </fieldset>
-          <fieldset className="Fieldset">
-            <label className="Label" htmlFor="password">
-              Password
-            </label>
-            <input
-              className="Input"
-              id="password"
-              placeholder="Enter password"
-              type="password"
-            />
-            <Box
-              width="100%"
-              borderRadius="0.25rem"
-              mt="1.5rem"
-              py="0.75rem"
-              px="1.25rem"
-              backgroundColor="#bee5eb"
-              border="1px solid #bee5eb"
-            >
-              <Typography color="#0c5460">
-                {/* fontSize="0.75rem" */}
-                <StyledList>
-                  {(t("register.passwordRules") as string[]).map((rule) => (
-                    <li key={rule}>{rule}</li>
-                  ))}
-                </StyledList>
-              </Typography>
-            </Box>
-          </fieldset>
+
           {/* <ReCAPTCHA
             ref={recaptchaRefSignUpHive}
             sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
