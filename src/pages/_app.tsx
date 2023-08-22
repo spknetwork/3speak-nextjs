@@ -102,7 +102,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Flex
               margin='auto'
               marginTop='30px'
-              width={"40%"}
+              width={"30%"}
               css={css`
                 @media (max-width: 768px) {
                   flex-direction: column;
@@ -132,7 +132,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                         className="TabsTrigger text-center"
                         value="tab2"
                       >
-                        Sign Up with Hive
+                        Sign In with Hive
                       </Tabs.Trigger>
                       <Tabs.Trigger
                         onClick={() => updateAuthCurrentPage("tab3")}
