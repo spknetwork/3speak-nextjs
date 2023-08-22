@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -7,12 +7,39 @@ import { Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
+import { KeychainSDK } from "keychain-sdk";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
 import SignUpHive from "@/components/signup/SignUpHive";
+import { Button } from "@chakra-ui/react";
 const TabsDemo = ({ tab }: any) => {
+  const [username, setUsername] = useState<string>("")
+  const callback = (response: any) => {
+    console.log("response", response);
+  };
+  const requestHiveLogin = async () => {
+    try {
+      // Gives @stoodkev active authority with weight 2 to `account`
+      const keychain = window.hive_keychain;
+      console.log("keychain", keychain);
+      const message = `{login: ${username}}`
+      keychain.requestSignBuffer(
+        username,
+        message,
+        "Posting",
+        callback,
+        null,
+        "Login using Hive",
+        (response: any) => {
+          console.log(response);
+        }
+      );
+    } catch (error) {
+      console.log({ error });
+    }
+  };
   console.log("tabhere", tab);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -34,7 +61,8 @@ const TabsDemo = ({ tab }: any) => {
       paddingTop="100px"
     >
       <Tabs.Content className="TabsContent" value={tab}>
-        <SignUpHive />
+        {/* <Button onClick={() => requestHiveLogin("juneroy1")}>hive</Button> */}
+        <SignUpHive requestHiveLogin={requestHiveLogin} username={username} setUsername={setUsername}  />
       </Tabs.Content>
       {/* <Tabs.Content className="TabsContent" value="tab2">
           <SignUpHive />
