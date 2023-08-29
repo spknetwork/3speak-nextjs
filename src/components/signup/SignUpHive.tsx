@@ -19,8 +19,8 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
   const { t } = useTranslation();
   const recaptchaRefSignUpHive: any = useRef();
 
-  const onSubmitWithReCAPTCHASignUpHive = async (e: any) => {
-    e.preventDefault()
+  const onSubmitWithReCAPTCHASignUpHive = async () => {
+    // e.preventDefault()
     // const token = await recaptchaRefSignUpHive.current.executeAsync();
     // console.log(token);
     requestHiveLogin()
@@ -43,9 +43,9 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
           width="100%"
         />
       </Box>
-      <form onSubmit={onSubmitWithReCAPTCHASignUpHive}>
+      {/* <form onSubmit={onSubmitWithReCAPTCHASignUpHive}> */}
         <Flex>
-          <Flex width={'30rem'} borderRadius={'10px'} padding='5px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="1rem" mr='10px'>
+          <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="1rem" mr='10px'>
             <img src="/keychain.6846c271.png" alt="3speak logo" />
           </Flex>
           <Box mt="1rem" width="100%">
@@ -61,11 +61,11 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
             </fieldset>
           </Box>
           <Box mt="1rem" width="auto">
-            <Button>{'>'}</Button>
+            <Button onClick={() => requestHiveLogin()}>{'>'}</Button>
           </Box>
         </Flex>
         <Flex>
-          <Flex width={'30rem'} borderRadius={'10px'} padding='5px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mb="1rem" mt="1rem" mr='10px'>
+          <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mb="1rem" mt="1rem" mr='10px'>
             <img src="/hiveauth.ac85800f.svg" alt="3speak logo" />
           </Flex>
           <Box mt="1rem" width="100%">
@@ -85,7 +85,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
           </Box>
         </Flex>
         <Flex>
-          <Flex width={'30rem'} borderRadius={'10px'} padding='5px' justifyContent={'center'} height={'50px'} backgroundColor={'#d1d5da'} mb="1rem" mt="1rem" mr='10px'>
+          <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'#d1d5da'} mb="1rem" mt="1rem" mr='10px'>
             <img src="/hivesigner.6958efa0.svg" alt="3speak logo" />
           </Flex>
           <Box mt="1rem" width="100%">
@@ -106,7 +106,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
         </Flex>
 
 
-      </form>
+      {/* </form> */}
     </Box>
   );
 };

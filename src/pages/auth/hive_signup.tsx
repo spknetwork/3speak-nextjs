@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -16,8 +16,31 @@ import SignUpHive from "@/components/signup/SignUpHive";
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
 import { API_URL_FROM_WEST } from "@/utils/config";
+import { useAppStore } from "@/lib/store";
+
 
 const TabsDemo = ({ tab }: any) => {
+  const router = useRouter();
+  const { allowAccess, checkAuth } = useAppStore();
+  // const isMedium = useBreakpointValue({ base: false, md: true });
+  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (allowAccess == true) {
+      setAuthenticated(allowAccess);
+      // return
+    } else {
+      setAuthenticated(false);
+    }
+  }, [allowAccess]);
+
+  useEffect(() => {
+    if (authenticated) {
+      router.push("/");
+    }
+  }, [authenticated, router]);
+
+
   const [username, setUsername] = useState<string>("")
   const [dateNow, setDateNow] = useState<string>("")
   const datan = new Date().toISOString()
@@ -49,6 +72,8 @@ const TabsDemo = ({ tab }: any) => {
       }
     );
     console.log('_response',_response)
+    localStorage.setItem("access_token", _response.data.access_token);
+    checkAuth();
   };
   const requestHiveLogin = async () => {
     const dateN = new Date().toISOString()
@@ -80,7 +105,7 @@ const TabsDemo = ({ tab }: any) => {
     }
   };
   console.log("tabhere", tab);
-  const router = useRouter();
+ 
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRef: any = useRef();
