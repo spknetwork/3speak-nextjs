@@ -6,19 +6,20 @@ import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
-import { Typography, Box, Flex } from "src/components";
+import { Typography,  Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
-
+import { Button,Box, Text } from "@chakra-ui/react";
+import Image from "next/image";
 const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRefSignUpHive: any = useRef();
 
-  const onSubmitWithReCAPTCHASignUpHive = async (e:any) => {
+  const onSubmitWithReCAPTCHASignUpHive = async (e: any) => {
     e.preventDefault()
     // const token = await recaptchaRefSignUpHive.current.executeAsync();
     // console.log(token);
@@ -27,6 +28,14 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
   };
   return (
     <Box width="100%">
+      <Box>
+        <Text as='h2'>
+          Login to 3Speak
+        </Text>
+        <Text>
+          Select one of the supported login options that help keep your access safe and decentralized.
+        </Text>
+      </Box>
       <Box mx="auto" maxWidth="9rem">
         <img
           src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
@@ -35,29 +44,68 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
         />
       </Box>
       <form onSubmit={onSubmitWithReCAPTCHASignUpHive}>
-        <Box mb="2rem" mt="1.5rem" width="100%">
-          <fieldset className="Fieldset">
-            <label className="Label" htmlFor="emailAddress">
-              Username
-            </label>
-            <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="Input"
-              id="text"
-              placeholder="Enter username"
-              type="text"
-            />
-          </fieldset>
-
-          {/* <ReCAPTCHA
-            ref={recaptchaRefSignUpHive}
-            sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
-          /> */}
-          <Flex width="100%" justifyContent="center" mt="1rem">
-            <StyledButton type="submit">Sign In</StyledButton>
+        <Flex>
+          <Flex width={'30rem'} borderRadius={'10px'} padding='5px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="1rem" mr='10px'>
+            <img src="/keychain.6846c271.png" alt="3speak logo" />
           </Flex>
-        </Box>
+          <Box mt="1rem" width="100%">
+            <fieldset className="Fieldset2">
+              <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="Input2"
+                id="text"
+                placeholder="Enter username"
+                type="text"
+              />
+            </fieldset>
+          </Box>
+          <Box mt="1rem" width="auto">
+            <Button>{'>'}</Button>
+          </Box>
+        </Flex>
+        <Flex>
+          <Flex width={'30rem'} borderRadius={'10px'} padding='5px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mb="1rem" mt="1rem" mr='10px'>
+            <img src="/hiveauth.ac85800f.svg" alt="3speak logo" />
+          </Flex>
+          <Box mt="1rem" width="100%">
+            <fieldset className="Fieldset2">
+              <input
+                style={{cursor:'not-allowed'}}
+                disabled={true}
+                className="Input2"
+                id="text"
+                placeholder="Enter username"
+                type="text"
+              />
+            </fieldset>
+          </Box>
+          <Box cursor={'not-allowed'} mt="1rem" width="auto">
+            <Button  disabled={true}>{'>'}</Button>
+          </Box>
+        </Flex>
+        <Flex>
+          <Flex width={'30rem'} borderRadius={'10px'} padding='5px' justifyContent={'center'} height={'50px'} backgroundColor={'#d1d5da'} mb="1rem" mt="1rem" mr='10px'>
+            <img src="/hivesigner.6958efa0.svg" alt="3speak logo" />
+          </Flex>
+          <Box mt="1rem" width="100%">
+            <fieldset className="Fieldset2">
+              <input 
+                 style={{cursor:'not-allowed'}}
+                disabled={true}
+                className="Input2"
+                id="text"
+                placeholder="Enter username"
+                type="text"
+              />
+            </fieldset>
+          </Box>
+          <Box mt="1rem" width="auto">
+            <Button cursor={'not-allowed'} disabled={true}>{'>'}</Button>
+          </Box>
+        </Flex>
+
+
       </form>
     </Box>
   );
