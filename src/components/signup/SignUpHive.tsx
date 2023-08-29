@@ -29,10 +29,10 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
   return (
     <Box width="100%">
       <Box>
-        <Text as='h2'>
+        <Text as='h2' textAlign={'center'}>
           Login to 3Speak
         </Text>
-        <Text>
+        <Text textAlign={'center'}>
           Select one of the supported login options that help keep your access safe and decentralized.
         </Text>
       </Box>
