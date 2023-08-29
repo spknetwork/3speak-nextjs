@@ -15,8 +15,32 @@ import axios from "axios";
 import { api } from "@/utils/api";
 import { useAppStore } from "@/lib/store";
 import { Button } from "@chakra-ui/react";
+import { Magic } from "magic-sdk";
 
+// const magic = new Magic("pk_live_7645A843999E2369");
 const SignIn = () => {
+  // const [account, setAccount] = useState<any>(null);
+  // const [idToken, setIdToken] = useState();
+
+  const connectWallet = async () => {
+    // const accounts = await magic.wallet
+    //   .connectWithUI()
+    //   .on("id-token-created", (params:any) => {
+    //     setIdToken(params.idToken);
+    //   });
+
+    // setAccount(accounts[0]);
+  };
+
+  // const showUI = () => {
+  //   magic.wallet.showUI();
+  // };
+
+  // const logout = async () => {
+  //   await magic.user.logout();
+  //   setAccount(null);
+  // };
+
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -157,12 +181,12 @@ const SignIn = () => {
             </Flex>
             <Flex width="100%" justifyContent="center" mt="1rem">
               <Button
-                onClick={() => showThirdPartyLogin()}
+                onClick={() => connectWallet()}
                 width={"100%"}
                 variant={"outline"}
                 colorScheme="gray"
               >
-                Login with Single Sign-On (SSO)
+                Login with Social Accounts
               </Button>
             </Flex>
 
