@@ -45,7 +45,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
       </Box>
       {/* <form onSubmit={onSubmitWithReCAPTCHASignUpHive}> */}
         <Flex>
-          <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="1rem" mr='10px'>
+          <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="11px" mr='10px'>
             <img src="/keychain.6846c271.png" alt="3speak logo" />
           </Flex>
           <Box mt="1rem" width="100%">
@@ -61,11 +61,11 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
             </fieldset>
           </Box>
           <Box mt="1rem" width="auto">
-            <Button onClick={() => requestHiveLogin()}>{'>'}</Button>
+            <Button height={'92%'} onClick={() => requestHiveLogin()}>{'>'}</Button>
           </Box>
         </Flex>
         <Flex>
-          <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mb="1rem" mt="1rem" mr='10px'>
+          <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'}  mt="11px" mr='10px'>
             <img src="/hiveauth.ac85800f.svg" alt="3speak logo" />
           </Flex>
           <Box mt="1rem" width="100%">
@@ -81,11 +81,11 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
             </fieldset>
           </Box>
           <Box cursor={'not-allowed'} mt="1rem" width="auto">
-            <Button  disabled={true}>{'>'}</Button>
+            <Button height={'92%'}  disabled={true}>{'>'}</Button>
           </Box>
         </Flex>
         <Flex>
-          <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'#d1d5da'} mb="1rem" mt="1rem" mr='10px'>
+          <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'#d1d5da'} mt="11px" mr='10px'>
             <img src="/hivesigner.6958efa0.svg" alt="3speak logo" />
           </Flex>
           <Box mt="1rem" width="100%">
@@ -101,7 +101,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
             </fieldset>
           </Box>
           <Box mt="1rem" width="auto">
-            <Button cursor={'not-allowed'} disabled={true}>{'>'}</Button>
+            <Button height={'92%'} cursor={'not-allowed'} disabled={true}>{'>'}</Button>
           </Box>
         </Flex>
 
