@@ -28,10 +28,9 @@ const TabsDemo = ({ tab }: any) => {
     <Flex
       justifyContent="center"
       px="1rem"
+      py="1rem"
       alignItems={{ _: "flex-start", tablet: "flex-start" }}
       backgroundColor="#F5F5F5"
-      paddingBottom="50px"
-      paddingTop="100px"
     >
       <Tabs.Content className="TabsContent" value={tab}>
         <SignUp />

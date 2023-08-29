@@ -14,26 +14,65 @@ import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
 import SignUpHive from "@/components/signup/SignUpHive";
 import { Button } from "@chakra-ui/react";
+import axios from "axios";
+import { API_URL_FROM_WEST } from "@/utils/config";
+
 const TabsDemo = ({ tab }: any) => {
   const [username, setUsername] = useState<string>("")
-  const callback = (response: any) => {
+  const [dateNow, setDateNow] = useState<string>("")
+  const datan = new Date().toISOString()
+  const callback =  async (response: any) =>  {
     console.log("response", response);
+    const result =response
+    console.log("result", result);
+
+    const proof_payload = {
+      account: username,
+      ts: datan,
+    }
+    const data = {
+      username: username,
+      network: 'hive',
+      authority_type: 'posting',
+      proof_payload:JSON.stringify(proof_payload),
+      proof: result.result,
+    }
+
+    const _response = await axios.post(
+      API_URL_FROM_WEST + "/v1/auth/login_singleton",
+      data,
+      {
+        headers: {
+          // Set your custom headers here
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log('_response',_response)
   };
   const requestHiveLogin = async () => {
+    const dateN = new Date().toISOString()
+    setDateNow(dateN)
+    console.log('dadadadadad')
+    console.log('dateN',dateN)
+    console.log('datan',datan)
     try {
       // Gives @stoodkev active authority with weight 2 to `account`
       const keychain = window.hive_keychain;
       console.log("keychain", keychain);
-      const message = `{login: ${username}}`
+      const proof_payload = {
+        account: username,
+        ts: datan,
+      }
       keychain.requestSignBuffer(
         username,
-        message,
+        JSON.stringify(proof_payload),
         "Posting",
         callback,
         null,
         "Login using Hive",
         (response: any) => {
-          console.log(response);
+          console.log("response",response);
         }
       );
     } catch (error) {
@@ -55,10 +94,9 @@ const TabsDemo = ({ tab }: any) => {
     <Flex
       justifyContent="center"
       px="1rem"
+      py="1rem"
       alignItems={{ _: "flex-start", tablet: "flex-start" }}
       backgroundColor="#F5F5F5"
-      paddingBottom="50px"
-      paddingTop="100px"
     >
       <Tabs.Content className="TabsContent" value={tab}>
         {/* <Button onClick={() => requestHiveLogin("juneroy1")}>hive</Button> */}
