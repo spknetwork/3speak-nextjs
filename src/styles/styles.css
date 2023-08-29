@@ -84,6 +84,12 @@ input {
   flex-direction: column;
   justify-content: flex-start;
 }
+.Fieldset2 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 
 .Label {
   font-size: 13px;
@@ -105,6 +111,23 @@ input {
   color: var(--gray11);
   box-shadow: 0 0 0 1px var(--gray12);
   height: 35px;
+}
+
+.Input2 {
+  width: 80%;
+  padding: 1rem 1rem;
+  /* margin: 10px 0px; */
+  flex: 1 0 auto;
+  border-radius: 4px;
+  /* padding: 0 10px; */
+  font-size: 15px;
+  line-height: 1;
+  color: var(--gray11);
+  box-shadow: 0 0 0 1px var(--gray12);
+  height: 20px;
+}
+.Input2:focus {
+  box-shadow: 0 0 0 2px var(--gray12);
 }
 .Input:focus {
   box-shadow: 0 0 0 2px var(--gray12);
