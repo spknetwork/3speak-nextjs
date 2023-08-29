@@ -13,6 +13,7 @@ import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
 import { Button,Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import { FaLongArrowAltRight } from "react-icons/fa";
 const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -61,7 +62,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
             </fieldset>
           </Box>
           <Box mt="1rem" width="auto">
-            <Button height={'92%'} onClick={() => requestHiveLogin()}>{'>'}</Button>
+            <Button height={'92%'} onClick={() => requestHiveLogin()}><FaLongArrowAltRight/></Button>
           </Box>
         </Flex>
         <Flex>
@@ -81,7 +82,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
             </fieldset>
           </Box>
           <Box cursor={'not-allowed'} mt="1rem" width="auto">
-            <Button height={'92%'}  disabled={true}>{'>'}</Button>
+            <Button height={'92%'}  disabled={true}><FaLongArrowAltRight/></Button>
           </Box>
         </Flex>
         <Flex>
@@ -101,7 +102,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
             </fieldset>
           </Box>
           <Box mt="1rem" width="auto">
-            <Button height={'92%'} cursor={'not-allowed'} disabled={true}>{'>'}</Button>
+            <Button height={'92%'} cursor={'not-allowed'} disabled={true}><FaLongArrowAltRight/></Button>
           </Box>
         </Flex>
 
