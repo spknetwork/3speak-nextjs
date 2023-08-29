@@ -55,7 +55,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
             sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
           /> */}
           <Flex width="100%" justifyContent="center" mt="1rem">
-            <StyledButton type="submit">Sign Up</StyledButton>
+            <StyledButton type="submit">Sign In</StyledButton>
           </Flex>
         </Box>
       </form>
