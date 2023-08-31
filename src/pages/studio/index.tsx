@@ -134,7 +134,7 @@ export default function StudioPage({ children }: { children: ReactNode }) {
               fontWeight={"400 !important"}
               lineHeight="1.2"
             >
-              Welcome back {userDetails?.username}!
+              Welcome back {userDetails?.username?.toUpperCase()}!
             </Text>
           </Flex>
           <Box

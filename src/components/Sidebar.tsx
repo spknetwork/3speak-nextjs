@@ -175,7 +175,7 @@ export const Sidebar = () => {
 
                 <ChakraBox>
                   <Text textAlign={'center'} as='h5'>
-                    {userDetails?.username}
+                    {userDetails?.username?.toLocaleUpperCase()}
                   </Text>
                 </ChakraBox>
                 <Link href="/studio">
