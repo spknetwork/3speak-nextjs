@@ -6,6 +6,8 @@ import { StateCreator } from "zustand";
 export interface AuthUserSlice {
   allowAccess: boolean | null;
   checkAuth: () => any;
+  getUserDetails: () => any;
+  userDetails: UserDetails | null;
   login: (data: Params) => any;
   register: (data: Params) => any;
 }
@@ -15,8 +17,13 @@ export interface Params {
   password: string;
 }
 
+export interface UserDetails {
+  username: string | null;
+}
+
 export const createAuthUserSlice: StateCreator<AuthUserSlice> = (set) => ({
   allowAccess: null,
+  userDetails: null,
   checkAuth: async () => {
     const token = localStorage.getItem("access_token"); // Retrieve the token from your storage or context
     if (token) {
@@ -27,6 +34,20 @@ export const createAuthUserSlice: StateCreator<AuthUserSlice> = (set) => ({
       }
     } else {
       set({ allowAccess: false });
+    }
+  },
+  getUserDetails: async () => {
+    const token = localStorage.getItem("access_token"); // Retrieve the token from your storage or context
+    if (token) {
+      const data = await api.auth.getUserDetails(token);
+      if (data) {
+        const account = {
+          username: data
+        }
+        set({ userDetails: account });
+      }
+    } else {
+      set({ userDetails: null });
     }
   },
   login: async (requestBody: Params) => {

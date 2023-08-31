@@ -26,5 +26,22 @@ export const api = {
         return false;
       }
     },
+    async getUserDetails(token: any) {
+      try {
+        const response = await instance.get(
+          "/v1/profile",
+          {
+            headers: {
+              // Set your custom headers here
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        return response.data.username;
+      } catch (error) {
+        return null;
+      }
+    },
   },
 };
