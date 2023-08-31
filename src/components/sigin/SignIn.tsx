@@ -179,7 +179,7 @@ const SignIn = () => {
             <Flex width="100%" justifyContent="center" mt="1rem">
               <StyledButton type="submit">Log in</StyledButton>
             </Flex>
-            <Flex width="100%" border={'1px solid'} borderRadius='6px' boxShadow={'0 0 0 1px #4a3f3f'} justifyContent="center" mt="1rem">
+            <Flex width="100%" border={'1px solid'} borderRadius='6px'  justifyContent="center" mt="1rem">
               <Button
                 onClick={() => connectWallet()}
                 width={"100%"}
