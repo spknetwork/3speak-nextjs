@@ -21,11 +21,13 @@ import {
   Button,
   Flex,
   Menu,
+  Box as ChakraBox,
   MenuButton,
   MenuDivider,
   MenuGroup,
   MenuItem,
   MenuList,
+  Text,
 } from "@chakra-ui/react";
 import { useMediaQuery } from "react-responsive";
 import { css } from "@emotion/react";
@@ -102,16 +104,16 @@ export const Sidebar = () => {
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
-  useEffect(()  =>  {
-      if (allowAccess == true) {
-        setAuthenticated(allowAccess)
-        // return
-      }else{
-        setAuthenticated(false)
-      }
+  useEffect(() => {
+    if (allowAccess == true) {
+      setAuthenticated(allowAccess)
+      // return
+    } else {
+      setAuthenticated(false)
+    }
 
-      console.log('authenticated',authenticated)
-     
+    console.log('authenticated', authenticated)
+
   }, [allowAccess]);
 
 
@@ -169,9 +171,18 @@ export const Sidebar = () => {
             )}
 
             {authenticated && (
-              <Link href="/studio">
-                <StyledButton py={3}>Upload Video</StyledButton>
-              </Link>
+              <Flex flexDirection={'column'}>
+
+                <ChakraBox>
+                  <Text textAlign={'center'} as='h5'>
+                    eroyjune@gmail.com
+                  </Text>
+                </ChakraBox>
+                <Link href="/studio">
+                  <StyledButton py={3}>Upload Video</StyledButton>
+                </Link>
+              </Flex>
+
             )}
           </Box>
           <Box>
