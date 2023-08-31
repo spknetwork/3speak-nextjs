@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { FiBell, FiChevronDown, FiMenu } from "react-icons/fi";
+import { useAppStore } from '../../lib/store'
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -23,6 +24,7 @@ interface MobileProps extends FlexProps {
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const router = useRouter();
 
+  const { userDetails } = useAppStore();
   const logout = () => {
     localStorage.removeItem("access_token"); //
     // in order to reset the localstorage it needs to refresh the whole page
@@ -84,8 +86,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">Justina Clark</Text>
-                  <Text fontSize="xs" color="gray.600">
+                  <Text margin={0} fontSize="sm">{userDetails?.username}</Text>
+                  <Text margin={0}  fontSize="xs" color="gray.600">
                     Admin
                   </Text>
                 </VStack>

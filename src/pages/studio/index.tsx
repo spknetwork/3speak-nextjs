@@ -31,7 +31,7 @@ export default function StudioPage({ children }: { children: ReactNode }) {
   const [mViewsCount, setMViewsCount] = useState<Number>();
 
   const router = useRouter();
-  const { allowAccess } = useAppStore();
+  const { allowAccess,userDetails } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
@@ -134,7 +134,7 @@ export default function StudioPage({ children }: { children: ReactNode }) {
               fontWeight={"400 !important"}
               lineHeight="1.2"
             >
-              Welcome back eroyjunehive1!
+              Welcome back {userDetails?.username}!
             </Text>
           </Flex>
           <Box
