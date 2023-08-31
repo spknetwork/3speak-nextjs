@@ -113,13 +113,13 @@ const SignIn = () => {
         {(props) => (
           // <form onSubmit={onSubmitWithReCAPTCHASignIn}>
           <Form>
-            <Box mb="2rem" mt="1.5rem" width="100%">
+            <Box mb="1.5rem" mt="1.5rem" width="100%">
               <fieldset className="Fieldset">
                 <label className="Label" htmlFor="currentPassword">
                   Email
                 </label>
                 <input
-                  className="Input"
+                  className="Input3"
                   id="email"
                   placeholder={t("login.email")}
                   type="email"
@@ -139,7 +139,7 @@ const SignIn = () => {
                 </label>
                 <input
                   type="password"
-                  className="Input"
+                  className="Input3"
                   placeholder={t("login.password")}
                   onChange={props.handleChange}
                   onBlur={props.handleBlur}

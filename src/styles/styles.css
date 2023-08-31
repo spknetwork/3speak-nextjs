@@ -112,6 +112,19 @@ input {
   box-shadow: 0 0 0 1px var(--gray12);
   height: 35px;
 }
+.Input3 {
+  width: 95%;
+  padding: 1rem 1rem;
+  /* margin: 10px 0px; */
+  flex: 1 0 auto;
+  border-radius: 4px;
+  /* padding: 0 10px; */
+  font-size: 15px;
+  line-height: 1;
+  color: var(--gray11);
+  box-shadow: 0 0 0 1px var(--gray12);
+  height: 20px;
+}
 
 .Input2 {
   width: 80%;
@@ -125,6 +138,9 @@ input {
   color: var(--gray11);
   box-shadow: 0 0 0 1px var(--gray12);
   height: 20px;
+}
+.Input3:focus {
+  box-shadow: 0 0 0 2px var(--gray12);
 }
 .Input2:focus {
   box-shadow: 0 0 0 2px var(--gray12);
