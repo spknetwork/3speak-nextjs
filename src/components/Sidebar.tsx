@@ -100,7 +100,7 @@ export const Sidebar = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const [showNav, setShowNav] = useState(true);
 
-  const { allowAccess } = useAppStore();
+  const { allowAccess,userDetails } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
@@ -175,7 +175,7 @@ export const Sidebar = () => {
 
                 <ChakraBox>
                   <Text textAlign={'center'} as='h5'>
-                    eroyjune@gmail.com
+                    {userDetails?.username}
                   </Text>
                 </ChakraBox>
                 <Link href="/studio">
