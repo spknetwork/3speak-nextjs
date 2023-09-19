@@ -118,7 +118,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               `}
             >
               <main>
-                <Box width={"100%"} backgroundColor="#EFF4F6">
+                <Box width={"100%"} backgroundColor="#EFF4F6" boxShadow={'10px 10px 5px lightblue'}>
                   <Tabs.Root className="TabsRoot" defaultValue="tab1">
                     <Tabs.List
                       className="TabsList"
