@@ -100,7 +100,7 @@ export const Sidebar = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const [showNav, setShowNav] = useState(true);
 
-  const { allowAccess,userDetails } = useAppStore();
+  const { allowAccess, userDetails } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
@@ -174,9 +174,16 @@ export const Sidebar = () => {
               <Flex flexDirection={'column'}>
 
                 <ChakraBox>
-                  <Text textAlign={'center'} as='h5'>
-                    {userDetails?.username?.toLocaleUpperCase()}
-                  </Text>
+                  <Flex justifyContent={'center'} alignItems='center'>
+                    <Flex margin='10px' justifyContent={'center'} alignItems='center' cursor={'pointer'} borderRadius={'50%'} height={'100%'} width='40px' border={'1px solid'}>
+                      <img src={'/images/avatar3.png'} style={{ margin: '0', width: '40px', borderRadius: '100px', height: '100%', objectFit: 'cover' }} />
+                    </Flex>
+
+                    <Text marginLeft={'5px'} margin={'0px'} textAlign={'center'} as='h5'>
+                      {userDetails?.username?.toLocaleUpperCase()}
+                    </Text>
+                  </Flex>
+
                 </ChakraBox>
                 <Link href="/studio">
                   <StyledButton py={3}>Upload Video</StyledButton>
