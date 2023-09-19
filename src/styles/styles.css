@@ -98,6 +98,13 @@ input {
   color: var(--violet12);
   display: block;
 }
+.LabelOnboarding{
+  font-size: 16px;
+  line-height: 1;
+  margin-bottom: 1px;
+  color: var(--violet12);
+  display: block;
+}
 
 .Input {
   width: 95%;
@@ -126,6 +133,20 @@ input {
   height: 20px;
 }
 
+.Input3Area {
+  width: 100%;
+  padding: 1rem 1rem;
+  /* margin: 10px 0px; */
+  flex: 1 0 auto;
+  border-radius: 4px;
+  /* padding: 0 10px; */
+  font-size: 15px;
+  line-height: 1;
+  color: var(--gray11);
+  box-shadow: 0 0 0 1px var(--gray12);
+  height: 100px;
+}
+
 .Input2 {
   width: 80%;
   padding: 1rem 1rem;
@@ -140,6 +161,9 @@ input {
   height: 20px;
 }
 .Input3:focus {
+  box-shadow: 0 0 0 2px var(--gray12);
+}
+.Input3Area:focus {
   box-shadow: 0 0 0 2px var(--gray12);
 }
 .Input2:focus {
