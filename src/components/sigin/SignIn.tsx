@@ -19,7 +19,7 @@ import { Magic } from "magic-sdk";
 
 // const magic = new Magic("pk_live_7645A843999E2369");
 const SignIn = () => {
-  // const [account, setAccount] = useState<any>(null);
+  const [onboarding, setOnboarding] = useState<any>(false);
   // const [idToken, setIdToken] = useState();
 
   const connectWallet = async () => {
@@ -67,13 +67,19 @@ const SignIn = () => {
 
   useEffect(() => {
     if (authenticated) {
-      router.push("/");
+      if (onboarding) {
+        router.push("/onboarding");
+      }else{
+        router.push("/");
+      }
+     
     }
   }, [authenticated, router]);
 
   const handleSubmit = async (values: any) => {
     // const token = await recaptchaRefSignIn.current.executeAsync();
     // console.log(token);
+    setOnboarding(true)
     await login(values);
     // router.push("/otp/enter_code");
     checkAuth();
