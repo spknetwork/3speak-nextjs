@@ -20,10 +20,13 @@ import { useAppStore } from "@/lib/store";
 
 
 const TabsDemo = ({ tab }: any) => {
+  const [datawindow] = useState<any>(window)
+
   const router = useRouter();
   const { allowAccess, checkAuth } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+  const [onboarding, setOnboarding] = useState<any>(false);
 
   useEffect(() => {
     if (allowAccess == true) {
@@ -36,7 +39,11 @@ const TabsDemo = ({ tab }: any) => {
 
   useEffect(() => {
     if (authenticated) {
-      router.push("/");
+      if (onboarding) {
+        router.push("/onboarding");
+      }else{
+        router.push("/");
+      }
     }
   }, [authenticated, router]);
 
@@ -78,12 +85,10 @@ const TabsDemo = ({ tab }: any) => {
   const requestHiveLogin = async () => {
     const dateN = new Date().toISOString()
     setDateNow(dateN)
-    console.log('dadadadadad')
-    console.log('dateN',dateN)
-    console.log('datan',datan)
+    setOnboarding(true)
     try {
       // Gives @stoodkev active authority with weight 2 to `account`
-      const keychain = window.hive_keychain;
+      const keychain = datawindow.hive_keychain;
       console.log("keychain", keychain);
       const proof_payload = {
         account: username,
