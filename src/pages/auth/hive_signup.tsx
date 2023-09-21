@@ -20,7 +20,7 @@ import { useAppStore } from "@/lib/store";
 
 
 const TabsDemo = ({ tab }: any) => {
-  const [datawindow] = useState<any>(window)
+  const [datawindow] = useState<any>(null)
 
   const router = useRouter();
   const { allowAccess, checkAuth } = useAppStore();
@@ -88,7 +88,7 @@ const TabsDemo = ({ tab }: any) => {
     setOnboarding(true)
     try {
       // Gives @stoodkev active authority with weight 2 to `account`
-      const keychain = datawindow.hive_keychain;
+      const keychain = window.hive_keychain;
       console.log("keychain", keychain);
       const proof_payload = {
         account: username,

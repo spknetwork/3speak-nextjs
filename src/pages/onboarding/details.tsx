@@ -11,7 +11,7 @@ const OnBoarding = () => {
 
   const router = useRouter();
   const [datawindow] = useState<any>("");
-  const [name, setName] = useState<string | Name>("");
+  const [name, setName] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [website, setWebsite] = useState<string>("");
   const [about, setAbout] = useState<string>("");
@@ -56,7 +56,7 @@ const OnBoarding = () => {
   useEffect(() => {
     getUserHiveDetails();
     if (userName) {
-      setName(userName);
+      setName(`${userName}`);
     }
   }, []);
 
