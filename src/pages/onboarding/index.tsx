@@ -10,20 +10,20 @@ type FilePreview = {
   previewUrl: string;
 };
 const OnBoarding = () => {
-  const { getUserHiveDetails, userhiveDetails, setUserHiveDetails } =
+  const { getUserHiveDetails, userhiveDetails, userDetails, setUserHiveDetails } =
     useAppStore();
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string | null>("");
 
   useEffect(() => {
     getUserHiveDetails();
   }, []);
 
   useEffect(() => {
-    if (userhiveDetails) {
-      console.log("userhiveDetails useffect", userhiveDetails);
-      setName(userhiveDetails.name);
+    if (userDetails) {
+        setName(userDetails.username)
     }
-  }, [userhiveDetails]);
+  }, [userDetails]);
+
 
   const onchangeName = (e: any) => {
     setName(e.target.value);
