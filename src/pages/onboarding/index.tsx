@@ -15,7 +15,7 @@ const OnBoarding = () => {
     userDetails,
     setUserHiveDetails,
   } = useAppStore();
-  const [name, setName] = useState<string | null>("");
+  const [name, setName] = useState<string>("");
 
   useEffect(() => {
     getUserHiveDetails();
@@ -23,7 +23,8 @@ const OnBoarding = () => {
 
   useEffect(() => {
     if (userDetails) {
-      setName(userDetails.username);
+        const name = `${userDetails.username}`
+      setName(name);
     }
   }, [userDetails]);
 
@@ -90,7 +91,7 @@ const OnBoarding = () => {
                 width="100%"
               >
                 <Text as="h6">
-                  Add display name so that your friends know it's you
+                  Add display name so that your friends know it`s you
                 </Text>
               </Flex>
               <Box mb="1.5rem" mt="1.5rem" width="100%">
