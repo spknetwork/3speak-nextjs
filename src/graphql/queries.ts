@@ -266,7 +266,7 @@ export const GET_FOLLOWS = gql`
   }
 `;
 
-const LATEST_FEED = gql`
+export const LATEST_FEED = gql`
   query LatestFeed {
     feed: socialFeed {
       items {
@@ -308,7 +308,7 @@ const LATEST_FEED = gql`
   }
 `
 
-const TRENDING_FEED = gql`
+export const TRENDING_FEED = gql`
   query TrendingFeed {
     feed: trendingFeed {
       items {
