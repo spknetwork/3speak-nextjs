@@ -4,12 +4,14 @@ import OBWizardSteps from '@/components/onboarding/OBWizardSteps';
 import { useRouter } from 'next/router';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
 import { useAppStore } from '@/lib/store';
+import { Name } from '@/lib/slices/createUserStore';
 
 const OnBoarding = () => {
     const { getUserHiveDetails, userhiveDetails, userName } = useAppStore();
-    
+
     const router = useRouter();
     const [datawindow] = useState<any>("")
+    const [name, setName] = useState<string | Name>("")
     const [location, setLocation] = useState<string>("")
     const [website, setWebsite] = useState<string>("")
     const [about, setAbout] = useState<string>("")
@@ -18,8 +20,8 @@ const OnBoarding = () => {
             const keychain = window.hive_keychain;
             const profile = {
                 profile: {
-                    name: userName,
-                    version:2,
+                    name: name,
+                    version: 2,
                     location: location,
                     about: about,
                     website: website,
@@ -37,9 +39,9 @@ const OnBoarding = () => {
                     }
                 ]
             ],
-            "Posting", (response:any) => {
-                console.log("response",response);
-              }
+                "Posting", (response: any) => {
+                    console.log("response", response);
+                }
             )
         } catch (error) {
             console.log({ error });
@@ -49,16 +51,20 @@ const OnBoarding = () => {
 
     useEffect(() => {
         getUserHiveDetails()
-    },[])
+        if (userName) {
+            setName(userName)
+        }
+    }, [])
 
     useEffect(() => {
         if (userhiveDetails) {
-            console.log('userhiveDetails useffect',userhiveDetails)
+            console.log('userhiveDetails useffect', userhiveDetails)
             setWebsite(userhiveDetails.website)
             setAbout(userhiveDetails.about)
             setLocation(userhiveDetails.location)
+            setName(userhiveDetails.name)
         }
-    },[userhiveDetails])
+    }, [userhiveDetails])
 
     return (
         <Box minHeight={'100vh'}>
@@ -91,13 +97,15 @@ const OnBoarding = () => {
                             <Box mb="1.5rem" mt="1.5rem" width="100%">
                                 <fieldset className="Fieldset">
                                     <label className="LabelOnboarding" htmlFor="currentPassword">
-                                        Username
+                                        Name
                                     </label>
                                     <input
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
                                         className="Input3"
-                                        id="email"
-                                        type="email"
-                                        name="email"
+                                        id="name"
+                                        type="text"
+                                        name="name"
                                     />
                                 </fieldset>
                             </Box>
@@ -110,9 +118,9 @@ const OnBoarding = () => {
                                         value={location}
                                         onChange={(e) => setLocation(e.target.value)}
                                         className="Input3"
-                                        id="email"
-                                        type="email"
-                                        name="email"
+                                        id="text"
+                                        type="text"
+                                        name="text"
                                     />
                                 </fieldset>
                             </Box>
