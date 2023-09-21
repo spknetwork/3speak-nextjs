@@ -19,11 +19,11 @@ const OnBoarding = () => {
   }, []);
   useEffect(() => {
     if (userhiveDetails) {
-      console.log("userhiveDetails useffect PROFILE", userhiveDetails);
       setcoverImage(userhiveDetails.cover_image);
       setprofileImage(userhiveDetails.profile_image);
     }
   }, [userhiveDetails]);
+
   const changeCurrentStep = (step: number) => {};
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
   const [selectedFileProfile, setSelectedFileProfile] =
@@ -171,7 +171,7 @@ const OnBoarding = () => {
                 width="100%"
               >
                 <Text as="h6">
-                  Add profile and banner so that your friends know it's you
+                  Add profile and banner so that your friends know it`s you
                 </Text>
               </Flex>
               <Flex
