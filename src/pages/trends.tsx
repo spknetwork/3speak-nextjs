@@ -55,6 +55,8 @@ const NewComers2 = () => {
                 backgroundColor={"#222 !important"}
                 alt="test"
                 src={`${video.thumbnail}`}
+                maxH="13em"
+                width="100% !important"
               />
               <VideosTitle title={`${video.title}`} />
               <Name username={`${video.username}`} />
