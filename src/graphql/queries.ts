@@ -265,3 +265,87 @@ export const GET_FOLLOWS = gql`
     }
   }
 `;
+
+export const LATEST_FEED = gql`
+  query LatestFeed {
+    feed: socialFeed {
+      items {
+        body
+        created_at
+        parent_author
+        parent_permlink
+        permlink
+        title
+        updated_at
+        ... on HivePost {
+          parent_author
+          parent_permlink
+          author {
+            username
+          }
+          json_metadata {
+            raw
+          }
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          app_metadata
+          spkvideo
+          refs
+          post_type
+          permlink
+          title
+          tags
+          updated_at
+          body
+          community
+          created_at
+        }
+      }
+    }
+  }
+`
+
+export const TRENDING_FEED = gql`
+  query TrendingFeed {
+    feed: trendingFeed {
+      items {
+        body
+        created_at
+        parent_author
+        parent_permlink
+        permlink
+        title
+        updated_at
+        ... on HivePost {
+          parent_author
+          parent_permlink
+          author {
+            username
+          }
+          json_metadata {
+            raw
+          }
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          app_metadata
+          spkvideo
+          refs
+          post_type
+          permlink
+          title
+          tags
+          updated_at
+          body
+          community
+          created_at
+        }
+      }
+    }
+  }
+`
