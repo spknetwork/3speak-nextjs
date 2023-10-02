@@ -306,13 +306,12 @@ export const LATEST_FEED = gql`
       }
     }
   }
-`
+`;
 
 export const TRENDING_FEED = gql`
   query TrendingFeed {
     feed: trendingFeed {
       items {
-        body
         created_at
         parent_author
         parent_permlink
@@ -325,14 +324,12 @@ export const TRENDING_FEED = gql`
           author {
             username
           }
-          json_metadata {
-            raw
-          }
           stats {
             num_comments
             num_votes
             total_hive_reward
           }
+          hive_rewards
           app_metadata
           spkvideo
           refs
@@ -341,11 +338,9 @@ export const TRENDING_FEED = gql`
           title
           tags
           updated_at
-          body
-          community
           created_at
         }
       }
     }
   }
-`
+`;
