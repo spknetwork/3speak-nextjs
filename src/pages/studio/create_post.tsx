@@ -52,7 +52,7 @@ const CreatePost: React.FC = () => {
   const [uploadingProgress, setUploadingProgress] = useState<number>(0);
   const [uploadStatus, setUploadStatus] = useState<Boolean | null>(null);
   const [uploading, setUploading] = useState<Boolean>(false);
-  const [steps, setSteps] = useState<number>(0);
+  const [steps, setSteps] = useState<number>(2);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
     useState<String>("Uploading Video...");
@@ -326,7 +326,7 @@ const CreatePost: React.FC = () => {
 
   useEffect(() => {
     if (authenticated == false && authenticated != null) {
-      router.push("/auth/login");
+      // router.push("/auth/login");
     }
   }, [authenticated, router]);
 
@@ -334,9 +334,9 @@ const CreatePost: React.FC = () => {
     authenticated ? "gray.100" : "gray.100",
     authenticated ? "gray.900" : "gray.900"
   );
-  if (authenticated === null) {
-    return <Box>Loading...</Box>;
-  }
+  // if (authenticated === null) {
+  //   return <Box>Loading...</Box>;
+  // }
 
   if (authenticated === false) {
     return <Box>Unauthorized access, please login first</Box>;
@@ -999,6 +999,7 @@ const CreatePost: React.FC = () => {
 
                                     {publishValue == "2" && (
                                       <Input
+                                        alignItems={'center'}
                                         width={"50%"}
                                         type="datetime-local"
                                         placeholder="select date"
