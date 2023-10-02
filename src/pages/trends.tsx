@@ -51,12 +51,13 @@ const NewComers2 = () => {
           videos.map((video, index) => (
             <GridItem w="100%" h="100%" key={index}>
               <Image
-                padding={"5px"}
+                padding={"1px"}
                 backgroundColor={"#222 !important"}
                 alt="test"
                 src={`${video.thumbnail}`}
-                maxH="13em"
+                height="13em !important"
                 width="100% !important"
+                objectFit="contain"
               />
               <VideosTitle title={`${video.title}`} />
               <Name username={`${video.username}`} />
