@@ -82,7 +82,7 @@ const OnBoarding = () => {
                 marginTop={"10px"}
                 width="100%"
               >
-                <Text as="h2">Lets start with adding of display name</Text>
+                <Text as="h2">Lets start with adding of username</Text>
               </Flex>
               <Flex
                 justifyContent={"center"}
@@ -97,7 +97,7 @@ const OnBoarding = () => {
               <Box mb="1.5rem" mt="1.5rem" width="100%">
                 <fieldset className="Fieldset">
                   <label className="LabelOnboarding" htmlFor="currentPassword">
-                    Display name
+                    Username
                   </label>
                   <input
                     value={name}
