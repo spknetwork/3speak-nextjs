@@ -125,7 +125,7 @@ const OnBoarding = () => {
               {/* <Flex cursor={'pointer'} onClick={() => router.push('/onboarding/profile')} justifyContent={'center'} alignItems='center' padding={'10px'} marginTop={'10px'} width='100%' >
                                 <Button width={'lg'} colorScheme='blue'>Add display name</Button>
                             </Flex> */}
-              <Flex
+              {/* <Flex
                 cursor={"pointer"}
                 onClick={() => router.push("/onboarding/profile")}
                 justifyContent={"center"}
@@ -134,7 +134,7 @@ const OnBoarding = () => {
                 width="100%"
               >
                 <Text as="span">Skip</Text>
-              </Flex>
+              </Flex> */}
             </Box>
           </CardBody>
         </Card>
