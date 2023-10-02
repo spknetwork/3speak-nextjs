@@ -125,7 +125,7 @@ const OnBoarding = () => {
               <Box mb="1.5rem" mt="1.5rem" width="100%">
                 <fieldset className="Fieldset">
                   <label className="LabelOnboarding" htmlFor="currentPassword">
-                    Name
+                    Display Name
                   </label>
                   <input
                     value={name}
