@@ -36,7 +36,7 @@ import { FaAppStoreIos, FaInfo, FaInfoCircle } from "react-icons/fa";
 import { api } from "@/utils/api";
 import { useAppStore } from '../lib/store'
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-
+import { AiFillAndroid } from "react-icons/ai";
 const threespeak = {
   filter: "drop-shadow(2px 4px 6px black)",
 };
@@ -418,16 +418,20 @@ export const Sidebar = () => {
       )}
 
       {!showNav && (
-        <Box className="nav-item text-center ">
-          <Link
-            target="_blank"
-            href="https://twitter.com/3speakonline?utm_source=3speak.tv"
-          >
-            <FontAwesomeIcon
-              className="fa-2x text-secondary ms-3 mb-1"
-              icon={faTwitterIcon}
-            />
-          </Link>
+        <Box className="nav-item text-center d-flex justify-content-center align-items-center flex-wrap">
+          <ChakraBox width={'40px'}>
+            <Link
+
+              target="_blank"
+              href="https://twitter.com/3speakonline?utm_source=3speak.tv"
+            >
+              <FontAwesomeIcon
+                className="fa-2x text-secondary ms-3 mb-1"
+                icon={faTwitterIcon}
+              />
+            </Link>
+          </ChakraBox>
+          <ChakraBox width={'40px'}>
           <Link
             target="_blank"
             href="https://t.me/threespeak?utm_source=3speak.tv"
@@ -437,12 +441,16 @@ export const Sidebar = () => {
               icon={faTelegramIcon}
             />
           </Link>
+          </ChakraBox>
+          <ChakraBox width={'40px'}>
           <Link target="_blank" href="https://discord.gg/NSFS2VGj83">
             <FontAwesomeIcon
               className="fa-2x text-secondary ms-3 mb-1"
               icon={faDiscordIcon}
             />
           </Link>
+          </ChakraBox>
+          <ChakraBox width={'40px'}>
           <Link
             target="_blank"
             title="Visit Our Blog"
@@ -458,6 +466,9 @@ export const Sidebar = () => {
               />
             </span>
           </Link>
+          </ChakraBox>
+          <ChakraBox width={'40px'}>
+
           <Link target="_blank" title="SPK Network" href="https://spk.network">
             <span className="ms-3">
               <StyledImage
@@ -469,6 +480,9 @@ export const Sidebar = () => {
               />
             </span>
           </Link>
+          </ChakraBox>
+          <ChakraBox width={'40px'}>
+
           <Link
             target="_blank"
             href="https://testflight.apple.com/join/0tipqwsZ"
@@ -477,16 +491,22 @@ export const Sidebar = () => {
               className="fa-2x text-secondary ms-3"
               icon={faAppStoreIosIcon}
             />
+
           </Link>
+          </ChakraBox>
+          <ChakraBox width={'40px'}>
+
           <Link
             target="_blank"
             href="https://appdistribution.firebase.dev/i/047cfb506633e639"
           >
-            <FontAwesomeIcon
+            <AiFillAndroid className="fa-2x text-secondary ms-3" width={'100'} size='30' color="grey" />
+            {/* <FontAwesomeIcon
               className="fa-2x text-secondary ms-3"
               icon={faAndroidIcon}
-            />
+            /> */}
           </Link>
+          </ChakraBox>
         </Box>
       )}
     </Flex>
