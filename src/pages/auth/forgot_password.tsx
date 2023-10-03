@@ -28,7 +28,7 @@ const ForgotPassword = () => {
       px="1rem"
       alignItems={{ _: "flex-start", tablet: "flex-start" }}
       backgroundColor="#F5F5F5"
-      paddingBottom="50px"
+      paddingBottom="20px"
       paddingTop="20px"
     >
       {/* <Tabs.Root className="TabsRoot" defaultValue="tab1">
@@ -38,7 +38,7 @@ const ForgotPassword = () => {
           </Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content className="TabsContent" value="tab1"> */}
-          <Box width="100%">
+          <Box className="TabsContent" width="100%">
             <Flex justifyContent={'start'}>
               <FiArrowLeft onClick={() => router.push("/auth/login")} cursor={'pointer'} size={'30px'}/>
             </Flex>
