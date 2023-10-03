@@ -12,6 +12,8 @@ import { API_URL_FROM_WEST } from "../../utils/config";
 import { useToast } from "@chakra-ui/react";
 import { useAppStore } from "@/lib/store";
 import ReCAPTCHA from "react-google-recaptcha";
+import { Text, Box as ChakraBox } from "@chakra-ui/react";
+
 const SignUp = () => {
   const toast = useToast();
   const router = useRouter();
@@ -184,12 +186,12 @@ const SignUp = () => {
                   </Typography>
                 </Box>
               </Box>
-              <Box marginTop={"10px"}>
+              <ChakraBox display={'flex'} justifyContent='center' alignItems={'center'} marginTop={"10px"}>
                 <ReCAPTCHA
                   ref={recaptchaRefSignUp}
                   sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
                 />
-              </Box>
+              </ChakraBox>
 
               <Flex width="100%" justifyContent="center" mt="1rem">
                 <StyledButton type="submit">Sign Up</StyledButton>
