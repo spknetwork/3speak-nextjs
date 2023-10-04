@@ -344,3 +344,40 @@ export const TRENDING_FEED = gql`
     }
   }
 `;
+
+export const FIRST_UPLOAD_FEED = gql`
+  query TrendingFeed {
+    feed: trendingFeed {
+      items {
+        created_at
+        parent_author
+        parent_permlink
+        permlink
+        title
+        updated_at
+        ... on HivePost {
+          parent_author
+          parent_permlink
+          author {
+            username
+          }
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          hive_rewards
+          app_metadata
+          spkvideo
+          refs
+          post_type
+          permlink
+          title
+          tags
+          updated_at
+          created_at
+        }
+      }
+    }
+  }
+`;
