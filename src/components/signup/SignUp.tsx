@@ -139,7 +139,7 @@ const SignUp = () => {
                     </Typography>
                   )}
                 </fieldset>
-                <Box
+                {/* <Box
                   width="100%"
                   borderRadius="0.25rem"
                   mt="1.5rem"
@@ -149,14 +149,13 @@ const SignUp = () => {
                   border="1px solid #bee5eb"
                 >
                   <Typography color="#0c5460">
-                    {/* fontSize="0.75rem" */}
                     <StyledList>
                       {(t("register.passwordRules") as string[]).map((rule) => (
                         <li key={rule}>{rule}</li>
                       ))}
                     </StyledList>
                   </Typography>
-                </Box>
+                </Box> */}
                 {/* <Box
                   width="100%"
                   borderRadius="0.25rem"
