@@ -14,7 +14,7 @@ import { useAppStore } from "@/lib/store";
 import ReCAPTCHA from "react-google-recaptcha";
 import { Text, Box as ChakraBox } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
-import { BsGithub } from "react-icons/bs";
+import { BsGithub, BsDiscord } from "react-icons/bs";
 const SignUp = () => {
   const toast = useToast();
   const router = useRouter();
@@ -224,7 +224,7 @@ const SignUp = () => {
             variant={"outline"}
             colorScheme="gray"
           >
-            Sign up with Discord
+            <BsDiscord size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Discord</Text>  
           </Button>
         </Flex>
       </Box>
