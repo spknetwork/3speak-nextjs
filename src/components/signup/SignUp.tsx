@@ -9,7 +9,7 @@ import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
 import axios from "axios";
 import { API_URL_FROM_WEST } from "../../utils/config";
-import { useToast } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import { useAppStore } from "@/lib/store";
 import ReCAPTCHA from "react-google-recaptcha";
 import { Text, Box as ChakraBox } from "@chakra-ui/react";
@@ -196,8 +196,36 @@ const SignUp = () => {
                 <StyledButton type="submit">Sign Up</StyledButton>
               </Flex>
             </Form>
+
           )}
         </Formik>
+        <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+          <Button
+            width={"100%"}
+            variant={"outline"}
+            colorScheme="gray"
+          >
+            Sign up with Google
+          </Button>
+        </Flex>
+        <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+          <Button
+            width={"100%"}
+            variant={"outline"}
+            colorScheme="gray"
+          >
+            Sign up with Github
+          </Button>
+        </Flex>
+        <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+          <Button
+            width={"100%"}
+            variant={"outline"}
+            colorScheme="gray"
+          >
+            Sign up with Discord
+          </Button>
+        </Flex>
       </Box>
     </div>
   );
