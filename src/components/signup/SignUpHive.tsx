@@ -1,17 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
-import { Typography,  Flex } from "src/components";
+import { Typography, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
-import { Button,Box, Text } from "@chakra-ui/react";
+import { Button, Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { FaLongArrowAltRight } from "react-icons/fa";
 const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
@@ -19,7 +19,21 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRefSignUpHive: any = useRef();
+  useEffect(() => {
+    // setTimeout(() => {
+    //   if (router.pathname == '/auth/signup') {
+    //     setshowRecaptcha(true)
+    //     console.log('captcha test', router.pathname)
+    //   }
 
+    // }, 3000)
+    if (router.pathname == '/auth/hive_signup') {
+      // setshowRecaptcha(true)
+      console.log('captcha test121212121', router.pathname)
+    }
+
+
+  }, [router.pathname])
   const onSubmitWithReCAPTCHASignUpHive = async () => {
     // e.preventDefault()
     // const token = await recaptchaRefSignUpHive.current.executeAsync();
@@ -45,7 +59,9 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
         />
       </Box>
       {/* <form onSubmit={onSubmitWithReCAPTCHASignUpHive}> */}
+      <form onSubmit={(e) => requestHiveLogin(e)}>
         <Flex>
+
           <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="11px" mr='10px'>
             <img src="/keychain.6846c271.png" alt="3speak logo" />
           </Flex>
@@ -62,49 +78,51 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
             </fieldset>
           </Box>
           <Box mt="1rem" width="auto">
-            <Button height={'92%'} onClick={() => requestHiveLogin()}><FaLongArrowAltRight/></Button>
+            <Button type="submit" height={'92%'} onClick={(e) => requestHiveLogin(e)}><FaLongArrowAltRight /></Button>
           </Box>
+
         </Flex>
-        <Flex>
-          <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'}  mt="11px" mr='10px'>
-            <img src="/hiveauth.ac85800f.svg" alt="3speak logo" />
-          </Flex>
-          <Box mt="1rem" width="100%">
-            <fieldset className="Fieldset2">
-              <input
-                style={{cursor:'not-allowed'}}
-                disabled={true}
-                className="Input2"
-                id="text"
-                placeholder="Enter username"
-                type="text"
-              />
-            </fieldset>
-          </Box>
-          <Box cursor={'not-allowed'} mt="1rem" width="auto">
-            <Button height={'92%'}  disabled={true}><FaLongArrowAltRight/></Button>
-          </Box>
+      </form>
+      <Flex>
+        <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="11px" mr='10px'>
+          <img src="/hiveauth.ac85800f.svg" alt="3speak logo" />
         </Flex>
-        <Flex>
-          <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'#d1d5da'} mt="11px" mr='10px'>
-            <img src="/hivesigner.6958efa0.svg" alt="3speak logo" />
-          </Flex>
-          <Box mt="1rem" width="100%">
-            <fieldset className="Fieldset2">
-              <input 
-                 style={{cursor:'not-allowed'}}
-                disabled={true}
-                className="Input2"
-                id="text"
-                placeholder="Enter username"
-                type="text"
-              />
-            </fieldset>
-          </Box>
-          <Box mt="1rem" width="auto">
-            <Button height={'92%'} cursor={'not-allowed'} disabled={true}><FaLongArrowAltRight/></Button>
-          </Box>
+        <Box mt="1rem" width="100%">
+          <fieldset className="Fieldset2">
+            <input
+              style={{ cursor: 'not-allowed' }}
+              disabled={true}
+              className="Input2"
+              id="text"
+              placeholder="Enter username"
+              type="text"
+            />
+          </fieldset>
+        </Box>
+        <Box cursor={'not-allowed'} mt="1rem" width="auto">
+          <Button height={'92%'} disabled={true}><FaLongArrowAltRight /></Button>
+        </Box>
+      </Flex>
+      <Flex>
+        <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'#d1d5da'} mt="11px" mr='10px'>
+          <img src="/hivesigner.6958efa0.svg" alt="3speak logo" />
         </Flex>
+        <Box mt="1rem" width="100%">
+          <fieldset className="Fieldset2">
+            <input
+              style={{ cursor: 'not-allowed' }}
+              disabled={true}
+              className="Input2"
+              id="text"
+              placeholder="Enter username"
+              type="text"
+            />
+          </fieldset>
+        </Box>
+        <Box mt="1rem" width="auto">
+          <Button height={'92%'} cursor={'not-allowed'} disabled={true}><FaLongArrowAltRight /></Button>
+        </Box>
+      </Flex>
 
 
       {/* </form> */}
