@@ -13,7 +13,7 @@ import { Button, useToast } from "@chakra-ui/react";
 import { useAppStore } from "@/lib/store";
 import ReCAPTCHA from "react-google-recaptcha";
 import { Text, Box as ChakraBox } from "@chakra-ui/react";
-
+import { FcGoogle } from "react-icons/fc";
 const SignUp = () => {
   const toast = useToast();
   const router = useRouter();
@@ -205,7 +205,7 @@ const SignUp = () => {
             variant={"outline"}
             colorScheme="gray"
           >
-            Sign up with Google
+            <FcGoogle size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Google</Text> 
           </Button>
         </Flex>
         <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
