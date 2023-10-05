@@ -82,7 +82,8 @@ const TabsDemo = ({ tab }: any) => {
     localStorage.setItem("access_token", _response.data.access_token);
     checkAuth();
   };
-  const requestHiveLogin = async () => {
+  const requestHiveLogin = async (e:any) => {
+    e.preventDefault()
     const dateN = new Date().toISOString()
     setDateNow(dateN)
     setOnboarding(true)
