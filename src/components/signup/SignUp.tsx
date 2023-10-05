@@ -14,6 +14,7 @@ import { useAppStore } from "@/lib/store";
 import ReCAPTCHA from "react-google-recaptcha";
 import { Text, Box as ChakraBox } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
+import { BsGithub } from "react-icons/bs";
 const SignUp = () => {
   const toast = useToast();
   const router = useRouter();
@@ -214,7 +215,7 @@ const SignUp = () => {
             variant={"outline"}
             colorScheme="gray"
           >
-            Sign up with Github
+             <BsGithub size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Github</Text> 
           </Button>
         </Flex>
         <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
