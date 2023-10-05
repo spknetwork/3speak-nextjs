@@ -1,3 +1,4 @@
+import { Typography } from "@/components";
 import OBWizardSteps from "@/components/onboarding/OBWizardSteps";
 import { useAppStore } from "@/lib/store";
 import { Box, Button, Card, CardBody, Flex, Text } from "@chakra-ui/react";
@@ -115,13 +116,41 @@ const OnBoarding = () => {
                 justifyContent={"center"}
                 alignItems="center"
                 padding={"0"}
-                marginTop={"100px"}
+                marginTop={"10px"}
                 width="100%"
               >
                 <Button width={"xl"} colorScheme="blue">
                   Save
                 </Button>
               </Flex>
+              <Box
+                  width="100%"
+                  borderRadius="0.25rem"
+                  mt="1.5rem"
+                  py="0.75rem"
+                  px="1.25rem"
+                  backgroundColor="#f8d7da"
+                  border="1px solid #f5c6cb"
+                >
+                  <Typography textAlign="center" color="#721c24">
+                    Some email services will wrongly sort our emails,
+                    remember to check your junk/spam folder!
+                  </Typography>
+                </Box>
+                <Box
+                  width="100%"
+                  borderRadius="0.25rem"
+                  mt="1.5rem"
+                  py="0.75rem"
+                  px="1.25rem"
+                  backgroundColor="#f8d7da"
+                  border="1px solid #f5c6cb"
+                >
+                  <Typography textAlign="center" color="#721c24">
+                    In order to claim the keys for the Hive account associated
+                    with your 3speak account you must post at least one video.
+                  </Typography>
+                </Box> 
               {/* <Flex cursor={'pointer'} onClick={() => router.push('/onboarding/profile')} justifyContent={'center'} alignItems='center' padding={'10px'} marginTop={'10px'} width='100%' >
                                 <Button width={'lg'} colorScheme='blue'>Add display name</Button>
                             </Flex> */}
