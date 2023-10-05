@@ -14,8 +14,10 @@ import { API_URL_FROM_WEST } from "../../utils/config";
 import axios from "axios";
 import { api } from "@/utils/api";
 import { useAppStore } from "@/lib/store";
-import { Button } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 import { Magic } from "magic-sdk";
+import { FcGoogle } from "react-icons/fc";
+import { BsDiscord, BsGithub } from "react-icons/bs";
 
 // const magic = new Magic("pk_live_7645A843999E2369");
 const SignIn = () => {
@@ -195,13 +197,13 @@ const SignIn = () => {
                 Login with Social Accounts
               </Button>
             </Flex> */}
-            <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+          <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
           <Button
             width={"100%"}
             variant={"outline"}
             colorScheme="gray"
           >
-            Sign up with Google
+            <FcGoogle size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Google</Text> 
           </Button>
         </Flex>
         <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
@@ -210,7 +212,7 @@ const SignIn = () => {
             variant={"outline"}
             colorScheme="gray"
           >
-            Sign up with Github
+             <BsGithub size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Github</Text> 
           </Button>
         </Flex>
         <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
@@ -219,7 +221,7 @@ const SignIn = () => {
             variant={"outline"}
             colorScheme="gray"
           >
-            Sign up with Discord
+            <BsDiscord size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Discord</Text>  
           </Button>
         </Flex>
 
