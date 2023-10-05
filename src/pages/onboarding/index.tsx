@@ -92,7 +92,7 @@ const OnBoarding = () => {
                 width="100%"
               >
                 <Text as="h6">
-                  Add display name so that your friends know it`s you
+                  Choose a unique username
                 </Text>
               </Flex>
               <Box mb="1.5rem" mt="1.5rem" width="100%">
