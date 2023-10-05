@@ -157,7 +157,7 @@ const SignUp = () => {
                     </StyledList>
                   </Typography>
                 </Box>
-                <Box
+                {/* <Box
                   width="100%"
                   borderRadius="0.25rem"
                   mt="1.5rem"
@@ -184,7 +184,7 @@ const SignUp = () => {
                     In order to claim the keys for the Hive account associated
                     with your 3speak account you must post at least one video.
                   </Typography>
-                </Box>
+                </Box> */}
               </Box>
               <ChakraBox display={'flex'} justifyContent='center' alignItems={'center'} marginTop={"10px"}>
                 <ReCAPTCHA
