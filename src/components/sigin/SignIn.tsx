@@ -185,7 +185,7 @@ const SignIn = () => {
             <Flex width="100%" justifyContent="center" mt="1rem">
               <StyledButton type="submit">Log in</StyledButton>
             </Flex>
-            <Flex width="100%" border={'1px solid'} borderRadius='6px'  justifyContent="center" mt="1rem">
+            {/* <Flex width="100%" border={'1px solid'} borderRadius='6px'  justifyContent="center" mt="1rem">
               <Button
                 onClick={() => connectWallet()}
                 width={"100%"}
@@ -194,7 +194,34 @@ const SignIn = () => {
               >
                 Login with Social Accounts
               </Button>
-            </Flex>
+            </Flex> */}
+            <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+          <Button
+            width={"100%"}
+            variant={"outline"}
+            colorScheme="gray"
+          >
+            Sign up with Google
+          </Button>
+        </Flex>
+        <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+          <Button
+            width={"100%"}
+            variant={"outline"}
+            colorScheme="gray"
+          >
+            Sign up with Github
+          </Button>
+        </Flex>
+        <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+          <Button
+            width={"100%"}
+            variant={"outline"}
+            colorScheme="gray"
+          >
+            Sign up with Discord
+          </Button>
+        </Flex>
 
             <Flex width="100%" justifyContent="center" mt="0.5rem">
               <Link href="/auth/forgot_password">
