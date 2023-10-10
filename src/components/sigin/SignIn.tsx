@@ -47,7 +47,9 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRefSignIn: any = useRef();
-
+  const redirectToForgotPasswordPage = () => {
+    window.location.href = "/auth/forgot_password"
+  }
   const onSubmitWithReCAPTCHASignIn = async () => {
     // const token = await recaptchaRefSignIn.current.executeAsync();
     // console.log(token);
@@ -226,7 +228,8 @@ const SignIn = () => {
         </Flex>
 
             <Flex width="100%" justifyContent="center" mt="0.5rem">
-              <Link href="/auth/forgot_password">
+              {/* <Link href="/auth/forgot_password"> */}
+              <Box onClick={() => redirectToForgotPasswordPage()} width={'100%'}>
                 <StyledButton
                   className="text-dark"
                   colors={{
@@ -238,7 +241,7 @@ const SignIn = () => {
                 >
                   Forgot password
                 </StyledButton>
-              </Link>
+              </Box>
             </Flex>
             {/* </form> */}
           </Form>
