@@ -78,7 +78,7 @@ const OnBoarding = () => {
             <Box
               border={"1px solid"}
               borderRadius="10px"
-              width={"60%"}
+              width={{base:"100%", md: "100%", lg:"60%"}}
               padding="10px"
               paddingTop={"20px"}
               margin="auto"
