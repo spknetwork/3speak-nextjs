@@ -107,12 +107,12 @@ function MyApp({ Component, pageProps }: AppProps) {
               margin='auto'
               marginTop='30px'
               css={css`
-                @media (max-width: 768px) {
+                @media (max-width: 820px) {
                   flex-direction: column;
                   width:100%;
                 }
 
-                @media (min-width: 769px) {
+                @media (min-width: 821px) {
                   flex-direction: column;
                   width:35%;
                 }
