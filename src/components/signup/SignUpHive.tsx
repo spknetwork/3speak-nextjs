@@ -65,7 +65,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
           <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="11px" mr='10px'>
             <img src="/keychain.6846c271.png" alt="3speak logo" />
           </Flex>
-          <Box marginRight={'10px'} mt="1rem" width="100%">
+          <Box marginRight={{base:"10px", md:"10px", lg:"5px"}} mt="1rem" width="100%">
             <fieldset className="Fieldset2">
               <input
                 value={username}
@@ -87,7 +87,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
         <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="11px" mr='10px'>
           <img src="/hiveauth.ac85800f.svg" alt="3speak logo" />
         </Flex>
-        <Box marginRight={'10px'} mt="1rem" width="100%">
+        <Box marginRight={{base:"10px", md:"10px", lg:"5px"}} mt="1rem" width="100%">
           <fieldset className="Fieldset2">
             <input
               style={{ cursor: 'not-allowed' }}
@@ -107,7 +107,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
         <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'#d1d5da'} mt="11px" mr='10px'>
           <img src="/hivesigner.6958efa0.svg" alt="3speak logo" />
         </Flex>
-        <Box marginRight={'10px'} mt="1rem" width="100%">
+        <Box marginRight={{base:"10px", md:"10px", lg:"5px"}} mt="1rem" width="100%">
           <fieldset className="Fieldset2">
             <input
               style={{ cursor: 'not-allowed' }}
