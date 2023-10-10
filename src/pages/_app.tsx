@@ -40,7 +40,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       break;
 
       case "tab3":
-        router.push(`/auth/signup`)
+        window.location.href = "/auth/signup"
+        // router.push(`/auth/signup`)
       break;
       default:
         break;
