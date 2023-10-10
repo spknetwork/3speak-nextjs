@@ -106,7 +106,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Flex
               margin='auto'
               marginTop='30px'
-              width={"30%"}
+              width={{base:"100%", md:"35%"}}
+
               css={css`
                 @media (max-width: 768px) {
                   flex-direction: column;
