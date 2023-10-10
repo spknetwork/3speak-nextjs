@@ -106,15 +106,15 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Flex
               margin='auto'
               marginTop='30px'
-              width={{base:"100%", md:"35%"}}
-
               css={css`
                 @media (max-width: 768px) {
                   flex-direction: column;
+                  width:100%;
                 }
 
                 @media (min-width: 769px) {
                   flex-direction: column;
+                  width:35%;
                 }
               `}
             >
