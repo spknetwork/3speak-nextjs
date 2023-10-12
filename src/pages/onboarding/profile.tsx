@@ -126,7 +126,7 @@ const OnBoarding = () => {
                   </Flex>
                 </Flex>
                 <Box
-                  left={"38%"}
+                  left={{base:"16%", md:"29%", lg: "38%"}}
                   top="205px"
                   position={"absolute"}
                   background={"white"}
