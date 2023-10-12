@@ -62,7 +62,7 @@ const OnBoarding = () => {
         justifyContent={"center"}
         alignItems="center"
       >
-        <Card height={"100%"} width="100%">
+        <Card paddingBottom={'100px'} height={"100%"} width="100%">
           <CardBody>
             <Box
               cursor={"pointer"}
@@ -87,7 +87,7 @@ const OnBoarding = () => {
               <Flex
                 position={"relative"}
                 justifyContent={"start"}
-                height={"400px"}
+                height={{base:"330px", md:"400px"}}
                 width="100%"
               >
                 <Flex
@@ -106,7 +106,7 @@ const OnBoarding = () => {
                       lg: "100px",
                     }}
                     borderRadius={"10px"}
-                    height={"300px"}
+                    height={{base:"200px", md:"300px"}}
                     width="100%"
                     border={"1px solid"}
                   >
@@ -126,15 +126,15 @@ const OnBoarding = () => {
                   </Flex>
                 </Flex>
                 <Box
-                  left={{base:"16%", md:"29%", lg: "38%"}}
-                  top="205px"
+                  left={{base:"33%", md:"36%", lg: "38%"}}
+                  top={{base:"230px", md: "205px"}}
                   position={"absolute"}
                   background={"white"}
                   {...getRootPropsProfile()}
                   cursor={"pointer"}
                   borderRadius={"50%"}
-                  height={"200px"}
-                  width="200px"
+                  height={{base:"100px", md: "200px"}}
+                  width={{base:"100px", md: "200px"}}
                   border={"1px solid"}
                 >
                   <input {...getInputPropsProfile()} />
