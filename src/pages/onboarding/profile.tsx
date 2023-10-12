@@ -87,7 +87,7 @@ const OnBoarding = () => {
               <Flex
                 position={"relative"}
                 justifyContent={"start"}
-                height={{base:"330px", md:"400px"}}
+                height={{base:"300px", md:"400px"}}
                 width="100%"
               >
                 <Flex
@@ -126,8 +126,8 @@ const OnBoarding = () => {
                   </Flex>
                 </Flex>
                 <Box
-                  left={{base:"33%", md:"36%", lg: "38%"}}
-                  top={{base:"230px", md: "205px"}}
+                  left={{base:"38%", md:"38%", lg: "38%"}}
+                  top={{base:"148px", md: "205px"}}
                   position={"absolute"}
                   background={"white"}
                   {...getRootPropsProfile()}
