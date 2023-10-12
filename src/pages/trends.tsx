@@ -15,8 +15,8 @@ const NewComers2 = () => {
     if (!loading && !error && data) {
       setVideos(
         data.feed.items
-          .filter((e) => !!e.spkvideo)
-          .map((e) => {
+          .filter((e:any) => !!e.spkvideo)
+          .map((e:any) => {
             console.log(e);
             return {
               title: e.title,
@@ -48,7 +48,7 @@ const NewComers2 = () => {
         {/* {videos.length} */}
         {!loading &&
           !error &&
-          videos.map((video, index) => (
+          videos.map((video:any, index:number) => (
             <GridItem w="100%" h="100%" key={index}>
               <Image
                 padding={"5px"}

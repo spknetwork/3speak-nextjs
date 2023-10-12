@@ -8,14 +8,14 @@ import { FIRST_UPLOAD_FEED } from "../graphql/queries";
 const FirstTime = () => {
   const { loading, error, data } = useQuery(FIRST_UPLOAD_FEED);
 
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState<any>([]);
 
   useEffect(() => {
     if (!loading && !error && data) {
       setVideos(
         data.feed.items
-          .filter((e) => !!e.spkvideo)
-          .map((e) => {
+          .filter((e:any) => !!e.spkvideo)
+          .map((e:any) => {
             console.log(e);
             return {
               title: e.title,
@@ -46,19 +46,19 @@ const FirstTime = () => {
       >
         {!loading &&
           !error &&
-          videos.map((video, index) => (
+          videos.map((video:any, index:number) => (
             <GridItem w="100%" h="100%" key={index}>
               <Image
                 padding={"5px"}
                 backgroundColor={"#222 !important"}
                 alt="test"
-                src={`${video.thumbnail}`}
+                src={`${video?.thumbnail}`}
                 height="13em !important"
                 width="100% !important"
                 objectFit="contain"
               />
-              <VideosTitle title={`${video.title}`} />
-              <Name username={`${video.username}`} />
+              <VideosTitle title={`${video?.title}`} />
+              <Name username={`${video?.username}`} />
               <Text as="p" margin={"1px"}>
                 a day ago
               </Text>
