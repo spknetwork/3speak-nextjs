@@ -129,7 +129,7 @@ const TabsDemo = ({ tab }: any) => {
       alignItems={{ _: "flex-start", tablet: "flex-start" }}
       backgroundColor="#F5F5F5"
     >
-      <Tabs.Content className="TabsContent w-100" value={tab}>
+      <Tabs.Content className="TabsContent w-100" value={'tab2'}>
         {/* <Button onClick={() => requestHiveLogin("juneroy1")}>hive</Button> */}
         <SignUpHive requestHiveLogin={requestHiveLogin} username={username} setUsername={setUsername}  />
       </Tabs.Content>

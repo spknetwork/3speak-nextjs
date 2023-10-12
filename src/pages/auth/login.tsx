@@ -34,7 +34,7 @@ const TabsDemo = ({tab}:any) => {
       
     >
     
-        <Tabs.Content className="TabsContent" value={tab}>
+        <Tabs.Content className="TabsContent" value={'tab1'}>
           <SignIn />
         </Tabs.Content>
         {/* <Tabs.Content className="TabsContent" value="tab2">

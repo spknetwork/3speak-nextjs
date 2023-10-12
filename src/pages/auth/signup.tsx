@@ -32,7 +32,7 @@ const TabsDemo = ({ tab }: any) => {
       alignItems={{ _: "flex-start", tablet: "flex-start" }}
       backgroundColor="#F5F5F5"
     >
-      <Tabs.Content className="TabsContent" value={tab}>
+      <Tabs.Content className="TabsContent" value={'tab3'}>
         <SignUp />
       </Tabs.Content>
       {/* <Tabs.Content className="TabsContent" value="tab2">
