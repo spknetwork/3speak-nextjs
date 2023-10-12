@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Flex,
   FlexProps,
   HStack,
@@ -10,8 +11,16 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Text,
   useColorModeValue,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -22,8 +31,23 @@ interface MobileProps extends FlexProps {
   onOpen: () => void;
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
-  const router = useRouter();
+  const { isOpen: isOpenModal1, onOpen:onOpenModal1, onClose: onCloseModal1 } = useDisclosure()
 
+  const router = useRouter();
+  const switchAccounts = () => {
+    console.log('switch account')
+    // show modal list of accounts available
+    isOpenModal1
+
+  }
+
+  const addAccounts = () => {
+    console.log('addAccounts')
+    // show modal list of accounts available
+    onCloseModal1()
+
+
+  }
   const { userDetails } = useAppStore();
   const logout = () => {
     localStorage.removeItem("access_token"); //
@@ -103,12 +127,53 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               <MenuItem>Profile</MenuItem>
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
+              <MenuItem onClick={onOpenModal1}>Switch Account</MenuItem>
               <MenuDivider />
               <MenuItem onClick={() => logout()}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
       </HStack>
+
+      <Modal size='md' closeOnOverlayClick={false} isOpen={isOpenModal1} onClose={onCloseModal1}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Accounts</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <Box>
+              <Flex justifyContent={'space-between'} alignItems='center'>
+                <Flex justifyContent={'space-between'} alignItems='center'>
+                  <Box marginX={'5px'}>Avatar</Box>
+                  <Box marginX={'5px'}>Juneroy1</Box>
+                  <Box marginX={'5px'}>(Keychain)</Box>
+                </Flex>
+                <Box>
+                  <Text> X</Text>
+                </Box>
+              </Flex>
+              <Flex justifyContent={'space-between'} alignItems='center'>
+                <Flex justifyContent={'space-between'} alignItems='center'>
+                  <Box marginX={'5px'}>Avatar</Box>
+                  <Box marginX={'5px'}>Juneroy2</Box>
+                  <Box marginX={'5px'}>(Keychain)</Box>
+                </Flex>
+                <Box>
+                  <Text> X</Text>
+                </Box>
+              </Flex>
+            </Box>
+            {/* <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit nemo quos iusto!</p> */}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button onClick={addAccounts} colorScheme='blue' mr={3}>
+              Add Account
+            </Button>
+            {/* <Button onClick={onCloseModal1}>Cancel</Button> */}
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Flex>
   );
 };
