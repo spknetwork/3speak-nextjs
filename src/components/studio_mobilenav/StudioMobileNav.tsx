@@ -1,5 +1,6 @@
 import {
   Avatar,
+  AvatarBadge,
   Box,
   Button,
   Flex,
@@ -24,6 +25,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { MdClose } from "react-icons/md";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { FiBell, FiChevronDown, FiMenu } from "react-icons/fi";
 import { useAppStore } from '../../lib/store'
@@ -37,6 +40,7 @@ interface MobileProps extends FlexProps {
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure()
   const { isOpen: isOpenModal2, onOpen: onOpenModal2, onClose: onCloseModal2 } = useDisclosure()
+  const { listAccounts, setAccounts } = useAppStore();
 
   const router = useRouter();
   const switchAccounts = () => {
@@ -45,6 +49,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     isOpenModal1
 
   }
+  useEffect(() => {
+    console.log('im here in nav', listAccounts)
+  }, [listAccounts])
 
   const addAccounts = () => {
     console.log('addAccounts')
@@ -148,26 +155,21 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Box>
-              <Flex justifyContent={'space-between'} alignItems='center'>
-                <Flex justifyContent={'space-between'} alignItems='center'>
-                  <Box marginX={'5px'}>Avatar</Box>
-                  <Box marginX={'5px'}>Juneroy1</Box>
-                  <Box marginX={'5px'}>(Keychain)</Box>
-                </Flex>
-                <Box>
-                  <Text>X</Text>
-                </Box>
-              </Flex>
-              <Flex justifyContent={'space-between'} alignItems='center'>
-                <Flex justifyContent={'space-between'} alignItems='center'>
-                  <Box marginX={'5px'}>Avatar</Box>
-                  <Box marginX={'5px'}>Juneroy2</Box>
-                  <Box marginX={'5px'}>(Keychain)</Box>
-                </Flex>
-                <Box>
-                  <Text> X</Text>
-                </Box>
-              </Flex>
+              {listAccounts.length > 0 &&  listAccounts.map((account:any) => {
+                 return <>
+                  <Flex justifyContent={'space-between'} alignItems='center'>
+                    <Flex justifyContent={'space-between'} alignItems='center'>
+                      <Box margin={'5px'} marginX={'5px'}><Avatar size={"sm"} src={`${account.avatar}`}/></Box>
+                      <Box margin={'5px'} marginX={'5px'}>{account.name}</Box>
+                      <Box margin={'5px'} marginX={'5px'}>({account.type})</Box>
+                    </Flex>
+                    <Box cursor={'pointer'}>
+                      <MdClose/>
+                    </Box>
+                  </Flex>
+                </>
+              })}
+
             </Box>
             {/* <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit nemo quos iusto!</p> */}
           </ModalBody>
@@ -214,10 +216,10 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   </Flex>
                   <Box marginRight={{ base: "10px", md: "10px", lg: "5px" }} mt="1rem" width="100%">
                     <fieldset className="Fieldset2">
-                    {/* value={username} */}
-                        {/* onChange={(e) => setUsername(e.target.value)} */}
+                      {/* value={username} */}
+                      {/* onChange={(e) => setUsername(e.target.value)} */}
                       <input
-                        
+
                         className="Input2"
                         id="text"
                         placeholder="Enter username"
@@ -226,7 +228,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                     </fieldset>
                   </Box>
                   <Box mt="1rem" width="auto">
-                  {/* onClick={(e) => requestHiveLogin(e)} */}
+                    {/* onClick={(e) => requestHiveLogin(e)} */}
                     <Button type="submit" height={'92%'} ><FaLongArrowAltRight /></Button>
                   </Box>
 

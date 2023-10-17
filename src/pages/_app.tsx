@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const isOtp = pathname.includes("/otp");
   const isStudio = pathname.includes("/studio");
   const [currentAuthPage, setCurrentAuthPage] = useState<string>("tab1");
-  const { checkAuth,allowAccess,getUserDetails } = useAppStore();
+  const { checkAuth,allowAccess,getUserDetails,setAccounts } = useAppStore();
 
   const updateAuthCurrentPage = (tab: string) => {
     setCurrentAuthPage(tab);
@@ -48,6 +48,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
    
   };
+
   useEffect(() => {
     if (allowAccess == true) {
       getUserDetails()
@@ -55,6 +56,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [allowAccess]);
   useEffect(() => {
     checkAuth();
+    setAccounts()
   }, []);
 
   return (
