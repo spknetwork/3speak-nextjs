@@ -133,7 +133,7 @@ input {
   height: 20px;
 }
 .TabsContent:focus{
-  box-shadow: 0 0 0 2px white !important;
+  box-shadow: none !important;
 }
 .Input3Area {
   width: 100%;
