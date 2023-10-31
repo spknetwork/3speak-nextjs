@@ -314,9 +314,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                         >
                           Company
                         </Text>
-                        {FOOTER_TITLE.map((footer:any) => {
+                        {FOOTER_TITLE.map((footer:any, index:number) => {
                           return (
-                            <Link href="#">
+                            <Link key={index} href="#">
                               <Text fontWeight={"500"} margin={"0px"}>
                                 {footer.name}
                               </Text>
