@@ -132,7 +132,9 @@ input {
   box-shadow: 0 0 0 1px var(--gray12);
   height: 20px;
 }
-
+.TabsContent:focus{
+  box-shadow: 0 0 0 2px white !important;
+}
 .Input3Area {
   width: 100%;
   padding: 1rem 1rem;
