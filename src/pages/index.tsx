@@ -1,9 +1,18 @@
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
-import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, GridItem, Image, Text, useDisclosure } from "@chakra-ui/react";
 import React, { useState } from "react";
-
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
 const NewIndex = () => {
+
   const [videos, setVideos] = useState([
     {
       title:
@@ -134,6 +143,7 @@ const NewIndex = () => {
   ]);
   return (
     <Box>
+      
       <Box height={"20px"} backgroundColor={"#E8E8E8"} padding="20px"></Box>
       <Grid
         padding={"20px"}
@@ -154,7 +164,7 @@ const NewIndex = () => {
               alt="test"
               src={`${video.thumbnail}`}
             />
-           <VideosTitle title={`${video.title}`} />
+            <VideosTitle title={`${video.title}`} />
             <Name username={`${video.username}`} />
             <Text as="p" margin={"1px"}>
               a day ago

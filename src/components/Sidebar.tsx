@@ -28,6 +28,15 @@ import {
   MenuItem,
   MenuList,
   Text,
+  Modal,
+  ModalOverlay,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  Avatar,
+  ModalContent,
+  ModalFooter,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useMediaQuery } from "react-responsive";
 import { css } from "@emotion/react";
@@ -37,6 +46,7 @@ import { api } from "@/utils/api";
 import { useAppStore } from '../lib/store'
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { AiFillAndroid } from "react-icons/ai";
+import { MdClose } from "react-icons/md";
 const threespeak = {
   filter: "drop-shadow(2px 4px 6px black)",
 };
@@ -93,6 +103,18 @@ const faTelegramIcon = faTelegram as IconProp;
 const faTwitterIcon = faTwitter as IconProp;
 
 export const Sidebar = () => {
+  const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure()
+  const { isOpen: isOpenModal2, onOpen: onOpenModal2, onClose: onCloseModal2 } = useDisclosure()
+
+  // const { listAccounts, setAccounts } = useAppStore();
+  const addAccounts = () => {
+    console.log('addAccounts')
+    // show modal list of accounts available
+    onCloseModal1()
+    onOpenModal2()
+
+
+  }
   const router = useRouter();
   const [communitiesPopup, setCommunitiesPopup] = useState(false);
   const [search, setSearch] = useState("");
@@ -100,7 +122,7 @@ export const Sidebar = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const [showNav, setShowNav] = useState(true);
 
-  const { allowAccess, userDetails } = useAppStore();
+  const { allowAccess, userDetails, listAccounts, setAccounts } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
@@ -127,6 +149,13 @@ export const Sidebar = () => {
       console.log("showNav", showNav);
     }
   }, [isMobile, showNav]);
+
+  const removeAccount = (account:any, index: number) => {
+    listAccounts.splice(index, 1)
+    console.log('listAccounts', listAccounts)
+    localStorage.setItem("accountsList", JSON.stringify(listAccounts))
+    setAccounts()
+  }
   return (
     <Flex p="1rem" flexDirection="column">
       <Flex
@@ -191,6 +220,10 @@ export const Sidebar = () => {
               </Flex>
 
             )}
+            <Flex cursor={'pointer'} width={'100%'} justifyContent='center' alignItems={'center'}>
+              <ChakraBox onClick={onOpenModal1} >Switch Account</ChakraBox>
+            </Flex>
+           
           </Box>
           <Box>
             {NAVIGATION.map(({ img, title, route }) => (
@@ -509,6 +542,40 @@ export const Sidebar = () => {
           </ChakraBox>
         </Box>
       )}
+       <Modal closeOnOverlayClick={false} isOpen={isOpenModal1} onClose={onCloseModal1}>
+          <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Accounts</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody pb={6}>
+                  <ChakraBox>
+                    {listAccounts.length > 0 &&  listAccounts.map((account:any, index:number) => {
+                      return (<Flex key={index} justifyContent={'space-between'} alignItems='center'>
+                          <Flex justifyContent={'space-between'} alignItems='center'>
+                            <ChakraBox margin={'5px'} marginX={'5px'}><Avatar size={"sm"} src={`${account.avatar}`}/></ChakraBox>
+                            <ChakraBox margin={'5px'} marginX={'5px'}>{account.username}</ChakraBox>
+                            <ChakraBox margin={'5px'} marginX={'5px'}>({account.type})</ChakraBox>
+                          </Flex>
+                          <ChakraBox onClick={(() => removeAccount(account,index))} cursor={'pointer'}>
+                            <MdClose/>
+                          </ChakraBox>
+                        </Flex>)
+                    })}
+
+                    {listAccounts.length == 0 && (<Text>No accounts save.</Text>)}
+
+                  </ChakraBox>
+                  {/* <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit nemo quos iusto!</p> */}
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button onClick={addAccounts} colorScheme='blue' mr={3}>
+                    Add Account
+                  </Button>
+                  {/* <Button onClick={onCloseModal1}>Cancel</Button> */}
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
     </Flex>
   );
 };

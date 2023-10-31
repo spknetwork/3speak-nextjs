@@ -7,7 +7,7 @@ import { useAppStore } from "../store";
 export interface AuthUserSlice {
   allowAccess: boolean | null;
   checkAuth: () => any;
-  setAccounts: () => void;
+  setAccounts: (data?: any) => void;
   getUserDetails: () => any;
   userDetails: UserDetails | null;
   login: (data: Params) => any;
@@ -35,16 +35,24 @@ export const createAuthUserSlice: StateCreator<AuthUserSlice> = (set) => ({
   listAccounts:[],
   allowAccess: null,
   userDetails: null,
-  setAccounts:async () => {
-    for (let index = 0; index < 5; index++) {
-      const account = {
-        avatar: 'https://source.unsplash.com/random/200x200?sig=3',
-        name: 'Juneroy1',
-        type: 'Keychain'
-      }
-      const accounts = useAppStore.getState().listAccounts
-      let toAppendAccounts = [...accounts, account]
+  setAccounts:async (requestBody: Params) => {
+
+    // for (let index = 0; index < 5; index++) {
+    //   const account = {
+    //     avatar: 'https://source.unsplash.com/random/200x200?sig=3',
+    //     name: 'Juneroy1',
+    //     type: 'Keychain'
+    //   }
+    //   const accounts = useAppStore.getState().listAccounts
+    //   let toAppendAccounts = [...accounts, account]
+    //   set({listAccounts: toAppendAccounts})
+    // }
+    // const accounts = useAppStore.getState().listAccounts
+    const accounts = localStorage.getItem("accountsList")
+    if (accounts) {
+      let toAppendAccounts = JSON.parse(accounts)
       set({listAccounts: toAppendAccounts})
+      console.log('im from setAccounts now',toAppendAccounts)
     }
   },
   checkAuth: async () => {
@@ -74,26 +82,47 @@ export const createAuthUserSlice: StateCreator<AuthUserSlice> = (set) => ({
     }
   },
   login: async (requestBody: Params) => {
-    try {
-      const body = {
-        ...requestBody,
-        username: requestBody.email,
-      };
-      const response = await axios.post(
-        API_URL_FROM_WEST + "/v1/auth/login",
-        body,
-        {
-          headers: {
-            // Set your custom headers here
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      localStorage.setItem("access_token", response.data.access_token);
-      // Handle the response here
-    } catch (error) {
-      console.error("API call error:", error);
+    let data = {
+      avatar: 'https://source.unsplash.com/random/200x200?sig=3',
+      username: requestBody.email,
+      type: 'Email/Password',
+      token: ''
     }
+
+    let accounts
+    const local = localStorage.getItem("accountsList")
+    if (!local) {
+        localStorage.setItem("accountsList", JSON.stringify([data]))
+    }else{
+      accounts = JSON.parse(local)
+      const checkData = accounts.filter((item:any) => item.username == data.username )
+      console.log('checkData',checkData)
+      if (accounts.length < 6 && checkData.length == 0) {
+        accounts.push(data)
+        localStorage.setItem("accountsList", JSON.stringify(accounts))
+      }
+    }
+    // useAppStore.getState().setAccounts(data)
+    // try {
+    //   const body = {
+    //     ...requestBody,
+    //     username: requestBody.email,
+    //   };
+    //   const response = await axios.post(
+    //     API_URL_FROM_WEST + "/v1/auth/login",
+    //     body,
+    //     {
+    //       headers: {
+    //         // Set your custom headers here
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
+    //   localStorage.setItem("access_token", response.data.access_token);
+    //   // Handle the response here
+    // } catch (error) {
+    //   console.error("API call error:", error);
+    // }
   },
   register: async (requestBody: Params) => {
       const body = {

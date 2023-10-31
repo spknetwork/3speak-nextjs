@@ -15,7 +15,44 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { Text, Box as ChakraBox } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import { BsGithub, BsDiscord } from "react-icons/bs";
+import { Magic } from 'magic-sdk';
+import { OAuthExtension } from '@magic-ext/oauth';
 const SignUp = () => {
+
+  let magic:any
+  if (typeof window !== "undefined") {
+     magic = new Magic('pk_live_773A61B5424F8C7D', {
+      extensions: [new OAuthExtension()],
+    });
+    // console.log('herererererere')
+  }
+  const googlelogin = async () => {
+    const data = await magic.oauth.loginWithRedirect({
+      provider: 'google' /* 'google', 'facebook', 'apple', or 'github' */,
+      redirectURI: 'http://localhost:3050',
+    });
+
+    console.log('data', data)
+  }
+
+
+  const githublogin = async () => {
+    const data = await magic.oauth.loginWithRedirect({
+      provider: 'github' /* 'google', 'facebook', 'apple', or 'github' */,
+      redirectURI: 'http://localhost:3050',
+    });
+
+    console.log('data', data)
+  }
+
+  const discordlogin = async () => {
+    const data = await magic.oauth.loginWithRedirect({
+      provider: 'discord' /* 'google', 'facebook', 'apple', or 'github' */,
+      redirectURI: 'http://localhost:3050',
+    });
+
+    console.log('data', data)
+  }
   const toast = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -205,6 +242,7 @@ const SignUp = () => {
             width={"100%"}
             variant={"outline"}
             colorScheme="gray"
+            onClick={() => googlelogin()}
           >
             <FcGoogle size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Google</Text> 
           </Button>
@@ -214,6 +252,7 @@ const SignUp = () => {
             width={"100%"}
             variant={"outline"}
             colorScheme="gray"
+            onClick={() => githublogin()}
           >
              <BsGithub size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Github</Text> 
           </Button>
@@ -223,6 +262,7 @@ const SignUp = () => {
             width={"100%"}
             variant={"outline"}
             colorScheme="gray"
+            onClick={() => discordlogin()}
           >
             <BsDiscord size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Discord</Text>  
           </Button>

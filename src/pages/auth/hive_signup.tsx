@@ -52,6 +52,28 @@ const TabsDemo = ({ tab }: any) => {
   const [dateNow, setDateNow] = useState<string>("")
   const datan = new Date().toISOString()
   const callback =  async (response: any) =>  {
+
+    let dataToStore = {
+      avatar: 'https://source.unsplash.com/random/200x200?sig=3',
+      username: username,
+      type: 'Keychain',
+      token: ''
+    }
+
+    let accounts
+    const local = localStorage.getItem("accountsList")
+    if (!local) {
+        localStorage.setItem("accountsList", JSON.stringify([dataToStore]))
+    }else{
+      accounts = JSON.parse(local)
+      const checkData = accounts.filter((item:any) => item.username == data.username )
+      console.log('checkData',checkData)
+      if (accounts.length < 6 && checkData.length == 0) {
+        accounts.push(dataToStore)
+        localStorage.setItem("accountsList", JSON.stringify(accounts))
+      }
+    }
+
     console.log("response", response);
     const result =response
     console.log("result", result);

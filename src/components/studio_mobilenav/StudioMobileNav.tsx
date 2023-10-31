@@ -160,7 +160,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   <Flex justifyContent={'space-between'} alignItems='center'>
                     <Flex justifyContent={'space-between'} alignItems='center'>
                       <Box margin={'5px'} marginX={'5px'}><Avatar size={"sm"} src={`${account.avatar}`}/></Box>
-                      <Box margin={'5px'} marginX={'5px'}>{account.name}</Box>
+                      <Box margin={'5px'} marginX={'5px'}>{account.username}</Box>
                       <Box margin={'5px'} marginX={'5px'}>({account.type})</Box>
                     </Flex>
                     <Box cursor={'pointer'}>

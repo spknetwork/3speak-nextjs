@@ -121,7 +121,7 @@ export default function Identities({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (authenticated == false && authenticated != null) {
-      router.push("/auth/login");
+      // router.push("/auth/login");
     }
   }, [authenticated, router]);
 
@@ -129,9 +129,9 @@ export default function Identities({ children }: { children: ReactNode }) {
     authenticated ? "gray.100" : "gray.100",
     authenticated ? "gray.900" : "gray.900"
   );
-  if (authenticated === null) {
-    return <Box>Loading...</Box>;
-  }
+  // if (authenticated === null) {
+  //   return <Box>Loading...</Box>;
+  // }
 
   if (authenticated === false) {
     return <Box>Unauthorized access, please login first</Box>;

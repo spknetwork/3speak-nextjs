@@ -15,12 +15,50 @@ import axios from "axios";
 import { api } from "@/utils/api";
 import { useAppStore } from "@/lib/store";
 import { Button, Text } from "@chakra-ui/react";
-import { Magic } from "magic-sdk";
+// import { Magic } from "magic-sdk";
 import { FcGoogle } from "react-icons/fc";
 import { BsDiscord, BsGithub } from "react-icons/bs";
-
+import { Magic } from 'magic-sdk';
+import { OAuthExtension } from '@magic-ext/oauth';
 // const magic = new Magic("pk_live_7645A843999E2369");
+
+
 const SignIn = () => {
+  let magic:any
+  if (typeof window !== "undefined") {
+     magic = new Magic('pk_live_773A61B5424F8C7D', {
+      extensions: [new OAuthExtension()],
+    });
+    // console.log('herererererere')
+  }
+  const googlelogin = async () => {
+    const data = await magic.oauth.loginWithRedirect({
+      provider: 'google' /* 'google', 'facebook', 'apple', or 'github' */,
+      redirectURI: 'http://localhost:3050',
+    });
+
+    console.log('data', data)
+  }
+
+
+  const githublogin = async () => {
+    const data = await magic.oauth.loginWithRedirect({
+      provider: 'github' /* 'google', 'facebook', 'apple', or 'github' */,
+      redirectURI: 'http://localhost:3050',
+    });
+
+    console.log('data', data)
+  }
+
+  const discordlogin = async () => {
+    const data = await magic.oauth.loginWithRedirect({
+      provider: 'discord' /* 'google', 'facebook', 'apple', or 'github' */,
+      redirectURI: 'http://localhost:3050',
+    });
+
+    console.log('data', data)
+  }
+ 
   const [onboarding, setOnboarding] = useState<any>(false);
   // const [idToken, setIdToken] = useState();
 
@@ -204,8 +242,9 @@ const SignIn = () => {
             width={"100%"}
             variant={"outline"}
             colorScheme="gray"
+            onClick={() => googlelogin()}
           >
-            <FcGoogle size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Google</Text> 
+            <FcGoogle size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign in with Google</Text> 
           </Button>
         </Flex>
         <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
@@ -213,8 +252,9 @@ const SignIn = () => {
             width={"100%"}
             variant={"outline"}
             colorScheme="gray"
+            onClick={() => githublogin()}
           >
-             <BsGithub size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Github</Text> 
+             <BsGithub size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign in with Github</Text> 
           </Button>
         </Flex>
         <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
@@ -222,8 +262,9 @@ const SignIn = () => {
             width={"100%"}
             variant={"outline"}
             colorScheme="gray"
+            onClick={() => discordlogin()}
           >
-            <BsDiscord size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Discord</Text>  
+            <BsDiscord size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign in with Discord</Text>  
           </Button>
         </Flex>
 

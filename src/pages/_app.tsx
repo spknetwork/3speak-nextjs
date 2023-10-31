@@ -12,23 +12,34 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import { useAppStore } from "../lib/store";
 import * as Tabs from "@radix-ui/react-tabs";
-import { Box, ChakraProvider, Flex, Image, Link, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, ChakraProvider, Flex, Image, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from "@chakra-ui/react";
 import { BiEnvelope, BiGlobe } from "react-icons/bi";
 import { ApolloProvider } from "@apollo/client";
 import client from "../lib/apolloClient";
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
+import { MdClose } from "react-icons/md";
 config.autoAddCss = false;
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure()
+  const { isOpen: isOpenModal2, onOpen: onOpenModal2, onClose: onCloseModal2 } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const { pathname } = useRouter();
   const router = useRouter();
   const isAuth = pathname.includes("/auth");
   const isOtp = pathname.includes("/otp");
   const isStudio = pathname.includes("/studio");
   const [currentAuthPage, setCurrentAuthPage] = useState<string>("tab1");
-  const { checkAuth,allowAccess,getUserDetails,setAccounts } = useAppStore();
+  const { checkAuth, allowAccess, getUserDetails, setAccounts, listAccounts } = useAppStore();
+  const addAccounts = () => {
+    console.log('addAccounts')
+    // show modal list of accounts available
+    onCloseModal1()
+    onOpenModal2()
 
+
+  }
   const updateAuthCurrentPage = (tab: string) => {
     setCurrentAuthPage(tab);
     switch (tab) {
@@ -37,16 +48,16 @@ function MyApp({ Component, pageProps }: AppProps) {
         break;
       case "tab2":
         router.push(`/auth/hive_signup`)
-      break;
+        break;
 
       case "tab3":
         window.location.href = "/auth/signup"
         // router.push(`/auth/signup`)
-      break;
+        break;
       default:
         break;
     }
-   
+
   };
 
   useEffect(() => {
@@ -73,7 +84,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         `}
       >
         <nav>
-          <Box>{!isAuth && !isStudio && !isOtp && <Sidebar />}</Box>
+          <Box>{!isAuth && !isStudio && !isOtp && <ChakraProvider><Sidebar /></ChakraProvider>}</Box>
         </nav>
         {isOtp && (
           <>
@@ -93,12 +104,12 @@ function MyApp({ Component, pageProps }: AppProps) {
             >
               <main>
                 <Box width={"100%"} backgroundColor="#EFF4F6">
-                  
-                    <ChakraProvider>
-                      <ApolloProvider client={client}>
-                        <Component tab={currentAuthPage} {...pageProps} />
-                      </ApolloProvider>
-                    </ChakraProvider>
+
+                  <ChakraProvider>
+                    <ApolloProvider client={client}>
+                      <Component tab={currentAuthPage} {...pageProps} />
+                    </ApolloProvider>
+                  </ChakraProvider>
                 </Box>
               </main>
             </Flex>
@@ -123,7 +134,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             >
               <main>
                 <Box width={"100%"} backgroundColor="#EFF4F6" boxShadow={'10px 10px 5px lightblue'}>
-                  <Tabs.Root className="TabsRoot" defaultValue={router.pathname =='/auth/signup'? "tab3":router.pathname =='/auth/hive_signup'?'tab2':'tab1'}>
+                  <Tabs.Root className="TabsRoot" defaultValue={router.pathname == '/auth/signup' ? "tab3" : router.pathname == '/auth/hive_signup' ? 'tab2' : 'tab1'}>
                     <Tabs.List
                       className="TabsList"
                       aria-label="Manage your account"
@@ -177,8 +188,44 @@ function MyApp({ Component, pageProps }: AppProps) {
               `}
             >
               <main>
+
                 <Box width={"100%"} backgroundColor="#EFF4F6">
+
                   <ChakraProvider>
+                    <Modal closeOnOverlayClick={false} isOpen={isOpenModal1} onClose={onCloseModal1}>
+                      <ModalOverlay />
+                      <ModalContent>
+                        <ModalHeader>Accounts</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody pb={6}>
+                          <Box>
+                            {listAccounts.length > 0 && listAccounts.map((account: any) => {
+                              return <>
+                                <Flex justifyContent={'space-between'} alignItems='center'>
+                                  <Flex justifyContent={'space-between'} alignItems='center'>
+                                    <Box margin={'5px'} marginX={'5px'}><Avatar size={"sm"} src={`${account.avatar}`} /></Box>
+                                    <Box margin={'5px'} marginX={'5px'}>{account.username}</Box>
+                                    <Box margin={'5px'} marginX={'5px'}>({account.type})</Box>
+                                  </Flex>
+                                  <Box cursor={'pointer'}>
+                                    <MdClose />
+                                  </Box>
+                                </Flex>
+                              </>
+                            })}
+
+                          </Box>
+                          {/* <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit nemo quos iusto!</p> */}
+                        </ModalBody>
+
+                        <ModalFooter>
+                          <Button onClick={addAccounts} colorScheme='blue' mr={3}>
+                            Add Account
+                          </Button>
+                          {/* <Button onClick={onCloseModal1}>Cancel</Button> */}
+                        </ModalFooter>
+                      </ModalContent>
+                    </Modal>
                     <ApolloProvider client={client}>
                       <Component {...pageProps} />
                     </ApolloProvider>
