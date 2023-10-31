@@ -3,15 +3,15 @@ import React, { useRef } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { Formik } from "formik";
+// import { Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
-import SignUp from "@/components/signup/SignUp";
-import Link from "next/link";
+// import SignUp from "@/components/signup/SignUp";
+// import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
-import SignUpHive from "@/components/signup/SignUpHive";
+// import SignUpHive from "@/components/signup/SignUpHive";
 const TabsDemo = ({tab}:any) => {
   console.log('tabhere',tab)
   const router = useRouter();
@@ -37,13 +37,6 @@ const TabsDemo = ({tab}:any) => {
         <Tabs.Content className="TabsContent" value={'tab1'}>
           <SignIn />
         </Tabs.Content>
-        {/* <Tabs.Content className="TabsContent" value="tab2">
-          <SignUpHive />
-        </Tabs.Content>
-        <Tabs.Content className="TabsContent" value="tab3">
-          <SignUp />
-        </Tabs.Content> */}
-     
     </Flex>
   );
 };
