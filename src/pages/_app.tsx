@@ -21,6 +21,12 @@ import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 config.autoAddCss = false;
 
+const FOOTER_TITLE = [
+  { name: 'About us' },
+  { name: 'FAQ' },
+  { name: 'Terms' },
+]
+
 function MyApp({ Component, pageProps }: AppProps) {
   const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure()
   const { isOpen: isOpenModal2, onOpen: onOpenModal2, onClose: onCloseModal2 } = useDisclosure()
@@ -32,6 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const isStudio = pathname.includes("/studio");
   const [currentAuthPage, setCurrentAuthPage] = useState<string>("tab1");
   const { checkAuth, allowAccess, getUserDetails, setAccounts, listAccounts } = useAppStore();
+
   const addAccounts = () => {
     console.log('addAccounts')
     // show modal list of accounts available
@@ -215,14 +222,12 @@ function MyApp({ Component, pageProps }: AppProps) {
                             })}
 
                           </Box>
-                          {/* <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit nemo quos iusto!</p> */}
                         </ModalBody>
 
                         <ModalFooter>
                           <Button onClick={addAccounts} colorScheme='blue' mr={3}>
                             Add Account
                           </Button>
-                          {/* <Button onClick={onCloseModal1}>Cancel</Button> */}
                         </ModalFooter>
                       </ModalContent>
                     </Modal>
@@ -230,15 +235,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                       <Component {...pageProps} />
                     </ApolloProvider>
                   </ChakraProvider>
-                  {/* <Box
-            position={"absolute"}
-            bottom="20px"
-            width={"-webkit-fill-available"}
-            border="1px solid"
-            height={"100px"}
-          >
-            footer here
-          </Box> */}
+
                 </Box>
               </main>
               {!isAuth && (
@@ -256,7 +253,6 @@ function MyApp({ Component, pageProps }: AppProps) {
                     width={"100%"}
                     margin="auto"
                   >
-                    {/* flex={"0 0 25%"} maxWidth={"25%"} paddingX="20px" */}
                     <Flex width={"100%"} flexWrap="wrap">
                       <Box
                         css={css`
@@ -318,21 +314,17 @@ function MyApp({ Component, pageProps }: AppProps) {
                         >
                           Company
                         </Text>
-                        <Link href="#">
-                          <Text fontWeight={"500"} margin={"0px"}>
-                            About us
-                          </Text>
-                        </Link>
-                        <Link href="#">
-                          <Text fontWeight={"500"} margin={"0px"}>
-                            FAQ
-                          </Text>
-                        </Link>
-                        <Link href="#">
-                          <Text fontWeight={"500"} margin={"0px"}>
-                            Terms
-                          </Text>
-                        </Link>
+                        {FOOTER_TITLE.map((footer:any) => {
+                          return (
+                            <Link href="#">
+                              <Text fontWeight={"500"} margin={"0px"}>
+                                {footer.name}
+                              </Text>
+                            </Link>
+                          )
+                        })}
+
+
                       </Box>
                       <Box
                         css={css`
