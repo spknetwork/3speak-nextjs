@@ -1,20 +1,14 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useRef } from "react";
-import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
-import axios from "axios";
-import { API_URL_FROM_WEST } from "../../utils/config";
-import { Button, useToast } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { useAppStore } from "@/lib/store";
 import ReCAPTCHA from "react-google-recaptcha";
-import { Text, Box as ChakraBox } from "@chakra-ui/react";
-import { FcGoogle } from "react-icons/fc";
-import { BsGithub, BsDiscord } from "react-icons/bs";
+import { Box as ChakraBox } from "@chakra-ui/react";
 import { Magic } from 'magic-sdk';
 import { OAuthExtension } from '@magic-ext/oauth';
 import GoogleAuth from "../SocialAuth/GoogleAuth";

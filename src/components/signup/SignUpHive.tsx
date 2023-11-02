@@ -1,46 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useRef } from "react";
-import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { Formik } from "formik";
-import { useRouter } from "next/router";
-import { useTranslation } from "next-export-i18n";
-import { Typography, Flex } from "src/components";
-// import ReCAPTCHA from "react-google-recaptcha";
-import SignUp from "@/components/signup/SignUp";
-import Link from "next/link";
-import SignIn from "@/components/sigin/SignIn";
+import {  Flex } from "src/components";
 import { Button, Box, Text } from "@chakra-ui/react";
-import Image from "next/image";
 import { FaLongArrowAltRight } from "react-icons/fa";
 const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const recaptchaRefSignUpHive: any = useRef();
-  useEffect(() => {
-    // setTimeout(() => {
-    //   if (router.pathname == '/auth/signup') {
-    //     setshowRecaptcha(true)
-    //     console.log('captcha test', router.pathname)
-    //   }
-
-    // }, 3000)
-    if (router.pathname == '/auth/hive_signup') {
-      // setshowRecaptcha(true)
-      console.log('captcha test121212121', router.pathname)
-    }
 
 
-  }, [router.pathname])
-  const onSubmitWithReCAPTCHASignUpHive = async () => {
-    // e.preventDefault()
-    // const token = await recaptchaRefSignUpHive.current.executeAsync();
-    // console.log(token);
-    requestHiveLogin()
-    // apply to form data
-  };
   return (
     <Box width="100%">
       <Box>
@@ -58,14 +23,13 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
           width="100%"
         />
       </Box>
-      {/* <form onSubmit={onSubmitWithReCAPTCHASignUpHive}> */}
       <form onSubmit={(e) => requestHiveLogin(e)}>
         <Flex>
 
           <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="11px" mr='10px'>
             <img src="/keychain.6846c271.png" alt="3speak logo" />
           </Flex>
-          <Box marginRight={{base:"10px", md:"10px", lg:"5px"}} mt="1rem" width="100%">
+          <Box marginRight={{ base: "10px", md: "10px", lg: "5px" }} mt="1rem" width="100%">
             <fieldset className="Fieldset2">
               <input
                 value={username}
@@ -77,7 +41,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
               />
             </fieldset>
           </Box>
-          <Box  mt="1rem" width="auto">
+          <Box mt="1rem" width="auto">
             <Button type="submit" height={'92%'} onClick={(e) => requestHiveLogin(e)}><FaLongArrowAltRight /></Button>
           </Box>
 
@@ -87,7 +51,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
         <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="11px" mr='10px'>
           <img src="/hiveauth.ac85800f.svg" alt="3speak logo" />
         </Flex>
-        <Box marginRight={{base:"10px", md:"10px", lg:"5px"}} mt="1rem" width="100%">
+        <Box marginRight={{ base: "10px", md: "10px", lg: "5px" }} mt="1rem" width="100%">
           <fieldset className="Fieldset2">
             <input
               style={{ cursor: 'not-allowed' }}
@@ -107,7 +71,7 @@ const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
         <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'#d1d5da'} mt="11px" mr='10px'>
           <img src="/hivesigner.6958efa0.svg" alt="3speak logo" />
         </Flex>
-        <Box marginRight={{base:"10px", md:"10px", lg:"5px"}} mt="1rem" width="100%">
+        <Box marginRight={{ base: "10px", md: "10px", lg: "5px" }} mt="1rem" width="100%">
           <fieldset className="Fieldset2">
             <input
               style={{ cursor: 'not-allowed' }}
