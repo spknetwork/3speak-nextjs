@@ -94,7 +94,7 @@ const TabsDemo = ({ tab }: any) => {
       localStorage.setItem("accountsList", JSON.stringify([dataToStore]))
     } else {
       accounts = JSON.parse(local)
-      const checkData = accounts.filter((item: any) => item.username == data.username)
+      const checkData = accounts.filter((item: any) => item.username == username)
       console.log('checkData', checkData)
       if (accounts.length < 6 && checkData.length == 0) {
         accounts.push(dataToStore)
