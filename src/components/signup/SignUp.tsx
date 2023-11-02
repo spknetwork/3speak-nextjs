@@ -27,7 +27,6 @@ const SignUp = () => {
     magic = new Magic('pk_live_773A61B5424F8C7D', {
       extensions: [new OAuthExtension()],
     });
-    // console.log('herererererere')
   }
   const googlelogin = async () => {
     const data = await magic.oauth.loginWithRedirect({
@@ -62,9 +61,7 @@ const SignUp = () => {
   const { t } = useTranslation();
   const recaptchaRefSignUp: any = useRef();
 
-  const onSubmitWithReCAPTCHASignUp = async () => {
-    // apply to form data
-  };
+
   const { register } = useAppStore();
   const handleSubmit = async (values: any) => {
     const token = await recaptchaRefSignUp.current.executeAsync();
@@ -112,7 +109,6 @@ const SignUp = () => {
             }
 
             if (!props.password) errors.password = t("required");
-            // if (!props.username) errors.username = t("username");
             if (!props.email) errors.email = t("required");
 
             return errors;
@@ -142,24 +138,6 @@ const SignUp = () => {
                   )}
                 </fieldset>
               </Box>
-              {/* <Box width="100%">
-                <fieldset className="Fieldset">
-                  <label className="Label" htmlFor="username">
-                    Hive username
-                  </label>
-                  <input
-                    className="Input"
-                    id="username"
-                    placeholder="hive username"
-                    type="text"
-                  /> */}
-              {/* {!!props.errors.username && (
-                    <Typography color="#FF3333">
-                      {props.errors.username}
-                    </Typography>
-                  )} */}
-              {/* </fieldset>
-              </Box> */}
               <Box width="100%">
                 <fieldset className="Fieldset">
                   <label className="Label" htmlFor="newPassword">
@@ -180,51 +158,6 @@ const SignUp = () => {
                     </Typography>
                   )}
                 </fieldset>
-                {/* <Box
-                  width="100%"
-                  borderRadius="0.25rem"
-                  mt="1.5rem"
-                  py="0.75rem"
-                  px="1.25rem"
-                  backgroundColor="#bee5eb"
-                  border="1px solid #bee5eb"
-                >
-                  <Typography color="#0c5460">
-                    <StyledList>
-                      {(t("register.passwordRules") as string[]).map((rule) => (
-                        <li key={rule}>{rule}</li>
-                      ))}
-                    </StyledList>
-                  </Typography>
-                </Box> */}
-                {/* <Box
-                  width="100%"
-                  borderRadius="0.25rem"
-                  mt="1.5rem"
-                  py="0.75rem"
-                  px="1.25rem"
-                  backgroundColor="#f8d7da"
-                  border="1px solid #f5c6cb"
-                >
-                  <Typography textAlign="center" color="#721c24">
-                    Some email services will wrongly sort our our emails,
-                    remember to check your junk/spam folder!
-                  </Typography>
-                </Box>
-                <Box
-                  width="100%"
-                  borderRadius="0.25rem"
-                  mt="1.5rem"
-                  py="0.75rem"
-                  px="1.25rem"
-                  backgroundColor="#f8d7da"
-                  border="1px solid #f5c6cb"
-                >
-                  <Typography textAlign="center" color="#721c24">
-                    In order to claim the keys for the Hive account associated
-                    with your 3speak account you must post at least one video.
-                  </Typography>
-                </Box> */}
               </Box>
               <ChakraBox display={'flex'} justifyContent='center' alignItems={'center'} marginTop={"10px"}>
                 <ReCAPTCHA
