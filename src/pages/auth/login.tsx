@@ -1,19 +1,13 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useRef } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-// import { Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
-// import SignUp from "@/components/signup/SignUp";
-// import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
-// import SignUpHive from "@/components/signup/SignUpHive";
 const TabsDemo = ({tab}:any) => {
-  console.log('tabhere',tab)
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -22,7 +16,6 @@ const TabsDemo = ({tab}:any) => {
   const onSubmitWithReCAPTCHA = async () => {
     const token = await recaptchaRef.current.executeAsync();
     console.log(token);
-    // apply to form data
   };
   return (
     <Flex
