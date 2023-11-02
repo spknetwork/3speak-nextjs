@@ -17,11 +17,14 @@ import { FcGoogle } from "react-icons/fc";
 import { BsGithub, BsDiscord } from "react-icons/bs";
 import { Magic } from 'magic-sdk';
 import { OAuthExtension } from '@magic-ext/oauth';
+import GoogleAuth from "../SocialAuth/GoogleAuth";
+import DiscordAuth from "../SocialAuth/DiscordAuth";
+import GithubAuth from "../SocialAuth/GithubAuth";
 const SignUp = () => {
 
-  let magic:any
+  let magic: any
   if (typeof window !== "undefined") {
-     magic = new Magic('pk_live_773A61B5424F8C7D', {
+    magic = new Magic('pk_live_773A61B5424F8C7D', {
       extensions: [new OAuthExtension()],
     });
     // console.log('herererererere')
@@ -238,34 +241,13 @@ const SignUp = () => {
           )}
         </Formik>
         <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-          <Button
-            width={"100%"}
-            variant={"outline"}
-            colorScheme="gray"
-            onClick={() => googlelogin()}
-          >
-            <FcGoogle size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Google</Text> 
-          </Button>
+          <GoogleAuth googlelogin={googlelogin} label='Sign in with Google'/>
         </Flex>
         <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-          <Button
-            width={"100%"}
-            variant={"outline"}
-            colorScheme="gray"
-            onClick={() => githublogin()}
-          >
-             <BsGithub size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Github</Text> 
-          </Button>
+          <GithubAuth githublogin={githublogin} label='Sign in with Github'/>
         </Flex>
         <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-          <Button
-            width={"100%"}
-            variant={"outline"}
-            colorScheme="gray"
-            onClick={() => discordlogin()}
-          >
-            <BsDiscord size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign up with Discord</Text>  
-          </Button>
+          <DiscordAuth discordlogin={discordlogin} label='Sign in with Discord'/>
         </Flex>
       </Box>
     </div>
