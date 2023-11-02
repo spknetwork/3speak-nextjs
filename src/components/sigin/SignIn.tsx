@@ -60,27 +60,6 @@ const SignIn = () => {
   }
  
   const [onboarding, setOnboarding] = useState<any>(false);
-  // const [idToken, setIdToken] = useState();
-
-  const connectWallet = async () => {
-    // const accounts = await magic.wallet
-    //   .connectWithUI()
-    //   .on("id-token-created", (params:any) => {
-    //     setIdToken(params.idToken);
-    //   });
-
-    // setAccount(accounts[0]);
-  };
-
-  // const showUI = () => {
-  //   magic.wallet.showUI();
-  // };
-
-  // const logout = async () => {
-  //   await magic.user.logout();
-  //   setAccount(null);
-  // };
-
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -88,20 +67,13 @@ const SignIn = () => {
   const redirectToForgotPasswordPage = () => {
     window.location.href = "/auth/forgot_password"
   }
-  const onSubmitWithReCAPTCHASignIn = async () => {
-    // const token = await recaptchaRefSignIn.current.executeAsync();
-    // console.log(token);
-    // apply to form data
-  };
 
   const { allowAccess, login, checkAuth } = useAppStore();
-  // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (allowAccess == true) {
       setAuthenticated(allowAccess);
-      // return
     } else {
       setAuthenticated(false);
     }
@@ -119,11 +91,8 @@ const SignIn = () => {
   }, [authenticated, router]);
 
   const handleSubmit = async (values: any) => {
-    // const token = await recaptchaRefSignIn.current.executeAsync();
-    // console.log(token);
     setOnboarding(true)
     await login(values);
-    // router.push("/otp/enter_code");
     checkAuth();
   };
 
@@ -211,32 +180,12 @@ const SignIn = () => {
               border="1px solid #f5c6cb"
             >
               <Typography textAlign="center" color="#721c24">
-                {/* fontSize="1.75rem" */}
                 {t("login.disclaimer")}
               </Typography>
             </Box>
-            {/* <Box
-              marginTop={'10px'}
-            >
-              <ReCAPTCHA
-                ref={recaptchaRefSignIn}
-                sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
-              />
-            </Box> */}
-
             <Flex width="100%" justifyContent="center" mt="1rem">
               <StyledButton type="submit">Log in</StyledButton>
             </Flex>
-            {/* <Flex width="100%" border={'1px solid'} borderRadius='6px'  justifyContent="center" mt="1rem">
-              <Button
-                onClick={() => connectWallet()}
-                width={"100%"}
-                variant={"outline"}
-                colorScheme="gray"
-              >
-                Login with Social Accounts
-              </Button>
-            </Flex> */}
           <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
           <Button
             width={"100%"}

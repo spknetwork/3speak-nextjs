@@ -59,8 +59,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     // show modal list of accounts available
     onCloseModal1()
     onOpenModal2()
-
-
   }
   const { userDetails } = useAppStore();
   const logout = () => {
