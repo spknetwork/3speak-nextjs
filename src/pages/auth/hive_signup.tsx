@@ -1,19 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useRef, useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
-import { KeychainSDK } from "keychain-sdk";
-// import ReCAPTCHA from "react-google-recaptcha";
-import SignUp from "@/components/signup/SignUp";
-import Link from "next/link";
-import SignIn from "@/components/sigin/SignIn";
 import SignUpHive from "@/components/signup/SignUpHive";
-import { Button } from "@chakra-ui/react";
 import axios from "axios";
 import { API_URL_FROM_WEST } from "@/utils/config";
 import { useAppStore } from "@/lib/store";
@@ -46,7 +38,6 @@ const TabsDemo = ({ tab }: any) => {
       }
     }
   }, [authenticated, router]);
-
 
   const [username, setUsername] = useState<string>("")
   const [dateNow, setDateNow] = useState<string>("")
@@ -152,15 +143,8 @@ const TabsDemo = ({ tab }: any) => {
       backgroundColor="#F5F5F5"
     >
       <Tabs.Content className="TabsContent w-100" value={'tab2'}>
-        {/* <Button onClick={() => requestHiveLogin("juneroy1")}>hive</Button> */}
         <SignUpHive requestHiveLogin={requestHiveLogin} username={username} setUsername={setUsername}  />
       </Tabs.Content>
-      {/* <Tabs.Content className="TabsContent" value="tab2">
-          <SignUpHive />
-        </Tabs.Content>
-        <Tabs.Content className="TabsContent" value="tab3">
-          <SignUp />
-        </Tabs.Content> */}
     </Flex>
   );
 };
