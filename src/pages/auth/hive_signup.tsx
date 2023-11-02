@@ -33,7 +33,7 @@ const TabsDemo = ({ tab }: any) => {
     if (authenticated) {
       if (onboarding) {
         router.push("/onboarding");
-      }else{
+      } else {
         router.push("/");
       }
     }
@@ -42,31 +42,12 @@ const TabsDemo = ({ tab }: any) => {
   const [username, setUsername] = useState<string>("")
   const [dateNow, setDateNow] = useState<string>("")
   const datan = new Date().toISOString()
-  const callback =  async (response: any) =>  {
+  const callback = async (response: any) => {
 
-    let dataToStore = {
-      avatar: 'https://source.unsplash.com/random/200x200?sig=3',
-      username: username,
-      type: 'Keychain',
-      token: ''
-    }
 
-    let accounts
-    const local = localStorage.getItem("accountsList")
-    if (!local) {
-        localStorage.setItem("accountsList", JSON.stringify([dataToStore]))
-    }else{
-      accounts = JSON.parse(local)
-      const checkData = accounts.filter((item:any) => item.username == data.username )
-      console.log('checkData',checkData)
-      if (accounts.length < 6 && checkData.length == 0) {
-        accounts.push(dataToStore)
-        localStorage.setItem("accountsList", JSON.stringify(accounts))
-      }
-    }
 
     console.log("response", response);
-    const result =response
+    const result = response
     console.log("result", result);
 
     const proof_payload = {
@@ -77,7 +58,7 @@ const TabsDemo = ({ tab }: any) => {
       username: username,
       network: 'hive',
       authority_type: 'posting',
-      proof_payload:JSON.stringify(proof_payload),
+      proof_payload: JSON.stringify(proof_payload),
       proof: result.result,
     }
 
@@ -91,11 +72,39 @@ const TabsDemo = ({ tab }: any) => {
         },
       }
     );
-    console.log('_response',_response)
+    console.log('_response', _response)
     localStorage.setItem("access_token", _response.data.access_token);
     checkAuth();
+
+    // call saving in localstorage
+    saveLocalStorage()
   };
-  const requestHiveLogin = async (e:any) => {
+
+  const saveLocalStorage = () => {
+    let dataToStore = {
+      avatar: 'https://source.unsplash.com/random/200x200?sig=3',
+      username: username,
+      type: 'Keychain',
+      token: ''
+    }
+
+    let accounts
+    const local = localStorage.getItem("accountsList")
+    if (!local) {
+      localStorage.setItem("accountsList", JSON.stringify([dataToStore]))
+    } else {
+      accounts = JSON.parse(local)
+      const checkData = accounts.filter((item: any) => item.username == data.username)
+      console.log('checkData', checkData)
+      if (accounts.length < 6 && checkData.length == 0) {
+        accounts.push(dataToStore)
+        localStorage.setItem("accountsList", JSON.stringify(accounts))
+      }
+    }
+  }
+
+  
+  const requestHiveLogin = async (e: any) => {
     e.preventDefault()
     const dateN = new Date().toISOString()
     setDateNow(dateN)
@@ -116,7 +125,7 @@ const TabsDemo = ({ tab }: any) => {
         null,
         "Login using Hive",
         (response: any) => {
-          console.log("response",response);
+          console.log("response", response);
         }
       );
     } catch (error) {
@@ -124,7 +133,7 @@ const TabsDemo = ({ tab }: any) => {
     }
   };
   console.log("tabhere", tab);
- 
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRef: any = useRef();
@@ -143,7 +152,7 @@ const TabsDemo = ({ tab }: any) => {
       backgroundColor="#F5F5F5"
     >
       <Tabs.Content className="TabsContent w-100" value={'tab2'}>
-        <SignUpHive requestHiveLogin={requestHiveLogin} username={username} setUsername={setUsername}  />
+        <SignUpHive requestHiveLogin={requestHiveLogin} username={username} setUsername={setUsername} />
       </Tabs.Content>
     </Flex>
   );
