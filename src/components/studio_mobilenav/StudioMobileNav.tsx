@@ -30,6 +30,7 @@ import { MdClose } from "react-icons/md";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { FiBell, FiChevronDown, FiMenu } from "react-icons/fi";
 import { useAppStore } from '../../lib/store'
+import AccountsList from "../Modal/AccountsList";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -148,42 +149,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Flex>
       </HStack>
 
-      <Modal size='md' closeOnOverlayClick={false} isOpen={isOpenModal1} onClose={onCloseModal1}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Accounts</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <Box>
-              {listAccounts.length > 0 &&  listAccounts.map((account:any) => {
-                 return <>
-                  <Flex justifyContent={'space-between'} alignItems='center'>
-                    <Flex justifyContent={'space-between'} alignItems='center'>
-                      <Box margin={'5px'} marginX={'5px'}><Avatar size={"sm"} src={`${account.avatar}`}/></Box>
-                      <Box margin={'5px'} marginX={'5px'}>{account.username}</Box>
-                      <Box margin={'5px'} marginX={'5px'}>({account.type})</Box>
-                    </Flex>
-                    <Box cursor={'pointer'}>
-                      <MdClose/>
-                    </Box>
-                  </Flex>
-                </>
-              })}
-
-            </Box>
-            {/* <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit nemo quos iusto!</p> */}
-          </ModalBody>
-
-          <ModalFooter>
-            <Button onClick={addAccounts} colorScheme='blue' mr={3}>
-              Add Account
-            </Button>
-            {/* <Button onClick={onCloseModal1}>Cancel</Button> */}
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
-
+      <AccountsList isOpenModal1={isOpenModal1} onCloseModal1={onCloseModal1} listAccounts={listAccounts} addAccounts={addAccounts}/>
       <Modal size='md' closeOnOverlayClick={false} isOpen={isOpenModal2} onClose={onCloseModal2}>
         <ModalOverlay />
         <ModalContent>
@@ -206,8 +172,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   width="100%"
                 />
               </Box>
-              {/* <form onSubmit={onSubmitWithReCAPTCHASignUpHive}> */}
-              {/* onSubmit={(e) => requestHiveLogin(e)} */}
               <form >
                 <Flex>
 
