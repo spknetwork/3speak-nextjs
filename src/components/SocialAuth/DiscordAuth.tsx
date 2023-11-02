@@ -2,7 +2,7 @@ import { Button, Text } from '@chakra-ui/react'
 import React from 'react'
 import { BsDiscord } from 'react-icons/bs'
 
-const DiscordAuth = ({discordlogin,label}:any) => {
+const DiscordAuth = ({ discordlogin, label }: any) => {
     return (
         <Button
             width={"100%"}

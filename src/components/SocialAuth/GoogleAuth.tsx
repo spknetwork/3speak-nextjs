@@ -2,7 +2,7 @@ import { Button, Text } from '@chakra-ui/react'
 import React from 'react'
 import { FcGoogle } from 'react-icons/fc'
 
-const GoogleAuth = ({googlelogin, label}:any) => {
+const GoogleAuth = ({ googlelogin, label }: any) => {
   return (
     <Button
       width={"100%"}

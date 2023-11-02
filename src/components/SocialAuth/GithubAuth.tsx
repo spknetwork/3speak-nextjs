@@ -2,7 +2,7 @@ import { Button, Text } from '@chakra-ui/react'
 import React from 'react'
 import { BsGithub } from 'react-icons/bs'
 
-const GithubAuth = ({githublogin,label}:any) => {
+const GithubAuth = ({ githublogin, label }: any) => {
     return (
         <Button
             width={"100%"}
