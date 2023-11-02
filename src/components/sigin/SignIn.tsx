@@ -20,13 +20,16 @@ import { FcGoogle } from "react-icons/fc";
 import { BsDiscord, BsGithub } from "react-icons/bs";
 import { Magic } from 'magic-sdk';
 import { OAuthExtension } from '@magic-ext/oauth';
+import GoogleAuth from "../SocialAuth/GoogleAuth";
+import GithubAuth from "../SocialAuth/GithubAuth";
+import DiscordAuth from "../SocialAuth/DiscordAuth";
 // const magic = new Magic("pk_live_7645A843999E2369");
 
 
 const SignIn = () => {
-  let magic:any
+  let magic: any
   if (typeof window !== "undefined") {
-     magic = new Magic('pk_live_773A61B5424F8C7D', {
+    magic = new Magic('pk_live_773A61B5424F8C7D', {
       extensions: [new OAuthExtension()],
     });
     // console.log('herererererere')
@@ -58,7 +61,7 @@ const SignIn = () => {
 
     console.log('data', data)
   }
- 
+
   const [onboarding, setOnboarding] = useState<any>(false);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -83,10 +86,10 @@ const SignIn = () => {
     if (authenticated) {
       if (onboarding) {
         router.push("/onboarding");
-      }else{
+      } else {
         router.push("/");
       }
-     
+
     }
   }, [authenticated, router]);
 
@@ -186,36 +189,15 @@ const SignIn = () => {
             <Flex width="100%" justifyContent="center" mt="1rem">
               <StyledButton type="submit">Log in</StyledButton>
             </Flex>
-          <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-          <Button
-            width={"100%"}
-            variant={"outline"}
-            colorScheme="gray"
-            onClick={() => googlelogin()}
-          >
-            <FcGoogle size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign in with Google</Text> 
-          </Button>
-        </Flex>
-        <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-          <Button
-            width={"100%"}
-            variant={"outline"}
-            colorScheme="gray"
-            onClick={() => githublogin()}
-          >
-             <BsGithub size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign in with Github</Text> 
-          </Button>
-        </Flex>
-        <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-          <Button
-            width={"100%"}
-            variant={"outline"}
-            colorScheme="gray"
-            onClick={() => discordlogin()}
-          >
-            <BsDiscord size={'20px'}  /> <Text marginLeft={'10px'} marginBottom='0px'>Sign in with Discord</Text>  
-          </Button>
-        </Flex>
+            <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+              <GoogleAuth googlelogin={googlelogin} label='Sign in with Google'/>
+            </Flex>
+            <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+              <GithubAuth githublogin={githublogin} label='Sign in with Github'/>
+            </Flex>
+            <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+              <DiscordAuth discordlogin={discordlogin} label='Sign in with Discord' />
+            </Flex>
 
             <Flex width="100%" justifyContent="center" mt="0.5rem">
               {/* <Link href="/auth/forgot_password"> */}
