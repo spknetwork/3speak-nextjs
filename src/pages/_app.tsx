@@ -19,6 +19,7 @@ import client from "../lib/apolloClient";
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
+import AccountsList from "@/components/Modal/AccountsList";
 config.autoAddCss = false;
 
 const FOOTER_TITLE = [
@@ -199,38 +200,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <Box width={"100%"} backgroundColor="#EFF4F6">
 
                   <ChakraProvider>
-                    <Modal closeOnOverlayClick={false} isOpen={isOpenModal1} onClose={onCloseModal1}>
-                      <ModalOverlay />
-                      <ModalContent>
-                        <ModalHeader>Accounts</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody pb={6}>
-                          <Box>
-                            {listAccounts.length > 0 && listAccounts.map((account: any) => {
-                              return <>
-                                <Flex justifyContent={'space-between'} alignItems='center'>
-                                  <Flex justifyContent={'space-between'} alignItems='center'>
-                                    <Box margin={'5px'} marginX={'5px'}><Avatar size={"sm"} src={`${account.avatar}`} /></Box>
-                                    <Box margin={'5px'} marginX={'5px'}>{account.username}</Box>
-                                    <Box margin={'5px'} marginX={'5px'}>({account.type})</Box>
-                                  </Flex>
-                                  <Box cursor={'pointer'}>
-                                    <MdClose />
-                                  </Box>
-                                </Flex>
-                              </>
-                            })}
-
-                          </Box>
-                        </ModalBody>
-
-                        <ModalFooter>
-                          <Button onClick={addAccounts} colorScheme='blue' mr={3}>
-                            Add Account
-                          </Button>
-                        </ModalFooter>
-                      </ModalContent>
-                    </Modal>
+                    <AccountsList isOpenModal1={isOpenModal1} onCloseModal1={onCloseModal1} listAccounts={listAccounts} addAccounts={addAccounts}/>
                     <ApolloProvider client={client}>
                       <Component {...pageProps} />
                     </ApolloProvider>

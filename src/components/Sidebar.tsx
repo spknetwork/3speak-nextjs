@@ -47,6 +47,7 @@ import { useAppStore } from '../lib/store'
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { AiFillAndroid } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
+import AccountsList from "./Modal/AccountsList";
 const threespeak = {
   filter: "drop-shadow(2px 4px 6px black)",
 };
@@ -542,40 +543,7 @@ export const Sidebar = () => {
           </ChakraBox>
         </Box>
       )}
-       <Modal closeOnOverlayClick={false} isOpen={isOpenModal1} onClose={onCloseModal1}>
-          <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Accounts</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody pb={6}>
-                  <ChakraBox>
-                    {listAccounts.length > 0 &&  listAccounts.map((account:any, index:number) => {
-                      return (<Flex key={index} justifyContent={'space-between'} alignItems='center'>
-                          <Flex justifyContent={'space-between'} alignItems='center'>
-                            <ChakraBox margin={'5px'} marginX={'5px'}><Avatar size={"sm"} src={`${account.avatar}`}/></ChakraBox>
-                            <ChakraBox margin={'5px'} marginX={'5px'}>{account.username}</ChakraBox>
-                            <ChakraBox margin={'5px'} marginX={'5px'}>({account.type})</ChakraBox>
-                          </Flex>
-                          <ChakraBox onClick={(() => removeAccount(account,index))} cursor={'pointer'}>
-                            <MdClose/>
-                          </ChakraBox>
-                        </Flex>)
-                    })}
-
-                    {listAccounts.length == 0 && (<Text>No accounts save.</Text>)}
-
-                  </ChakraBox>
-                  {/* <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit nemo quos iusto!</p> */}
-                </ModalBody>
-
-                <ModalFooter>
-                  <Button onClick={addAccounts} colorScheme='blue' mr={3}>
-                    Add Account
-                  </Button>
-                  {/* <Button onClick={onCloseModal1}>Cancel</Button> */}
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
+      <AccountsList isOpenModal1={isOpenModal1} onCloseModal1={onCloseModal1} listAccounts={listAccounts} addAccounts={addAccounts}/>
     </Flex>
   );
 };
