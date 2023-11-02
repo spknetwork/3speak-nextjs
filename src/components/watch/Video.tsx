@@ -2,11 +2,12 @@ import { Box, Image, Link, Text } from "@chakra-ui/react";
 import React from "react";
 import { MdPlayArrow } from "react-icons/md";
 
-const Video = ({ videoSrc }: any) => {
+const Video = ({ videoSrc, number_views }: any) => {
   return (
     <Box w="100%" bg="white.500" color={"black"} marginBottom="3rem">
+      {/* cursor={'pointer'} */}
       <Box
-        cursor={'pointer'}
+        cursor={'pointer'} 
         float="left"
         w="calc(136px * 1.25)"
         height="calc(77px * 1.25)"
@@ -30,8 +31,8 @@ const Video = ({ videoSrc }: any) => {
           paddingLeft={"4px"}
           paddingRight={"8px"}
         >
-          <MdPlayArrow size='18px' color="grey" />
-          <Text as='span' marginLeft={'2px'} fontSize='11px' fontWeight={'bold'}>12</Text>
+          <MdPlayArrow size='15px' color="grey" />
+          <Text as='span' marginLeft={'2px'} fontSize='11px' fontWeight={'bold'}>{number_views}</Text>
         </Box>
         <Box
           position={"absolute"}
@@ -57,27 +58,29 @@ const Video = ({ videoSrc }: any) => {
       </Box>
       <Box bg="white.500" color={"black"}>
         <Box
-          marginBottom="5px"
           lineHeight="17px"
           bg="white.500"
           color={"black"}
         >
+           {/* textDecor={'none !important'} */}
           <Link
             fontSize="13px"
             fontWeight={"600"}
             cursor="pointer"
             transition={"all 0.2s"}
+            color={'black'}
+            textDecor={'none !important'}
           >
             (Eng/Esp)🔴¡VIVIR EN EL PASADO TE HACE DAÑO! Despabila
           </Link>
         </Box>
         <Box
-          marginBottom="5px"
           lineHeight="17px"
           bg="white.500"
           color={"black"}
         >
           <Link
+            textDecor={'none !important'}
             fontSize="11px"
             fontWeight={"500"}
             cursor="pointer"
@@ -87,7 +90,6 @@ const Video = ({ videoSrc }: any) => {
           </Link>
         </Box>
         <Box
-          marginBottom="5px"
           lineHeight="17px"
           bg="white.500"
           color={"#acacac"}
@@ -97,8 +99,24 @@ const Video = ({ videoSrc }: any) => {
             fontWeight={"bolder"}
             cursor="pointer"
             transition={"all 0.2s"}
+            textDecor={'none !important'}
           >
-            stellamartinez
+            1 month ago
+          </Link>
+        </Box>
+        <Box
+          lineHeight="17px"
+          bg="white.500"
+          color={"black"}
+        >
+          <Link
+            textDecor={'none !important'}
+            fontSize="11px"
+            fontWeight={"bold"}
+            cursor="pointer"
+            transition={"all 0.2s"}
+          >
+            $10.00
           </Link>
         </Box>
       </Box>
