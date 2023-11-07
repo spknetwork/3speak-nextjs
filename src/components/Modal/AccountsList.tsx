@@ -11,9 +11,9 @@ const AccountsList = ({ listAccounts, addAccounts, isOpenModal1, onCloseModal1 }
                 <ModalCloseButton />
                 <ModalBody pb={6}>
                     <Box>
-                        {listAccounts.length > 0 && listAccounts.map((account: any) => {
-                            return <>
-                                <Flex justifyContent={'space-between'} alignItems='center'>
+                        {listAccounts.length > 0 && listAccounts.map((account: any, index:number) => {
+                            return (
+                                <Flex key={index} justifyContent={'space-between'} alignItems='center'>
                                     <Flex justifyContent={'space-between'} alignItems='center'>
                                         <Box margin={'5px'} marginX={'5px'}><Avatar size={"sm"} src={`${account.avatar}`} /></Box>
                                         <Box margin={'5px'} marginX={'5px'}>{account.username}</Box>
@@ -22,8 +22,8 @@ const AccountsList = ({ listAccounts, addAccounts, isOpenModal1, onCloseModal1 }
                                     <Box cursor={'pointer'}>
                                         <MdClose />
                                     </Box>
-                                </Flex>
-                            </>
+                                </Flex>)
+                          
                         })}
 
                     </Box>
