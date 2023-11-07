@@ -4,11 +4,11 @@ import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { FIRST_UPLOAD_FEED } from "../graphql/queries";
-
+import { VideoInterface } from "types";
 const FirstTime = () => {
   const { loading, error, data } = useQuery(FIRST_UPLOAD_FEED);
 
-  const [videos, setVideos] = useState<any>([]);
+  const [videos, setVideos] = useState<VideoInterface[]>([]);
 
   useEffect(() => {
     if (!loading && !error && data) {
@@ -46,7 +46,7 @@ const FirstTime = () => {
       >
         {!loading &&
           !error &&
-          videos.map((video:any, index:number) => (
+          videos.map((video:VideoInterface, index:number) => (
             <GridItem w="100%" h="100%" key={index}>
               <Image
                 padding={"5px"}
