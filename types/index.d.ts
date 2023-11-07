@@ -8,7 +8,7 @@ declare global {
 export interface VideoInterface {
   title: string;
   username: string;
-  number_views: number;
+  number_views?: number;
   thumbnail: string;
 }
 
