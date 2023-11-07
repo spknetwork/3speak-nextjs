@@ -2,11 +2,11 @@ import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
 import { Box,  Grid, GridItem, Image, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
-
+import { VideoInterface } from "types";
 import { MdPlayArrow } from "react-icons/md";
 const NewIndex = () => {
 
-  const [videos, setVideos] = useState([
+  const [videos, setVideos] = useState<VideoInterface[]>([
     {
       title:
         "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
@@ -169,7 +169,7 @@ const NewIndex = () => {
         gap={6}
       >
         {/* {videos.length} */}
-        {videos.map((video, index) => (
+        {videos.map((video:VideoInterface, index:number) => (
           <GridItem w="100%" h="100%" key={index}>
             <Box cursor={'pointer'} position='relative'>
               <Box
