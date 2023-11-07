@@ -5,11 +5,11 @@ import { css } from "@emotion/react";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { TRENDING_FEED } from "../graphql/queries";
-
+import { VideoInterface } from "types";
 const NewComers2 = () => {
   const { loading, error, data } = useQuery(TRENDING_FEED);
 
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState<VideoInterface[]>([]);
 
   useEffect(() => {
     if (!loading && !error && data) {
@@ -48,7 +48,7 @@ const NewComers2 = () => {
         {/* {videos.length} */}
         {!loading &&
           !error &&
-          videos.map((video:any, index:number) => (
+          videos.map((video:VideoInterface, index:number) => (
             <GridItem w="100%" h="100%" key={index}>
               <Image
                 padding={"5px"}
