@@ -17,7 +17,7 @@ import { css } from "@emotion/react";
 
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-
+import { VideoInterface } from "types";
 const UserPage = () => {
   const [showFeed, setShowFeed] = useState<number>(1);
   const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
@@ -37,28 +37,28 @@ const UserPage = () => {
     }
   }, [isMobile]);
 
-  const [videos] = useState([
+  const [videos] = useState<VideoInterface[]>([
     {
-      thumbnail_url:
+      thumbnail:
         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVijsuv81Cu6QUxATfwLCchp7dhexyXdq6vj7hSxy7PKLRNLf5CYPBTwYKRDj6dR95KAhZkjwL?format=jpeg&mode=cover&width=340&height=191",
       title:
         "The Adventure trail of Mount Naupa and Mind2Mind Talk with Lakwatserong Engineer",
       username: "thetrollingmind",
     },
     {
-      thumbnail_url:
+      thumbnail:
         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVhbe9xjZvwDJDwq34KonBAhp6aDi5QWVMa8GKtBZHpfb4pz88JsvtNudXgZBf9vd4ahzvcP1p?format=jpeg&mode=cover&width=340&height=191",
       title: "Refreshing Communal Ranch in Bukidnon Philippines",
       username: "thetrollingmind",
     },
     {
-      thumbnail_url:
+      thumbnail:
         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVb4cnggfP19UUoMFibN8JndfBo44LsTNKVZ5tXRYFs7vB9bWocqyN3CFG7xfRFuKAomRBmvQ6?format=jpeg&mode=cover&width=340&height=191",
       title: "Via Crucis at Camari Hill | Lenten Tradition",
       username: "thetrollingmind",
     },
     {
-      thumbnail_url:
+      thumbnail:
         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbFQdnkVpujsZq5ivaUS3RobVsvgoUMDXSTgZCHfbwNsgBSuTKvqmnzt9EUtxERKUQ5963fSE?format=jpeg&mode=cover&width=340&height=191",
       title: "Weekend Adventure- to the Mountain of Kan-irag",
       username: "thetrollingmind",
@@ -451,7 +451,7 @@ const UserPage = () => {
             )}
 
             {showFeed == 1 &&
-              videos.map((item: any, index: number) => (
+              videos.map((item: VideoInterface, index: number) => (
                 <Box key={index} className="col-xl-2 col-lg-3  col-6 p-2 mb-3">
                   <Box
                     opacity={"1"}
@@ -505,7 +505,7 @@ const UserPage = () => {
                         maxHeight={"200px"}
                         height="auto"
                         objectFit="cover"
-                        src={`${item.thumbnail_url}`}
+                        src={`${item.thumbnail}`}
                         alt="Dan Abramov"
                       />
                     </Link>
