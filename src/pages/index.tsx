@@ -1,16 +1,8 @@
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
-import { Box, Button, Flex, Grid, GridItem, Image, Text, useDisclosure } from "@chakra-ui/react";
+import { Box,  Grid, GridItem, Image, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from '@chakra-ui/react'
+
 import { MdPlayArrow } from "react-icons/md";
 const NewIndex = () => {
 
