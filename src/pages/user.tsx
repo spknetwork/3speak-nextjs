@@ -427,26 +427,17 @@ const UserPage = () => {
         <Box>
           <Box className="row">
             {showFeed == 2 && (
-              // <Box className="col-xl-2 col-lg-3  col-6 p-2 mb-3">
-
-              //  </Box>
               <Earnings />
             )}
             {showFeed == 3 && (
-              // <Box className="col-xl-2 col-lg-3  col-6 p-2 mb-3">
-              //   </Box>
               <About />
             )}
 
             {showFeed == 4 && (
-              // <Box className="col-xl-2 col-lg-3  col-6 p-2 mb-3">
-              //   </Box>
               <Livestream />
             )}
 
             {showFeed == 5 && (
-              // <Box className="col-xl-2 col-lg-3  col-6 p-2 mb-3">
-              //    </Box>
               <Achievements />
             )}
 

@@ -239,16 +239,8 @@ const CreatePost: React.FC = () => {
     }
     const blobData = new Blob([thumbnail[0]], { type: "image/jpeg" });
     const file = new File([blobData], "image.jpg", { type: "image/jpeg" });
-    // console.log("blobData", file);
-    // console.log("saveThumbnail", thumbnail);
-    // console.log("response", response);
-    // response.data.upload_id
 
     const token = localStorage.getItem("access_token");
-    // const params = {
-    //   file: [file],
-    //   upload_id: response.data.upload_id,
-    // };
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_id', response.data.upload_id);
@@ -852,32 +844,6 @@ const CreatePost: React.FC = () => {
                                 </Flex>
                               ))}
 
-                              {/* <Flex
-                                width={"250px"}
-                                marginX={{ base: "0px", md: "0px", lg: "10px" }}
-                                height="100%"
-                                paddingY={{ base: "5px", md: "5px", lg: "0px" }}
-                              >
-                                <Image
-                                  objectFit={"cover"}
-                                  borderRadius={"10px"}
-                                  src="https://i.ytimg.com/vi/a4AtoGyjPVo/maxresdefault.jpg"
-                                  alt="Dan Abramov"
-                                />
-                              </Flex>
-                              <Flex
-                                width={"250px"}
-                                marginX={{ base: "0px", md: "0px", lg: "10px" }}
-                                height="100%"
-                                paddingY={{ base: "5px", md: "5px", lg: "0px" }}
-                              >
-                                <Image
-                                  objectFit={"cover"}
-                                  borderRadius={"10px"}
-                                  src="https://i.ytimg.com/vi/-q4M9yf_ABY/mqdefault.jpg"
-                                  alt="Dan Abramov"
-                                />
-                              </Flex> */}
                             </Flex>
                           </Flex>
                         </Box>
@@ -1009,22 +975,6 @@ const CreatePost: React.FC = () => {
                                 </Box>
                               </RadioGroup>
                             </Box>
-                            {/* <Text as={"fieldset"} className="w-100 mb-3">
-                              <Text
-                                as={"legend"}
-                                fontSize="15px"
-                                className="fw-bold"
-                              >
-                                Video Title
-                              </Text>
-                              <Input
-                                placeholder="Video Title"
-                                width={{ base: "89%", md: "89%", lg: "97%" }}
-                              />
-                              <Text as={"label"}>
-                                Your video title, 2-55 characters
-                              </Text>
-                            </Text> */}
                           </Flex>
                         </Box>
                         <Box
@@ -1042,7 +992,6 @@ const CreatePost: React.FC = () => {
                             alignItems={"center"}
                             borderRadius="10px 10px 0px 0px"
                           >
-                            {/* juneroy */}
                             {selectedFile ? (
                               <>
                                 {selectedFile.file.type.startsWith("image/") ? (
