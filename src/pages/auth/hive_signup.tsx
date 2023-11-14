@@ -43,6 +43,7 @@ const TabsDemo = ({ tab }: any) => {
   const [username, setUsername] = useState<string>("")
   // const [dateNow, setDateNow] = useState<string>("")
   const dateNow = new Date().toISOString()
+  
   const callback = async (response: any) => {
     const result = response
     const proof_payload = {
@@ -110,17 +111,10 @@ const TabsDemo = ({ tab }: any) => {
     login_with_hive(request)
     
   };
-  console.log("tabhere", tab);
 
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
   const recaptchaRef: any = useRef();
 
-  const onSubmitWithReCAPTCHA = async () => {
-    const token = await recaptchaRef.current.executeAsync();
-    console.log(token);
-    // apply to form data
-  };
+
   return (
     <Flex
       justifyContent="center"
