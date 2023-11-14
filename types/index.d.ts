@@ -4,6 +4,12 @@ declare global {
   function sum(a: number, b: number): number;
 }
 
+export interface HiveLoginInterface {
+  username: string,
+  dateNow: string,
+  callback: Function
+}
+
 export interface Params {
   email: string;
   password: string;
