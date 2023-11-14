@@ -143,15 +143,36 @@ export const GET_SOCIAL_POST = gql`
 `;
 
 export const GET_PROFILE = gql`
-  query MyQuery {
-    profile {
+  query MyQuery($id: String) {
+    profile(id: $id) {
+      ... on CeramicProfile {
+        id
+        name
+      }
       ... on HiveProfile {
         id
         name
+        about
+        did
+        images {
+          avatar
+          cover
+        }
+        src
+        username
+        website
+        location
+        json_metadata
       }
     }
   }
 `;
+// profile {
+//   ... on HiveProfile {
+//     id
+//     name
+//   }
+// }
 // latestFeed {
 //   items {
 //     body
