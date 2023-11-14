@@ -10,6 +10,28 @@ export interface VideoInterface {
   username: string;
   number_views?: number;
   thumbnail: string;
+  index?: number;
+}
+
+export interface UserInterface {
+  profile: ProfileInterface
+}
+export interface ProfileImagesInterface{
+  avatar: string,
+  cover: string,
+}
+
+export interface ProfileInterface {
+  about: string,
+  did?: string,
+  images?: ProfileImagesInterface,
+  id?: string,
+  json_metadata?: string,
+  location?: string,
+  name: string,
+  src?: string,
+  username: string,
+  website?: string,
 }
 
 export {}
