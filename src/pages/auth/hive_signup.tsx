@@ -43,7 +43,7 @@ const TabsDemo = ({ tab }: any) => {
   const [username, setUsername] = useState<string>("")
   // const [dateNow, setDateNow] = useState<string>("")
   const dateNow = new Date().toISOString()
-  
+
   const callback = async (response: any) => {
     const result = response
     const proof_payload = {
@@ -111,9 +111,6 @@ const TabsDemo = ({ tab }: any) => {
     login_with_hive(request)
     
   };
-
-  const recaptchaRef: any = useRef();
-
 
   return (
     <Flex
