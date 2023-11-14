@@ -9,13 +9,14 @@ import SignUpHive from "@/components/signup/SignUpHive";
 import axios from "axios";
 import { API_URL_FROM_WEST } from "@/utils/config";
 import { useAppStore } from "@/lib/store";
+import { HiveLoginInterface } from "types";
 
 
 const TabsDemo = ({ tab }: any) => {
-  const [datawindow] = useState<any>(null)
+  
 
   const router = useRouter();
-  const { allowAccess, checkAuth } = useAppStore();
+  const { allowAccess, checkAuth, login_with_hive } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
   const [onboarding, setOnboarding] = useState<any>(false);
@@ -40,19 +41,13 @@ const TabsDemo = ({ tab }: any) => {
   }, [authenticated, router]);
 
   const [username, setUsername] = useState<string>("")
-  const [dateNow, setDateNow] = useState<string>("")
-  const datan = new Date().toISOString()
+  // const [dateNow, setDateNow] = useState<string>("")
+  const dateNow = new Date().toISOString()
   const callback = async (response: any) => {
-
-
-
-    console.log("response", response);
     const result = response
-    console.log("result", result);
-
     const proof_payload = {
       account: username,
-      ts: datan,
+      ts: dateNow,
     }
     const data = {
       username: username,
@@ -106,31 +101,14 @@ const TabsDemo = ({ tab }: any) => {
   
   const requestHiveLogin = async (e: any) => {
     e.preventDefault()
-    const dateN = new Date().toISOString()
-    setDateNow(dateN)
     setOnboarding(true)
-    try {
-      // Gives @stoodkev active authority with weight 2 to `account`
-      const keychain = window.hive_keychain;
-      console.log("keychain", keychain);
-      const proof_payload = {
-        account: username,
-        ts: datan,
-      }
-      keychain.requestSignBuffer(
-        username,
-        JSON.stringify(proof_payload),
-        "Posting",
-        callback,
-        null,
-        "Login using Hive",
-        (response: any) => {
-          console.log("response", response);
-        }
-      );
-    } catch (error) {
-      console.log({ error });
+    const request:HiveLoginInterface = {
+      username: username,
+      dateNow: dateNow,
+      callback: callback
     }
+    login_with_hive(request)
+    
   };
   console.log("tabhere", tab);
 
