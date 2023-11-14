@@ -1,7 +1,7 @@
 import { api } from "@/utils/api";
 import { API_URL_FROM_WEST } from "@/utils/config";
 import axios from "axios";
-import { Params, UserDetails } from "types";
+import { HiveLoginInterface, Params, UserDetails } from "types";
 import { StateCreator } from "zustand";
 import { useAppStore } from "../store";
 
@@ -10,6 +10,7 @@ export interface AuthUserSlice {
   checkAuth: () => any;
   setAccounts: (data?: any) => void;
   getUserDetails: () => any;
+  login_with_hive: (request:HiveLoginInterface) => any;
   userDetails: UserDetails | null;
   login: (data: Params) => any;
   register: (data: Params) => any;
@@ -68,6 +69,30 @@ export const createAuthUserSlice: StateCreator<AuthUserSlice> = (set) => ({
       set({ userDetails: null });
     }
   },
+  login_with_hive: async (request: HiveLoginInterface) => {
+    try {
+      // Gives @stoodkev active authority with weight 2 to `account`
+      const keychain = window.hive_keychain;
+      console.log("keychain", keychain);
+      const proof_payload = {
+        account: request.username,
+        ts: request.dateNow,
+      }
+      keychain.requestSignBuffer(
+        request.username,
+        JSON.stringify(proof_payload),
+        "Posting",
+        request.callback,
+        null,
+        "Login using Hive",
+        (response: any) => {
+          console.log("response", response);
+        }
+      );
+    } catch (error) {
+      console.log({ error });
+    }
+  },
   login: async (requestBody: Params) => {
     let data = {
       avatar: 'https://source.unsplash.com/random/200x200?sig=3',
@@ -89,27 +114,6 @@ export const createAuthUserSlice: StateCreator<AuthUserSlice> = (set) => ({
         localStorage.setItem("accountsList", JSON.stringify(accounts))
       }
     }
-    // useAppStore.getState().setAccounts(data)
-    // try {
-    //   const body = {
-    //     ...requestBody,
-    //     username: requestBody.email,
-    //   };
-    //   const response = await axios.post(
-    //     API_URL_FROM_WEST + "/v1/auth/login",
-    //     body,
-    //     {
-    //       headers: {
-    //         // Set your custom headers here
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-    //   localStorage.setItem("access_token", response.data.access_token);
-    //   // Handle the response here
-    // } catch (error) {
-    //   console.error("API call error:", error);
-    // }
   },
   register: async (requestBody: Params) => {
       const body = {
@@ -122,9 +126,7 @@ export const createAuthUserSlice: StateCreator<AuthUserSlice> = (set) => ({
         body,
         {
           headers: {
-            // Set your custom headers here
             "Content-Type": "application/json",
-            // "Access-Control-Allow-Origin": "*",
           },
         }
       );   
