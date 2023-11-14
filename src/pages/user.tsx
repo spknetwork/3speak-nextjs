@@ -430,7 +430,8 @@ const UserPage = () => {
               <Earnings />
             )}
             {showFeed == 3 && (
-              <About />
+              // <About profile={} />
+              <p>test</p>
             )}
 
             {showFeed == 4 && (
