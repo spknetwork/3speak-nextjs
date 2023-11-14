@@ -4,6 +4,22 @@ declare global {
   function sum(a: number, b: number): number;
 }
 
+export interface Params {
+  email: string;
+  password: string;
+}
+
+export interface Account {
+  avatar: string;
+  name: string;
+  type: string;
+}
+
+
+export interface UserDetails {
+  username: string | null;
+}
+
 
 export interface VideoInterface {
   title: string;

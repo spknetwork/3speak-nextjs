@@ -1,6 +1,7 @@
 import { api } from "@/utils/api";
 import { API_URL_FROM_WEST } from "@/utils/config";
 import axios from "axios";
+import { Params, UserDetails } from "types";
 import { StateCreator } from "zustand";
 import { useAppStore } from "../store";
 
@@ -15,21 +16,7 @@ export interface AuthUserSlice {
   listAccounts: any;
 }
 
-export interface Params {
-  email: string;
-  password: string;
-}
 
-export interface Account {
-  avatar: string;
-  name: string;
-  type: string;
-}
-
-
-export interface UserDetails {
-  username: string | null;
-}
 
 export const createAuthUserSlice: StateCreator<AuthUserSlice> = (set) => ({
   listAccounts:[],
