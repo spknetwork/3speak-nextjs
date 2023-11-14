@@ -99,7 +99,7 @@ const TabsDemo = ({ tab }: any) => {
   }
 
   
-  const requestHiveLogin = async (e: any) => {
+  const requestHiveLogin = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setOnboarding(true)
     const request:HiveLoginInterface = {
