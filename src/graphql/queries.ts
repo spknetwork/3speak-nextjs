@@ -55,7 +55,9 @@ query ProfileVideoData($id: String) {
         author {
           username
         }
+        permlink
       }
+      permlink
     }
   }
 }
