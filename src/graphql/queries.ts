@@ -40,8 +40,8 @@ export const GET_RELATED_FEED = gql`
   }
 `;
 export const GET_SOCIAL_FEED_BY_CREATOR = gql `
-query ProfileVideoData {
-  socialFeed(feedOptions: {byCreator: {_eq: "dimeilaz"}}) {
+query ProfileVideoData($id: String) {
+  socialFeed(feedOptions: {byCreator: {_eq: $id}}) {
     items {
       ... on HivePost {
         spkvideo
