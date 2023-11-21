@@ -39,6 +39,24 @@ export const GET_RELATED_FEED = gql`
     }
   }
 `;
+export const GET_SOCIAL_FEED_BY_CREATOR = gql `
+query ProfileVideoData {
+  socialFeed(feedOptions: {byCreator: {_eq: "dimeilaz"}}) {
+    items {
+      ... on HivePost {
+        spkvideo
+        body
+        title
+        stats {
+          num_votes
+        }
+        created_at
+        refs
+      }
+    }
+  }
+}
+`
 export const GET_SOCIAL_FEED = gql`
   query MyQuery {
     socialFeed(
