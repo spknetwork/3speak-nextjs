@@ -1,7 +1,7 @@
 import { Box, Image, Link, Text } from '@chakra-ui/react'
 import React from 'react'
 import { VideoInterface } from 'types'
-const VideoComponent: React.FC<VideoInterface> = ({ title, thumbnail, username, number_views, index }) => {
+const VideoComponent: React.FC<VideoInterface> = ({ title, thumbnail, username, number_views, index, author }) => {
     return (
         <Box key={index} className="col-xl-2 col-lg-3  col-6 p-2 mb-3">
             <Box
@@ -96,7 +96,7 @@ const VideoComponent: React.FC<VideoInterface> = ({ title, thumbnail, username, 
                             <b>
                                 <Link href="/user/cttpodcast">
                                     <i className="fa fa-user"></i>
-                                    {username}
+                                    {author}
                                 </Link>
                             </b>
                         </p>

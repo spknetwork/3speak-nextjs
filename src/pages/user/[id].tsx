@@ -267,9 +267,9 @@ const UserPage: React.FC = () => {
                             <Achievements />
                         )}
 
-                        {showFeed == 1 &&
-                            videos.map((item: VideoInterface, index: number) => (
-                                <VideoComponent index={index} thumbnail={item.thumbnail} title={item.title} username={item.username} number_views={item.number_views} key={index} />
+                        {showFeed == 1 && videoList.length > 0 &&
+                            videoList.map((item: VideoInterface, index: number) => (
+                                <VideoComponent  index={index} thumbnail={item.spkvideo?.thumbnail_url} title={item.title} username={item.username} number_views={item.number_views} key={index} author={item?.author?.username} />
                             ))}
                     </Box>
                 </Box>

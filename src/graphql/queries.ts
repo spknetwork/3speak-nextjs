@@ -52,6 +52,9 @@ query ProfileVideoData($id: String) {
         }
         created_at
         refs
+        author {
+          username
+        }
       }
     }
   }

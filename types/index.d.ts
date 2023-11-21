@@ -31,10 +31,15 @@ export interface VideoInterface {
   title: string;
   username: string;
   number_views?: number;
-  thumbnail: string;
+  spkvideo?: any;
+  thumbnail: any;
+  author?: any;
   index?: number;
 }
 
+export interface UsernameInterface {
+  username: string;
+}
 export interface SocialFeedInterface {
   socialFeed: SocialFeedItemInterface
 }
