@@ -20,7 +20,7 @@ import { useMediaQuery } from "react-responsive";
 import { VideoInterface } from "types";
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
-import { GET_PROFILE } from "@/graphql/queries";
+import { GET_PROFILE, GET_SOCIAL_FEED_BY_CREATOR } from "@/graphql/queries";
 import { UserInterface } from "types";
 import VideoComponent from "@/components/VideoComponent";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
@@ -45,6 +45,20 @@ const UserPage: React.FC = () => {
         variables: { id: id },
     });
 
+    const { loading:loadingList, error:errorList, data:dataList } = useQuery(GET_SOCIAL_FEED_BY_CREATOR, {
+        variables: { id: id },
+    });
+
+    useEffect(() => {
+        if (!loadingList && !errorList && dataList) {
+            console.log('data list', dataList)
+            // setuserProfile(data)
+        }
+        if (errorList) {
+            console.log('error list', errorList)
+
+        }
+    }, [loadingList, errorList, dataList]);
 
     useEffect(() => {
         if (!loading && !error && data) {
