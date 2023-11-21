@@ -17,7 +17,7 @@ import { css } from "@emotion/react";
 
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { VideoInterface } from "types";
+import { SocialFeedInterface, VideoInterface } from "types";
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 import { GET_PROFILE, GET_SOCIAL_FEED_BY_CREATOR } from "@/graphql/queries";
@@ -40,6 +40,8 @@ const UserPage: React.FC = () => {
         },
     });
 
+    const [videoList, setvideoList] = useState<any>([]);
+
     // call user graphql here
     const { loading, error, data } = useQuery(GET_PROFILE, {
         variables: { id: id },
@@ -51,7 +53,9 @@ const UserPage: React.FC = () => {
 
     useEffect(() => {
         if (!loadingList && !errorList && dataList) {
-            console.log('data list', dataList)
+            console.log('data list', dataList.socialFeed)
+            setvideoList([...dataList.socialFeed.items])
+            // console.log("videoList",videoList)
             // setuserProfile(data)
         }
         if (errorList) {
@@ -71,6 +75,11 @@ const UserPage: React.FC = () => {
         }
     }, [loading, data, error]);
 
+    useEffect(() => {
+        if (videoList) {
+            console.log('videoList', videoList)
+        }
+    }, [videoList]);
     useEffect(() => {
         if (userProfile) {
             console.log('userProfile', userProfile)

@@ -36,9 +36,11 @@ export interface VideoInterface {
 }
 
 export interface SocialFeedInterface {
-  items: SocialFeedItemsInterface[]
+  socialFeed: SocialFeedItemInterface
 }
-
+export interface SocialFeedItemInterface {
+  item : SocialFeedItemsInterface[]
+}
 export interface SocialFeedItemsInterface {
   body?: string;
   created_at: string;
