@@ -35,6 +35,28 @@ export interface VideoInterface {
   index?: number;
 }
 
+export interface SocialFeedInterface {
+  items: SocialFeedItemsInterface[]
+}
+
+export interface SocialFeedItemsInterface {
+  body?: string;
+  created_at: string;
+  title?: string;
+  spkvideo?:SpkVideoInterface
+
+}
+
+export interface SpkVideoInterface {
+  body?:string;
+  duration?: number;
+  height?: number;
+  is_short?: boolean;
+  play_url?: string;
+  thumbnail_url?: string;
+  width?: number;
+}
+
 export interface UserInterface {
   profile: ProfileInterface
 }
