@@ -57,6 +57,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       case "tab2":
         router.push(`/auth/hive_signin`)
         break;
+      case "tab4":
+        router.push(`/auth/hive_signup`)
+        break;
 
       case "tab3":
         window.location.href = "/auth/signup"
