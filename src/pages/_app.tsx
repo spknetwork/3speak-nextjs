@@ -55,7 +55,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         router.push(`/auth/login`)
         break;
       case "tab2":
-        router.push(`/auth/hive_signup`)
+        router.push(`/auth/hive_signin`)
         break;
 
       case "tab3":
@@ -142,7 +142,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             >
               <main>
                 <Box width={"100%"} backgroundColor="#EFF4F6" boxShadow={'10px 10px 5px lightblue'}>
-                  <Tabs.Root className="TabsRoot" defaultValue={router.pathname == '/auth/signup' ? "tab3" : router.pathname == '/auth/hive_signup' ? 'tab2' : 'tab1'}>
+                  <Tabs.Root className="TabsRoot" defaultValue={router.pathname == '/auth/signup' ? "tab3" : router.pathname == '/auth/hive_signin' ? 'tab2' : 'tab1'}>
                     <Tabs.List
                       className="TabsList"
                       aria-label="Manage your account"
