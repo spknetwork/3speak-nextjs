@@ -168,6 +168,13 @@ function MyApp({ Component, pageProps }: AppProps) {
                       >
                         Sign Up
                       </Tabs.Trigger>
+                      <Tabs.Trigger
+                        onClick={() => updateAuthCurrentPage("tab4")}
+                        className="TabsTrigger"
+                        value="tab4"
+                      >
+                        Hive Sign Up
+                      </Tabs.Trigger>
                     </Tabs.List>
                     <ChakraProvider>
                       <ApolloProvider client={client}>
