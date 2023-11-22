@@ -1,3 +1,4 @@
+import HiveSignUpComponent from '@/components/hive_signup/HiveSignUpComponent';
 import { Flex } from '@chakra-ui/react'
 import * as Tabs from "@radix-ui/react-tabs";
 import React from 'react'
@@ -13,7 +14,7 @@ const HiveSIgnUp = () => {
       backgroundColor="#F5F5F5"
     >
       <Tabs.Content className="TabsContent w-100" value={'tab4'}>
-        
+            <HiveSignUpComponent />
       </Tabs.Content>
     </Flex>
   )
