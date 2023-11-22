@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
-import SignUpHive from "@/components/signup/SignUpHive";
+import SignInHive from "@/components/signup/SignInHive";
 import axios from "axios";
 import { API_URL_FROM_WEST } from "@/utils/config";
 import { useAppStore } from "@/lib/store";
@@ -121,7 +121,7 @@ const HiveSignIn = ({ tab }: any) => {
       backgroundColor="#F5F5F5"
     >
       <Tabs.Content className="TabsContent w-100" value={'tab2'}>
-        <SignUpHive requestHiveLogin={requestHiveLogin} username={username} setUsername={setUsername} />
+        <SignInHive requestHiveLogin={requestHiveLogin} username={username} setUsername={setUsername} />
       </Tabs.Content>
     </Flex>
   );

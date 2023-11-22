@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {  Flex } from "src/components";
 import { Button, Box, Text } from "@chakra-ui/react";
 import { FaLongArrowAltRight } from "react-icons/fa";
-const SignUpHive = ({ requestHiveLogin, username, setUsername }: any) => {
+const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
   return (
     <Box width="100%">
       <Box>
@@ -135,4 +135,4 @@ const StyledButton = styled.button<{
   }
 `;
 
-export default SignUpHive;
+export default SignInHive;

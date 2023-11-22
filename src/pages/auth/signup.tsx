@@ -11,7 +11,7 @@ import { Typography, Box, Flex } from "src/components";
 import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
-import SignUpHive from "@/components/signup/SignUpHive";
+import SignInHive from "@/components/signup/SignInHive";
 const TabsDemo = ({ tab }: any) => {
   console.log("tabhere", tab);
   const router = useRouter();
@@ -36,7 +36,7 @@ const TabsDemo = ({ tab }: any) => {
         <SignUp />
       </Tabs.Content>
       {/* <Tabs.Content className="TabsContent" value="tab2">
-          <SignUpHive />
+          <SignInHive />
         </Tabs.Content>
         <Tabs.Content className="TabsContent" value="tab3">
           <SignUp />
