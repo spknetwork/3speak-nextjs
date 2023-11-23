@@ -18,6 +18,8 @@
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "i18next": "^19.4.4",
+    "i18next-browser-languagedetector": "^4.2.0",
     "@hiveio/dhive": "1.1",
     "@hiveio/hive-js": "^2.0.4",
     "@magic-ext/oauth": "^15.1.1",
