@@ -1,15 +1,116 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { Form, Formik } from "formik";
 import { useTranslation } from 'next-export-i18n';
 import { Typography } from "src/components";
 import styled from "styled-components";
+import { KeyTypes, generatePassword, getPrivateKeys } from '@/helper/onboard';
+import { hexEnc } from '@/utils/b64';
+import clipboard from '@/utils/clipboard';
+import { _t } from '@/i18n';
+import Link from 'next/link';
 
 const HiveSignUpComponent = () => {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState<Number>(0);
+  const [newUserKeys, setNewUserKeys]: any = useState(null);
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+  const [referral, setReferral] = useState("");
+
+  const [accountPassword, setAccountPassword] = useState("")
+  const [urlHash, setUrlHash] = useState("")
+  const [isDownloaded, setIsDownloaded] = useState(false)
+
   const handleSubmit = async (values: any) => {
-    setCurrentStep(1);
+    // setCurrentStep(1);
+    try {
+      const password: string = await generatePassword(32);
+      const keys: KeyTypes = getPrivateKeys(values.username, password);
+      console.log('password', password)
+      console.log('keys', keys)
+      setNewUserKeys((prev: any) => ({ ...prev, ...keys }));
+      setAccountPassword(password)
+
+      const username = values.file_name
+      const email = values.email
+      const referral = values.username
+      setUsername(username)
+      setEmail(email)
+      setReferral(referral)
+
+      const dataToEncode = {
+        username,
+        email,
+        referral,
+        keys: {
+          activePubKey: keys.activePubkey,
+          postingPubKey: keys.postingPubkey,
+          ownerPubKey: keys.ownerPubkey,
+          memoPubKey: keys.memoPubkey
+        }
+      }
+
+      const stringifiedData = JSON.stringify(dataToEncode);
+      const hash = hexEnc(stringifiedData)
+      setUrlHash(hash)
+      setCurrentStep(1);
+    } catch (err) {
+      console.log(err)
+    }
+  };
+
+  const copyPasswordFunc = () => {
+    clipboard(accountPassword)
+  }
+
+  const downloadKeys = async () => {
+    if (newUserKeys) {
+      setIsDownloaded(false);
+      const element = document.createElement("a");
+      const keysToFile = `
+          ${_t("onboard.file-warning")}
+  
+          ${_t("onboard.recommend")}
+          1. ${_t("onboard.recommend-print")}
+          2. ${_t("onboard.recommend-use")}
+          3. ${_t("onboard.recommend-save")}
+          4. ${_t("onboard.recommend-third-party")}
+
+          ${_t("onboard.account-info")}
+
+          Username: ${username}
+
+          Password: ${accountPassword}
+
+          ${_t("onboard.owner-private")} ${newUserKeys.owner}
+  
+          ${_t("onboard.active-private")} ${newUserKeys.active}
+  
+          ${_t("onboard.posting-private")} ${newUserKeys.posting}
+  
+          ${_t("onboard.memo-private")} ${newUserKeys.memo}
+  
+  
+          ${_t("onboard.keys-use")}
+          ${_t("onboard.owner")} ${_t("onboard.owner-use")}   
+          ${_t("onboard.active")} ${_t("onboard.active-use")}  
+          ${_t("onboard.posting")} ${_t("onboard.posting-use")} 
+          ${_t("onboard.memo")} ${_t("onboard.memo-use")}`;
+
+      const file = new Blob([keysToFile.replace(/\n/g, "\r\n")], {
+        type: "text/plain"
+      });
+      element.href = URL.createObjectURL(file);
+      element.download = `${username}_hive_keys.txt`;
+      document.body.appendChild(element);
+      element.click();
+      setIsDownloaded(true);
+    }
+  };
+
+  const splitUrl = (url: string) => {
+    return url.slice(0, 50);
   };
   return (
     <Box width="100%">
@@ -106,6 +207,67 @@ const HiveSignUpComponent = () => {
 
 
         </Formik>
+      )}
+
+      {currentStep == 1 && (
+        <Box padding={'20px'}>
+          <Text as='h1'>{_t("onboard.confirm-details")}</Text>
+          <Box padding={'10px'}>
+            <Text style={{ lineHeight: 2 }}>
+              {_t("onboard.username")} <strong>{username}</strong>
+            </Text>
+            <Text style={{ lineHeight: 2 }}>
+              {_t("onboard.email")} <strong>{email}</strong>
+            </Text>
+            <Text style={{ lineHeight: 2 }}>
+              {_t("onboard.referral")} <strong>{referral}</strong>
+            </Text>
+            <Text style={{ lineHeight: 2 }}>
+              <b>Note:</b> Please make sure you download and install a hive keychain in your browser, if not <span>visit this page on how to install hive keychain <a href='https://chromewebstore.google.com/detail/hive-keychain/jcacnejopjdphbnjgfaaobbfafkihpep?pli=1'> visit page</a></span>
+            </Text>
+            <Text style={{ lineHeight: 2 }}>
+              <b>Step 1:</b> Download file
+            </Text>
+            <Text style={{ lineHeight: 2 }}>
+              <b>Step 2:</b> Send the link to an existing user / friend
+            </Text>
+            <Text style={{ lineHeight: 2 }}>
+              <b>Step 3:</b> Copy password and paste it in hive account
+            </Text>
+            <Text style={{ lineHeight: 2 }}>
+              <b>Step 4:</b> Take a break and wait until your friend pay your registered account, will give you an email!
+
+            </Text>
+          </Box>
+
+          <Button marginBottom={'10px'} colorScheme='blue' onClick={() => downloadKeys()}>
+            {_t("onboard.download-keys")}
+          </Button>
+
+          <Box marginTop={'10px'} marginBottom={'20px'}>
+            <h4>{_t("onboard.copy-info-message")}</h4>
+            {isDownloaded == true && (
+              <div>
+                {/* <Link href={`${window.origin}/onboard-friend/${urlHash}`}>{splitUrl(`${window.origin}/onboard-friend/${urlHash}`)}...</Link> */}
+                <Link href={`${window.origin}/onboard-friend/${urlHash}`}>{splitUrl(`${window.origin}/onboard-friend/${urlHash}`)}</Link>
+                <Button marginLeft={'5px'} colorScheme='blue' onClick={() => {
+                  clipboard(`${window.origin}/onboard-friend/${urlHash}`);
+                  // success(_t("onboard.copy-link"))
+                }}>copy</Button>
+              </div>
+            )}
+
+            {isDownloaded == false && (
+              <div>
+                <Text>The link will be show here after you download the keys.</Text>
+              </div>
+            )}
+
+          </Box>
+
+          <Text>{accountPassword}</Text>
+          <Button colorScheme='green' onClick={(e) => copyPasswordFunc()}>Copy password</Button>
+        </Box>
       )}
 
     </Box >
