@@ -14,7 +14,7 @@ const HiveSIgnUp = () => {
       backgroundColor="#F5F5F5"
     >
       <Tabs.Content className="TabsContent w-100" value={'tab4'}>
-            <HiveSignUpComponent />
+          <HiveSignUpComponent />
       </Tabs.Content>
     </Flex>
   )
