@@ -145,12 +145,12 @@ const HiveSignUpComponent = () => {
               <Box mb="1.5rem" mt="1.5rem" width="100%">
                 <fieldset className="Fieldset">
                   <label className="Label" htmlFor="file_name">
-                    File name
+                    Username
                   </label>
                   <input
                     className="Input3"
                     id="file_name"
-                    placeholder={'File name'}
+                    placeholder={'Username'}
                     type="text"
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
@@ -183,12 +183,12 @@ const HiveSignUpComponent = () => {
               <Box mb="1.5rem" mt="1.5rem" width="100%">
                 <fieldset className="Fieldset">
                   <label className="Label" htmlFor="username">
-                    Username
+                    Refferal
                   </label>
                   <input
                     className="Input3"
                     id="username"
-                    placeholder={t("login.username")}
+                    placeholder={'Refferal'}
                     type="text"
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
