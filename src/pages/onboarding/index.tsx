@@ -20,7 +20,7 @@ const OnBoarding = () => {
 
   useEffect(() => {
     getUserHiveDetails();
-  }, []);
+  }, [getUserHiveDetails]);
 
   useEffect(() => {
     if (userDetails) {

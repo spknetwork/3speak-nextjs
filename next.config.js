@@ -10,15 +10,19 @@ const withTM = require("next-transpile-modules")([
 module.exports = withTM({
   reactStrictMode: true,
   images: {
-    domains: ["images.hive.blog"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.hive.blog",
-        port: "",
-        pathname: "/**",
-      },
-    ],
+    domains: ["images.hive.blog","s3.eu-central-1.wasabisys.com"],
+    // remotePatterns: [
+    //   {
+    //     protocol: "https",
+    //     hostname: "images.hive.blog",
+    //     port: "",
+    //     pathname: "/**",
+    //   },
+    //   {
+    //     protocol: "https",
+    //     hostname: "s3.eu-central-1.wasabisys.com",
+    //   },
+    // ],
   },
   async rewrites() {
     return [

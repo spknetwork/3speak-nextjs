@@ -137,7 +137,7 @@ export const Sidebar = () => {
 
     console.log('authenticated', authenticated)
 
-  }, [allowAccess]);
+  }, [allowAccess, authenticated]);
 
 
   useEffect(() => {
@@ -174,6 +174,7 @@ export const Sidebar = () => {
         <StyledLink href="/">
           <Box width={"180px"}>
             <Image
+               loader={() => `/main_logo.svg`}
               src="/main_logo.svg"
               alt="3speak logo"
               width={200}
@@ -206,7 +207,10 @@ export const Sidebar = () => {
                 <ChakraBox>
                   <Flex justifyContent={'center'} alignItems='center'>
                     <Flex margin='10px' justifyContent={'center'} alignItems='center' cursor={'pointer'} borderRadius={'50%'} height={'100%'} width='40px' border={'1px solid'}>
-                      <img src={'/images/avatar3.png'} style={{ margin: '0', width: '40px', borderRadius: '100px', height: '100%', objectFit: 'cover' }} />
+                      <Image
+                      alt="sidebar avatar" 
+                      loader={() => `/images/avatar3.png`}
+                      src={'/images/avatar3.png'} style={{ margin: '0', width: '40px', borderRadius: '100px', height: '100%', objectFit: 'cover' }} />
                     </Flex>
 
                     <Text marginLeft={'5px'} margin={'0px'} textAlign={'center'} as='h5'>
@@ -414,6 +418,7 @@ export const Sidebar = () => {
             <Box maxWidth="2rem">
               <Image
                 alt="search icon"
+                loader={() => `/nav/search.svg`}
                 src="/nav/search.svg"
                 width={45}
                 height={45}

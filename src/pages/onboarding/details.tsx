@@ -58,7 +58,7 @@ const OnBoarding = () => {
     if (userName) {
       setName(`${userName}`);
     }
-  }, []);
+  }, [getUserHiveDetails,userName]);
 
   useEffect(() => {
     if (userhiveDetails) {

@@ -23,6 +23,7 @@ import { OAuthExtension } from '@magic-ext/oauth';
 import GoogleAuth from "../SocialAuth/GoogleAuth";
 import GithubAuth from "../SocialAuth/GithubAuth";
 import DiscordAuth from "../SocialAuth/DiscordAuth";
+import Image from "next/image";
 // const magic = new Magic("pk_live_7645A843999E2369");
 
 
@@ -91,7 +92,7 @@ const SignIn = () => {
       }
 
     }
-  }, [authenticated, router]);
+  }, [authenticated, router, onboarding]);
 
   const handleSubmit = async (values: any) => {
     setOnboarding(true)
@@ -103,14 +104,21 @@ const SignIn = () => {
     // call the magic link function here
     console.log("call the magic link function here");
   };
-
+  const loadImage=()=>{
+    return "https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png";
+  }
   return (
     <Box width="100%">
       <Box mx="auto" maxWidth="9rem">
-        <img
-          src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
-          alt="3speak logo"
-          width="100%"
+        <Image
+        alt="logo player"
+        loader={loadImage}
+         src={`https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png`} width={'100'}
+        height={'100'}
+          // src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
+          // alt="Logo"
+          // width={100}
+          // height={50}
         />
       </Box>
 

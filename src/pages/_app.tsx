@@ -75,11 +75,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (allowAccess == true) {
       getUserDetails()
     }
-  }, [allowAccess]);
+  }, [allowAccess,getUserDetails]);
   useEffect(() => {
     checkAuth();
     setAccounts()
-  }, []);
+  }, [checkAuth,setAccounts]);
 
   return (
     <Provider store={store}>
@@ -176,7 +176,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                         className="TabsTrigger"
                         value="tab4"
                       >
-                        Hive Sign Up
+                        Sign Up with Hive
                       </Tabs.Trigger>
                     </Tabs.List>
                     <ChakraProvider>

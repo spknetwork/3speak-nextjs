@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {  Flex } from "src/components";
 import { Button, Box, Text } from "@chakra-ui/react";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import Image from "next/image";
 const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
   return (
     <Box width="100%">
@@ -15,17 +16,19 @@ const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
         </Text>
       </Box>
       <Box mx="auto" maxWidth="9rem">
-        <img
+        <Image
+          loader={() => "https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"}
           src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
           alt="3speak logo"
-          width="100%"
+          width="100"
+          height={'100'}
         />
       </Box>
       <form onSubmit={(e) => requestHiveLogin(e)}>
         <Flex>
 
           <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="11px" mr='10px'>
-            <img src="/keychain.6846c271.png" alt="3speak logo" />
+            <Image width={'100'} height='100' src="/keychain.6846c271.png" alt="3speak logo" />
           </Flex>
           <Box marginRight={{ base: "10px", md: "10px", lg: "5px" }} mt="1rem" width="100%">
             <fieldset className="Fieldset2">
@@ -47,7 +50,7 @@ const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
       </form>
       <Flex>
         <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="11px" mr='10px'>
-          <img src="/hiveauth.ac85800f.svg" alt="3speak logo" />
+          <Image width={'100'} height='100' src="/hiveauth.ac85800f.svg" alt="3speak logo" />
         </Flex>
         <Box marginRight={{ base: "10px", md: "10px", lg: "5px" }} mt="1rem" width="100%">
           <fieldset className="Fieldset2">
@@ -67,7 +70,7 @@ const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
       </Flex>
       <Flex>
         <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'#d1d5da'} mt="11px" mr='10px'>
-          <img src="/hivesigner.6958efa0.svg" alt="3speak logo" />
+          <Image width={'100'} height='100' src="/hivesigner.6958efa0.svg" alt="3speak logo" />
         </Flex>
         <Box marginRight={{ base: "10px", md: "10px", lg: "5px" }} mt="1rem" width="100%">
           <fieldset className="Fieldset2">

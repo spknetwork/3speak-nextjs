@@ -4,6 +4,7 @@ import { Box } from "./Box";
 import { VideoCol } from "./Grid";
 import styled from "styled-components";
 import timeSince from "../utils/timeSince";
+import Image from "next/image";
 
 export const TextCutoff = styled.div`
   text-overflow: "ellipsis";
@@ -19,13 +20,16 @@ export const VideoCard = (props: IVideo & { payout: number }) => {
       <Box style={{ width: 340 }}>
         <Link href={`/@${props.owner}/${props.permlink}`}>
           <a>
-            <img
+            <Image
               style={{
                 width: "100%",
                 border: "5px solid #555",
                 maxHeight: "200px",
                 objectFit: "cover",
               }}
+              width='100'
+              height={'100'}
+              loader={() => 'https://ipfs.3speak.tv/ipfs/'}
               src={
                 "https://ipfs.3speak.tv/ipfs/" + props.thumbnail.split("://")[1]
               }

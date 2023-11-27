@@ -38,7 +38,7 @@ const HiveSignIn = ({ tab }: any) => {
         router.push("/");
       }
     }
-  }, [authenticated, router]);
+  }, [authenticated, router, onboarding]);
 
   const [username, setUsername] = useState<string>("")
   // const [dateNow, setDateNow] = useState<string>("")

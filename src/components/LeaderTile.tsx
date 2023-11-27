@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 import RefLink from "./RefLink";
 
@@ -45,7 +46,7 @@ export function LeaderTile(props: LeaderTileProps) {
     };
 
     void load();
-  }, []);
+  }, [props]);
 
   return (
     <div
@@ -55,10 +56,11 @@ export function LeaderTile(props: LeaderTileProps) {
       <div className="card-body">
         <div className="channels-card-image text-center d-flex justify-content-center align-items-center flex-column">
           <a href={`#/user/${props.reflink.toString()}`}>
-            <img
+            <Image
               className="img-fluid shadow-sm rounded-circle mb-2 w-80"
               src={profilePicture}
-              alt=""
+              loader={() => `${profilePicture}`}
+              alt="profile"
             />
           </a>
           <div className="channels-card-image-btn my-2">

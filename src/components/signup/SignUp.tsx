@@ -14,6 +14,7 @@ import { OAuthExtension } from '@magic-ext/oauth';
 import GoogleAuth from "../SocialAuth/GoogleAuth";
 import DiscordAuth from "../SocialAuth/DiscordAuth";
 import GithubAuth from "../SocialAuth/GithubAuth";
+import Image from "next/image";
 const SignUp = () => {
 
   let magic: any
@@ -86,10 +87,11 @@ const SignUp = () => {
     <div>
       <Box width="100%">
         <Box mx="auto" maxWidth="9rem">
-          <img
+          <Image
+            loader={() => 'https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png'}
             src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
             alt="3speak logo"
-            width="100%"
+            width={'100'} height='100'
           />
         </Box>
 

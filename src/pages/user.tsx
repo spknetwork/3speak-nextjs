@@ -35,7 +35,7 @@ const UserPage = () => {
       setShowNav(false);
       console.log("showNav", showNav);
     }
-  }, [isMobile]);
+  }, [isMobile,showNav]);
 
   const [videos] = useState<VideoInterface[]>([
     {

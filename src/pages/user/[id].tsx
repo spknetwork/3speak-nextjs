@@ -102,7 +102,7 @@ const UserPage: React.FC = () => {
             setShowNav(false);
             console.log("showNav", showNav);
         }
-    }, [isMobile]);
+    }, [isMobile,showNav]);
 
     const [videos] = useState<VideoInterface[]>([
         {

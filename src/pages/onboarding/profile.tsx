@@ -16,7 +16,7 @@ const OnBoarding = () => {
   const [profileImage, setprofileImage] = useState<string>("");
   useEffect(() => {
     getUserHiveDetails();
-  }, []);
+  }, [getUserHiveDetails]);
   useEffect(() => {
     if (userhiveDetails) {
       setcoverImage(userhiveDetails.cover_image);
@@ -24,7 +24,7 @@ const OnBoarding = () => {
     }
   }, [userhiveDetails]);
 
-  const changeCurrentStep = (step: number) => {};
+  const changeCurrentStep = (step: number) => { };
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
   const [selectedFileProfile, setSelectedFileProfile] =
     useState<FilePreview | null>(null);
@@ -78,7 +78,7 @@ const OnBoarding = () => {
             <Box
               border={"1px solid"}
               borderRadius="10px"
-              width={{base:"100%", md: "100%", lg:"60%"}}
+              width={{ base: "100%", md: "100%", lg: "60%" }}
               padding="10px"
               paddingTop={"20px"}
               margin="auto"
@@ -87,7 +87,7 @@ const OnBoarding = () => {
               <Flex
                 position={"relative"}
                 justifyContent={"start"}
-                height={{base:"300px", md:"400px"}}
+                height={{ base: "300px", md: "400px" }}
                 width="100%"
               >
                 <Flex
@@ -106,14 +106,30 @@ const OnBoarding = () => {
                       lg: "100px",
                     }}
                     borderRadius={"10px"}
-                    height={{base:"200px", md:"300px"}}
+                    height={{ base: "200px", md: "300px" }}
                     width="100%"
                     border={"1px solid"}
                   >
                     <input {...getInputProps()} />
-                    {(coverImage || selectedFile) && (
-                      <img
-                        src={coverImage ? coverImage : selectedFile?.previewUrl}
+                    {(coverImage && !selectedFile) && (
+                      <Image
+                        alt="cover image"
+                        loader={() => `${coverImage}`}
+                        src={coverImage}
+                        style={{
+                          margin: "0",
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    )}
+
+                    {(!coverImage && selectedFile) && (
+                      <Image
+                        loader={() => `${selectedFile?.previewUrl}`}
+                        alt="cover image"
+                        src={selectedFile?.previewUrl}
                         style={{
                           margin: "0",
                           width: "100%",
@@ -126,25 +142,33 @@ const OnBoarding = () => {
                   </Flex>
                 </Flex>
                 <Box
-                  left={{base:"38%", md:"38%", lg: "38%"}}
-                  top={{base:"148px", md: "205px"}}
+                  left={{ base: "38%", md: "38%", lg: "38%" }}
+                  top={{ base: "148px", md: "205px" }}
                   position={"absolute"}
                   background={"white"}
                   {...getRootPropsProfile()}
                   cursor={"pointer"}
                   borderRadius={"50%"}
-                  height={{base:"100px", md: "200px"}}
-                  width={{base:"100px", md: "200px"}}
+                  height={{ base: "100px", md: "200px" }}
+                  width={{ base: "100px", md: "200px" }}
                   border={"1px solid"}
                 >
                   <input {...getInputPropsProfile()} />
-                  <img
+                  <Image
+                    alt="avatar"
+                    loader={() => {
+                      return profileImage
+                        ? profileImage
+                        : selectedFileProfile
+                          ? selectedFileProfile.previewUrl
+                          : "/images/avatar3.png"
+                    }}
                     src={
                       profileImage
                         ? profileImage
                         : selectedFileProfile
-                        ? selectedFileProfile.previewUrl
-                        : "/images/avatar3.png"
+                          ? selectedFileProfile.previewUrl
+                          : "/images/avatar3.png"
                     }
                     style={{
                       margin: "0",

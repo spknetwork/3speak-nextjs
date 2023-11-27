@@ -77,7 +77,9 @@ const OnBoarding = () => {
                 >
                   <input {...getInputProps()} />
                   {selectedFile && (
-                    <img
+                    <Image
+                    alt="preview url"
+                    loader={() => `${selectedFile.previewUrl}`}
                       src={selectedFile.previewUrl}
                       style={{
                         margin: "0",
