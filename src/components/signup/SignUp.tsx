@@ -59,8 +59,8 @@ const SignUp = () => {
 
   const { register } = useAppStore();
   const handleSubmit = async (values: any) => {
-    const token = await recaptchaRefSignUp.current.executeAsync();
-    console.log(token);
+    // const token = await recaptchaRefSignUp.current.executeAsync();
+    // console.log(token);
     try {
       await register(values);
       toast({
@@ -156,10 +156,10 @@ const SignUp = () => {
                 </fieldset>
               </Box>
               <ChakraBox display={'flex'} justifyContent='center' alignItems={'center'} marginTop={"10px"}>
-                <ReCAPTCHA
+                {/* <ReCAPTCHA
                   ref={recaptchaRefSignUp}
                   sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
-                />
+                /> */}
               </ChakraBox>
 
               <Flex width="100%" justifyContent="center" mt="1rem">

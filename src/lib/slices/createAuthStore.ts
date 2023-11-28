@@ -95,25 +95,36 @@ export const createAuthUserSlice: StateCreator<AuthUserSlice> = (set) => ({
   },
   login: async (requestBody: Params) => {
     let data = {
-      avatar: 'https://source.unsplash.com/random/200x200?sig=3',
       username: requestBody.email,
-      type: 'Email/Password',
-      token: ''
+      password:requestBody.password,
     }
 
-    let accounts
-    const local = localStorage.getItem("accountsList")
-    if (!local) {
-        localStorage.setItem("accountsList", JSON.stringify([data]))
-    }else{
-      accounts = JSON.parse(local)
-      const checkData = accounts.filter((item:any) => item.username == data.username )
-      console.log('checkData',checkData)
-      if (accounts.length < 6 && checkData.length == 0) {
-        accounts.push(data)
-        localStorage.setItem("accountsList", JSON.stringify(accounts))
+    const response = await axios.post(
+      API_URL_FROM_WEST + "/v1/auth/login",
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    }
+    );   
+    console.log('response',response)
+    localStorage.setItem("access_token", response.data.access_token)
+    return response
+
+    // let accounts
+    // const local = localStorage.getItem("accountsList")
+    // if (!local) {
+    //     localStorage.setItem("accountsList", JSON.stringify([data]))
+    // }else{
+    //   accounts = JSON.parse(local)
+    //   const checkData = accounts.filter((item:any) => item.username == data.username )
+    //   console.log('checkData',checkData)
+    //   if (accounts.length < 6 && checkData.length == 0) {
+    //     accounts.push(data)
+    //     localStorage.setItem("accountsList", JSON.stringify(accounts))
+    //   }
+    // }
   },
   register: async (requestBody: Params) => {
       const body = {

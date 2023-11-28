@@ -110,11 +110,14 @@ const OnBoarding = () => {
                     width="100%"
                     border={"1px solid"}
                   >
+                    {/* <span> {coverImage}</span> */}
+                   
+                    {/* {selectedFile} */}
                     <input {...getInputProps()} />
                     {(coverImage && !selectedFile) && (
-                      <Image
+                      <img
+                        className="coverImage"
                         alt="cover image"
-                        loader={() => `${coverImage}`}
                         src={coverImage}
                         style={{
                           margin: "0",
@@ -126,8 +129,9 @@ const OnBoarding = () => {
                     )}
 
                     {(!coverImage && selectedFile) && (
-                      <Image
-                        loader={() => `${selectedFile?.previewUrl}`}
+                      <img
+                      className="selectedFile coverimage"
+
                         alt="cover image"
                         src={selectedFile?.previewUrl}
                         style={{
@@ -154,30 +158,69 @@ const OnBoarding = () => {
                   border={"1px solid"}
                 >
                   <input {...getInputPropsProfile()} />
-                  <Image
-                    alt="avatar"
-                    loader={() => {
-                      return profileImage
-                        ? profileImage
-                        : selectedFileProfile
-                          ? selectedFileProfile.previewUrl
-                          : "/images/avatar3.png"
-                    }}
-                    src={
-                      profileImage
-                        ? profileImage
-                        : selectedFileProfile
-                          ? selectedFileProfile.previewUrl
-                          : "/images/avatar3.png"
-                    }
-                    style={{
-                      margin: "0",
-                      width: "100%",
-                      borderRadius: "100px",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
+                  {profileImage && !selectedFileProfile && (
+                    <img
+                    className="profileImage"
+                     alt="avatar"
+                    //  width='100%'
+                    //  height={'100%'}
+                    //  loader={() => {
+                    //    return profileImage
+                    //  }}
+                     src={
+                       profileImage  
+                     }
+                     style={{
+                       margin: "0",
+                       width: "100%",
+                       borderRadius: "100px",
+                       height: "100%",
+                       objectFit: "cover",
+                     }}
+                   />
+                  )}
+
+                  {!profileImage && selectedFileProfile && (
+                    <img
+                    className="selectedFileProfile"
+                     alt="avatar"
+                    //  width='100'
+                    //  height={'100'}
+                    //  loader={() => {
+                    //    return selectedFileProfile.previewUrl
+                    //  }}
+                     src={
+                      selectedFileProfile.previewUrl  
+                     }
+                     style={{
+                       margin: "0",
+                       width: "100%",
+                       borderRadius: "100px",
+                       height: "100%",
+                       objectFit: "cover",
+                     }}
+                   />
+                  )}
+
+                  {!profileImage && !selectedFileProfile && (
+                    <img
+                     alt="avatar"
+                    //  width='100'
+                    //  height={'100'}
+                     
+                     src={
+                      '/images/avatar3.png'
+                     }
+                     style={{
+                       margin: "0",
+                       width: "100%",
+                       borderRadius: "100px",
+                       height: "100%",
+                       objectFit: "cover",
+                     }}
+                   />
+                  )}
+                  
                 </Box>
               </Flex>
               <Flex

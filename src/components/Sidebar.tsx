@@ -210,6 +210,8 @@ export const Sidebar = () => {
                       <Image
                       alt="sidebar avatar" 
                       loader={() => `/images/avatar3.png`}
+                      width='100'
+                      height={'100'}
                       src={'/images/avatar3.png'} style={{ margin: '0', width: '40px', borderRadius: '100px', height: '100%', objectFit: 'cover' }} />
                     </Flex>
 
