@@ -231,30 +231,20 @@ const HiveSignUpComponent = () => {
             <Text style={{ lineHeight: 2 }}>
               <b>Step 1:</b> Download file
             </Text>
+            <Button marginBottom={'10px'} colorScheme='blue' onClick={() => downloadKeys()}>
+             {_t("onboard.download-keys")}
+            </Button>
             <Text style={{ lineHeight: 2 }}>
-              <b>Step 2:</b> Send the link to an existing user / friend
+              <b>Step 2:</b> Send the link to an existing hive user to pay for your account
             </Text>
-            <Text style={{ lineHeight: 2 }}>
-              <b>Step 3:</b> Copy password and paste it in hive account
-            </Text>
-            <Text style={{ lineHeight: 2 }}>
-              <b>Step 4:</b> Take a break and wait until your friend pay your registered account, will give you an email!
-
-            </Text>
-          </Box>
-
-          <Button marginBottom={'10px'} colorScheme='blue' onClick={() => downloadKeys()}>
-            {_t("onboard.download-keys")}
-          </Button>
-
-          <Box marginTop={'10px'} marginBottom={'20px'}>
-            <h4>{_t("onboard.copy-info-message")}</h4>
+            <Box marginTop={'10px'} marginBottom={'20px'}>
+            {/* <h4>{_t("onboard.copy-info-message")}</h4> */}
             {isDownloaded == true && (
               <div>
                 {/* <Link href={`${window.origin}/onboard-friend/${urlHash}`}>{splitUrl(`${window.origin}/onboard-friend/${urlHash}`)}...</Link> */}
-                <Link href={`${window.origin}/onboard-friend/${urlHash}`}>{splitUrl(`${window.origin}/onboard-friend/${urlHash}`)}</Link>
+                <Link href={`${window.origin}/signup_onboarding/${urlHash}`}>{splitUrl(`${window.origin}/signup_onboarding/${urlHash}`)}</Link>
                 <Button marginLeft={'5px'} colorScheme='blue' onClick={() => {
-                  clipboard(`${window.origin}/onboard-friend/${urlHash}`);
+                  clipboard(`${window.origin}/signup_onboarding/${urlHash}`);
                   // success(_t("onboard.copy-link"))
                 }}>copy</Button>
               </div>
@@ -267,9 +257,27 @@ const HiveSignUpComponent = () => {
             )}
 
           </Box>
+            <Text as='span' fontStyle={'italic'} marginBottom={'10px'}>
+              make sure they installed Hive Keychain and should be pinned to their desktop for a web app user and the app should be downloaded for a mobile user
+            </Text>
+            <br />
+            <br />
+            <Text style={{ lineHeight: 2 }}>
+              <b>Step 3:</b> go to your email and check the account was created
+            </Text>
+            <Text style={{ lineHeight: 2 }}>
+              <b>Step 4:</b> Copy the password and paste it in keychain
 
-          <Text>{accountPassword}</Text>
+            </Text>
+            <Text>{accountPassword}</Text>
           <Button colorScheme='green' onClick={(e) => copyPasswordFunc()}>Copy password</Button>
+          </Box>
+
+         
+
+          
+
+          
         </Box>
       )}
 
