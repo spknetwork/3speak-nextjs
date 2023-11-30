@@ -226,7 +226,7 @@ const HiveSignUpComponent = () => {
               {_t("onboard.referral")} <strong>{referral}</strong>
             </Text>
             <Text style={{ lineHeight: 2 }}>
-              <b>Note:</b> Please make sure you download and install a hive keychain in your browser, if not <span>visit this page on how to install hive keychain <a href='https://chromewebstore.google.com/detail/hive-keychain/jcacnejopjdphbnjgfaaobbfafkihpep?pli=1'> visit page</a></span>
+              <b>Note:</b> Please make sure you download and install a hive keychain in your browser, if not <span>visit this page on how to install hive keychain <a href='https://hive-keychain.com/'> visit page</a></span>
             </Text>
             <Text style={{ lineHeight: 2 }}>
               <b>Step 1:</b> Download file
