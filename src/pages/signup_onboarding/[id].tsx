@@ -2,8 +2,10 @@ import { hexDec } from '@/utils/b64';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { Client, RCAPI, utils,Operation } from "@hiveio/dhive";
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
-
+import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
+// import Link from 'next/link';
+import { useToast } from "@chakra-ui/react";
+import { useAppStore } from '@/lib/store';
 // import {PrivateKey, Operation, OperationName, TransactionConfirmation, AccountUpdateOperation, CustomJsonOperation} from '@hiveio/dhive';
 
 
@@ -31,28 +33,55 @@ interface AccountInfo {
 }
 function AccountRegisterForFriend(props: any) {
   const router = useRouter();
+
+  const { allowAccess, userDetails, listAccounts, setAccounts } = useAppStore();
+  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (allowAccess == true) {
+      setAuthenticated(allowAccess);
+      return
+    } 
+    if (allowAccess == false) {
+      setAuthenticated(false);
+      return
+    }
+  }, [allowAccess]);
+
+  useEffect(() => {
+    if (authenticated == false && authenticated != null) {
+      router.push("/auth/login");
+    }
+  }, [authenticated, router]);
+
+  const toast = useToast();
+
+  const [step, setStep] = useState<any>(1)
+  // const router = useRouter();
   const { id } = router.query;
-  // console.log('hash',id)
+  console.log('hash',id)
   const [urlInfo, seturlInfo] = useState<any>(null)
   const [community, setCommunity] = useState<any | null>(null);
-  const [step, setStep] = useState("confirm");
+  // const [step, setStep] = useState("confirm");
   const [msg, setMsg] = useState("");
   const [token, setToken] = useState(0)
 
   useEffect(() => {
     let decodedObj;
-    try {
-      if (id) {
+    // try {
+      if (id && userDetails?.username) {
         const decodedHash = hexDec(`${id}`);
         decodedObj = JSON.parse(decodedHash);
         console.log('decodedHash', decodedHash)
+        console.log('userDetails?.username', userDetails?.username)
+        seturlInfo(decodedObj);
+        getAccountTokens();
       }
-    } catch (error) {
-      console.log(error);
-    }
-    seturlInfo(decodedObj);
-    getAccountTokens();
-  }, []);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  
+  }, [id,userDetails?.username]);
 
   useEffect(() => {
     console.log('toklen here', token)
@@ -140,37 +169,167 @@ function AccountRegisterForFriend(props: any) {
       ))
   }
   const getAccountTokens = async () => {
-    const acc = await getAccounts(['juneroy1']);
-    console.log('acc', acc)
-    setToken(acc[0]?.pending_claimed_accounts)
+    const getUsername = userDetails?.username?.toLowerCase()
+    if (getUsername) {
+      console.log("getUsername",getUsername)
+      const acc = await getAccounts([`${getUsername}`]);
+      console.log('acc', acc)
+      setToken(acc[0]?.pending_claimed_accounts)
+    }
+    
   }
 
   useEffect(() => {
     console.log('urlInfo', urlInfo)
   }, [urlInfo])
-
+  const accountWithCredit = async () => {
+    const getUsername = userDetails?.username?.toLowerCase()
+    if (getUsername) {
+      try {
+        const response: any = await createAccountWithCredit({
+          username: urlInfo?.username,
+          keys: urlInfo?.keys
+        }, 
+        `${getUsername}`
+        )
+        console.log('response',response)
+  
+        if (response.success === true) {
+          // setStep("success");
+          // await createBreakawayUser(urlInfo!.username, props.global.hive_id, urlInfo!.referral, urlInfo!.email)
+          // setMsg(response.message)
+          setStep(2)
+  
+          toast({
+            position: "top-right",
+            title: "Successfully registered",
+            description: "You can try to visit the profile in the link below",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+        } else {
+          // setStep("fail")
+          // setMsg(response.message)
+          setStep(3)
+  
+          toast({
+            position: "top-right",
+            title: "Something went wrong",
+            description: "Please try again",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+      } catch (error) {
+        
+      }
+    }
+    
+  }
   const createAccount = async ()=> {
-    try {
-      const response: any = await createHiveAccount({
-        username: urlInfo?.username,
-        keys: urlInfo?.keys
-      }, 
-      "juneroy1"
-      );
-      console.log('response',response)
-      // if (response.success === true) {
-      //   setStep("success");
-      //   await createBreakawayUser(urlInfo!.username, props.global.hive_id, urlInfo!.referral, urlInfo!.email)
-      //   setMsg(response.message)
-      // } else {
-      //   setStep("fail")
-      //   setMsg(response.message)
-      // }
-    } catch (error) {
-      console.log(error)
-    };
+    const getUsername = userDetails?.username?.toLowerCase()
+    if (getUsername) {
+      try {
+        const response: any = await createHiveAccount({
+          username: urlInfo?.username,
+          keys: urlInfo?.keys
+        }, 
+        `${getUsername}`
+        );
+        console.log('response',response)
+        if (response.success === true) {
+          // setStep("success");
+          // await createBreakawayUser(urlInfo!.username, props.global.hive_id, urlInfo!.referral, urlInfo!.email)
+          // setMsg(response.message)
+          setStep(2)
+  
+          toast({
+            position: "top-right",
+            title: "Successfully registered",
+            description: "You can try to visit the profile in the link below",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+        } else {
+          // setStep("fail")
+          // setMsg(response.message)
+          setStep(3)
+          toast({
+            position: "top-right",
+            title: "Something went wrong",
+            description: "Please try again",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+      } catch (error) {
+        console.log(error)
+      };
+    }
+    
   };
-
+  const createAccountWithCredit = async (data: any, creator_account: string) => {
+    try {
+      const { username, keys } = data;
+  
+      const account = {
+        name: username,
+        ...keys,
+        active: false
+      };
+  
+      let tokens: any = await getAccounts([creator_account]);
+      console.log(tokens)
+      tokens = tokens[0]?.pending_claimed_accounts;
+  
+      let fee = null;
+      let op_name: OperationName = "create_claimed_account";
+  
+      const owner = {
+        weight_threshold: 1,
+        account_auths: [],
+        key_auths: [[account.ownerPubKey, 1]]
+      };
+      const active = {
+        weight_threshold: 1,
+        account_auths: [],
+        key_auths: [[account.activePubKey, 1]]
+      };
+      const posting = {
+        weight_threshold: 1,
+        account_auths: [["threespeak", 1]],
+        key_auths: [[account.postingPubKey, 1]]
+      };
+      const ops: Array<any> = [];
+      const params: any = {
+        creator: creator_account,
+        new_account_name: account.name,
+        owner,
+        active,
+        posting,
+        memo_key: account.memoPubKey,
+        json_metadata: "",
+        extensions: []
+      };
+  
+      if (fee) params.fee = fee;
+      const operation: Operation = [op_name, params];
+      ops.push(operation);
+      try {
+        const newAccount = await broadcast(creator_account, [operation], "Active");
+        return newAccount;
+      } catch (err: any) {
+        return err;
+      }
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
   const createHiveAccount = async (data: any, creator_account: string) => {
     try {
       const { username, keys } = data;
@@ -180,7 +339,7 @@ function AccountRegisterForFriend(props: any) {
       ...keys,
       active: false
       };
-      console.log(account)
+      console.log("account",account)
   
       const op_name: OperationName = "account_create";
   
@@ -196,7 +355,7 @@ function AccountRegisterForFriend(props: any) {
       };
       const posting = {
       weight_threshold: 1,
-      account_auths: [["3speak.app", 1]],
+      account_auths: [["threespeak", 1]],
       key_auths: [[account.postingPubKey, 1]]
       };
       const ops: Array<any> = [];
@@ -238,17 +397,43 @@ function AccountRegisterForFriend(props: any) {
             resolve(resp);
         }, rpc);
     })
-
+  
+  if (authenticated === null) {
+    return <Box>Loading...</Box>;
+  }
+  
+  if (authenticated === false) {
+    return <Box>Unauthorized access, please login first</Box>;
+  }
 
   return (
     <Box padding={'30px'} width={'100%'} height='80vh'>
+      {step == 1 && (
       <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
         <Text as='h2'>You are creating an account for a friend.</Text>
         <Flex padding={'20px'} paddingX='50px' width={'70%'} justifyContent='space-evenly'>
           <Button onClick={()=> createAccount()} colorScheme={'blue'}>Pay with (3Hive)</Button>
-          <Button colorScheme={'blue'}>Pay with credits</Button>
+          <Button onClick={() => accountWithCredit()} colorScheme={'blue'}>Pay with credits</Button>
         </Flex>
       </Flex>
+      )}
+
+      {step == 2 && (
+      <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
+        <Text as='h2'>Successfully registered account!</Text>
+        <Link href={`/${urlInfo?.username}`}>Visist {urlInfo?.username}'s profile</Link>
+        
+      </Flex>
+      )}
+
+      {step == 3 && (
+      <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
+        <Text>Something Went Wrong!</Text>
+        <Button onClick={() => setStep(1)}>Try Again</Button>
+        
+      </Flex>
+      )}
+      
 
     </Box>
   )

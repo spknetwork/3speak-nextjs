@@ -170,13 +170,13 @@ const SignUp = () => {
           )}
         </Formik>
         <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-          <GoogleAuth googlelogin={googlelogin} label='Sign in with Google'/>
+          <GoogleAuth googlelogin={googlelogin} label='Sign Up with Google'/>
         </Flex>
         <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-          <GithubAuth githublogin={githublogin} label='Sign in with Github'/>
+          <GithubAuth githublogin={githublogin} label='Sign Up with Github'/>
         </Flex>
         <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-          <DiscordAuth discordlogin={discordlogin} label='Sign in with Discord'/>
+          <DiscordAuth discordlogin={discordlogin} label='Sign Up with Discord'/>
         </Flex>
       </Box>
     </div>

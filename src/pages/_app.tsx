@@ -176,7 +176,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                         className="TabsTrigger"
                         value="tab4"
                       >
-                        Sign Up with Hive
+                        Sign Up - Hive Referral
                       </Tabs.Trigger>
                     </Tabs.List>
                     <ChakraProvider>

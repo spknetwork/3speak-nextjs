@@ -10,6 +10,8 @@ import clipboard from '@/utils/clipboard';
 import { _t } from '@/i18n';
 import Link from 'next/link';
 import Image from 'next/image';
+import QRCode from 'qrcode.react';
+import { Client, RCAPI, utils,Operation } from "@hiveio/dhive";
 
 const HiveSignUpComponent = () => {
   const { t } = useTranslation();
@@ -113,10 +115,113 @@ const HiveSignUpComponent = () => {
   const splitUrl = (url: string) => {
     return url.slice(0, 50);
   };
+  const [errorUsername, setError] = useState("");
+  const [inProgress, setInProgress] = useState(false)
+
+  const onchangeUsername = async (e:any) => {
+
+    setInProgress(true)
+    console.log('e',e)
+    const { value: username } = e.target;
+    const existingAccount = await getAccount(username)
+    console.log('existingAccount',existingAccount)
+    if (existingAccount){
+      setError("Username not available");
+      
+    } else {
+      setError("")
+    }
+    setInProgress(false)
+
+
+  }
+  const SERVERS = [
+    "https://rpc.ecency.com",
+    "https://api.hive.blog",
+    "https://api.deathwing.me",
+    "https://rpc.ausbit.dev",
+    "https://hived.emre.sh"
+  ]
+const getAccount = (username: string): Promise<any> => getAccounts([username]).then((resp:any) => resp[0]);
+const client = new Client(SERVERS, {
+  timeout: 4000,
+  failoverThreshold: 2,
+  consoleOnFailover: true,
+});
+const getAccounts = async (usernames: string[]): Promise<any[]> => {
+  return await client.database.getAccounts(usernames).then((resp: any[]): any[] =>
+    resp.map((x) => {
+      const account: any = {
+        name: x.name,
+        owner: x.owner,
+        active: x.active,
+        posting: x.posting,
+        memo_key: x.memo_key,
+        post_count: x.post_count,
+        created: x.created,
+        reputation: x.reputation,
+        posting_json_metadata: x.posting_json_metadata,
+        last_vote_time: x.last_vote_time,
+        last_post: x.last_post,
+        json_metadata: x.json_metadata,
+        reward_hive_balance: x.reward_hive_balance,
+        reward_hbd_balance: x.reward_hbd_balance,
+        reward_vesting_hive: x.reward_vesting_hive,
+        reward_vesting_balance: x.reward_vesting_balance,
+        balance: x.balance,
+        hbd_balance: x.hbd_balance,
+        savings_balance: x.savings_balance,
+        savings_hbd_balance: x.savings_hbd_balance,
+        next_vesting_withdrawal: x.next_vesting_withdrawal,
+        vesting_shares: x.vesting_shares,
+        delegated_vesting_shares: x.delegated_vesting_shares,
+        received_vesting_shares: x.received_vesting_shares,
+        vesting_withdraw_rate: x.vesting_withdraw_rate,
+        to_withdraw: x.to_withdraw,
+        withdrawn: x.withdrawn,
+        witness_votes: x.witness_votes,
+        proxy: x.proxy,
+        proxied_vsf_votes: x.proxied_vsf_votes,
+        voting_manabar: x.voting_manabar,
+        voting_power: x.voting_power,
+        downvote_manabar: x.downvote_manabar,
+        pending_claimed_accounts: x.pending_claimed_accounts,
+        __loaded: true,
+      };
+      let profile: any | undefined;
+
+      try {
+        profile = JSON.parse(x.posting_json_metadata!).profile;
+      } catch (e) {
+      }
+
+      if (!profile) {
+        try {
+          profile = JSON.parse(x.json_metadata!).profile;
+        } catch (e) {
+        }
+      }
+
+      if (!profile) {
+        profile = {
+          about: '',
+          cover_image: '',
+          location: '',
+          name: '',
+          profile_image: '',
+          website: '',
+        }
+      }
+
+      return { ...account, profile };
+    }
+    ))
+}
+
   return (
     <Box width="100%">
       <Box mx="auto" maxWidth="9rem">
-        <Image  
+        <Image
           loader={() => "https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"}
           src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
           alt="3speak logo"
@@ -155,13 +260,18 @@ const HiveSignUpComponent = () => {
                     id="file_name"
                     placeholder={'Username'}
                     type="text"
-                    onChange={props.handleChange}
+                    onChange={onchangeUsername}
+                    onInput={props.handleChange}
                     onBlur={props.handleBlur}
                     name="file_name"
                   />
                   {!!props.errors.file_name && (
                     <Typography color="#FF3333">{props.errors.file_name}</Typography>
                   )}
+                   {!!errorUsername && (
+                    <Typography color="#FF3333">{errorUsername}</Typography>
+                  )}
+
                 </fieldset>
               </Box>
               <Box mb="1.5rem" mt="1.5rem" width="100%">
@@ -186,7 +296,7 @@ const HiveSignUpComponent = () => {
               <Box mb="1.5rem" mt="1.5rem" width="100%">
                 <fieldset className="Fieldset">
                   <label className="Label" htmlFor="username">
-                    Refferal
+                    Referral Username
                   </label>
                   <input
                     className="Input3"
@@ -203,7 +313,16 @@ const HiveSignUpComponent = () => {
                 </fieldset>
               </Box>
               <Flex width="100%" justifyContent="center" mt="1rem">
-                <StyledButton type="submit">Sign Up</StyledButton>
+                {inProgress && (
+                  <Button isDisabled={true} padding={'10px 15px'} width={'100%'} colorScheme={"blue"}>Checking Username</Button>
+                )}
+                 {errorUsername && !inProgress && (
+                  <Button isDisabled={true} padding={'10px 15px'} width={'100%'} colorScheme={"blue"}>{errorUsername}</Button>
+                )}
+                 {!inProgress && !errorUsername && (
+                  <StyledButton  type="submit">{inProgress?"Checking Username":"Sign Up"}</StyledButton>
+                )}
+                
               </Flex>
             </Form>
           )}
@@ -226,58 +345,71 @@ const HiveSignUpComponent = () => {
               {_t("onboard.referral")} <strong>{referral}</strong>
             </Text>
             <Text style={{ lineHeight: 2 }}>
-              <b>Note:</b> Please make sure you download and install a hive keychain in your browser, if not <span>visit this page on how to install hive keychain <a href='https://hive-keychain.com/'> visit page</a></span>
+              <b>Note:</b> Please make sure you download and install a hive keychain in your browser, if not visit this page on how to install hive keychain <a href='https://hive-keychain.com/'> visit page</a>
             </Text>
             <Text style={{ lineHeight: 2 }}>
               <b>Step 1:</b> Download file
             </Text>
             <Button marginBottom={'10px'} colorScheme='blue' onClick={() => downloadKeys()}>
-             {_t("onboard.download-keys")}
+              {_t("onboard.download-keys")}
             </Button>
-            <Text style={{ lineHeight: 2 }}>
-              <b>Step 2:</b> Send the link to an existing hive user to pay for your account
-            </Text>
-            <Box marginTop={'10px'} marginBottom={'20px'}>
-            {/* <h4>{_t("onboard.copy-info-message")}</h4> */}
             {isDownloaded == true && (
-              <div>
-                {/* <Link href={`${window.origin}/onboard-friend/${urlHash}`}>{splitUrl(`${window.origin}/onboard-friend/${urlHash}`)}...</Link> */}
-                <Link href={`${window.origin}/signup_onboarding/${urlHash}`}>{splitUrl(`${window.origin}/signup_onboarding/${urlHash}`)}</Link>
-                <Button marginLeft={'5px'} colorScheme='blue' onClick={() => {
-                  clipboard(`${window.origin}/signup_onboarding/${urlHash}`);
-                  // success(_t("onboard.copy-link"))
-                }}>copy</Button>
-              </div>
-            )}
+              <Box>
+                <Text style={{ lineHeight: 2 }}>
+                  <b>Step 2:</b> Send the link to an existing hive user to pay for your account
+                </Text>
+                <Box marginTop={'10px'} marginBottom={'20px'}>
+                  {/* <h4>{_t("onboard.copy-info-message")}</h4> */}
+                  {/* {isDownloaded == true && ( */}
+                    <Box display={'flex'} justifyContent='center' alignItems={'center'}>
+                      {/* <Link href={`${window.origin}/onboard-friend/${urlHash}`}>{splitUrl(`${window.origin}/onboard-friend/${urlHash}`)}...</Link> */}
+                      <Link href={`${window.origin}/signup_onboarding/${urlHash}`}>{splitUrl(`${window.origin}/signup_onboarding/${urlHash}`)}</Link>
+                      <Button marginLeft={'5px'} colorScheme='blue' onClick={() => {
+                        clipboard(`${window.origin}/signup_onboarding/${urlHash}`);
+                        // success(_t("onboard.copy-link"))
+                      }}>copy</Button>
+                    </Box>
+                    <Text as='h2' textAlign={'center'}>OR</Text>
+                    <Box display={'flex'} justifyContent='center' alignItems={'center'} id="qrcode">
+                      {/* <p>{`${window.origin}/signup_onboarding/${urlHash}`}</p> */}
+                      <QRCode value={`${window.origin}/signup_onboarding/${urlHash}`} size={500} />
+                    </Box>
+                  {/* // )} */}
 
-            {isDownloaded == false && (
-              <div>
-                <Text>The link will be show here after you download the keys.</Text>
-              </div>
+                  {/* {isDownloaded == false && ( */}
+                    {/* <div>
+                      <Text>The link will be show here after you download the keys.</Text>
+                    </div> */}
+                  {/* )}  */}
+
+                </Box>
+                <Text style={{ lineHeight: 2 }}>
+                  <b>Step 3:</b> Make sure to install Hive Keychain, It should be pinned in web browser and if you are using mobile, you should download the mobile app
+                </Text>
+                {/* <Text as='span' fontStyle={'italic'} marginBottom={'10px'}>
+                  make sure to installed Hive Keychain and should be pinned to their desktop for a web app user and the app should be downloaded for a mobile 
+                </Text>
+                <br />
+                <br /> */}
+                <Text style={{ lineHeight: 2 }}>
+                  <b>Step 4:</b> go to your email and check the account was created
+                </Text>
+                <Text style={{ lineHeight: 2 }}>
+                  <b>Step 5:</b> Copy the password below and paste it in keychain
+
+                </Text>
+                <Text>{accountPassword}</Text>
+                <Button colorScheme='green' onClick={(e) => copyPasswordFunc()}>Copy password</Button>
+              </Box>
             )}
 
           </Box>
-            <Text as='span' fontStyle={'italic'} marginBottom={'10px'}>
-              make sure they installed Hive Keychain and should be pinned to their desktop for a web app user and the app should be downloaded for a mobile user
-            </Text>
-            <br />
-            <br />
-            <Text style={{ lineHeight: 2 }}>
-              <b>Step 3:</b> go to your email and check the account was created
-            </Text>
-            <Text style={{ lineHeight: 2 }}>
-              <b>Step 4:</b> Copy the password and paste it in keychain
 
-            </Text>
-            <Text>{accountPassword}</Text>
-          <Button colorScheme='green' onClick={(e) => copyPasswordFunc()}>Copy password</Button>
-          </Box>
 
-         
 
-          
 
-          
+
+
         </Box>
       )}
 
