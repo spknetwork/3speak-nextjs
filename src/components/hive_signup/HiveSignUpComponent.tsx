@@ -115,7 +115,7 @@ const HiveSignUpComponent = () => {
   const splitUrl = (url: string) => {
     return url.slice(0, 50);
   };
-  const [errorUsername, setError] = useState("");
+  const [errorUsername, setError] = useState<String | null>(null);
   const [inProgress, setInProgress] = useState(false)
 
   const onchangeUsername = async (e:any) => {
@@ -271,7 +271,7 @@ const getAccounts = async (usernames: string[]): Promise<any[]> => {
                    {!!errorUsername && (
                     <Typography color="#FF3333">{errorUsername}</Typography>
                   )}
-                   {!errorUsername && (
+                   {errorUsername == "" && (
                     <Typography color="green">Username is valid</Typography>
                   )}
 
@@ -388,7 +388,7 @@ const getAccounts = async (usernames: string[]): Promise<any[]> => {
                 </Box>
                 <Text style={{ lineHeight: 2 }}>
                   <b>Step 3:</b> Make sure to install Hive Keychain, It should be pinned in web browser and if you are using mobile, you should download the mobile app
-                  <span><a style={{textDecoration: 'underline'}} href='https://hive-keychain.com/'> Visit download page here</a></span>
+                  <span><a style={{textDecoration: 'underline'}} href='https://hive-keychain.com/'> Visit hivekeychain download page here</a></span>
                 </Text>
                 {/* <Text as='span' fontStyle={'italic'} marginBottom={'10px'}>
                   make sure to installed Hive Keychain and should be pinned to their desktop for a web app user and the app should be downloaded for a mobile 
