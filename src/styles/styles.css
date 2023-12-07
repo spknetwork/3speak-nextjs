@@ -148,6 +148,9 @@ input {
   box-shadow: 0 0 0 1px var(--gray12);
   height: 100px;
 }
+.coverimage{
+  object-fit: cover;
+}
 
 .Input2 {
   width: 80%;

@@ -1,7 +1,7 @@
 import { hexDec } from '@/utils/b64';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react'
-import { Client, RCAPI, utils,Operation } from "@hiveio/dhive";
+import React, { useCallback, useEffect, useState } from 'react'
+import { Client, RCAPI, utils,Operation,OperationName } from "@hiveio/dhive";
 import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
 // import Link from 'next/link';
 import { useToast } from "@chakra-ui/react";
@@ -65,9 +65,22 @@ function AccountRegisterForFriend(props: any) {
   // const [step, setStep] = useState("confirm");
   const [msg, setMsg] = useState("");
   const [token, setToken] = useState(0)
-
+ 
   useEffect(() => {
     let decodedObj;
+    const getAccountTokens = async () => {
+      const getUsername = userDetails?.username?.toLowerCase()
+      if (getUsername) {
+        console.log("getUsername",getUsername)
+        if (getAccounts) {
+          const acc = await getAccounts([`${getUsername}`]);
+          console.log('acc', acc)
+          setToken(acc[0]?.pending_claimed_accounts)
+        } 
+        
+      }
+      
+    }
     // try {
       if (id && userDetails?.username) {
         const decodedHash = hexDec(`${id}`);
@@ -99,7 +112,7 @@ function AccountRegisterForFriend(props: any) {
     failoverThreshold: 2,
     consoleOnFailover: true,
   });
-  const getAccounts = async (usernames: string[]): Promise<any[]> => {
+  const getAccounts = useCallback(async (usernames: string[]): Promise<any[]> => {
     return await client.database.getAccounts(usernames).then((resp: any[]): any[] =>
       resp.map((x) => {
         const account: any = {
@@ -167,17 +180,8 @@ function AccountRegisterForFriend(props: any) {
         return { ...account, profile };
       }
       ))
-  }
-  const getAccountTokens = async () => {
-    const getUsername = userDetails?.username?.toLowerCase()
-    if (getUsername) {
-      console.log("getUsername",getUsername)
-      const acc = await getAccounts([`${getUsername}`]);
-      console.log('acc', acc)
-      setToken(acc[0]?.pending_claimed_accounts)
-    }
-    
-  }
+  }, [client.database])
+  
 
   useEffect(() => {
     console.log('urlInfo', urlInfo)
@@ -421,7 +425,7 @@ function AccountRegisterForFriend(props: any) {
       {step == 2 && (
       <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
         <Text as='h2'>Successfully registered account!</Text>
-        <Link href={`/${urlInfo?.username}`}>Visist {urlInfo?.username}'s profile</Link>
+        <Link href={`/${urlInfo?.username}`}>Visist {urlInfo?.username}&quot;s profile</Link>
         
       </Flex>
       )}
