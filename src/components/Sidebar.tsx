@@ -197,7 +197,6 @@ export const Sidebar = () => {
           <ChakraBox mb="1rem" width="100%">
             {!authenticated && (
               <Link href="/auth/login">
-                {/* @ts-expect-error Server Component */}
                 <StyledButton py={3}>{t("mainLogin")}</StyledButton>
               </Link>
             )}
