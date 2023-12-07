@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Box } from "./Box";
-// import { Flex } from "./Flex";
+import { Flex as FlexComponent } from "./Flex";
 import { Typography } from "./Typography";
 import { useTranslation } from "next-export-i18n";
 import { useRouter } from "next/router";
@@ -171,7 +171,7 @@ export const Sidebar = () => {
         `}
         width="100%"
       >
-        <StyledLink href="/">
+        <Link  style={{cursor:'pointer'}} href="/">
           <Box width={"180px"}>
             <Image
                loader={() => `/main_logo.svg`}
@@ -181,7 +181,7 @@ export const Sidebar = () => {
               height={100}
             />
           </Box>
-        </StyledLink>
+        </Link>
         {isMobile && (
           <Button
             variant={"outline"}
@@ -255,7 +255,7 @@ export const Sidebar = () => {
                   )}
 
                   {title != "download_apps" && title != "about_3speak" && (
-                    <StyledImage
+                    <Image
                       src={`/${img}`}
                       alt={title}
                       width={30}
@@ -498,7 +498,7 @@ export const Sidebar = () => {
             href="https://hive.blog/@threespeak"
           >
             <span className="ms-3">
-              <StyledImage
+              <Image
                 src="/nav/blog.png"
                 alt={"3speak blog"}
                 width={30}
@@ -512,7 +512,7 @@ export const Sidebar = () => {
 
           <Link target="_blank" title="SPK Network" href="https://spk.network">
             <span className="ms-3">
-              <StyledImage
+              <Image
                 src="/nav/spk_network.png"
                 alt={"SPK Network"}
                 width={30}
@@ -564,9 +564,9 @@ const AboutText = styled(Typography)`
   }
 `;
 
-const StyledLink = styled(Link)`
-  cursor: pointer;
-`;
+// const StyledLink = styled(Link)`
+//   cursor: pointer;
+// `;
 
 const StyledInput = styled.input`
   width: 100% !important;
@@ -578,7 +578,7 @@ const StyledInput = styled.input`
   margin-bottom: 1rem;
 `;
 
-const StyledNav = styled(Flex)`
+const StyledNav = styled(FlexComponent)`
   cursor: pointer;
   color: rgba(0, 0, 0, 0.5);
   transition: all 0.25s ease-in;
@@ -594,11 +594,11 @@ const StyledNav = styled(Flex)`
   }
 `;
 
-const StyledImage = styled(Image)`
-  svg {
-    color: rgba(0, 0, 0, 0.5);
-  }
-`;
+// const StyledImage = styled(Image)`
+//   svg {
+//     color: rgba(0, 0, 0, 0.5);
+//   }
+// `;
 
 const StyledButton = styled(Box)`
   box-shadow: 0 1px 4px rgb(0 0 0 / 40%);

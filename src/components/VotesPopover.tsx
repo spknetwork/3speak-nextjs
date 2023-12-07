@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 export const VotesPopover = (props: any) => {
   return (
+   
     <PopupState variant="popover" popupId="demo-popup-popover">
       {(popupState) => (
         <span style={{fontSize: '69'}}>

@@ -68,19 +68,6 @@ function AccountRegisterForFriend(props: any) {
  
   useEffect(() => {
     let decodedObj;
-    const getAccountTokens = async () => {
-      const getUsername = userDetails?.username?.toLowerCase()
-      if (getUsername) {
-        console.log("getUsername",getUsername)
-        if (getAccounts) {
-          const acc = await getAccounts([`${getUsername}`]);
-          console.log('acc', acc)
-          setToken(acc[0]?.pending_claimed_accounts)
-        } 
-        
-      }
-      
-    }
     // try {
       if (id && userDetails?.username) {
         const decodedHash = hexDec(`${id}`);
@@ -94,8 +81,20 @@ function AccountRegisterForFriend(props: any) {
     //   console.log(error);
     // }
   
-  }, [id,userDetails?.username]);
-
+  }, [id, userDetails?.username]);
+  const getAccountTokens = async () => {
+    const getUsername = userDetails?.username?.toLowerCase()
+    if (getUsername) {
+      console.log("getUsername",getUsername)
+      if (getAccounts) {
+        const acc = await getAccounts([`${getUsername}`]);
+        console.log('acc', acc)
+        setToken(acc[0]?.pending_claimed_accounts)
+      } 
+      
+    }
+    
+  }
   useEffect(() => {
     console.log('toklen here', token)
   }, [token])
@@ -112,7 +111,7 @@ function AccountRegisterForFriend(props: any) {
     failoverThreshold: 2,
     consoleOnFailover: true,
   });
-  const getAccounts = useCallback(async (usernames: string[]): Promise<any[]> => {
+  const getAccounts = async (usernames: string[]): Promise<any[]> => {
     return await client.database.getAccounts(usernames).then((resp: any[]): any[] =>
       resp.map((x) => {
         const account: any = {
@@ -180,7 +179,7 @@ function AccountRegisterForFriend(props: any) {
         return { ...account, profile };
       }
       ))
-  }, [client.database])
+  }
   
 
   useEffect(() => {
