@@ -271,6 +271,9 @@ const getAccounts = async (usernames: string[]): Promise<any[]> => {
                    {!!errorUsername && (
                     <Typography color="#FF3333">{errorUsername}</Typography>
                   )}
+                   {!errorUsername && (
+                    <Typography color="green">Username is valid</Typography>
+                  )}
 
                 </fieldset>
               </Box>
@@ -345,7 +348,7 @@ const getAccounts = async (usernames: string[]): Promise<any[]> => {
               {_t("onboard.referral")} <strong>{referral}</strong>
             </Text>
             <Text style={{ lineHeight: 2 }}>
-              <b>Note:</b> Please make sure you download and install a hive keychain in your browser, if not visit this page on how to install hive keychain <a href='https://hive-keychain.com/'> visit page</a>
+              <b>Note:</b> Please make sure you download and install a hive keychain in your browser, if not visit this page on how to install hive keychain <a style={{textDecoration: 'underline'}} href='https://hive-keychain.com/'> Visit hivekeychain download page here</a>
             </Text>
             <Text style={{ lineHeight: 2 }}>
               <b>Step 1:</b> Download file
@@ -385,6 +388,7 @@ const getAccounts = async (usernames: string[]): Promise<any[]> => {
                 </Box>
                 <Text style={{ lineHeight: 2 }}>
                   <b>Step 3:</b> Make sure to install Hive Keychain, It should be pinned in web browser and if you are using mobile, you should download the mobile app
+                  <span><a style={{textDecoration: 'underline'}} href='https://hive-keychain.com/'> Visit download page here</a></span>
                 </Text>
                 {/* <Text as='span' fontStyle={'italic'} marginBottom={'10px'}>
                   make sure to installed Hive Keychain and should be pinned to their desktop for a web app user and the app should be downloaded for a mobile 
@@ -392,7 +396,7 @@ const getAccounts = async (usernames: string[]): Promise<any[]> => {
                 <br />
                 <br /> */}
                 <Text style={{ lineHeight: 2 }}>
-                  <b>Step 4:</b> go to your email and check the account was created
+                  <b>Step 4:</b> Go to your email and check the account was created
                 </Text>
                 <Text style={{ lineHeight: 2 }}>
                   <b>Step 5:</b> Copy the password below and paste it in keychain
