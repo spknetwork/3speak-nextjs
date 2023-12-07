@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Box } from "./Box";
+import { Box as BoxContainer } from "./Box";
 import { Flex as FlexComponent } from "./Flex";
 import { Typography } from "./Typography";
 import { useTranslation } from "next-export-i18n";
@@ -172,7 +172,7 @@ export const Sidebar = () => {
         width="100%"
       >
         <Link  style={{cursor:'pointer'}} href="/">
-          <Box width={"180px"}>
+          <ChakraBox width={"180px"}>
             <Image
                loader={() => `/main_logo.svg`}
               src="/main_logo.svg"
@@ -180,7 +180,7 @@ export const Sidebar = () => {
               width={200}
               height={100}
             />
-          </Box>
+          </ChakraBox>
         </Link>
         {isMobile && (
           <Button
@@ -193,8 +193,8 @@ export const Sidebar = () => {
         )}
       </Flex>
       {!showNav && (
-        <Box>
-          <Box mb="1rem" width="100%">
+        <ChakraBox>
+          <ChakraBox mb="1rem" width="100%">
             {!authenticated && (
               <Link href="/auth/login">
                 <StyledButton py={3}>{t("mainLogin")}</StyledButton>
@@ -231,8 +231,8 @@ export const Sidebar = () => {
               <ChakraBox onClick={onOpenModal1} >Switch Account</ChakraBox>
             </Flex>
            
-          </Box>
-          <Box>
+          </ChakraBox>
+          <ChakraBox>
             {NAVIGATION.map(({ img, title, route }) => (
               <StyledNav
                 onClick={() =>
@@ -245,7 +245,7 @@ export const Sidebar = () => {
                 justifyContent="flex-start"
                 alignItems="center"
               >
-                <Box mr="1rem" maxWidth="25px">
+                <ChakraBox mr="1rem" maxWidth="25px">
                   {title == "download_apps" && (
                     <FaAppStoreIos size={"2rem"} color="black" />
                   )}
@@ -262,9 +262,9 @@ export const Sidebar = () => {
                       height={30}
                     />
                   )}
-                </Box>
+                </ChakraBox>
                 {title == "download_apps" && (
-                  <Box position="relative">
+                  <ChakraBox position="relative">
                     <Menu>
                       <MenuButton>Download 3Speak Apps</MenuButton>
                       <MenuList
@@ -297,7 +297,7 @@ export const Sidebar = () => {
                         </MenuGroup>
                       </MenuList>
                     </Menu>
-                  </Box>
+                  </ChakraBox>
                   // <Menu>
                   //   <MenuButton>Download 3Speak Apps</MenuButton>
                   //   <MenuList
@@ -319,7 +319,7 @@ export const Sidebar = () => {
                   // </Menu>
                 )}
                 {/* {title == "nav.communities" && (
-                  <Box position="relative">
+                  <ChakraBox position="relative">
                     <Menu>
                       <MenuButton>Communities</MenuButton>
                       <MenuList
@@ -360,10 +360,10 @@ export const Sidebar = () => {
                         </MenuGroup>
                       </MenuList>
                     </Menu>
-                  </Box>
+                  </ChakraBox>
                 )} */}
                 {title == "about_3speak" && (
-                  <Box position="relative">
+                  <ChakraBox position="relative">
                     <Menu>
                       <MenuButton>About 3Speak</MenuButton>
                       <MenuList
@@ -403,21 +403,21 @@ export const Sidebar = () => {
                         </MenuGroup>
                       </MenuList>
                     </Menu>
-                  </Box>
+                  </ChakraBox>
                 )}
                 {title != "download_apps" && title != "about_3speak" && (
                   <Typography>{t(title)}</Typography>
                 )}
               </StyledNav>
             ))}
-          </Box>
-        </Box>
+          </ChakraBox>
+        </ChakraBox>
       )}
 
       {!showNav && (
-        <Box>
+        <ChakraBox>
           <Flex width="100%" alignItems="center" mt="1rem">
-            <Box maxWidth="2rem">
+            <ChakraBox maxWidth="2rem">
               <Image
                 alt="search icon"
                 loader={() => `/nav/search.svg`}
@@ -425,7 +425,7 @@ export const Sidebar = () => {
                 width={45}
                 height={45}
               />
-            </Box>
+            </ChakraBox>
             <StyledInput
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) =>
@@ -439,7 +439,7 @@ export const Sidebar = () => {
           <Typography mb="0.5rem" mt="1rem">
             3Speak
           </Typography>
-          <Box ml="0.5rem" mt="1rem">
+          <ChakraBox ml="0.5rem" mt="1rem">
             <AboutText
               onClick={() => router.push("/about-us")}
               color="rgba(0,0,0,0.5)"
@@ -454,12 +454,12 @@ export const Sidebar = () => {
             >
               {t("faq")}
             </AboutText>
-          </Box>
-        </Box>
+          </ChakraBox>
+        </ChakraBox>
       )}
 
       {!showNav && (
-        <Box className="nav-item text-center d-flex justify-content-center align-items-center flex-wrap">
+        <ChakraBox className="nav-item text-center d-flex justify-content-center align-items-center flex-wrap">
           <ChakraBox width={'40px'}>
             <Link
 
@@ -548,7 +548,7 @@ export const Sidebar = () => {
             /> */}
           </Link>
           </ChakraBox>
-        </Box>
+        </ChakraBox>
       )}
       <AccountsList isOpenModal1={isOpenModal1} onCloseModal1={onCloseModal1} listAccounts={listAccounts} addAccounts={addAccounts}/>
     </Flex>
@@ -600,7 +600,7 @@ const StyledNav = styled(FlexComponent)`
 //   }
 // `;
 
-const StyledButton = styled(Box)`
+const StyledButton = styled(BoxContainer)`
   box-shadow: 0 1px 4px rgb(0 0 0 / 40%);
   width: 100%;
   text-align: center;
