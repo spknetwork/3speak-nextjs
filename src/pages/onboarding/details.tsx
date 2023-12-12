@@ -7,8 +7,10 @@ import { useAppStore } from "@/lib/store";
 import { Name } from "@/lib/slices/createUserStore";
 
 const OnBoarding = () => {
-  const { getUserHiveDetails, userhiveDetails, userName } = useAppStore();
-
+  const { getUserHiveDetails, userhiveDetails, userName, userDetails } = useAppStore();
+  useEffect(() => {
+    console.log("userDetails?.username",userDetails?.username)
+  },[userDetails?.username])
   const router = useRouter();
   const [datawindow] = useState<any>("");
   const [name, setName] = useState<string>("");
@@ -30,12 +32,12 @@ const OnBoarding = () => {
 
       const stringprofile = JSON.stringify(profile);
       keychain.requestBroadcast(
-        "juneroy1",
+        `${userDetails?.username}`,
         [
           [
             "account_update2",
             {
-              account: "juneroy1",
+              account: `${userDetails?.username}`,
               json_metadata: "",
               posting_json_metadata: stringprofile,
               extensions: [],
@@ -54,11 +56,14 @@ const OnBoarding = () => {
   };
 
   useEffect(() => {
-    getUserHiveDetails();
+    if (userDetails?.username) {
+      getUserHiveDetails(`${userDetails?.username}`);
+    }
+   
     if (userName) {
       setName(`${userName}`);
     }
-  }, [getUserHiveDetails,userName]);
+  }, [getUserHiveDetails,userName,userDetails?.username]);
 
   useEffect(() => {
     if (userhiveDetails) {

@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Formik } from "formik";
 import { useTranslation } from 'next-export-i18n';
 import { Typography } from "src/components";
@@ -62,6 +62,10 @@ const HiveSignUpComponent = () => {
       console.log(err)
     }
   };
+
+  useEffect(() => {
+    console.log("newUserKeys",newUserKeys)
+  },[newUserKeys])
 
   const copyPasswordFunc = () => {
     clipboard(accountPassword)
@@ -403,7 +407,7 @@ const getAccounts = async (usernames: string[]): Promise<any[]> => {
 
                 </Text>
                 <Text>{accountPassword}</Text>
-                <Button colorScheme='green' onClick={(e) => copyPasswordFunc()}>Copy password</Button>
+                <Button colorScheme='blue' onClick={(e) => copyPasswordFunc()}>Copy password</Button>
               </Box>
             )}
 

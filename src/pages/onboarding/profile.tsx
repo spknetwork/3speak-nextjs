@@ -11,12 +11,17 @@ type FilePreview = {
   previewUrl: string;
 };
 const OnBoarding = () => {
-  const { getUserHiveDetails, userhiveDetails } = useAppStore();
+  const { getUserHiveDetails, userhiveDetails,userDetails } = useAppStore();
   const [coverImage, setcoverImage] = useState<string>("");
   const [profileImage, setprofileImage] = useState<string>("");
   useEffect(() => {
-    getUserHiveDetails();
-  }, [getUserHiveDetails]);
+    if (userDetails?.username) {
+      getUserHiveDetails(`${userDetails?.username}`);
+
+    }
+   
+  }, [getUserHiveDetails,userDetails?.username]);
+
   useEffect(() => {
     if (userhiveDetails) {
       setcoverImage(userhiveDetails.cover_image);

@@ -15,12 +15,17 @@ const OnBoarding = () => {
     getUserHiveDetails,
     userDetails,
     setUserHiveDetails,
+    
   } = useAppStore();
   const [name, setName] = useState<string>("");
 
   useEffect(() => {
-    getUserHiveDetails();
-  }, [getUserHiveDetails]);
+    if (userDetails?.username) {
+      getUserHiveDetails(`${userDetails?.username}`);
+
+    }
+   
+  }, [getUserHiveDetails,userDetails?.username]);
 
   useEffect(() => {
     if (userDetails) {
@@ -123,7 +128,7 @@ const OnBoarding = () => {
                   Save
                 </Button>
               </Flex>
-              <Box
+              {/* <Box
                   width="100%"
                   borderRadius="0.25rem"
                   mt="1.5rem"
@@ -136,8 +141,8 @@ const OnBoarding = () => {
                     Some email services will wrongly sort our emails,
                     remember to check your junk/spam folder!
                   </Typography>
-                </Box>
-                <Box
+                </Box> */}
+                {/* <Box
                   width="100%"
                   borderRadius="0.25rem"
                   mt="1.5rem"
@@ -150,7 +155,7 @@ const OnBoarding = () => {
                     In order to claim the keys for the Hive account associated
                     with your 3speak account you must post at least one video.
                   </Typography>
-                </Box> 
+                </Box>  */}
               {/* <Flex cursor={'pointer'} onClick={() => router.push('/onboarding/profile')} justifyContent={'center'} alignItems='center' padding={'10px'} marginTop={'10px'} width='100%' >
                                 <Button width={'lg'} colorScheme='blue'>Add display name</Button>
                             </Flex> */}

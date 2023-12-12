@@ -3,7 +3,7 @@ import axios from "axios";
 import { StateCreator } from "zustand";
 
 export interface UserSlice {
-    getUserHiveDetails: () => any;
+    getUserHiveDetails: (name:any) => any;
     setUserHiveDetails: (name:Name) => any;
     userhiveDetails: UserHiveDetails | null;
     userName:Name|null;
@@ -29,14 +29,14 @@ export const createUserDetailsSlice: StateCreator<UserSlice> = (set) => ({
     setUserHiveDetails: async (name:Name) => {
         set({userName:name});
     },
-    getUserHiveDetails: async () => {
+    getUserHiveDetails: async (name:any) => {
         console.log('condenser_api.get_accounts')
       const body = {
         id: 6,
         jsonrpc: "2.0",
         method: "condenser_api.get_accounts",
         params: [
-            ["juneroy1"]
+            [`${name}`]
         ]
       };
       // Make a POST request using Axios with headers and body
@@ -52,10 +52,14 @@ export const createUserDetailsSlice: StateCreator<UserSlice> = (set) => ({
           },
         }
       ); 
-     const profile = JSON.parse(response.data.result[0].posting_json_metadata  ) 
-      set({ userhiveDetails: profile.profile });
+      console.log("response.data.result juneroy",response.data.result)
+      if (response.data.result[0].posting_json_metadata != "") {
+        const profile = JSON.parse(response.data.result[0].posting_json_metadata  ) 
+        set({ userhiveDetails: profile.profile });
         console.log('response from hive',response.data.result[0].posting_json_metadata)
         console.log('response from hive parse',JSON.parse(response.data.result[0].posting_json_metadata))
+      }
+     
       return response
   },
 });

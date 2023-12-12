@@ -33,6 +33,9 @@ interface AccountInfo {
 }
 function AccountRegisterForFriend(props: any) {
   const router = useRouter();
+  const { pathname } = useRouter();
+
+  const is_signup_onboarding = pathname.includes("/signup_onboarding");
 
   const { allowAccess, userDetails, listAccounts, setAccounts } = useAppStore();
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
@@ -49,7 +52,7 @@ function AccountRegisterForFriend(props: any) {
   }, [allowAccess]);
 
   useEffect(() => {
-    if (authenticated == false && authenticated != null) {
+    if (authenticated == false && authenticated != null && !is_signup_onboarding) {
       router.push("/auth/login");
     }
   }, [authenticated, router]);
@@ -69,30 +72,38 @@ function AccountRegisterForFriend(props: any) {
   useEffect(() => {
     let decodedObj;
     // try {
-      if (id && userDetails?.username) {
+      if (id ) {
         const decodedHash = hexDec(`${id}`);
         decodedObj = JSON.parse(decodedHash);
-        console.log('decodedHash', decodedHash)
-        console.log('userDetails?.username', userDetails?.username)
+        console.log('decodedHash', decodedObj.referral)
+        // console.log('userDetails?.username', userDetails?.username)
         seturlInfo(decodedObj);
-        getAccountTokens();
+        
       }
     // } catch (error) {
     //   console.log(error);
     // }
   
-  }, [id, userDetails?.username]);
-  const getAccountTokens = async () => {
-    const getUsername = userDetails?.username?.toLowerCase()
-    if (getUsername) {
-      console.log("getUsername",getUsername)
+  }, [id]);
+  useEffect(() => {
+   
+    if (urlInfo) {
+      console.log("urlInfo", urlInfo)
+      const referral = urlInfo.referral
+      getAccountTokens(referral)
+    }
+    // getAccountTokens();
+  },[urlInfo])
+  const getAccountTokens = async (referral:any) => {
+    const getUsername = referral.toLowerCase()
+    // if (getUsername) {
+      // console.log("getUsername",getUsername)
       if (getAccounts) {
         const acc = await getAccounts([`${getUsername}`]);
         console.log('acc', acc)
         setToken(acc[0]?.pending_claimed_accounts)
       } 
-      
-    }
+    // }
     
   }
   useEffect(() => {
@@ -186,7 +197,7 @@ function AccountRegisterForFriend(props: any) {
     console.log('urlInfo', urlInfo)
   }, [urlInfo])
   const accountWithCredit = async () => {
-    const getUsername = userDetails?.username?.toLowerCase()
+    const getUsername = urlInfo.referral.toLowerCase()
     if (getUsername) {
       try {
         const response: any = await createAccountWithCredit({
@@ -232,7 +243,7 @@ function AccountRegisterForFriend(props: any) {
     
   }
   const createAccount = async ()=> {
-    const getUsername = userDetails?.username?.toLowerCase()
+    const getUsername = urlInfo.referral.toLowerCase()
     if (getUsername) {
       try {
         const response: any = await createHiveAccount({
@@ -401,13 +412,13 @@ function AccountRegisterForFriend(props: any) {
         }, rpc);
     })
   
-  if (authenticated === null) {
-    return <Box>Loading...</Box>;
-  }
+  // if (authenticated === null) {
+  //   return <Box>Loading...</Box>;
+  // }
   
-  if (authenticated === false) {
-    return <Box>Unauthorized access, please login first</Box>;
-  }
+  // if (authenticated === false) {
+  //   return <Box>Unauthorized access, please login first</Box>;
+  // }
 
   return (
     <Box padding={'30px'} width={'100%'} height='80vh'>
