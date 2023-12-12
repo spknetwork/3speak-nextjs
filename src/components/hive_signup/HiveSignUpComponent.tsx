@@ -29,7 +29,7 @@ const HiveSignUpComponent = () => {
     // setCurrentStep(1);
     try {
       const password: string = await generatePassword(32);
-      const keys: KeyTypes = getPrivateKeys(values.username, password);
+      const keys: KeyTypes = getPrivateKeys(values.file_name, password);
       console.log('password', password)
       console.log('keys', keys)
       setNewUserKeys((prev: any) => ({ ...prev, ...keys }));
