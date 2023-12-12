@@ -435,7 +435,7 @@ function AccountRegisterForFriend(props: any) {
       {step == 2 && (
       <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
         <Text as='h2'>Successfully registered account!</Text>
-        <Link href={`/${urlInfo?.username}`}>Visist {urlInfo?.username}&quot;s profile</Link>
+        <Link href={`/user/${urlInfo?.username}`}>Visit {urlInfo?.username}&quot;s profile</Link>
         
       </Flex>
       )}
