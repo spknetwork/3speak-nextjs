@@ -70,18 +70,21 @@ const HiveSignIn = ({ tab }: any) => {
     );
     console.log('_response', _response)
     localStorage.setItem("access_token", _response.data.access_token);
+    localStorage.setItem(`keychainToken_${username}`, _response.data.access_token);
+    // save users
+    // save keychainToken_username
     checkAuth();
 
     // call saving in localstorage
-    saveLocalStorage()
+    saveLocalStorage(_response.data.access_token)
   };
 
-  const saveLocalStorage = () => {
+  const saveLocalStorage = (token:any) => {
     let dataToStore = {
-      avatar: 'https://source.unsplash.com/random/200x200?sig=3',
+      avatar: 'https source.unsplash.com/random/200x200?sig=3',
       username: username,
       type: 'Keychain',
-      token: ''
+      token: `${token}`
     }
 
     let accounts
@@ -90,12 +93,14 @@ const HiveSignIn = ({ tab }: any) => {
       localStorage.setItem("accountsList", JSON.stringify([dataToStore]))
     } else {
       accounts = JSON.parse(local)
-      const checkData = accounts.filter((item: any) => item.username == username)
+      const checkData = accounts.filter((item: any) => item.username != username)
       console.log('checkData', checkData)
-      if (accounts.length < 6 && checkData.length == 0) {
+      // if (accounts.length < 6 && checkData.length == 0) {
+        // if (checkData.length == 0) {
+        accounts = checkData
         accounts.push(dataToStore)
         localStorage.setItem("accountsList", JSON.stringify(accounts))
-      }
+      // }
     }
   }
 

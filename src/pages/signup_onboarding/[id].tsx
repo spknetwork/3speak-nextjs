@@ -1,13 +1,21 @@
 import { hexDec } from '@/utils/b64';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react'
-import { Client, RCAPI, utils,Operation,OperationName } from "@hiveio/dhive";
-import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
+import { Client, RCAPI, utils, Operation, OperationName } from "@hiveio/dhive";
+import { Box, Button, Flex, Input, Link, Text, useDisclosure } from '@chakra-ui/react';
 // import Link from 'next/link';
 import { useToast } from "@chakra-ui/react";
 import { useAppStore } from '@/lib/store';
 // import {PrivateKey, Operation, OperationName, TransactionConfirmation, AccountUpdateOperation, CustomJsonOperation} from '@hiveio/dhive';
-
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
 
 interface ActiveUser {
   username: string;
@@ -32,6 +40,7 @@ interface AccountInfo {
   }
 }
 function AccountRegisterForFriend(props: any) {
+  const { isOpen:isOpenDRC, onOpen:onOpenDRC, onClose:onCloseDRC } = useDisclosure()
   const router = useRouter();
   const { pathname } = useRouter();
 
@@ -44,7 +53,7 @@ function AccountRegisterForFriend(props: any) {
     if (allowAccess == true) {
       setAuthenticated(allowAccess);
       return
-    } 
+    }
     if (allowAccess == false) {
       setAuthenticated(false);
       return
@@ -62,55 +71,63 @@ function AccountRegisterForFriend(props: any) {
   const [step, setStep] = useState<any>(1)
   // const router = useRouter();
   const { id } = router.query;
-  console.log('hash',id)
+  console.log('hash', id)
   const [urlInfo, seturlInfo] = useState<any>(null)
   const [community, setCommunity] = useState<any | null>(null);
   // const [step, setStep] = useState("confirm");
   const [msg, setMsg] = useState("");
   const [token, setToken] = useState(0)
- 
+  const [delegateRC, setDelegateRC] = useState(false)
+  const [showModalFormDelegateRC, setshowModalFormDelegateRC] = useState(false)
+  const [postingKey, setPostingKey] = useState(null)
+
   useEffect(() => {
     let decodedObj;
     // try {
-      if (id ) {
-        const decodedHash = hexDec(`${id}`);
-        decodedObj = JSON.parse(decodedHash);
-        console.log('decodedHash', decodedObj.referral)
-        // console.log('userDetails?.username', userDetails?.username)
-        seturlInfo(decodedObj);
-        
-      }
+    if (id) {
+      const decodedHash = hexDec(`${id}`);
+      decodedObj = JSON.parse(decodedHash);
+      console.log('decodedHash', decodedObj.referral)
+      // console.log('userDetails?.username', userDetails?.username)
+      seturlInfo(decodedObj);
+
+    }
     // } catch (error) {
     //   console.log(error);
     // }
-  
+
   }, [id]);
   useEffect(() => {
-   
+
     if (urlInfo) {
       console.log("urlInfo", urlInfo)
       const referral = urlInfo.referral
       getAccountTokens(referral)
     }
     // getAccountTokens();
-  },[urlInfo])
-  const getAccountTokens = async (referral:any) => {
+  }, [urlInfo])
+  const getAccountTokens = async (referral: any) => {
     const getUsername = referral.toLowerCase()
     // if (getUsername) {
-      // console.log("getUsername",getUsername)
-      if (getAccounts) {
-        const acc = await getAccounts([`${getUsername}`]);
-        console.log('acc', acc)
-        setToken(acc[0]?.pending_claimed_accounts)
-      } 
+    // console.log("getUsername",getUsername)
+    if (getAccounts) {
+      const acc = await getAccounts([`${getUsername}`]);
+      console.log('acc', acc)
+      setToken(acc[0]?.pending_claimed_accounts)
+      setPostingKey(acc[0]?.posting?.key_auths[0][0])
+       console.log('acc[0]?.posting?.key_auths[0]', acc[0]?.posting?.key_auths[0][0])
+    }
     // }
-    
+
   }
+  useEffect(() => {
+    console.log("postingKey",postingKey)
+  },[postingKey])
   useEffect(() => {
     console.log('toklen here', token)
   }, [token])
   const SERVERS = [
-    "https://rpc.ecency.com",
+    // "https://rpc.ecency.com",
     "https://api.hive.blog",
     "https://api.deathwing.me",
     "https://rpc.ausbit.dev",
@@ -191,29 +208,92 @@ function AccountRegisterForFriend(props: any) {
       }
       ))
   }
-  
 
   useEffect(() => {
     console.log('urlInfo', urlInfo)
   }, [urlInfo])
-  const accountWithCredit = async () => {
+  const [rcAmount, setrcAmount] = useState(5000000000)
+  const submitDelegateRC = () => {
+    // show modal call function here
+    // setshowModalFormDelegateRC(true)
+    // onOpenDRC()
+    console.log("urlinfo", urlInfo.username)
+    console.log("urlInfo.referral", urlInfo.referral)
+    console.log("rcAmount", rcAmount)
+    if (window.hive_keychain) {
+      console.log("window.hive_keychain",window.hive_keychain)
+      const json = JSON.stringify(['delegate_rc', {
+            from: `${urlInfo.referral}`,
+            delegatees: [`${urlInfo.username}`],
+            max_rc: rcAmount,
+        }]);
+      // window.hive_keychain.requestDelegation(
+      //   urlInfo.referral, // Your username
+      //     urlInfo.username,
+      //     // 'juneroy20241',
+      //     `${rcAmount.toFixed(3)}`,
+      //     'HP',
+      //     function(response:any) {
+      //         console.log(response);
+      //     }
+      // );
+      //  window.hive_keychain.requestCustomJson(
+      //   `${postingKey}`,
+      //   [],
+      //   [`${urlInfo.referral}`],
+      //   'rc',
+      //   json, // Your username
+          
+      //     function(response:any) {
+      //         console.log(response);
+      //     }
+      // );
+      window.hive_keychain.requestCustomJson(
+        `${urlInfo.referral}`,
+        "threespeak",
+        'Posting',
+        json,
+        "Delegate RC",
+        callbackfunctestREs
+      );
+  } else {
+      alert("Hive Keychain is not installed!");
+  }
+  }
+  const callbackfunctestREs = (res:any) => {
+    // show modal call function here
+    // setshowModalFormDelegateRC(true)
+    // onOpenDRC()c
+    console.log("res",res)
+    onCloseDRC()
+  }
+  const showModalDelegateRC = () => {
+    // show modal call function here
+    // setshowModalFormDelegateRC(true)
+    onOpenDRC()
+  }
+  const accountWithCreditDRC = async () => {
+    setDelegateRC(true)
+    accountWithCredit(true)
+  }
+  const accountWithCredit = async (delegate_rc = false) => {
     const getUsername = urlInfo.referral.toLowerCase()
     if (getUsername) {
       try {
         const response: any = await createAccountWithCredit({
           username: urlInfo?.username,
           keys: urlInfo?.keys
-        }, 
-        `${getUsername}`
+        },
+          `${getUsername}`
         )
-        console.log('response',response)
-  
+        console.log('response', response)
+
         if (response.success === true) {
           // setStep("success");
           // await createBreakawayUser(urlInfo!.username, props.global.hive_id, urlInfo!.referral, urlInfo!.email)
           // setMsg(response.message)
           setStep(2)
-  
+
           toast({
             position: "top-right",
             title: "Successfully registered",
@@ -222,11 +302,16 @@ function AccountRegisterForFriend(props: any) {
             duration: 9000,
             isClosable: true,
           });
+          // onOpenDRC()
+          if (delegate_rc) {
+            // call function in showing modal to delegate RC
+            showModalDelegateRC()
+          }
         } else {
           // setStep("fail")
           // setMsg(response.message)
           setStep(3)
-  
+
           toast({
             position: "top-right",
             title: "Something went wrong",
@@ -237,28 +322,32 @@ function AccountRegisterForFriend(props: any) {
           });
         }
       } catch (error) {
-        
+
       }
     }
-    
+
   }
-  const createAccount = async ()=> {
+  const createAccountDRC = async () => {
+    setDelegateRC(true)
+    createAccount(true)
+  }
+  const createAccount = async (delegate_rc = false) => {
     const getUsername = urlInfo.referral.toLowerCase()
     if (getUsername) {
       try {
         const response: any = await createHiveAccount({
           username: urlInfo?.username,
           keys: urlInfo?.keys
-        }, 
-        `${getUsername}`
+        },
+          `${getUsername}`
         );
-        console.log('response',response)
+        console.log('response', response)
         if (response.success === true) {
           // setStep("success");
           // await createBreakawayUser(urlInfo!.username, props.global.hive_id, urlInfo!.referral, urlInfo!.email)
           // setMsg(response.message)
           setStep(2)
-  
+
           toast({
             position: "top-right",
             title: "Successfully registered",
@@ -267,6 +356,12 @@ function AccountRegisterForFriend(props: any) {
             duration: 9000,
             isClosable: true,
           });
+          // onOpenDRC()
+          if (delegate_rc) {
+            // alert("here")
+            // call function in showing modal to delegate RC
+            showModalDelegateRC()
+          }
         } else {
           // setStep("fail")
           // setMsg(response.message)
@@ -284,25 +379,25 @@ function AccountRegisterForFriend(props: any) {
         console.log(error)
       };
     }
-    
+
   };
   const createAccountWithCredit = async (data: any, creator_account: string) => {
     try {
       const { username, keys } = data;
-  
+
       const account = {
         name: username,
         ...keys,
         active: false
       };
-  
+
       let tokens: any = await getAccounts([creator_account]);
       console.log(tokens)
       tokens = tokens[0]?.pending_claimed_accounts;
-  
+
       let fee = null;
       let op_name: OperationName = "create_claimed_account";
-  
+
       const owner = {
         weight_threshold: 1,
         account_auths: [],
@@ -329,7 +424,7 @@ function AccountRegisterForFriend(props: any) {
         json_metadata: "",
         extensions: []
       };
-  
+
       if (fee) params.fee = fee;
       const operation: Operation = [op_name, params];
       ops.push(operation);
@@ -347,107 +442,148 @@ function AccountRegisterForFriend(props: any) {
   const createHiveAccount = async (data: any, creator_account: string) => {
     try {
       const { username, keys } = data;
-  
+
       const account = {
-      name: username,
-      ...keys,
-      active: false
+        name: username,
+        ...keys,
+        active: false
       };
-      console.log("account",account)
-  
+      console.log("account", account)
+
       const op_name: OperationName = "account_create";
-  
+
       const owner = {
-      weight_threshold: 1,
-      account_auths: [],
-      key_auths: [[account.ownerPubKey, 1]]
+        weight_threshold: 1,
+        account_auths: [],
+        key_auths: [[account.ownerPubKey, 1]]
       };
       const active = {
-      weight_threshold: 1,
-      account_auths: [],
-      key_auths: [[account.activePubKey, 1]]
+        weight_threshold: 1,
+        account_auths: [],
+        key_auths: [[account.activePubKey, 1]]
       };
       const posting = {
-      weight_threshold: 1,
-      account_auths: [["threespeak", 1]],
-      key_auths: [[account.postingPubKey, 1]]
+        weight_threshold: 1,
+        account_auths: [["threespeak", 1]],
+        key_auths: [[account.postingPubKey, 1]]
       };
       const ops: Array<any> = [];
       const params: any = {
-      creator: creator_account,
-      new_account_name: account.name,
-      owner,
-      active,
-      posting,
-      memo_key: account.memoPubKey,
-      json_metadata: "",
-      extensions: [],
-      fee: "3.000 HIVE"
+        creator: creator_account,
+        new_account_name: account.name,
+        owner,
+        active,
+        posting,
+        memo_key: account.memoPubKey,
+        json_metadata: "",
+        extensions: [],
+        fee: "3.000 HIVE"
       };
       const operation: Operation = [op_name, params];
       ops.push(operation);
       try {
 
-      const response = await broadcast(creator_account, [operation], "Active");
-      console.log(response)
-          return response;
-          } catch (err: any) {
-          console.log(err);
-          return err;
-          }
-  } catch (err) {
+        const response = await broadcast(creator_account, [operation], "Active");
+        console.log(response)
+        return response;
+      } catch (err: any) {
+        console.log(err);
+        return err;
+      }
+    } catch (err) {
       console.log(err);
-  }
+    }
   }
 
-   const broadcast = (account: string, operations: any[], key: any, rpc: string | null = null): Promise<any> =>
+  const broadcast = (account: string, operations: any[], key: any, rpc: string | null = null): Promise<any> =>
     new Promise<any>((resolve, reject) => {
-        window.hive_keychain?.requestBroadcast(account, operations, key, (resp:any) => {
-            if (!resp.success) {
-                reject(resp);
-                // reject({message: "Operation cancelled"});
-            }
+      window.hive_keychain?.requestBroadcast(account, operations, key, (resp: any) => {
+        if (!resp.success) {
+          reject(resp);
+          // reject({message: "Operation cancelled"});
+        }
 
-            resolve(resp);
-        }, rpc);
+        resolve(resp);
+      }, rpc);
     })
-  
+
   // if (authenticated === null) {
   //   return <Box>Loading...</Box>;
   // }
-  
+
   // if (authenticated === false) {
   //   return <Box>Unauthorized access, please login first</Box>;
   // }
 
   return (
     <Box padding={'30px'} width={'100%'} height='80vh'>
+      <Modal size={'xl'} closeOnOverlayClick={false} isOpen={isOpenDRC} onClose={onCloseDRC}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Delegate Resource Credits for {urlInfo?.username}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {/* <Lorem count={2} /> */}
+            <Box marginBottom={'15px'}>
+            <label htmlFor="referral">From:</label><br />
+            <Input variant='outline' width='80%' placeholder='username' value={urlInfo?.referral} />
+            </Box>
+            <Box marginBottom={'15px'}>
+            <label htmlFor="referral">To:</label><br />
+
+            <Input variant='outline' width='80%'  placeholder='referral username' value={urlInfo?.username} />
+            </Box>
+            <Box>
+            <label htmlFor="referral">Amount:</label><br />
+
+            <Input required type={'number'} min={5000000000} variant='outline' width='80%'  placeholder='amount' value={rcAmount} onChange={(e) => setrcAmount(parseInt(e.target.value))}  />
+            </Box>
+          </ModalBody>
+
+          <ModalFooter>
+            {/* <Button colorScheme='blue' mr={3} onClick={onCloseDRC}>
+              Close
+            </Button> */}
+            <Button onClick={submitDelegateRC} variant='success'>Delegate RC Now</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       {step == 1 && (
-      <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
-        <Text as='h2'>You are creating an account for a friend.</Text>
-        <Flex padding={'20px'} paddingX='50px' width={'70%'} justifyContent='space-evenly'>
-          <Button onClick={()=> createAccount()} colorScheme={'blue'}>Pay with (3Hive)</Button>
-          <Button onClick={() => accountWithCredit()} colorScheme={'blue'}>Pay with credits</Button>
+        <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
+          <Text as='h2'>You are creating an account for a friend.</Text>
+          <Flex padding={'20px'} paddingX='50px' width={'70%'} justifyContent='center'>
+            <Button marginRight={'10px'} onClick={() => createAccount()} colorScheme={'blue'}>Pay with (3Hive)</Button>
+            {/* <Button onClick={() => showModalDelegateRC()} colorScheme={'blue'}>Pay with 3 hive and delegate resource credits</Button> */}
+            <Button onClick={() => createAccountDRC()} colorScheme={'blue'}>Pay with 3 hive and delegate resource credits</Button>
+            {/* <Button onClick={() => accountWithCredit()} colorScheme={'blue'}>Pay with account creation tokens</Button>
+            <Button onClick={() => accountWithCreditDRC()} colorScheme={'blue'}>Pay with account creation tokens and delegate resource credits</Button> */}
+          </Flex>
+          <Flex padding={'20px'} paddingX='50px' width={'70%'} justifyContent='center'>
+            {/* <Button onClick={() => createAccount()} colorScheme={'blue'}>Pay with (3Hive)</Button>
+            <Button onClick={() => showModalDelegateRC()} colorScheme={'blue'}>Pay with 3 hive and delegate resource credits</Button> */}
+            {/* <Button onClick={() => createAccountDRC()} colorScheme={'blue'}>Pay with 3 hive and delegate resource credits</Button> */}
+            <Button marginRight={'10px'}  onClick={() => accountWithCredit()} colorScheme={'blue'}>Pay with account creation tokens</Button>
+            <Button onClick={() => accountWithCreditDRC()} colorScheme={'blue'}>Pay with account creation tokens and delegate resource credits</Button>
+          </Flex>
         </Flex>
-      </Flex>
       )}
 
       {step == 2 && (
-      <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
-        <Text as='h2'>Successfully registered account!</Text>
-        <Link href={`/user/${urlInfo?.username}`}>Visit {urlInfo?.username}&quot;s profile</Link>
-        
-      </Flex>
+        <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
+          <Text as='h2'>Successfully registered account!</Text>
+          <Link href={`/user/${urlInfo?.username}`}>Visit {urlInfo?.username}&quot;s profile</Link>
+
+        </Flex>
       )}
 
       {step == 3 && (
-      <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
-        <Text>Something Went Wrong!</Text>
-        <Button onClick={() => setStep(1)}>Try Again</Button>
-        
-      </Flex>
+        <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
+          <Text>Something Went Wrong!</Text>
+          <Button onClick={() => setStep(1)}>Try Again</Button>
+
+        </Flex>
       )}
-      
+
 
     </Box>
   )
