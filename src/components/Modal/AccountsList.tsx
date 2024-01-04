@@ -17,7 +17,7 @@ const AccountsList = ({ listAccounts, addAccounts, isOpenModal1, onCloseModal1 }
                 <ModalCloseButton />
                 <ModalBody pb={6}>
                     <Box>
-                        {listAccounts.length > 0 && listAccounts.map((account: any, index:number) => {
+                        {listAccounts && listAccounts.length > 0 && listAccounts.map((account: any, index:number) => {
                             return (
                                 <Flex onClick={()=> changeAccount(account) } cursor={'pointer'} key={index} justifyContent={'space-between'} alignItems='center'>
                                     <Flex justifyContent={'space-between'} alignItems='center'>
