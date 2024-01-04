@@ -2,9 +2,10 @@ import { hexDec } from '@/utils/b64';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react'
 import { Client, RCAPI, utils, Operation, OperationName } from "@hiveio/dhive";
-import { Box, Button, Flex, Input, Link, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, Input, Link, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack, Text, useDisclosure } from '@chakra-ui/react';
 // import Link from 'next/link';
 import { useToast } from "@chakra-ui/react";
+import axios from 'axios';
 import { useAppStore } from '@/lib/store';
 // import {PrivateKey, Operation, OperationName, TransactionConfirmation, AccountUpdateOperation, CustomJsonOperation} from '@hiveio/dhive';
 import {
@@ -48,6 +49,7 @@ function AccountRegisterForFriend(props: any) {
 
   const { allowAccess, userDetails, listAccounts, setAccounts } = useAppStore();
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+  const [getCurrentRc, setgetCurrentRc] = useState<any>(0);
 
   useEffect(() => {
     if (allowAccess == true) {
@@ -67,7 +69,32 @@ function AccountRegisterForFriend(props: any) {
   }, [authenticated, router]);
 
   const toast = useToast();
-
+  const get_rc = (accounts:any) => {
+    return axios.post('https://api.hive.blog', {
+      jsonrpc: '2.0',
+      id: 1,
+      method: 'rc_api.find_rc_accounts',
+      params: {
+        accounts
+      }
+    })
+    .then((response) => {
+      response.data.result
+      console.log("response.data.result",response.data.result)
+      if (response && response.data && response.data.result && response.data.result.rc_accounts.length > 0) {
+        let currentRc =  response.data.result.rc_accounts[0].max_rc/1000000000
+        currentRc = Number(currentRc.toFixed(2))
+        setgetCurrentRc(currentRc)
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching RC accounts:', error);
+      throw error;
+    });
+  };
+  useEffect(() => {
+    console.log("getCurrentRc", getCurrentRc)
+  },[getCurrentRc])
   const [step, setStep] = useState<any>(1)
   // const router = useRouter();
   const { id } = router.query;
@@ -102,6 +129,7 @@ function AccountRegisterForFriend(props: any) {
     if (urlInfo) {
       console.log("urlInfo", urlInfo)
       const referral = urlInfo.referral
+      get_rc([`${urlInfo.referral}`])
       getAccountTokens(referral)
     }
     // getAccountTokens();
@@ -212,7 +240,7 @@ function AccountRegisterForFriend(props: any) {
   useEffect(() => {
     console.log('urlInfo', urlInfo)
   }, [urlInfo])
-  const [rcAmount, setrcAmount] = useState(5000000000)
+  const [rcAmount, setrcAmount] = useState(5)
   const submitDelegateRC = () => {
     // show modal call function here
     // setshowModalFormDelegateRC(true)
@@ -225,7 +253,7 @@ function AccountRegisterForFriend(props: any) {
       const json = JSON.stringify(['delegate_rc', {
             from: `${urlInfo.referral}`,
             delegatees: [`${urlInfo.username}`],
-            max_rc: rcAmount,
+            max_rc: rcAmount * 1000000000,
         }]);
       // window.hive_keychain.requestDelegation(
       //   urlInfo.referral, // Your username
@@ -320,6 +348,11 @@ function AccountRegisterForFriend(props: any) {
             duration: 9000,
             isClosable: true,
           });
+          if (delegate_rc) {
+            // alert("here")
+            // call function in showing modal to delegate RC
+            showModalDelegateRC()
+          }
         }
       } catch (error) {
 
@@ -374,6 +407,11 @@ function AccountRegisterForFriend(props: any) {
             duration: 9000,
             isClosable: true,
           });
+          if (delegate_rc) {
+            // alert("here")
+            // call function in showing modal to delegate RC
+            showModalDelegateRC()
+          }
         }
       } catch (error) {
         console.log(error)
@@ -526,17 +564,30 @@ function AccountRegisterForFriend(props: any) {
             {/* <Lorem count={2} /> */}
             <Box marginBottom={'15px'}>
             <label htmlFor="referral">From:</label><br />
-            <Input variant='outline' width='80%' placeholder='username' value={urlInfo?.referral} />
+            <Input variant='outline' readOnly width='80%' placeholder='username' value={urlInfo?.referral} />
             </Box>
             <Box marginBottom={'15px'}>
             <label htmlFor="referral">To:</label><br />
 
-            <Input variant='outline' width='80%'  placeholder='referral username' value={urlInfo?.username} />
+            <Input variant='outline' width='80%' readOnly placeholder='referral username' value={urlInfo?.username} />
             </Box>
             <Box>
-            <label htmlFor="referral">Amount:</label><br />
-
-            <Input required type={'number'} min={5000000000} variant='outline' width='80%'  placeholder='amount' value={rcAmount} onChange={(e) => setrcAmount(parseInt(e.target.value))}  />
+            <label htmlFor="referral">RC Amount (Max available {getCurrentRc}b RC):</label><br />
+              <Flex>
+              <Input placeholder='How much do you want to delegate?' autoFocus required type={'number'} min={5} variant='outline' width='80%'   value={rcAmount} onChange={(e) => setrcAmount(parseInt(e.target.value))}  />
+              <Button>B (BILLION)</Button>
+              </Flex>
+              <Box marginTop={'10px'}>
+              {/* <Input   type={'range'} value={rcAmount} onChange={(e) => setrcAmount(parseInt(e.target.value))}   min={0} max={getCurrentRc}  width='50%'     /> */}
+              <Slider defaultValue={0} value={rcAmount} max={getCurrentRc} aria-label='slider-ex-6' onChange={(val:any) => setrcAmount(parseInt(val))}>
+                
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+              {/* <input type="range" id="vol" name="vol" min="0" max="50"> */}
+              </Box>
             </Box>
           </ModalBody>
 
@@ -544,7 +595,7 @@ function AccountRegisterForFriend(props: any) {
             {/* <Button colorScheme='blue' mr={3} onClick={onCloseDRC}>
               Close
             </Button> */}
-            <Button onClick={submitDelegateRC} variant='success'>Delegate RC Now</Button>
+            <Button onClick={submitDelegateRC} isDisabled={getCurrentRc <rcAmount? true:false} colorScheme='teal'>Delegate RC Now</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
