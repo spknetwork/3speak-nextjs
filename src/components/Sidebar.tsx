@@ -48,6 +48,7 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { AiFillAndroid } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 import AccountsList from "./Modal/AccountsList";
+import SignInModal from "./Modal/SignInModal";
 const threespeak = {
   filter: "drop-shadow(2px 4px 6px black)",
 };
@@ -150,7 +151,9 @@ export const Sidebar = () => {
       console.log("showNav", showNav);
     }
   }, [isMobile, showNav]);
-
+  const addAccountsNow = () => {
+     console.log("addAccountsNow",addAccountsNow)
+  }
   const removeAccount = (account:any, index: number) => {
     listAccounts.splice(index, 1)
     console.log('listAccounts', listAccounts)
@@ -551,6 +554,7 @@ export const Sidebar = () => {
         </ChakraBox>
       )}
       <AccountsList isOpenModal1={isOpenModal1} onCloseModal1={onCloseModal1} listAccounts={listAccounts} addAccounts={addAccounts}/>
+      <SignInModal isOpenModal2={isOpenModal2} onCloseModal2={onCloseModal2}  addAccountsNow={addAccountsNow}/>
     </Flex>
   );
 };
