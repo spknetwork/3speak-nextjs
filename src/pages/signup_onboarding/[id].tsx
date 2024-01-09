@@ -69,28 +69,27 @@ function AccountRegisterForFriend(props: any) {
   }, [authenticated, router]);
 
   const toast = useToast();
-  const get_rc = (accounts:any) => {
-    return axios.post('https://api.hive.blog', {
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'rc_api.find_rc_accounts',
-      params: {
-        accounts
-      }
-    })
-    .then((response) => {
-      response.data.result
-      console.log("response.data.result",response.data.result)
+  const get_rc = async (accounts:any) => {
+    try {
+      const response = await axios.post('https://api.hive.blog', {
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'rc_api.find_rc_accounts',
+        params: {
+          accounts
+        }
+      });
+      response.data.result;
+      console.log("response.data.result", response.data.result);
       if (response && response.data && response.data.result && response.data.result.rc_accounts.length > 0) {
-        let currentRc =  response.data.result.rc_accounts[0].max_rc/1000000000
-        currentRc = Number(currentRc.toFixed(2))
-        setgetCurrentRc(currentRc)
+        let currentRc = response.data.result.rc_accounts[0].max_rc / 1000000000;
+        currentRc = Number(currentRc.toFixed(2));
+        setgetCurrentRc(currentRc);
       }
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error('Error fetching RC accounts:', error);
       throw error;
-    });
+    }
   };
   useEffect(() => {
     console.log("getCurrentRc", getCurrentRc)

@@ -4,6 +4,8 @@ import Earnings from "@/components/user/Earnings";
 import Livestream from "@/components/user/Livestream";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
+    Alert,
+    AlertIcon,
     Box,
     Button,
     Flex,
@@ -12,6 +14,7 @@ import {
     ListItem,
     Text,
     UnorderedList,
+    useDisclosure,
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 
@@ -26,8 +29,35 @@ import VideoComponent from "@/components/VideoComponent";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 import MobileTabs from "@/components/user/MobileTabs";
 import DesktopTabs from "@/components/user/DesktopTabs";
+import { useAppStore } from "@/lib/store";
+import StatsModal from "@/components/Modal/StatsModal";
+import DelegateRCModal from "@/components/Modal/DelegateRCModal";
 
 const UserPage: React.FC = () => {
+    const [urlInfo, seturlInfo] = useState<any>(null);
+
+    useEffect(() => {
+        console.log("urlInfo", urlInfo)
+    }, [urlInfo])
+  const { userDetails } = useAppStore();
+  const [currentUser, setcurrentUser] = useState<any>(null);
+  const { isOpen: isOpenModalStats, onOpen: onOpenModalStats, onClose: onCloseModalStats } = useDisclosure()
+  const { isOpen: isOpenModalEditDelegate, onOpen: onOpenModalEditDelegate, onClose: onCloseModalEditDelegate } = useDisclosure()
+
+
+  useEffect(() =>{
+    if (userDetails?.username) {
+        console.log("userDetails?.username?",userDetails?.username)
+        setcurrentUser(userDetails)
+    }
+  },[userDetails])
+
+  useEffect(() =>{
+    if (currentUser) {
+        console.log("currentUser",currentUser)
+    }
+  },[currentUser])
+
     const router = useRouter();
     const { id } = router.query;
 
@@ -50,7 +80,10 @@ const UserPage: React.FC = () => {
     const { loading:loadingList, error:errorList, data:dataList } = useQuery(GET_SOCIAL_FEED_BY_CREATOR, {
         variables: { id: id },
     });
-
+    const seturlInfoFun = (data:any) => {
+        seturlInfo(data)
+        onOpenModalEditDelegate()
+    } 
     useEffect(() => {
         if (!loadingList && !errorList && dataList) {
             console.log('data list', dataList.socialFeed)
@@ -104,33 +137,33 @@ const UserPage: React.FC = () => {
         }
     }, [isMobile,showNav]);
 
-    const [videos] = useState<VideoInterface[]>([
-        {
-            thumbnail:
-                "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVijsuv81Cu6QUxATfwLCchp7dhexyXdq6vj7hSxy7PKLRNLf5CYPBTwYKRDj6dR95KAhZkjwL?format=jpeg&mode=cover&width=340&height=191",
-            title:
-                "The Adventure trail of Mount Naupa and Mind2Mind Talk with Lakwatserong Engineer",
-            username: "thetrollingmind",
-        },
-        {
-            thumbnail:
-                "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVhbe9xjZvwDJDwq34KonBAhp6aDi5QWVMa8GKtBZHpfb4pz88JsvtNudXgZBf9vd4ahzvcP1p?format=jpeg&mode=cover&width=340&height=191",
-            title: "Refreshing Communal Ranch in Bukidnon Philippines",
-            username: "thetrollingmind",
-        },
-        {
-            thumbnail:
-                "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVb4cnggfP19UUoMFibN8JndfBo44LsTNKVZ5tXRYFs7vB9bWocqyN3CFG7xfRFuKAomRBmvQ6?format=jpeg&mode=cover&width=340&height=191",
-            title: "Via Crucis at Camari Hill | Lenten Tradition",
-            username: "thetrollingmind",
-        },
-        {
-            thumbnail:
-                "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbFQdnkVpujsZq5ivaUS3RobVsvgoUMDXSTgZCHfbwNsgBSuTKvqmnzt9EUtxERKUQ5963fSE?format=jpeg&mode=cover&width=340&height=191",
-            title: "Weekend Adventure- to the Mountain of Kan-irag",
-            username: "thetrollingmind",
-        },
-    ]);
+    // const [videos] = useState<VideoInterface[]>([
+    //     {
+    //         thumbnail:
+    //             "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVijsuv81Cu6QUxATfwLCchp7dhexyXdq6vj7hSxy7PKLRNLf5CYPBTwYKRDj6dR95KAhZkjwL?format=jpeg&mode=cover&width=340&height=191",
+    //         title:
+    //             "The Adventure trail of Mount Naupa and Mind2Mind Talk with Lakwatserong Engineer",
+    //         username: "thetrollingmind",
+    //     },
+    //     {
+    //         thumbnail:
+    //             "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVhbe9xjZvwDJDwq34KonBAhp6aDi5QWVMa8GKtBZHpfb4pz88JsvtNudXgZBf9vd4ahzvcP1p?format=jpeg&mode=cover&width=340&height=191",
+    //         title: "Refreshing Communal Ranch in Bukidnon Philippines",
+    //         username: "thetrollingmind",
+    //     },
+    //     {
+    //         thumbnail:
+    //             "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVb4cnggfP19UUoMFibN8JndfBo44LsTNKVZ5tXRYFs7vB9bWocqyN3CFG7xfRFuKAomRBmvQ6?format=jpeg&mode=cover&width=340&height=191",
+    //         title: "Via Crucis at Camari Hill | Lenten Tradition",
+    //         username: "thetrollingmind",
+    //     },
+    //     {
+    //         thumbnail:
+    //             "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbFQdnkVpujsZq5ivaUS3RobVsvgoUMDXSTgZCHfbwNsgBSuTKvqmnzt9EUtxERKUQ5963fSE?format=jpeg&mode=cover&width=340&height=191",
+    //         title: "Weekend Adventure- to the Mountain of Kan-irag",
+    //         username: "thetrollingmind",
+    //     },
+    // ]);
     return (
         <div>
             <Box minHeight={"280px"} position={"relative"} display="flex" justifyContent={'center'}>
@@ -241,6 +274,20 @@ const UserPage: React.FC = () => {
                                 <HamburgerIcon boxSize={"3rem"} />
                             </Button>
                         )}
+                        {
+                            currentUser?.username.toLowerCase() ==userProfile?.profile?.username.toLowerCase() && (
+                                <Box>
+                                    <Alert onClick={() =>onOpenModalStats() } cursor={'pointer'} fontSize={'12px'} marginLeft={'5px'} width={'80px'} borderRadius={'10px'} status='info'>
+                                        <AlertIcon />
+                                        Stats
+                                    </Alert>
+                                    <StatsModal  seturlInfo={seturlInfoFun} userDetails={userDetails} isOpenModalStats={isOpenModalStats} onCloseModalStats={onCloseModalStats}/>
+                                    <DelegateRCModal selectedUser={urlInfo} isOpenModalEditDelegate={isOpenModalEditDelegate} onCloseModalEditDelegate={onCloseModalEditDelegate}/>
+                                </Box>
+                            
+                            )
+                        }
+                         
                         <DesktopTabs isMobile={isMobile} showFeed={showFeed} updateShowFeed={updateShowFeed} />
                     </Flex>
 
