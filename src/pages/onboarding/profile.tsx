@@ -21,7 +21,16 @@ const OnBoarding = () => {
     }
    
   }, [getUserHiveDetails,userDetails?.username]);
-
+  useEffect(() => {
+    if (profileImage) {
+      localStorage.setItem("profileImage",profileImage)
+    }
+  },[profileImage])
+  useEffect(() => {
+    if (coverImage) {
+      localStorage.setItem("coverImage",coverImage)
+    }
+  },[coverImage])
   useEffect(() => {
     if (userhiveDetails) {
       setcoverImage(userhiveDetails.cover_image);
@@ -121,7 +130,7 @@ const OnBoarding = () => {
 
                     {/* {selectedFile} */}
                     <input {...getInputProps()} />
-                    {(coverImage && !selectedFile) && (
+                    {/* {(coverImage && !selectedFile) && (
                       <Image
                         className="coverImage"
                         layout="fill"
@@ -151,8 +160,9 @@ const OnBoarding = () => {
                           objectFit: "cover",
                         }}
                       />
-                    )}
-                    {!selectedFile && !coverImage && <FaUpload color="grey" />}
+                    )} */}
+                    {/* {!selectedFile && !coverImage && <FaUpload color="grey" />} */}
+                    <FaUpload color="grey" />
                   </Flex>
                 </Flex>
                 <Box
@@ -168,7 +178,9 @@ const OnBoarding = () => {
                   border={"1px solid"}
                 >
                   <input {...getInputPropsProfile()} />
-                  {profileImage && !selectedFileProfile && (
+                  <input type="hidden" value={profileImage} />
+                  <input type="hidden" value={coverImage} />
+                  {/* {profileImage && !selectedFileProfile && (
                     <Image
                       // className="profileImage"
                       className="selectedFile coverimage profileImage"
@@ -214,9 +226,10 @@ const OnBoarding = () => {
                         objectFit: "cover",
                       }}
                     />
-                  )}
+                  )} */}
 
-                  {!profileImage && !selectedFileProfile && (
+                  {/* {!profileImage && !selectedFileProfile && ( */}
+                  {!selectedFileProfile && (
                     <Image
                       // className="profileImage"
                       className="selectedFile coverimage"

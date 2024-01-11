@@ -8,9 +8,27 @@ import { Name } from "@/lib/slices/createUserStore";
 
 const OnBoarding = () => {
   const { getUserHiveDetails, userhiveDetails, userName, userDetails } = useAppStore();
+  const [coverImage, setcoverImage] = useState<string| null>("");
+  const [profileImage, setprofileImage] = useState<string| null>("");
   useEffect(() => {
     console.log("userDetails?.username",userDetails?.username)
+    const ls_coverImage = localStorage.getItem("coverImage")
+    const ls_profileImage = localStorage.getItem("profileImage")
+    setcoverImage(ls_profileImage)
+    setprofileImage(ls_coverImage)
   },[userDetails?.username])
+
+  useEffect(() => {
+    if (profileImage) {
+      localStorage.setItem("profileImage",profileImage)
+    }
+  },[profileImage])
+  useEffect(() => {
+    if (coverImage) {
+      localStorage.setItem("coverImage",coverImage)
+    }
+  },[coverImage])
+  
   const router = useRouter();
   const [datawindow] = useState<any>("");
   const [name, setName] = useState<string>("");
@@ -27,6 +45,8 @@ const OnBoarding = () => {
           location: location,
           about: about,
           website: website,
+          cover_image: coverImage,
+          profile_image: profileImage,
         },
       };
 
@@ -47,12 +67,14 @@ const OnBoarding = () => {
         "Posting",
         (response: any) => {
           console.log("response", response);
+          router.push("/")
         }
       );
     } catch (error) {
       console.log({ error });
+      router.push("/")
     }
-    // router.push("/")
+    
   };
 
   useEffect(() => {
