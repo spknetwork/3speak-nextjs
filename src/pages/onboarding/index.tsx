@@ -107,11 +107,13 @@ const OnBoarding = () => {
                   </label>
                   <input
                     value={name}
-                    onChange={onchangeName}
+                    disabled
+                    
                     className="Input3"
                     id="email"
                     type="email"
                     name="email"
+                    style={{cursor: 'not-allowed'}}
                   />
                 </fieldset>
               </Box>
@@ -125,7 +127,7 @@ const OnBoarding = () => {
                 width="100%"
               >
                 <Button width={"xl"} colorScheme="blue">
-                  Save
+                  Next
                 </Button>
               </Flex>
               {/* <Box

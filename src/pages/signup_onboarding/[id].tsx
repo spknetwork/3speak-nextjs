@@ -2,7 +2,7 @@ import { hexDec } from '@/utils/b64';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react'
 import { Client, RCAPI, utils, Operation, OperationName } from "@hiveio/dhive";
-import { Box, Button, Flex, Input, Link, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Checkbox, Flex, Input, Link, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack, Text, useDisclosure } from '@chakra-ui/react';
 // import Link from 'next/link';
 import { useToast } from "@chakra-ui/react";
 import axios from 'axios';
@@ -50,7 +50,7 @@ function AccountRegisterForFriend(props: any) {
   const { allowAccess, userDetails, listAccounts, setAccounts } = useAppStore();
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
   const [getCurrentRc, setgetCurrentRc] = useState<any>(0);
-
+  const [checkedItem, setCheckedItem] = useState<boolean>(false);
   useEffect(() => {
     if (allowAccess == true) {
       setAuthenticated(allowAccess);
@@ -66,7 +66,7 @@ function AccountRegisterForFriend(props: any) {
     if (authenticated == false && authenticated != null && !is_signup_onboarding) {
       router.push("/auth/login");
     }
-  }, [authenticated, router]);
+  }, [authenticated, router, is_signup_onboarding]);
 
   const toast = useToast();
   const get_rc = async (accounts:any) => {
@@ -132,7 +132,7 @@ function AccountRegisterForFriend(props: any) {
       getAccountTokens(referral)
     }
     // getAccountTokens();
-  }, [urlInfo])
+  }, [urlInfo, ])
   const getAccountTokens = async (referral: any) => {
     const getUsername = referral.toLowerCase()
     // if (getUsername) {
@@ -277,7 +277,7 @@ function AccountRegisterForFriend(props: any) {
       // );
       window.hive_keychain.requestCustomJson(
         `${urlInfo.referral}`,
-        "threespeak",
+        "rc",
         'Posting',
         json,
         "Delegate RC",
@@ -330,7 +330,7 @@ function AccountRegisterForFriend(props: any) {
             isClosable: true,
           });
           // onOpenDRC()
-          if (delegate_rc) {
+          if (checkedItem) {
             // call function in showing modal to delegate RC
             showModalDelegateRC()
           }
@@ -347,7 +347,7 @@ function AccountRegisterForFriend(props: any) {
             duration: 9000,
             isClosable: true,
           });
-          if (delegate_rc) {
+          if (checkedItem) {
             // alert("here")
             // call function in showing modal to delegate RC
             showModalDelegateRC()
@@ -389,7 +389,7 @@ function AccountRegisterForFriend(props: any) {
             isClosable: true,
           });
           // onOpenDRC()
-          if (delegate_rc) {
+          if (checkedItem) {
             // alert("here")
             // call function in showing modal to delegate RC
             showModalDelegateRC()
@@ -406,7 +406,7 @@ function AccountRegisterForFriend(props: any) {
             duration: 9000,
             isClosable: true,
           });
-          if (delegate_rc) {
+          if (checkedItem) {
             // alert("here")
             // call function in showing modal to delegate RC
             showModalDelegateRC()
@@ -601,10 +601,20 @@ function AccountRegisterForFriend(props: any) {
       {step == 1 && (
         <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
           <Text as='h2'>You are creating an account for a friend.</Text>
+          <Checkbox
+            size='lg' colorScheme='blue'
+            iconColor='white' iconSize='1rem'
+          isChecked={checkedItem}
+          onChange={(e:any) => setCheckedItem(e.target.checked)}
+        >
+          Delegate resource credits
+        </Checkbox>
           <Flex padding={'20px'} paddingX='50px' width={'70%'} justifyContent='center'>
             <Button marginRight={'10px'} onClick={() => createAccount()} colorScheme={'blue'}>Pay with (3Hive)</Button>
+            <Button marginRight={'10px'}  onClick={() => accountWithCredit()} colorScheme={'blue'}>Pay with account creation tokens</Button>
+
             {/* <Button onClick={() => showModalDelegateRC()} colorScheme={'blue'}>Pay with 3 hive and delegate resource credits</Button> */}
-            <Button onClick={() => createAccountDRC()} colorScheme={'blue'}>Pay with 3 hive and delegate resource credits</Button>
+            {/* <Button onClick={() => createAccountDRC()} colorScheme={'blue'}>Pay with 3 hive and delegate resource credits</Button> */}
             {/* <Button onClick={() => accountWithCredit()} colorScheme={'blue'}>Pay with account creation tokens</Button>
             <Button onClick={() => accountWithCreditDRC()} colorScheme={'blue'}>Pay with account creation tokens and delegate resource credits</Button> */}
           </Flex>
@@ -612,8 +622,8 @@ function AccountRegisterForFriend(props: any) {
             {/* <Button onClick={() => createAccount()} colorScheme={'blue'}>Pay with (3Hive)</Button>
             <Button onClick={() => showModalDelegateRC()} colorScheme={'blue'}>Pay with 3 hive and delegate resource credits</Button> */}
             {/* <Button onClick={() => createAccountDRC()} colorScheme={'blue'}>Pay with 3 hive and delegate resource credits</Button> */}
-            <Button marginRight={'10px'}  onClick={() => accountWithCredit()} colorScheme={'blue'}>Pay with account creation tokens</Button>
-            <Button onClick={() => accountWithCreditDRC()} colorScheme={'blue'}>Pay with account creation tokens and delegate resource credits</Button>
+            {/* <Button marginRight={'10px'}  onClick={() => accountWithCredit()} colorScheme={'blue'}>Pay with account creation tokens</Button> */}
+            {/* <Button onClick={() => accountWithCreditDRC()} colorScheme={'blue'}>Pay with account creation tokens and delegate resource credits</Button> */}
           </Flex>
         </Flex>
       )}

@@ -2,7 +2,7 @@ import { Box, Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalCont
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-const DelegateRCModal = ({selectedUser, isOpenModalEditDelegate, onCloseModalEditDelegate }: any) => {
+const DelegateRCModal = ({rerenderList,isCreate =false, selectedUser, isOpenModalEditDelegate, onCloseModalEditDelegate }: any) => {
   const [rcAmount, setrcAmount] = useState(5)
   const [urlInfo, seturlInfo] = useState<any>(null);
   const [toDelegate, settoDelegate] = useState<any>(null);
@@ -19,13 +19,13 @@ const DelegateRCModal = ({selectedUser, isOpenModalEditDelegate, onCloseModalEdi
       console.log("window.hive_keychain",window.hive_keychain)
       const json = JSON.stringify(['delegate_rc', {
             from: `${urlInfo.referral}`,
-            delegatees: [`${urlInfo.username}`],
+            delegatees: isCreate == true?[`${toDelegate}`]:[`${urlInfo.username}`],
             max_rc: rcAmount * 1000000000,
         }]);
       
       window.hive_keychain.requestCustomJson(
         `${urlInfo.referral}`,
-        "threespeak",
+        "rc",
         'Posting',
         json,
         "Delegate RC",
@@ -41,6 +41,8 @@ const DelegateRCModal = ({selectedUser, isOpenModalEditDelegate, onCloseModalEdi
     // setshowModalFormDelegateRC(true)
     // onOpenDRC()c
     console.log("res",res)
+    rerenderList()
+    onCloseModalEditDelegate()
     // onCloseDRC()
   }
   const [getCurrentRc, setgetCurrentRc] = useState<any>(0);
@@ -103,23 +105,34 @@ const DelegateRCModal = ({selectedUser, isOpenModalEditDelegate, onCloseModalEdi
             <Box marginBottom={'15px'}>
             <label htmlFor="referral">To:</label><br />
 
-            <Input variant='outline' width='80%' placeholder='referral username' value={urlInfo?.username} />
+            {isCreate == false && (
+              <Input variant='outline' width='80%' readOnly placeholder='referral username' value={urlInfo?.username} />
+            )}
+
+          {isCreate == true && (
+              <Input variant='outline' width='80%'  placeholder='referral username' value={toDelegate} onChange={(e:any) => settoDelegate(e.target.value)} />
+            )}
+            {/* <Input variant='outline' width='80%' readOnly placeholder='referral username' value={urlInfo?.username} /> */}
             </Box>
             <Box>
-            <label htmlFor="referral">RC Amount (Max available {getCurrentRc}b RC):</label><br />
+            <label htmlFor="referral">RC Amount (Max available {getCurrentRc}B RC):</label><br />
               <Flex>
               <Input placeholder='How much do you want to delegate?' autoFocus required type={'number'} min={5} variant='outline' width='80%'   value={rcAmount} onChange={(e) => setrcAmount(parseInt(e.target.value))}  />
               <Button>B (BILLION)</Button>
               </Flex>
               <Box marginTop={'10px'}>
               {/* <Input   type={'range'} value={rcAmount} onChange={(e) => setrcAmount(parseInt(e.target.value))}   min={0} max={getCurrentRc}  width='50%'     /> */}
-              <Slider defaultValue={0} value={rcAmount} max={getCurrentRc} aria-label='slider-ex-6' onChange={(val:any) => setrcAmount(parseInt(val))}>
+              
+               <Slider defaultValue={0} value={rcAmount} max={getCurrentRc} aria-label='slider-ex-6' onChange={(val:any) => setrcAmount(parseInt(val))}>
                 
-              <SliderTrack>
-                <SliderFilledTrack />
-              </SliderTrack>
-              <SliderThumb />
-            </Slider>
+               <SliderTrack>
+                 <SliderFilledTrack />
+               </SliderTrack>
+               <SliderThumb />
+             </Slider>
+            
+            
+             
               {/* <input type="range" id="vol" name="vol" min="0" max="50"> */}
               </Box>
             </Box>

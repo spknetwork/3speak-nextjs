@@ -140,7 +140,7 @@ const HiveSignUpComponent = () => {
 
   }
   const SERVERS = [
-    "https://rpc.ecency.com",
+    // "https://rpc.ecency.com",
     "https://api.hive.blog",
     "https://api.deathwing.me",
     "https://rpc.ausbit.dev",

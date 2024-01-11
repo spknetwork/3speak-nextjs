@@ -10,7 +10,8 @@ const withTM = require("next-transpile-modules")([
 module.exports = withTM({
   reactStrictMode: true,
   images: {
-    domains: ["images.hive.blog","s3.eu-central-1.wasabisys.com", "files.peakd.com"],
+    // domains: ['*'],
+    domains: [ "bworldonline.com", "www.bworldonline.com", "images.hive.blog","s3.eu-central-1.wasabisys.com", "files.peakd.com"],
     // remotePatterns: [
     //   {
     //     protocol: "https",

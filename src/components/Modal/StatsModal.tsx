@@ -2,40 +2,24 @@ import { Box, Button, Flex, Link, ListItem, Modal, ModalBody, ModalCloseButton, 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-const StatsModal = ({ seturlInfo, userDetails, isOpenModalStats, onCloseModalStats }: any) => {
+const StatsModal = ({ directDelegations,setDirectDelegations, list_rc_direct_delegations, seturlInfo, userDetails, isOpenModalStats, onCloseModalStats }: any) => {
 
     const [showComponent, setshowComponent] = useState<number>(1);
-    const [directDelegations, setDirectDelegations] = useState<any>(null);
-    const list_rc_direct_delegations = async (from: any, to: any, limit: any) => {
-        try {
-            const response = await axios.post('https://api.hive.blog', {
-                jsonrpc: '2.0',
-                id: 1,
-                method: 'rc_api.list_rc_direct_delegations',
-                params: {
-                    start: [from, to],
-                    limit
-                }
-            });
-            return response.data.result;
-        } catch (error) {
-            console.error('Error fetching direct delegations:', error);
-            throw error;
-        }
-    };
+    
+    
     useEffect(() => {
         const from = userDetails?.username; // Replace with the 'from' account
         const to = "";   // Replace with the 'to' account
-        const limit = 100;        // Adjust the limit as needed
+        const limit = 50;        // Adjust the limit as needed
 
         list_rc_direct_delegations(from, to, limit)
-            .then((result) => {
+            .then((result:any) => {
                 setDirectDelegations(result);
             })
-            .catch((error) => {
+            .catch((error:any) => {
                 console.error('Error fetching direct delegations:', error);
             });
-    }, []);
+    }, [list_rc_direct_delegations]);
     useEffect(() => {
         console.log("directDelegations", directDelegations?.rc_direct_delegations)
     }, [directDelegations])
@@ -53,7 +37,8 @@ const StatsModal = ({ seturlInfo, userDetails, isOpenModalStats, onCloseModalSta
         const data = {
             referral : userDetails?.username,
             username : "",
-            delegated_rc: 5
+            delegated_rc: 5,
+            create: true,
         }
         seturlInfo(data)
         // onOpenModalEditDelegate()
@@ -63,7 +48,8 @@ const StatsModal = ({ seturlInfo, userDetails, isOpenModalStats, onCloseModalSta
         const data = {
             referral : delegation?.from,
             username : delegation?.to,
-            delegated_rc: delegation.delegated_rc
+            delegated_rc: delegation.delegated_rc,
+            create: false,
         }
         seturlInfo(data)
         // onOpenModalEditDelegate()
@@ -88,7 +74,7 @@ const StatsModal = ({ seturlInfo, userDetails, isOpenModalStats, onCloseModalSta
             
             window.hive_keychain.requestCustomJson(
               `${delegation?.from}`,
-              "threespeak",
+              "rc",
               'Posting',
               json,
               "Delegate RC",
@@ -108,7 +94,7 @@ const StatsModal = ({ seturlInfo, userDetails, isOpenModalStats, onCloseModalSta
         // show modal call function here
         // setshowModalFormDelegateRC(true)
         // onOpenDRC()c
-        console.log("res",res)
+        // console.log("res",res)
         // onCloseDRC()
 
         const from = userDetails?.username; // Replace with the 'from' account
@@ -116,10 +102,10 @@ const StatsModal = ({ seturlInfo, userDetails, isOpenModalStats, onCloseModalSta
         const limit = 100;        // Adjust the limit as needed
 
     list_rc_direct_delegations(from, to, limit)
-        .then((result) => {
+        .then((result:any) => {
             setDirectDelegations(result);
         })
-        .catch((error) => {
+        .catch((error:any) => {
             console.error('Error fetching direct delegations:', error);
         });
       }
@@ -148,7 +134,7 @@ const StatsModal = ({ seturlInfo, userDetails, isOpenModalStats, onCloseModalSta
         }
       };
     return (
-        <Modal closeOnOverlayClick={false} isOpen={isOpenModalStats} onClose={onCloseModalStats}>
+        <Modal size='xl'  closeOnOverlayClick={false} isOpen={isOpenModalStats} onClose={onCloseModalStats}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>
@@ -216,10 +202,10 @@ const StatsModal = ({ seturlInfo, userDetails, isOpenModalStats, onCloseModalSta
                     {
                         showComponent == 1 && (
                             <Box>
-                                <Text as='h5'>Resource Credits: 100.00%</Text>
-                                <Text as='h5'>Total RC: {getCurrentRc}b</Text>
+                                {/* <Text as='h5'>Resource Credits: 100.00%</Text> */}
+                                <Text as='h5'>Total RC: {getCurrentRc}B</Text>
                                 {/* <SignInHive requestHiveLogin={requestHiveLogin} username={username} setUsername={setUsername} /> */}
-                                <Button onClick={() => {addDelegation()}} colorScheme='twitter' size='xs'>
+                                <Button onClick={() => {addDelegation()}} colorScheme='twitter' size='sm'>
                                     Delegate RC
                                 </Button>
                             </Box>
@@ -229,9 +215,9 @@ const StatsModal = ({ seturlInfo, userDetails, isOpenModalStats, onCloseModalSta
                     {
                         showComponent == 2 && (
                             <Box>
-                                <OrderedList>
+                                <OrderedList listStyleType={'none'} padding={'0'} margin={0}>
                                     {/* <Text>{directDelegations.rc_direct_delegations.length}</Text> */}
-                                    <ListItem>
+                                    <ListItem listStyleType={'none'}>
                                             <Flex justifyContent={'space-between'} alignItems={'center'}>
                                                 <Box><b>Name</b></Box>
                                                 <Box width={'100px'} ><b>Delegated RC</b></Box>
@@ -240,16 +226,16 @@ const StatsModal = ({ seturlInfo, userDetails, isOpenModalStats, onCloseModalSta
                                                 </Box>
                                             </Flex>
                                         </ListItem>
-                                    {directDelegations && directDelegations.rc_direct_delegations && directDelegations.rc_direct_delegations.length > 0 && directDelegations?.rc_direct_delegations.map((delegation: any) => (
-                                        <ListItem>
+                                    {directDelegations && directDelegations.rc_direct_delegations && directDelegations.rc_direct_delegations.length > 0 && directDelegations?.rc_direct_delegations.map((delegation: any, index:number) => (
+                                        <ListItem key={index}>
                                             <Flex justifyContent={'space-between'} alignItems={'center'}>
-                                                <Box>{delegation?.to}</Box>
-                                                <Box width={'100px'} textAlign={'center'}> {Number(delegation?.delegated_rc)/1000000000}b</Box>
+                                                <Box width={'80px'}>{delegation?.to}</Box>
+                                                <Box width={'100px'} textAlign={'center'}> {Number(delegation?.delegated_rc)/1000000000}B</Box>
                                                 <Box>
-                                                    <Button onClick={() => editDelegation(delegation)} colorScheme='twitter' size='xs'>
+                                                    <Button onClick={() => editDelegation(delegation)} colorScheme='twitter' size='sm'>
                                                         Edit
                                                     </Button>
-                                                    <Button onClick={() => deleteDelegation(delegation)} colorScheme='red' size='xs'>
+                                                    <Button onClick={() => deleteDelegation(delegation)} colorScheme='red' size='sm'>
                                                         Delete
                                                     </Button>
                                                 </Box>

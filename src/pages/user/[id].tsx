@@ -32,6 +32,7 @@ import DesktopTabs from "@/components/user/DesktopTabs";
 import { useAppStore } from "@/lib/store";
 import StatsModal from "@/components/Modal/StatsModal";
 import DelegateRCModal from "@/components/Modal/DelegateRCModal";
+import axios from "axios";
 
 const UserPage: React.FC = () => {
     const [urlInfo, seturlInfo] = useState<any>(null);
@@ -80,8 +81,14 @@ const UserPage: React.FC = () => {
     const { loading:loadingList, error:errorList, data:dataList } = useQuery(GET_SOCIAL_FEED_BY_CREATOR, {
         variables: { id: id },
     });
+
+    const [isCreate, setisCreate] = useState<any>(false);
+
     const seturlInfoFun = (data:any) => {
         seturlInfo(data)
+        if (data && data.create) {
+            setisCreate(true)
+        }
         onOpenModalEditDelegate()
     } 
     useEffect(() => {
@@ -164,6 +171,37 @@ const UserPage: React.FC = () => {
     //         username: "thetrollingmind",
     //     },
     // ]);
+
+    const [directDelegations, setDirectDelegations] = useState<any>(null);
+    const list_rc_direct_delegations = async (from: any, to: any, limit: any) => {
+        try {
+            const response = await axios.post('https://api.hive.blog', {
+                jsonrpc: '2.0',
+                id: 1,
+                method: 'rc_api.list_rc_direct_delegations',
+                params: {
+                    start: ["juneroy1", ""],
+                    limit: 100
+                }
+            });
+            return response.data.result;
+        } catch (error) {
+            console.error('Error fetching direct delegations:', error);
+            throw error;
+        }
+    };
+    const rerenderList = () => {
+        const from = userDetails?.username; // Replace with the 'from' account
+        const to = "";   // Replace with the 'to' account
+        const limit = 50; 
+        list_rc_direct_delegations(from, to, limit)
+            .then((result:any) => {
+                setDirectDelegations(result);
+            })
+            .catch((error:any) => {
+                console.error('Error fetching direct delegations:', error);
+            });
+    }
     return (
         <div>
             <Box minHeight={"280px"} position={"relative"} display="flex" justifyContent={'center'}>
@@ -275,18 +313,27 @@ const UserPage: React.FC = () => {
                             </Button>
                         )}
                         {
-                            currentUser?.username.toLowerCase() ==userProfile?.profile?.username.toLowerCase() && (
+                            currentUser?.username.toLowerCase() == userProfile?.profile?.username.toLowerCase() && (
                                 <Box>
                                     <Alert onClick={() =>onOpenModalStats() } cursor={'pointer'} fontSize={'12px'} marginLeft={'5px'} width={'80px'} borderRadius={'10px'} status='info'>
                                         <AlertIcon />
                                         Stats
                                     </Alert>
                                     <StatsModal  seturlInfo={seturlInfoFun} userDetails={userDetails} isOpenModalStats={isOpenModalStats} onCloseModalStats={onCloseModalStats}/>
-                                    <DelegateRCModal selectedUser={urlInfo} isOpenModalEditDelegate={isOpenModalEditDelegate} onCloseModalEditDelegate={onCloseModalEditDelegate}/>
+                                    <DelegateRCModal isCreate={isCreate} selectedUser={urlInfo} isOpenModalEditDelegate={isOpenModalEditDelegate} onCloseModalEditDelegate={onCloseModalEditDelegate}/>
                                 </Box>
                             
                             )
                         }
+
+                                <Box>
+                                    <Alert onClick={() =>onOpenModalStats() } cursor={'pointer'} fontSize={'12px'} marginLeft={'5px'} width={'80px'} borderRadius={'10px'} status='info'>
+                                        <AlertIcon />
+                                        Stats
+                                    </Alert>
+                                    <StatsModal list_rc_direct_delegations={list_rc_direct_delegations} directDelegations={directDelegations} setDirectDelegations={setDirectDelegations}  seturlInfo={seturlInfoFun} userDetails={userDetails} isOpenModalStats={isOpenModalStats} onCloseModalStats={onCloseModalStats}/>
+                                    <DelegateRCModal rerenderList={rerenderList} isCreate={isCreate} selectedUser={urlInfo} isOpenModalEditDelegate={isOpenModalEditDelegate} onCloseModalEditDelegate={onCloseModalEditDelegate}/>
+                                </Box>
                          
                         <DesktopTabs isMobile={isMobile} showFeed={showFeed} updateShowFeed={updateShowFeed} />
                     </Flex>

@@ -208,7 +208,7 @@ export const Sidebar = () => {
               <Flex flexDirection={'column'}>
 
                 <ChakraBox>
-                  <Flex justifyContent={'center'} alignItems='center'>
+                  <Flex onClick={() => router.push(`/user/${userDetails?.username?.toLocaleLowerCase()}`)} cursor={'pointer'} justifyContent={'center'} alignItems='center'>
                     <Flex margin='10px' justifyContent={'center'} alignItems='center' cursor={'pointer'} borderRadius={'50%'} height={'100%'} width='40px' border={'1px solid'}>
                       <Image
                       alt="sidebar avatar" 
