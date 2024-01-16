@@ -571,10 +571,10 @@ function AccountRegisterForFriend(props: any) {
             <Input variant='outline' width='80%' readOnly placeholder='referral username' value={urlInfo?.username} />
             </Box>
             <Box>
-            <label htmlFor="referral">RC Amount (Max available {getCurrentRc}b RC):</label><br />
+            <label htmlFor="referral">RC Amount (Max available {getCurrentRc}Bn RC):</label><br />
               <Flex>
               <Input placeholder='How much do you want to delegate?' autoFocus required type={'number'} min={5} variant='outline' width='80%'   value={rcAmount} onChange={(e) => setrcAmount(parseInt(e.target.value))}  />
-              <Button>B (BILLION)</Button>
+              <Button>Bn (BILLION)</Button>
               </Flex>
               <Box marginTop={'10px'}>
               {/* <Input   type={'range'} value={rcAmount} onChange={(e) => setrcAmount(parseInt(e.target.value))}   min={0} max={getCurrentRc}  width='50%'     /> */}
