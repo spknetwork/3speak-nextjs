@@ -600,7 +600,7 @@ function AccountRegisterForFriend(props: any) {
       </Modal>
       {step == 1 && (
         <Flex flexDirection={'column'} width={'100%'} height='100%' justifyContent={'center'} alignItems='center'>
-          <Text as='h2'>You are creating an account for a friend.</Text>
+          <Text as='h2'>You are creating an account for a friend</Text>
           <Checkbox
           borderColor={'black'}
             size='lg' colorScheme='blue'
