@@ -203,7 +203,7 @@ const StatsModal = ({ directDelegations,setDirectDelegations, list_rc_direct_del
                         showComponent == 1 && (
                             <Box>
                                 {/* <Text as='h5'>Resource Credits: 100.00%</Text> */}
-                                <Text as='h5'>Total RC: {getCurrentRc}B</Text>
+                                <Text as='h5'>Total RC: {getCurrentRc}Bn</Text>
                                 {/* <SignInHive requestHiveLogin={requestHiveLogin} username={username} setUsername={setUsername} /> */}
                                 <Button onClick={() => {addDelegation()}} colorScheme='twitter' size='sm'>
                                     Delegate RC
@@ -230,7 +230,7 @@ const StatsModal = ({ directDelegations,setDirectDelegations, list_rc_direct_del
                                         <ListItem key={index}>
                                             <Flex justifyContent={'space-between'} alignItems={'center'}>
                                                 <Box width={'80px'}>{delegation?.to}</Box>
-                                                <Box width={'100px'} textAlign={'center'}> {Number(delegation?.delegated_rc)/1000000000}B</Box>
+                                                <Box width={'100px'} textAlign={'center'}> {Number(delegation?.delegated_rc)/1000000000}Bn</Box>
                                                 <Box>
                                                     <Button onClick={() => editDelegation(delegation)} colorScheme='twitter' size='sm'>
                                                         Edit

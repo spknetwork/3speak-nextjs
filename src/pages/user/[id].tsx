@@ -319,21 +319,21 @@ const UserPage: React.FC = () => {
                                         <AlertIcon />
                                         Stats
                                     </Alert>
-                                    <StatsModal  seturlInfo={seturlInfoFun} userDetails={userDetails} isOpenModalStats={isOpenModalStats} onCloseModalStats={onCloseModalStats}/>
-                                    <DelegateRCModal isCreate={isCreate} selectedUser={urlInfo} isOpenModalEditDelegate={isOpenModalEditDelegate} onCloseModalEditDelegate={onCloseModalEditDelegate}/>
+                                    <StatsModal list_rc_direct_delegations={list_rc_direct_delegations} directDelegations={directDelegations} setDirectDelegations={setDirectDelegations}  seturlInfo={seturlInfoFun} userDetails={userDetails} isOpenModalStats={isOpenModalStats} onCloseModalStats={onCloseModalStats}/>
+                                    <DelegateRCModal rerenderList={rerenderList} isCreate={isCreate} selectedUser={urlInfo} isOpenModalEditDelegate={isOpenModalEditDelegate} onCloseModalEditDelegate={onCloseModalEditDelegate}/>
                                 </Box>
                             
                             )
                         }
 
-                                <Box>
+                                {/* <Box>
                                     <Alert onClick={() =>onOpenModalStats() } cursor={'pointer'} fontSize={'12px'} marginLeft={'5px'} width={'80px'} borderRadius={'10px'} status='info'>
                                         <AlertIcon />
                                         Stats
                                     </Alert>
                                     <StatsModal list_rc_direct_delegations={list_rc_direct_delegations} directDelegations={directDelegations} setDirectDelegations={setDirectDelegations}  seturlInfo={seturlInfoFun} userDetails={userDetails} isOpenModalStats={isOpenModalStats} onCloseModalStats={onCloseModalStats}/>
                                     <DelegateRCModal rerenderList={rerenderList} isCreate={isCreate} selectedUser={urlInfo} isOpenModalEditDelegate={isOpenModalEditDelegate} onCloseModalEditDelegate={onCloseModalEditDelegate}/>
-                                </Box>
+                                </Box> */}
                          
                         <DesktopTabs isMobile={isMobile} showFeed={showFeed} updateShowFeed={updateShowFeed} />
                     </Flex>
