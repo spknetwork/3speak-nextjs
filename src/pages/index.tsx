@@ -1,6 +1,6 @@
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
-import { Box,  Grid, GridItem, Image, Text } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { VideoInterface } from "types";
 import { MdPlayArrow } from "react-icons/md";
@@ -162,14 +162,14 @@ const NewIndex = () => {
         padding={"20px"}
         templateColumns={{
           base: "repeat(2, 1fr)",
-          md: "repeat(3, 1fr)",
-          lg: "repeat(3, 1fr)",
+          md: "repeat(4, 1fr)",
+          lg: "repeat(6, 1fr)",
           xl: "repeat(6, 1fr)",
         }}
         gap={6}
       >
         {/* {videos.length} */}
-        {videos.map((video:VideoInterface, index:number) => (
+        {videos.map((video: VideoInterface, index: number) => (
           <GridItem w="100%" h="100%" key={index}>
             <Box cursor={'pointer'} position='relative'>
               <Box
@@ -203,12 +203,18 @@ const NewIndex = () => {
               >
                 01:19
               </Box>
-              <Image
-                padding={"5px"}
-                backgroundColor={"#222 !important"}
-                alt="test"
-                src={`${video.thumbnail}`}
-              />
+              <Box height="13em !important"
+                width="100% !important">
+                <Image
+                  height="13em !important"
+                  width="100% !important"
+                  borderRadius={'10px'}
+                  objectFit="cover"
+                  alt="test"
+                  src={`${video.thumbnail}`}
+                />
+              </Box>
+
             </Box>
             <VideosTitle title={`${video.title}`} />
             <Name username={`${video.username}`} />

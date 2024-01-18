@@ -37,10 +37,11 @@ import {
   ModalContent,
   ModalFooter,
   useDisclosure,
+  IconButton,
 } from "@chakra-ui/react";
 import { useMediaQuery } from "react-responsive";
 import { css } from "@emotion/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { FaAppStoreIos, FaInfo, FaInfoCircle } from "react-icons/fa";
 import { api } from "@/utils/api";
 import { useAppStore } from '../lib/store'
@@ -107,7 +108,7 @@ const faTwitterIcon = faTwitter as IconProp;
 export const Sidebar = () => {
   const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure()
   const { isOpen: isOpenModal2, onOpen: onOpenModal2, onClose: onCloseModal2 } = useDisclosure()
-
+ 
   // const { listAccounts, setAccounts } = useAppStore();
   const addAccounts = () => {
     console.log('addAccounts')
@@ -124,7 +125,7 @@ export const Sidebar = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const [showNav, setShowNav] = useState(true);
 
-  const { allowAccess, userDetails, listAccounts, setAccounts } = useAppStore();
+  const { allowAccess, userDetails, userhiveDetails, listAccounts, setAccounts, getUserDetails,getUserHiveDetails } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
@@ -151,6 +152,28 @@ export const Sidebar = () => {
       console.log("showNav", showNav);
     }
   }, [isMobile, showNav]);
+
+  useEffect(() => {
+    
+    console.log("userhiveDetails in sidebar profile_image",userhiveDetails)
+
+   
+  }, [userhiveDetails])
+
+  // useEffect(() => {
+  //   if (allowAccess == true) {
+  //     getUserDetails()
+  //   }
+  // }, [allowAccess,getUserDetails]);
+  useEffect(() => {
+    if (userDetails?.username) {
+    console.log("userhiveDetails in sidebar profile_image",userDetails)
+
+      getUserHiveDetails(`${userDetails?.username}`);
+
+    }
+   
+  }, [getUserHiveDetails,userDetails?.username]);
   const addAccountsNow = () => {
      console.log("addAccountsNow",addAccountsNow)
   }
@@ -208,19 +231,35 @@ export const Sidebar = () => {
               <Flex flexDirection={'column'}>
 
                 <ChakraBox>
-                  <Flex onClick={() => router.push(`/user/${userDetails?.username?.toLocaleLowerCase()}`)} cursor={'pointer'} justifyContent={'center'} alignItems='center'>
-                    <Flex margin='10px' justifyContent={'center'} alignItems='center' cursor={'pointer'} borderRadius={'50%'} height={'100%'} width='40px' border={'1px solid'}>
+                  <Flex cursor={'pointer'} justifyContent={'center'} alignItems='center'>
+                    <Flex onClick={() => router.push(`/user/${userDetails?.username?.toLocaleLowerCase()}`)}  margin='10px' justifyContent={'center'} alignItems='center' cursor={'pointer'} borderRadius={'50%'} height={'100%'} width='40px' border={'1px solid white'}>
                       <Image
                       alt="sidebar avatar" 
-                      loader={() => `/images/avatar3.png`}
+                      loader={() => {
+                       return  userhiveDetails?.profile_image? userhiveDetails?.profile_image: `/images/avatar3.png`
+                      }}
                       width='100'
                       height={'100'}
-                      src={'/images/avatar3.png'} style={{ margin: '0', width: '40px', borderRadius: '100px', height: '100%', objectFit: 'cover' }} />
+                      src={userhiveDetails?.profile_image? userhiveDetails?.profile_image: `/images/avatar3.png`} style={{ margin: '0', width: '40px', borderRadius: '100px', height: '100%', objectFit: 'cover' }} />
+                      
                     </Flex>
-
-                    <Text marginLeft={'5px'} margin={'0px'} textAlign={'center'} as='h5'>
+                    
+                    <Text  onClick={() => router.push(`/user/${userDetails?.username?.toLocaleLowerCase()}`)} marginLeft={'5px'} margin={'0px'} marginRight={'8px'} textAlign={'center'} as='h5'>
                       {userDetails?.username?.toLocaleUpperCase()}
                     </Text>
+                    <Menu>
+                    <MenuButton
+                        as={IconButton}
+                        aria-label='Options'
+                        icon={<ChevronDownIcon />}
+                        variant='outline'
+                      />
+                        {/* <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                        </MenuButton> */}
+                        <MenuList>
+                          <MenuItem>Logout</MenuItem>
+                        </MenuList>
+                      </Menu>
                   </Flex>
 
                 </ChakraBox>

@@ -41,7 +41,7 @@ const OnBoarding = () => {
   }, [userDetails]);
 
   useEffect(() => {
-    console.log("userhiveDetails",userhiveDetails)
+    // console.log("userhiveDetails",userhiveDetails)
     if (userhiveDetails) {
       const from_login = localStorage.getItem("from_login")
       if ((userhiveDetails?.name || userhiveDetails?.name != "" ) && from_login == 'true') {

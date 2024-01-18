@@ -140,20 +140,26 @@ const New2 = () => {
         </Text>
       </Box>
       <Grid padding={"20px"} templateColumns={{
-          base: "repeat(2, 1fr)",
-          md: "repeat(3, 1fr)",
-          lg: "repeat(3, 1fr)",
-          xl: "repeat(6, 1fr)",
-        }} gap={6}>
+        base: "repeat(4, 1fr)",
+        md: "repeat(4, 1fr)",
+        lg: "repeat(6, 1fr)",
+        xl: "repeat(6, 1fr)",
+      }} gap={6}>
         {/* {videos.length} */}
-        {videos.map((video:VideoInterface, index:number) => (
+        {videos.map((video: VideoInterface, index: number) => (
           <GridItem w="100%" h="100%" key={index}>
-            <Image
-              padding={"5px"}
-              backgroundColor={"#222 !important"}
-              alt="test"
-              src={`${video.thumbnail}`}
-            />
+            <Box height="13em !important"
+              width="100% !important">
+              <Image
+                height="13em !important"
+                width="100% !important"
+                borderRadius={'10px'}
+                objectFit="cover"
+                alt="test"
+                src={`${video.thumbnail}`}
+              />
+            </Box>
+
             <VideosTitle title={`${video.title}`} />
             <Name username={`${video.username}`} />
             <Text as="p" margin={"1px"}>

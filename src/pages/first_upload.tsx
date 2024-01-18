@@ -38,9 +38,9 @@ const FirstTime = () => {
         padding={"20px"}
         templateColumns={{
           base: "repeat(2, 1fr)",
-          md: "repeat(2, 1fr)",
-          lg: "repeat(3, 1fr)",
-          xl: "repeat(4, 1fr)",
+          md: "repeat(4, 1fr)",
+          lg: "repeat(6, 1fr)",
+          xl: "repeat(6, 1fr)",
         }}
         gap={6}
       >
@@ -48,15 +48,21 @@ const FirstTime = () => {
           !error &&
           videos.map((video:VideoInterface, index:number) => (
             <GridItem w="100%" h="100%" key={index}>
-              <Image
-                padding={"5px"}
-                backgroundColor={"#222 !important"}
-                alt="test"
-                src={`${video?.thumbnail}`}
-                height="13em !important"
-                width="100% !important"
-                objectFit="contain"
-              />
+            <Box  height="13em !important"
+                  width="100% !important">
+                     {/* backgroundColor={"#222 !important"} */}
+                <Image
+                  padding={"5px"}
+                  height="13em !important"
+                  width="100% !important"
+                  borderRadius={'10px'}
+                  alt="test"
+                  src={`${video?.thumbnail}`}
+                 
+                  objectFit="cover"
+                />
+              </Box>
+              
               <VideosTitle title={`${video?.title}`} />
               <Name username={`${video?.username}`} />
               <Text as="p" margin={"1px"}>

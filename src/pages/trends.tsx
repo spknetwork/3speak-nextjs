@@ -15,8 +15,8 @@ const NewComers2 = () => {
     if (!loading && !error && data) {
       setVideos(
         data.feed.items
-          .filter((e:any) => !!e.spkvideo)
-          .map((e:any) => {
+          .filter((e: any) => !!e.spkvideo)
+          .map((e: any) => {
             console.log(e);
             return {
               title: e.title,
@@ -38,27 +38,31 @@ const NewComers2 = () => {
       <Grid
         padding={"20px"}
         templateColumns={{
-          base: "repeat(2, 1fr)",
-          md: "repeat(2, 1fr)",
-          lg: "repeat(3, 1fr)",
-          xl: "repeat(4, 1fr)",
+          base: "repeat(4, 1fr)",
+          md: "repeat(4, 1fr)",
+          lg: "repeat(6, 1fr)",
+          xl: "repeat(6, 1fr)",
         }}
-        gap={4}
+        gap={6}
       >
         {/* {videos.length} */}
         {!loading &&
           !error &&
-          videos.map((video:VideoInterface, index:number) => (
+          videos.map((video: VideoInterface, index: number) => (
             <GridItem w="100%" h="100%" key={index}>
-              <Image
-                padding={"5px"}
-                backgroundColor={"#222 !important"}
-                alt="test"
-                src={`${video.thumbnail}`}
-                height="13em !important"
-                width="100% !important"
-                objectFit="contain"
-              />
+              <Box height="13em !important"
+                width="100% !important">
+
+                <Image
+                  height="13em !important"
+                  width="100% !important"
+                  borderRadius={'10px'}
+                  objectFit="cover"
+                  alt="test"
+                  src={`${video.thumbnail}`}
+                />
+              </Box>
+
               <VideosTitle title={`${video.title}`} />
               <Name username={`${video.username}`} />
               <Text as="p" margin={"1px"}>

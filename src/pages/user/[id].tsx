@@ -9,6 +9,8 @@ import {
     Box,
     Button,
     Flex,
+    Grid,
+    GridItem,
     Image,
     Link,
     ListItem,
@@ -33,6 +35,8 @@ import { useAppStore } from "@/lib/store";
 import StatsModal from "@/components/Modal/StatsModal";
 import DelegateRCModal from "@/components/Modal/DelegateRCModal";
 import axios from "axios";
+import VideosTitle from "@/components/VideosTitle";
+import Name from "@/components/user/Name";
 
 const UserPage: React.FC = () => {
     const [urlInfo, seturlInfo] = useState<any>(null);
@@ -40,24 +44,24 @@ const UserPage: React.FC = () => {
     useEffect(() => {
         console.log("urlInfo", urlInfo)
     }, [urlInfo])
-  const { userDetails } = useAppStore();
-  const [currentUser, setcurrentUser] = useState<any>(null);
-  const { isOpen: isOpenModalStats, onOpen: onOpenModalStats, onClose: onCloseModalStats } = useDisclosure()
-  const { isOpen: isOpenModalEditDelegate, onOpen: onOpenModalEditDelegate, onClose: onCloseModalEditDelegate } = useDisclosure()
+    const { userDetails } = useAppStore();
+    const [currentUser, setcurrentUser] = useState<any>(null);
+    const { isOpen: isOpenModalStats, onOpen: onOpenModalStats, onClose: onCloseModalStats } = useDisclosure()
+    const { isOpen: isOpenModalEditDelegate, onOpen: onOpenModalEditDelegate, onClose: onCloseModalEditDelegate } = useDisclosure()
 
 
-  useEffect(() =>{
-    if (userDetails?.username) {
-        console.log("userDetails?.username?",userDetails?.username)
-        setcurrentUser(userDetails)
-    }
-  },[userDetails])
+    useEffect(() => {
+        if (userDetails?.username) {
+            console.log("userDetails?.username?", userDetails?.username)
+            setcurrentUser(userDetails)
+        }
+    }, [userDetails])
 
-  useEffect(() =>{
-    if (currentUser) {
-        console.log("currentUser",currentUser)
-    }
-  },[currentUser])
+    useEffect(() => {
+        if (currentUser) {
+            console.log("currentUser", currentUser)
+        }
+    }, [currentUser])
 
     const router = useRouter();
     const { id } = router.query;
@@ -78,19 +82,19 @@ const UserPage: React.FC = () => {
         variables: { id: id },
     });
 
-    const { loading:loadingList, error:errorList, data:dataList } = useQuery(GET_SOCIAL_FEED_BY_CREATOR, {
+    const { loading: loadingList, error: errorList, data: dataList } = useQuery(GET_SOCIAL_FEED_BY_CREATOR, {
         variables: { id: id },
     });
 
     const [isCreate, setisCreate] = useState<any>(false);
 
-    const seturlInfoFun = (data:any) => {
+    const seturlInfoFun = (data: any) => {
         seturlInfo(data)
         if (data && data.create) {
             setisCreate(true)
         }
         onOpenModalEditDelegate()
-    } 
+    }
     useEffect(() => {
         if (!loadingList && !errorList && dataList) {
             console.log('data list', dataList.socialFeed)
@@ -142,7 +146,7 @@ const UserPage: React.FC = () => {
             setShowNav(false);
             console.log("showNav", showNav);
         }
-    }, [isMobile,showNav]);
+    }, [isMobile, showNav]);
 
     // const [videos] = useState<VideoInterface[]>([
     //     {
@@ -193,12 +197,12 @@ const UserPage: React.FC = () => {
     const rerenderList = () => {
         const from = userDetails?.username; // Replace with the 'from' account
         const to = "";   // Replace with the 'to' account
-        const limit = 50; 
+        const limit = 50;
         list_rc_direct_delegations(from, to, limit)
-            .then((result:any) => {
+            .then((result: any) => {
                 setDirectDelegations(result);
             })
-            .catch((error:any) => {
+            .catch((error: any) => {
                 console.error('Error fetching direct delegations:', error);
             });
     }
@@ -315,18 +319,18 @@ const UserPage: React.FC = () => {
                         {
                             currentUser?.username.toLowerCase() == userProfile?.profile?.username.toLowerCase() && (
                                 <Box>
-                                    <Alert onClick={() =>onOpenModalStats() } cursor={'pointer'} fontSize={'12px'} marginLeft={'5px'} width={'80px'} borderRadius={'10px'} status='info'>
+                                    <Alert onClick={() => onOpenModalStats()} cursor={'pointer'} fontSize={'12px'} marginLeft={'5px'} width={'80px'} borderRadius={'10px'} status='info'>
                                         <AlertIcon />
                                         Stats
                                     </Alert>
-                                    <StatsModal list_rc_direct_delegations={list_rc_direct_delegations} directDelegations={directDelegations} setDirectDelegations={setDirectDelegations}  seturlInfo={seturlInfoFun} userDetails={userDetails} isOpenModalStats={isOpenModalStats} onCloseModalStats={onCloseModalStats}/>
-                                    <DelegateRCModal rerenderList={rerenderList} isCreate={isCreate} selectedUser={urlInfo} isOpenModalEditDelegate={isOpenModalEditDelegate} onCloseModalEditDelegate={onCloseModalEditDelegate}/>
+                                    <StatsModal list_rc_direct_delegations={list_rc_direct_delegations} directDelegations={directDelegations} setDirectDelegations={setDirectDelegations} seturlInfo={seturlInfoFun} userDetails={userDetails} isOpenModalStats={isOpenModalStats} onCloseModalStats={onCloseModalStats} />
+                                    <DelegateRCModal rerenderList={rerenderList} isCreate={isCreate} selectedUser={urlInfo} isOpenModalEditDelegate={isOpenModalEditDelegate} onCloseModalEditDelegate={onCloseModalEditDelegate} />
                                 </Box>
-                            
+
                             )
                         }
 
-                                {/* <Box>
+                        {/* <Box>
                                     <Alert onClick={() =>onOpenModalStats() } cursor={'pointer'} fontSize={'12px'} marginLeft={'5px'} width={'80px'} borderRadius={'10px'} status='info'>
                                         <AlertIcon />
                                         Stats
@@ -334,7 +338,7 @@ const UserPage: React.FC = () => {
                                     <StatsModal list_rc_direct_delegations={list_rc_direct_delegations} directDelegations={directDelegations} setDirectDelegations={setDirectDelegations}  seturlInfo={seturlInfoFun} userDetails={userDetails} isOpenModalStats={isOpenModalStats} onCloseModalStats={onCloseModalStats}/>
                                     <DelegateRCModal rerenderList={rerenderList} isCreate={isCreate} selectedUser={urlInfo} isOpenModalEditDelegate={isOpenModalEditDelegate} onCloseModalEditDelegate={onCloseModalEditDelegate}/>
                                 </Box> */}
-                         
+
                         <DesktopTabs isMobile={isMobile} showFeed={showFeed} updateShowFeed={updateShowFeed} />
                     </Flex>
 
@@ -360,11 +364,40 @@ const UserPage: React.FC = () => {
                         {showFeed == 5 && (
                             <Achievements />
                         )}
+                        <Grid padding={"20px"} templateColumns={{
+                            base: "repeat(4, 1fr)",
+                            md: "repeat(4, 1fr)",
+                            lg: "repeat(6, 1fr)",
+                            xl: "repeat(6, 1fr)",
+                        }} gap={6}>
+                            {showFeed == 1 && videoList.length > 0 &&
+                                videoList.map((item: VideoInterface, index: number) => (
+                                    <GridItem w="100%" h="100%" key={index}>
+                                        <Box height="13em !important"
+                                            width="100% !important">
+                                            <Image
+                                                height="13em !important"
+                                                width="100% !important"
+                                                borderRadius={'10px'}
+                                                objectFit="cover"
+                                                alt="test"
+                                                src={`${item.spkvideo?.thumbnail_url}`}
+                                            />
+                                        </Box>
 
-                        {showFeed == 1 && videoList.length > 0 &&
-                            videoList.map((item: VideoInterface, index: number) => (
-                                <VideoComponent  index={index} thumbnail={item.spkvideo?.thumbnail_url} title={item.title} username={item.username} number_views={item.number_views} key={index} author={item?.author?.username} />
-                            ))}
+                                        <VideosTitle title={`${item.title}`} />
+                                        <Name username={`${item.username}`} />
+                                        <Text as="p" margin={"1px"}>
+                                            a day ago
+                                        </Text>
+                                        <Text fontWeight={"bold"} as="p">
+                                            $ 10.10
+                                        </Text>
+                                    </GridItem>
+                                    // <VideoComponent  index={index} thumbnail={item.spkvideo?.thumbnail_url} title={item.title} username={item.username} number_views={item.number_views} key={index} author={item?.author?.username} />
+                                ))}
+                        </Grid>
+
                     </Box>
                 </Box>
             </Box>
