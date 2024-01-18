@@ -68,9 +68,10 @@ const HiveSignIn = ({ tab }: any) => {
         },
       }
     );
-    console.log('_response', _response)
+    console.log('_response from login', _response)
     localStorage.setItem("access_token", _response.data.access_token);
     localStorage.setItem(`keychainToken_${username}`, _response.data.access_token);
+    localStorage.setItem(`from_login`,'true');
     // save users
     // save keychainToken_username
     checkAuth();

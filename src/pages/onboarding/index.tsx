@@ -11,13 +11,18 @@ type FilePreview = {
   previewUrl: string;
 };
 const OnBoarding = () => {
+  // const { getUserHiveDetails, userhiveDetails, userName, userDetails } = useAppStore();
+  const router = useRouter();
+
   const {
     getUserHiveDetails,
     userDetails,
+    userhiveDetails,
     setUserHiveDetails,
     
   } = useAppStore();
   const [name, setName] = useState<string>("");
+  const [checkDone, setcheckDone] = useState<boolean|null>(null);
 
   useEffect(() => {
     if (userDetails?.username) {
@@ -30,9 +35,30 @@ const OnBoarding = () => {
   useEffect(() => {
     if (userDetails) {
         const name = `${userDetails.username}`
+        console.log("userDetails",userDetails)
       setName(name);
     }
   }, [userDetails]);
+
+  useEffect(() => {
+    console.log("userhiveDetails",userhiveDetails)
+    if (userhiveDetails) {
+      const from_login = localStorage.getItem("from_login")
+      if ((userhiveDetails?.name || userhiveDetails?.name != "" ) && from_login == 'true') {
+        setcheckDone(true)
+        localStorage.setItem("from_login", "false")
+        router.push("/");
+
+      }else{
+        localStorage.setItem("from_login", "false")
+        setcheckDone(true)
+      }
+    }else{
+      setcheckDone(true)
+
+    }
+   
+  }, [userhiveDetails])
 
   const onchangeName = (e: any) => {
     setName(e.target.value);
@@ -52,8 +78,10 @@ const OnBoarding = () => {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
   });
-  const router = useRouter();
-
+  // const router = useRouter();
+  if (checkDone == null) {
+    return <Box>Loading...</Box>;
+  }
   return (
     <Box minHeight={"100vh"}>
       <Flex
@@ -88,7 +116,7 @@ const OnBoarding = () => {
                 marginTop={"10px"}
                 width="100%"
               >
-                <Text as="h2">Lets start with adding of username</Text>
+                <Text as="h2">Let's start with reviewing of username</Text>
               </Flex>
               <Flex
                 justifyContent={"center"}
@@ -97,7 +125,7 @@ const OnBoarding = () => {
                 width="100%"
               >
                 <Text as="h6">
-                  Choose a unique username
+                  This will be your username
                 </Text>
               </Flex>
               <Box mb="1.5rem" mt="1.5rem" width="100%">
