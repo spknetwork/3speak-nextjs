@@ -184,7 +184,7 @@ const UserPage: React.FC = () => {
                 id: 1,
                 method: 'rc_api.list_rc_direct_delegations',
                 params: {
-                    start: ["juneroy1", ""],
+                    start: [`${userDetails?.username}`, ""],
                     limit: 100
                 }
             });

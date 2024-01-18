@@ -257,7 +257,12 @@ export const Sidebar = () => {
                         {/* <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                         </MenuButton> */}
                         <MenuList>
-                          <MenuItem>Logout</MenuItem>
+                          <MenuItem onClick={() => {
+                              localStorage.removeItem("access_token"); //
+                              // in order to reset the localstorage it needs to refresh the whole page
+                              location.reload();
+                            
+                          }}>Logout</MenuItem>
                         </MenuList>
                       </Menu>
                   </Flex>
