@@ -1,13 +1,16 @@
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
-import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Image, Switch, Text, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { TRENDING_FEED } from "../graphql/queries";
 import { VideoInterface } from "types";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 const NewComers2 = () => {
   const { loading, error, data } = useQuery(TRENDING_FEED);
+  const bgColor = useColorModeValue('gray.100', 'gray.800');
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const [videos, setVideos] = useState<VideoInterface[]>([]);
 
@@ -29,12 +32,18 @@ const NewComers2 = () => {
   }, [loading, data, error]);
 
   return (
-    <Box>
-      <Box backgroundColor={"#E8E8E8"} padding="20px" paddingBottom={"0px"}>
-        <Text as="h1" fontWeight={"200 !important"}>
-          TRENDING VIDEOS
+    <Box bg={bgColor}>
+    <Flex marginRight={'30px'} justifyContent={'space-between'} alignItems='center'>
+        <Box padding="20px">
+          <Text as="h1" fontWeight={"300 !important"}>
+            TRENDING VIDEOS
+          </Text>
+        </Box>
+        <Text>
+          <Switch isChecked={colorMode === 'dark'} onChange={toggleColorMode} /> {colorMode === 'dark' && (<MoonIcon /> )} {colorMode !== 'dark' && (<SunIcon/> )}
         </Text>
-      </Box>
+
+      </Flex>
       <Grid
         padding={"20px"}
         templateColumns={{

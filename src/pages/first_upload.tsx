@@ -1,21 +1,25 @@
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
-import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Image, Text, useColorMode, Switch, useColorModeValue } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { FIRST_UPLOAD_FEED } from "../graphql/queries";
 import { VideoInterface } from "types";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+// import { useColorMode, Switch } from '@chakra-ui/react';
 const FirstTime = () => {
   const { loading, error, data } = useQuery(FIRST_UPLOAD_FEED);
 
   const [videos, setVideos] = useState<VideoInterface[]>([]);
-
+  const bgColor = useColorModeValue('gray.100', 'gray.800');
+  const textColor = useColorModeValue('black', 'white');
+  const { colorMode, toggleColorMode } = useColorMode();
   useEffect(() => {
     if (!loading && !error && data) {
       setVideos(
         data.feed.items
-          .filter((e:any) => !!e.spkvideo)
-          .map((e:any) => {
+          .filter((e: any) => !!e.spkvideo)
+          .map((e: any) => {
             console.log(e);
             return {
               title: e.title,
@@ -28,12 +32,20 @@ const FirstTime = () => {
   }, [loading, data, error]);
 
   return (
-    <Box>
-      <Box backgroundColor={"#E8E8E8"} padding="20px">
-        <Text as="h1" fontWeight={"300 !important"}>
-          FIRST TIME UPLOADS
+    <Box bg={bgColor} >
+      <Flex marginRight={'30px'} justifyContent={'space-between'} alignItems='center'>
+        <Box padding="20px">
+          <Text as="h1" fontWeight={"300 !important"}>
+            FIRST TIME UPLOADS
+          </Text>
+        </Box>
+        <Text>
+          <Switch isChecked={colorMode === 'dark'} onChange={toggleColorMode} /> {colorMode === 'dark' && (<MoonIcon /> )} {colorMode !== 'dark' && (<SunIcon/> )}
         </Text>
-      </Box>
+
+      </Flex>
+
+
       <Grid
         padding={"20px"}
         templateColumns={{
@@ -46,11 +58,11 @@ const FirstTime = () => {
       >
         {!loading &&
           !error &&
-          videos.map((video:VideoInterface, index:number) => (
+          videos.map((video: VideoInterface, index: number) => (
             <GridItem w="100%" h="100%" key={index}>
-            <Box  height="13em !important"
-                  width="100% !important">
-                     {/* backgroundColor={"#222 !important"} */}
+              <Box height="13em !important"
+                width="100% !important">
+                {/* backgroundColor={"#222 !important"} */}
                 <Image
                   padding={"5px"}
                   height="13em !important"
@@ -58,11 +70,11 @@ const FirstTime = () => {
                   borderRadius={'10px'}
                   alt="test"
                   src={`${video?.thumbnail}`}
-                 
+
                   objectFit="cover"
                 />
               </Box>
-              
+
               <VideosTitle title={`${video?.title}`} />
               <Name username={`${video?.username}`} />
               <Text as="p" margin={"1px"}>

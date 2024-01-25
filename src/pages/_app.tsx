@@ -12,7 +12,7 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import { useAppStore } from "../lib/store";
 import * as Tabs from "@radix-ui/react-tabs";
-import { Avatar, Box, Button, ChakraProvider, Flex, Image, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Box, Button, ChakraProvider, extendTheme, Flex, Image, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Switch, Text, useColorMode, useDisclosure } from "@chakra-ui/react";
 import { BiEnvelope, BiGlobe } from "react-icons/bi";
 import { ApolloProvider } from "@apollo/client";
 import client from "../lib/apolloClient";
@@ -28,6 +28,14 @@ const FOOTER_TITLE = [
   { name: 'Terms' },
 ]
 
+// Configure your theme with color mode options
+const theme = extendTheme({
+  config: {
+    initialColorMode: 'light', // Default mode
+    useSystemColorMode: false,  // If true, will use the system color mode
+  },
+});
+
 function MyApp({ Component, pageProps }: AppProps) {
   const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure()
   const { isOpen: isOpenModal2, onOpen: onOpenModal2, onClose: onCloseModal2 } = useDisclosure()
@@ -39,6 +47,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const isStudio = pathname.includes("/studio");
   const [currentAuthPage, setCurrentAuthPage] = useState<string>("tab1");
   const { checkAuth, allowAccess, getUserDetails, setAccounts, listAccounts } = useAppStore();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const addAccounts = () => {
     console.log('addAccounts')
@@ -95,7 +104,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         `}
       >
         <nav>
-          <Box>{!isAuth && !isStudio && !isOtp && <ChakraProvider><Sidebar /></ChakraProvider>}</Box>
+          <Box>{!isAuth && !isStudio && !isOtp && <ChakraProvider theme={theme}>
+            <Sidebar />
+   
+
+            <Switch isChecked={colorMode === 'dark'} onChange={toggleColorMode} />
+          </ChakraProvider>}
+          
+          </Box>
         </nav>
         {isOtp && (
           <>
@@ -116,7 +132,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <main>
                 <Box width={"100%"} backgroundColor="#EFF4F6">
 
-                  <ChakraProvider>
+                  <ChakraProvider theme={theme}>
                     <ApolloProvider client={client}>
                       <Component tab={currentAuthPage} {...pageProps} />
                     </ApolloProvider>
@@ -179,7 +195,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                         Sign Up - Hive Referral
                       </Tabs.Trigger>
                     </Tabs.List>
-                    <ChakraProvider>
+                    <ChakraProvider theme={theme}>
                       <ApolloProvider client={client}>
                         <Component tab={currentAuthPage} {...pageProps} />
                       </ApolloProvider>
@@ -209,7 +225,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                 <Box width={"100%"} backgroundColor="#EFF4F6">
 
-                  <ChakraProvider>
+                  <ChakraProvider theme={theme}>
                     <AccountsList isOpenModal1={isOpenModal1} onCloseModal1={onCloseModal1} listAccounts={listAccounts} addAccounts={addAccounts}/>
                     <ApolloProvider client={client}>
                       <Component {...pageProps} />

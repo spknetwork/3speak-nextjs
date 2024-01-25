@@ -38,6 +38,7 @@ import {
   ModalFooter,
   useDisclosure,
   IconButton,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useMediaQuery } from "react-responsive";
 import { css } from "@emotion/react";
@@ -106,6 +107,8 @@ const faTelegramIcon = faTelegram as IconProp;
 const faTwitterIcon = faTwitter as IconProp;
 
 export const Sidebar = () => {
+  const bgColor = useColorModeValue('gray.100', 'gray.800');
+  
   const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure()
   const { isOpen: isOpenModal2, onOpen: onOpenModal2, onClose: onCloseModal2 } = useDisclosure()
  
@@ -223,7 +226,7 @@ export const Sidebar = () => {
           <ChakraBox mb="1rem" width="100%">
             {!authenticated && (
               <Link href="/auth/login">
-                <StyledButton py={3}>{t("mainLogin")}</StyledButton>
+                <Button bg={bgColor} boxShadow={'0 1px 4px rgb(0 0 0 / 40%)'} width="100%" textAlign={'center'} cursor='pointer' py={3}>{t("mainLogin")}</Button>
               </Link>
             )}
 
@@ -269,7 +272,7 @@ export const Sidebar = () => {
 
                 </ChakraBox>
                 <Link href="/studio">
-                  <StyledButton py={3}>Upload Video</StyledButton>
+                <Button bg={bgColor} boxShadow={'0 1px 4px rgb(0 0 0 / 40%)'} width="90%" textAlign={'center'} cursor='pointer' py={3}>Uplaod Video</Button>
                 </Link>
               </Flex>
 
@@ -648,9 +651,9 @@ const StyledNav = styled(FlexComponent)`
 //   }
 // `;
 
-const StyledButton = styled(BoxContainer)`
-  box-shadow: 0 1px 4px rgb(0 0 0 / 40%);
-  width: 100%;
-  text-align: center;
-  cursor: pointer;
-`;
+// const StyledButton = styled(BoxContainer)`
+//   box-shadow: 0 1px 4px rgb(0 0 0 / 40%);
+//   width: 100%;
+//   text-align: center;
+//   cursor: pointer;
+// `;

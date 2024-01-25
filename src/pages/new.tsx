@@ -1,9 +1,13 @@
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
-import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Image, Switch, Text, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { VideoInterface } from "types";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 const New2 = () => {
+  const bgColor = useColorModeValue('gray.100', 'gray.800');
+  const textColor = useColorModeValue('black', 'white');
+  const { colorMode, toggleColorMode } = useColorMode();
   const [videos, setVideos] = useState<VideoInterface[]>([
     {
       title:
@@ -133,12 +137,19 @@ const New2 = () => {
     },
   ]);
   return (
-    <Box>
-      <Box backgroundColor={"#E8E8E8"} padding="20px">
-        <Text as="h1" fontWeight={"300 !important"}>
-          NEW VIDEOS
+    <Box bg={bgColor} >
+    
+    <Flex marginRight={'30px'} justifyContent={'space-between'} alignItems='center'>
+        <Box padding="20px">
+          <Text as="h1" fontWeight={"300 !important"}>
+            NEW VIDEOS
+          </Text>
+        </Box>
+        <Text>
+          <Switch isChecked={colorMode === 'dark'} onChange={toggleColorMode} /> {colorMode === 'dark' && (<MoonIcon /> )} {colorMode !== 'dark' && (<SunIcon/> )}
         </Text>
-      </Box>
+
+      </Flex>
       <Grid padding={"20px"}  templateColumns={{
           base: "repeat(1, 1fr)",
           md: "repeat(2, 1fr)",
