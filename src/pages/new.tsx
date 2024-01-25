@@ -139,19 +139,19 @@ const New2 = () => {
           NEW VIDEOS
         </Text>
       </Box>
-      <Grid padding={"20px"} templateColumns={{
-        base: "repeat(4, 1fr)",
-        md: "repeat(4, 1fr)",
-        lg: "repeat(6, 1fr)",
-        xl: "repeat(6, 1fr)",
-      }} gap={6}>
+      <Grid padding={"20px"}  templateColumns={{
+          base: "repeat(1, 1fr)",
+          md: "repeat(2, 1fr)",
+          lg: "repeat(2, 1fr)",
+          xl: "repeat(5, 1fr)",
+        }} gap={10}>
         {/* {videos.length} */}
         {videos.map((video: VideoInterface, index: number) => (
           <GridItem w="100%" h="100%" key={index}>
             <Box height="13em !important"
               width="100% !important">
               <Image
-                height="13em !important"
+                height="100% !important"
                 width="100% !important"
                 borderRadius={'10px'}
                 objectFit="cover"

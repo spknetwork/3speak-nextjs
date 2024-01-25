@@ -37,12 +37,12 @@ const FirstTime = () => {
       <Grid
         padding={"20px"}
         templateColumns={{
-          base: "repeat(2, 1fr)",
-          md: "repeat(4, 1fr)",
-          lg: "repeat(6, 1fr)",
-          xl: "repeat(6, 1fr)",
+          base: "repeat(1, 1fr)",
+          md: "repeat(2, 1fr)",
+          lg: "repeat(2, 1fr)",
+          xl: "repeat(5, 1fr)",
         }}
-        gap={6}
+        gap={10}
       >
         {!loading &&
           !error &&
