@@ -26,7 +26,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ au
   const video = await getVideo(authorperm);
   const otherVideosByOwner = await getOtherVideosByOwner(authorperm)
   const similarVideos = await getSimilarVideos(video, author)
-  const followerInfo = await getFollowerInfo(video);
+  // const followerInfo = await getFollowerInfo(video);
+  const followerInfo = null;
   const replies = await getReplies({author, permlink});
 
   return {
@@ -68,7 +69,7 @@ const Watch = ({
           <Row>
             <Col size={3} style={{paddingLeft: 10}}>
               <h3>{video.title}</h3>
-              <Subscribe owner={video.owner} followerInfo={followerInfo} />
+              {/* <Subscribe owner={video.owner} followerInfo={followerInfo} /> */}
               <>{video.views} views{video.community ? (
               <> &#x2022; <Link href={`/c/${video.hive}`}><a>{video.community}</a></Link></>) : <></>}</>
             </Col>
