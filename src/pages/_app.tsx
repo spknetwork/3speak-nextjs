@@ -84,36 +84,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (allowAccess == true) {
       getUserDetails()
     }
-  }, [allowAccess,getUserDetails]);
+  }, [allowAccess, getUserDetails]);
   useEffect(() => {
     checkAuth();
     setAccounts()
-  }, [checkAuth,setAccounts]);
+  }, [checkAuth, setAccounts]);
 
   return (
     <Provider store={store}>
-      <Flex
-        css={css`
-          @media (max-width: 768px) {
-            flex-direction: column;
-          }
 
-          @media (min-width: 769px) {
-            flex-direction: row;
-          }
-        `}
-      >
-        <nav>
-          <Box>{!isAuth && !isStudio && !isOtp && <ChakraProvider theme={theme}>
-            <Sidebar />
-   
-
-            <Switch isChecked={colorMode === 'dark'} onChange={toggleColorMode} />
-          </ChakraProvider>}
-          
-          </Box>
-        </nav>
-        {isOtp && (
+      {/* {isOtp && (
           <>
             <Flex
               margin='auto'
@@ -141,8 +121,8 @@ function MyApp({ Component, pageProps }: AppProps) {
               </main>
             </Flex>
           </>
-        )}
-        {isAuth && (
+        )} */}
+      {/* {isAuth && (
           <>
             <Flex
               margin='auto'
@@ -205,161 +185,18 @@ function MyApp({ Component, pageProps }: AppProps) {
               </main>
             </Flex>
           </>
-        )}
+        )} */}
 
-        {!isAuth && !isOtp && (
-          <>
-            <Flex
-              width={"100%"}
-              css={css`
-                @media (max-width: 768px) {
-                  flex-direction: column;
-                }
+      {!isAuth && !isOtp && (
 
-                @media (min-width: 769px) {
-                  flex-direction: column;
-                }
-              `}
-            >
-              <main>
+        <ChakraProvider theme={theme}>
+          <AccountsList isOpenModal1={isOpenModal1} onCloseModal1={onCloseModal1} listAccounts={listAccounts} addAccounts={addAccounts} />
+          <ApolloProvider client={client}>
+            <Component {...pageProps} />
+          </ApolloProvider>
+        </ChakraProvider>
 
-                <Box width={"100%"} backgroundColor="#EFF4F6">
-
-                  <ChakraProvider theme={theme}>
-                    <AccountsList isOpenModal1={isOpenModal1} onCloseModal1={onCloseModal1} listAccounts={listAccounts} addAccounts={addAccounts}/>
-                    <ApolloProvider client={client}>
-                      <Component {...pageProps} />
-                    </ApolloProvider>
-                  </ChakraProvider>
-
-                </Box>
-              </main>
-              {!isAuth && (
-                <Box
-                  backgroundColor={"#e8e8e8"}
-                  padding="5px"
-                  marginBottom={"10px"}
-                  paddingTop={"10px"}
-                  marginTop={"auto"}
-                >
-                  <Box
-                    paddingX={"15px"}
-                    marginX={"auto"}
-                    maxWidth="1140px"
-                    width={"100%"}
-                    margin="auto"
-                  >
-                    <Flex width={"100%"} flexWrap="wrap">
-                      <Box
-                        css={css`
-                          @media (max-width: 768px) {
-                            flex: 0 0 44%;
-                            max-width: 44%;
-                            padding: 0px 20px;
-                          }
-
-                          @media (min-width: 769px) {
-                            flex: 0 0 25%;
-                            max-width: 25%;
-                            padding: 0px 20px;
-                          }
-                        `}
-                      >
-                        <Image
-                          src="/images/3S_logo.svg"
-                          alt="3speak logo"
-                          width={200}
-                          height={100}
-                        />
-                        <Link href="#">
-                          <Flex alignItems={"center"}>
-                            <BiEnvelope color="black" />
-                            <Text fontWeight={"bold"} margin={"0px"}>
-                              helpdesk@3speak.tv
-                            </Text>
-                          </Flex>
-                        </Link>
-                        <Link href="#">
-                          <Flex alignItems={"center"}>
-                            <BiGlobe />
-                            <Text fontWeight={"bold"} margin={"0px"}>
-                              3speak.tv
-                            </Text>
-                          </Flex>
-                        </Link>
-                      </Box>
-                      <Box
-                        css={css`
-                          @media (max-width: 768px) {
-                            flex: 0 0 44%;
-                            max-width: 44%;
-                            padding: 0px 20px;
-                          }
-
-                          @media (min-width: 769px) {
-                            flex: 0 0 25%;
-                            max-width: 25%;
-                            padding: 0px 20px;
-                          }
-                        `}
-                      >
-                        <Text
-                          fontWeight={"bold"}
-                          margin={"0px"}
-                          marginBottom="20px"
-                        >
-                          Company
-                        </Text>
-                        {FOOTER_TITLE.map((footer:any, index:number) => {
-                          return (
-                            <Link key={index} href="#">
-                              <Text fontWeight={"500"} margin={"0px"}>
-                                {footer.name}
-                              </Text>
-                            </Link>
-                          )
-                        })}
-
-
-                      </Box>
-                      <Box
-                        css={css`
-                          @media (max-width: 768px) {
-                            flex: 0 0 44%;
-                            max-width: 44%;
-                            padding: 0px 20px;
-                            padding-top: 5px;
-                          }
-
-                          @media (min-width: 769px) {
-                            flex: 0 0 25%;
-                            max-width: 25%;
-                            padding: 0px 20px;
-                          }
-                        `}
-                      >
-                        <Text
-                          fontWeight={"bold"}
-                          margin={"0px"}
-                          marginBottom="20px"
-                        >
-                          Accepted Payment Methods
-                        </Text>
-                        <Image
-                          src="/images/hive-blockchain-hive-logo.svg"
-                          alt="3speak logo"
-                          width={200}
-                          height={100}
-                        />
-                      </Box>
-                    </Flex>
-                  </Box>
-                </Box>
-              )}
-            </Flex>
-          </>
-        )}
-      </Flex>
+      )}
     </Provider>
   );
 }
