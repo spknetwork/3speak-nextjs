@@ -226,7 +226,7 @@ export const Sidebar = () => {
           <ChakraBox mb="1rem" width="100%">
             {!authenticated && (
               <Link href="/auth/login">
-                <Button bg={bgColor} boxShadow={'0 1px 4px rgb(0 0 0 / 40%)'} width="100%" textAlign={'center'} cursor='pointer' py={3}>{t("mainLogin")}</Button>
+                <Button bg={bgColor} boxShadow={'0 1px 4px rgb(0 0 0 / 40%)'} width="90%" textAlign={'center'} cursor='pointer' py={3}>{t("mainLogin")}</Button>
               </Link>
             )}
 
