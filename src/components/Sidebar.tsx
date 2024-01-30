@@ -63,41 +63,49 @@ const navblog = {
 const NAVIGATION = [
   {
     img: "nav/home.svg",
+    img_light: "nav/home_light.svg",
     title: "nav.home",
     route: "/",
   },
   {
     img: "nav/smile.svg",
+    img_light: "nav/smile_light.svg",
     title: "nav.first",
     route: "/first_upload",
   },
   {
     img: "nav/fire.svg",
+    img_light: "nav/fire_light.svg",
     title: "nav.trending",
     route: "/trends",
   },
   {
     img: "nav/play.svg",
+    img_light: "nav/play_light.svg",
     title: "nav.new",
     route: "/new",
   },
 
   {
     img: "nav/communities.svg",
+    img_light: "nav/communities_light.svg",
     title: "nav.communities",
     route: "communities",
   },
   {
     img: "nav/leaderboard.svg",
+    img_light: "nav/leaderboard_light.svg",
     title: "nav.leaderboard",
     route: "/leaderboard",
   },
   {
     img: "nav/download.svg",
+    img_light: "nav/download_light.svg",
     title: "download_apps",
   },
   {
     img: "nav/spk_network.png",
+    img_light: "nav/home_light.svg",
     title: "about_3speak",
   },
 ];
@@ -114,7 +122,7 @@ export const Sidebar = () => {
 
   const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure()
   const { isOpen: isOpenModal2, onOpen: onOpenModal2, onClose: onCloseModal2 } = useDisclosure()
- 
+
   // const { listAccounts, setAccounts } = useAppStore();
   const addAccounts = () => {
     console.log('addAccounts')
@@ -131,7 +139,7 @@ export const Sidebar = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const [showNav, setShowNav] = useState(true);
 
-  const { allowAccess, userDetails, userhiveDetails, listAccounts, setAccounts, getUserDetails,getUserHiveDetails } = useAppStore();
+  const { allowAccess, userDetails, userhiveDetails, listAccounts, setAccounts, getUserDetails, getUserHiveDetails } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
@@ -160,10 +168,10 @@ export const Sidebar = () => {
   }, [isMobile, showNav]);
 
   useEffect(() => {
-    
-    console.log("userhiveDetails in sidebar profile_image",userhiveDetails)
 
-   
+    console.log("userhiveDetails in sidebar profile_image", userhiveDetails)
+
+
   }, [userhiveDetails])
 
   // useEffect(() => {
@@ -173,17 +181,17 @@ export const Sidebar = () => {
   // }, [allowAccess,getUserDetails]);
   useEffect(() => {
     if (userDetails?.username) {
-    console.log("userhiveDetails in sidebar profile_image",userDetails)
+      console.log("userhiveDetails in sidebar profile_image", userDetails)
 
       getUserHiveDetails(`${userDetails?.username}`);
 
     }
-   
-  }, [getUserHiveDetails,userDetails?.username]);
+
+  }, [getUserHiveDetails, userDetails?.username]);
   const addAccountsNow = () => {
-     console.log("addAccountsNow",addAccountsNow)
+    console.log("addAccountsNow", addAccountsNow)
   }
-  const removeAccount = (account:any, index: number) => {
+  const removeAccount = (account: any, index: number) => {
     listAccounts.splice(index, 1)
     console.log('listAccounts', listAccounts)
     localStorage.setItem("accountsList", JSON.stringify(listAccounts))
@@ -203,10 +211,10 @@ export const Sidebar = () => {
         `}
         width="100%"
       >
-        <Link  style={{cursor:'pointer'}} href="/">
+        <Link style={{ cursor: 'pointer' }} href="/">
           <ChakraBox width={"180px"}>
             <Image
-               loader={() => `/main_logo.svg`}
+              loader={() => `/main_logo.svg`}
               src="/main_logo.svg"
               alt="3speak logo"
               width={200}
@@ -238,44 +246,44 @@ export const Sidebar = () => {
 
                 <ChakraBox>
                   <Flex cursor={'pointer'} justifyContent={'center'} alignItems='center'>
-                    <Flex onClick={() => router.push(`/user/${userDetails?.username?.toLocaleLowerCase()}`)}  margin='10px' justifyContent={'center'} alignItems='center' cursor={'pointer'} borderRadius={'50%'} height={'100%'} width='40px' border={'1px solid white'}>
+                    <Flex onClick={() => router.push(`/user/${userDetails?.username?.toLocaleLowerCase()}`)} margin='10px' justifyContent={'center'} alignItems='center' cursor={'pointer'} borderRadius={'50%'} height={'100%'} width='40px' border={'1px solid white'}>
                       <Image
-                      alt="sidebar avatar" 
-                      loader={() => {
-                       return  userhiveDetails?.profile_image? userhiveDetails?.profile_image: `/images/avatar3.png`
-                      }}
-                      width='100'
-                      height={'100'}
-                      src={userhiveDetails?.profile_image? userhiveDetails?.profile_image: `/images/avatar3.png`} style={{ margin: '0', width: '40px', borderRadius: '100px', height: '100%', objectFit: 'cover' }} />
-                      
+                        alt="sidebar avatar"
+                        loader={() => {
+                          return userhiveDetails?.profile_image ? userhiveDetails?.profile_image : `/images/avatar3.png`
+                        }}
+                        width='100'
+                        height={'100'}
+                        src={userhiveDetails?.profile_image ? userhiveDetails?.profile_image : `/images/avatar3.png`} style={{ margin: '0', width: '40px', borderRadius: '100px', height: '100%', objectFit: 'cover' }} />
+
                     </Flex>
-                    
-                    <Text  onClick={() => router.push(`/user/${userDetails?.username?.toLocaleLowerCase()}`)} marginLeft={'5px'} margin={'0px'} marginRight={'8px'} textAlign={'center'} as='h5'>
+
+                    <Text onClick={() => router.push(`/user/${userDetails?.username?.toLocaleLowerCase()}`)} marginLeft={'5px'} margin={'0px'} marginRight={'8px'} textAlign={'center'} as='h5'>
                       {userDetails?.username?.toLocaleUpperCase()}
                     </Text>
                     <Menu>
-                    <MenuButton
+                      <MenuButton
                         as={IconButton}
                         aria-label='Options'
                         icon={<ChevronDownIcon />}
                         variant='outline'
                       />
-                        {/* <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                      {/* <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                         </MenuButton> */}
-                        <MenuList>
-                          <MenuItem onClick={() => {
-                              localStorage.removeItem("access_token"); //
-                              // in order to reset the localstorage it needs to refresh the whole page
-                              location.reload();
-                            
-                          }}>Logout</MenuItem>
-                        </MenuList>
-                      </Menu>
+                      <MenuList>
+                        <MenuItem onClick={() => {
+                          localStorage.removeItem("access_token"); //
+                          // in order to reset the localstorage it needs to refresh the whole page
+                          location.reload();
+
+                        }}>Logout</MenuItem>
+                      </MenuList>
+                    </Menu>
                   </Flex>
 
                 </ChakraBox>
                 <Link href="/studio">
-                <Button bg={bgColor} boxShadow={'0 1px 4px rgb(0 0 0 / 40%)'} width="90%" textAlign={'center'} cursor='pointer' py={3}>Uplaod Video</Button>
+                  <Button bg={bgColor} boxShadow={'0 1px 4px rgb(0 0 0 / 40%)'} width="90%" textAlign={'center'} cursor='pointer' py={3}>Uplaod Video</Button>
                 </Link>
               </Flex>
 
@@ -283,10 +291,10 @@ export const Sidebar = () => {
             <Flex cursor={'pointer'} width={'100%'} justifyContent='center' alignItems={'center'}>
               <ChakraBox onClick={onOpenModal1} >Switch Account</ChakraBox>
             </Flex>
-           
+
           </ChakraBox>
           <ChakraBox>
-            {NAVIGATION.map(({ img, title, route }) => (
+            {NAVIGATION.map(({ img, img_light, title, route }) => (
               <StyledNav
                 onClick={() =>
                   route ? router.push(route) : setCommunitiesPopup(true)
@@ -300,16 +308,16 @@ export const Sidebar = () => {
               >
                 <ChakraBox mr="1rem" maxWidth="25px">
                   {title == "download_apps" && (
-                    <FaAppStoreIos size={"2rem"} color={colorMode === 'dark'? 'white':'black'} />
+                    <FaAppStoreIos size={"2rem"} color={colorMode === 'dark' ? 'white' : 'black'} />
                   )}
 
                   {title == "about_3speak" && (
-                    <FaInfoCircle size={"1.5rem"} color={colorMode === 'dark'? 'white':'black'}/>
+                    <FaInfoCircle size={"1.5rem"} color={colorMode === 'dark' ? 'white' : 'black'} />
                   )}
 
                   {title != "download_apps" && title != "about_3speak" && (
                     <Image
-                      src={`/${img}`}
+                      src={`/${colorMode == 'dark' ? img_light : img}`}
                       alt={title}
                       width={30}
                       height={30}
@@ -319,7 +327,7 @@ export const Sidebar = () => {
                 {title == "download_apps" && (
                   <ChakraBox position="relative">
                     <Menu>
-                      <MenuButton color={colorMode === 'dark'? 'white':'black'}>Download 3Speak Apps</MenuButton>
+                      <MenuButton color={colorMode === 'dark' ? 'white' : 'black'}>Download 3Speak Apps</MenuButton>
                       <MenuList
                         display={"flex"}
                         flexDirection="column"
@@ -418,7 +426,7 @@ export const Sidebar = () => {
                 {title == "about_3speak" && (
                   <ChakraBox position="relative">
                     <Menu>
-                      <MenuButton color={colorMode === 'dark'? 'white':'black'}>About 3Speak {colorMode}</MenuButton>
+                      <MenuButton color={colorMode === 'dark' ? 'white' : 'black'}>About 3Speak {colorMode}</MenuButton>
                       <MenuList
                         display={"flex"}
                         flexDirection="column"
@@ -437,14 +445,14 @@ export const Sidebar = () => {
                           fontWeight={"bold"}
                           fontSize="13px"
                         >
-                          <MenuItem color={colorMode === 'dark'? 'white':'black'} paddingTop={"5px"} paddingBottom={"10px"}>
+                          <MenuItem color={colorMode === 'dark' ? 'white' : 'black'} paddingTop={"5px"} paddingBottom={"10px"}>
                             About Us
                           </MenuItem>
-                          <MenuItem color={colorMode === 'dark'? 'white':'black'} paddingBottom={"10px"}>FAQ</MenuItem>
-                          <MenuItem color={colorMode === 'dark'? 'white':'black'} paddingBottom={"10px"}>Telegram</MenuItem>
-                          <MenuItem color={colorMode === 'dark'? 'white':'black'} paddingBottom={"10px"}>Discord</MenuItem>
-                          <MenuItem color={colorMode === 'dark'? 'white':'black'} paddingBottom={"10px"}>Twitter</MenuItem>
-                          <MenuItem color={colorMode === 'dark'? 'white':'black'} paddingBottom={"10px"}>
+                          <MenuItem color={colorMode === 'dark' ? 'white' : 'black'} paddingBottom={"10px"}>FAQ</MenuItem>
+                          <MenuItem color={colorMode === 'dark' ? 'white' : 'black'} paddingBottom={"10px"}>Telegram</MenuItem>
+                          <MenuItem color={colorMode === 'dark' ? 'white' : 'black'} paddingBottom={"10px"}>Discord</MenuItem>
+                          <MenuItem color={colorMode === 'dark' ? 'white' : 'black'} paddingBottom={"10px"}>Twitter</MenuItem>
+                          <MenuItem color={colorMode === 'dark' ? 'white' : 'black'} paddingBottom={"10px"}>
                             3Speak - important links
                           </MenuItem>
                           <MenuItem paddingBottom={"10px"}>
@@ -459,7 +467,7 @@ export const Sidebar = () => {
                   </ChakraBox>
                 )}
                 {title != "download_apps" && title != "about_3speak" && (
-                  <Typography color={colorMode === 'dark'? 'white':'black'}>{t(title)}</Typography>
+                  <Typography color={colorMode === 'dark' ? 'white' : 'black'}>{t(title)}</Typography>
                 )}
               </StyledNav>
             ))}
@@ -473,15 +481,15 @@ export const Sidebar = () => {
             <ChakraBox maxWidth="2rem">
               <Image
                 alt="search icon"
-                loader={() => `/nav/search.svg`}
-                src="/nav/search.svg"
+                loader={() => `${colorMode == 'dark' ? '/nav/search_light.svg' : '/nav/search.svg'}`}
+                src={colorMode == 'dark' ? '/nav/search_light.svg' : '/nav/search.svg'}
                 width={45}
                 height={45}
               />
             </ChakraBox>
             <Input
-              color={colorMode === 'dark'? 'white':'black'}
-              focusBorderColor={colorMode === 'dark'? 'white':'black'}
+              color={colorMode === 'dark' ? 'white' : 'black'}
+              focusBorderColor={colorMode === 'dark' ? 'white' : 'black'}
               variant='flushed'
               outline='none'
               border={'none'}
@@ -504,7 +512,7 @@ export const Sidebar = () => {
           <ChakraBox ml="0.5rem" mt="1rem">
             <AboutText
               onClick={() => router.push("/about-us")}
-              color={colorMode === 'dark'? 'white':'black'}
+              color={colorMode === 'dark' ? 'white' : 'black'}
               mb="1rem"
             >
               {/* color="rgba(0,0,0,0.5)" */}
@@ -513,7 +521,7 @@ export const Sidebar = () => {
             </AboutText>
             <AboutText
               onClick={() => router.push("/faq")}
-              color={colorMode === 'dark'? 'white':'black'}
+              color={colorMode === 'dark' ? 'white' : 'black'}
               mb="1rem"
             >
               {t("faq")}
@@ -531,92 +539,92 @@ export const Sidebar = () => {
               href="https://twitter.com/3speakonline?utm_source=3speak.tv"
             >
               <FontAwesomeIcon
-                
+
                 className="fa-2x text-secondary ms-3 mb-1"
                 icon={faTwitterIcon}
               />
             </Link>
           </ChakraBox>
           <ChakraBox width={'40px'}>
-          <Link
-            target="_blank"
-            href="https://t.me/threespeak?utm_source=3speak.tv"
-          >
-            <FontAwesomeIcon
-              className="fa-2x text-secondary ms-3 mb-1"
-              icon={faTelegramIcon}
-            />
-          </Link>
-          </ChakraBox>
-          <ChakraBox width={'40px'}>
-          <Link target="_blank" href="https://discord.gg/NSFS2VGj83">
-            <FontAwesomeIcon
-              className="fa-2x text-secondary ms-3 mb-1"
-              icon={faDiscordIcon}
-            />
-          </Link>
-          </ChakraBox>
-          <ChakraBox width={'40px'}>
-          <Link
-            target="_blank"
-            title="Visit Our Blog"
-            href="https://hive.blog/@threespeak"
-          >
-            <span className="ms-3">
-              <Image
-                src="/nav/blog.png"
-                alt={"3speak blog"}
-                width={30}
-                height={30}
-                style={navblog}
+            <Link
+              target="_blank"
+              href="https://t.me/threespeak?utm_source=3speak.tv"
+            >
+              <FontAwesomeIcon
+                className="fa-2x text-secondary ms-3 mb-1"
+                icon={faTelegramIcon}
               />
-            </span>
-          </Link>
+            </Link>
           </ChakraBox>
           <ChakraBox width={'40px'}>
-
-          <Link target="_blank" title="SPK Network" href="https://spk.network">
-            <span className="ms-3">
-              <Image
-                src="/nav/spk_network.png"
-                alt={"SPK Network"}
-                width={30}
-                height={30}
-                style={threespeak}
+            <Link target="_blank" href="https://discord.gg/NSFS2VGj83">
+              <FontAwesomeIcon
+                className="fa-2x text-secondary ms-3 mb-1"
+                icon={faDiscordIcon}
               />
-            </span>
-          </Link>
+            </Link>
+          </ChakraBox>
+          <ChakraBox width={'40px'}>
+            <Link
+              target="_blank"
+              title="Visit Our Blog"
+              href="https://hive.blog/@threespeak"
+            >
+              <span className="ms-3">
+                <Image
+                  src="/nav/blog.png"
+                  alt={"3speak blog"}
+                  width={30}
+                  height={30}
+                  style={navblog}
+                />
+              </span>
+            </Link>
           </ChakraBox>
           <ChakraBox width={'40px'}>
 
-          <Link
-            target="_blank"
-            href="https://testflight.apple.com/join/0tipqwsZ"
-          >
-            <FontAwesomeIcon
-              className="fa-2x text-secondary ms-3"
-              icon={faAppStoreIosIcon}
-            />
-
-          </Link>
+            <Link target="_blank" title="SPK Network" href="https://spk.network">
+              <span className="ms-3">
+                <Image
+                  src="/nav/spk_network.png"
+                  alt={"SPK Network"}
+                  width={30}
+                  height={30}
+                  style={threespeak}
+                />
+              </span>
+            </Link>
           </ChakraBox>
           <ChakraBox width={'40px'}>
 
-          <Link
-            target="_blank"
-            href="https://appdistribution.firebase.dev/i/047cfb506633e639"
-          >
-            <AiFillAndroid className="fa-2x text-secondary ms-3" width={'100'} size='30' color="grey" />
-            {/* <FontAwesomeIcon
+            <Link
+              target="_blank"
+              href="https://testflight.apple.com/join/0tipqwsZ"
+            >
+              <FontAwesomeIcon
+                className="fa-2x text-secondary ms-3"
+                icon={faAppStoreIosIcon}
+              />
+
+            </Link>
+          </ChakraBox>
+          <ChakraBox width={'40px'}>
+
+            <Link
+              target="_blank"
+              href="https://appdistribution.firebase.dev/i/047cfb506633e639"
+            >
+              <AiFillAndroid className="fa-2x text-secondary ms-3" width={'100'} size='30' color="grey" />
+              {/* <FontAwesomeIcon
               className="fa-2x text-secondary ms-3"
               icon={faAndroidIcon}
             /> */}
-          </Link>
+            </Link>
           </ChakraBox>
         </ChakraBox>
       )}
-      <AccountsList isOpenModal1={isOpenModal1} onCloseModal1={onCloseModal1} listAccounts={listAccounts} addAccounts={addAccounts}/>
-      <SignInModal isOpenModal2={isOpenModal2} onCloseModal2={onCloseModal2}  addAccountsNow={addAccountsNow}/>
+      <AccountsList isOpenModal1={isOpenModal1} onCloseModal1={onCloseModal1} listAccounts={listAccounts} addAccounts={addAccounts} />
+      <SignInModal isOpenModal2={isOpenModal2} onCloseModal2={onCloseModal2} addAccountsNow={addAccountsNow} />
     </Flex>
   );
 };
