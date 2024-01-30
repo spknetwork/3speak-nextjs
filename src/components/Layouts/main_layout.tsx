@@ -8,14 +8,14 @@ const MainLayout = ({ children }: any) => {
     return (
         <Flex
             css={css`
-    @media (max-width: 768px) {
-      flex-direction: column;
-    }
+            @media (max-width: 768px) {
+            flex-direction: column;
+            }
 
-    @media (min-width: 769px) {
-      flex-direction: row;
-    }
-  `}
+            @media (min-width: 769px) {
+            flex-direction: row;
+            }
+        `}
         >
             <nav>
                 <Box><Sidebar /></Box>
@@ -23,14 +23,14 @@ const MainLayout = ({ children }: any) => {
             <Flex
                 width={"100%"}
                 css={css`
-              @media (max-width: 768px) {
-                flex-direction: column;
-              }
+                    @media (max-width: 768px) {
+                        flex-direction: column;
+                    }
 
-              @media (min-width: 769px) {
-                flex-direction: column;
-              }
-            `}
+                    @media (min-width: 769px) {
+                        flex-direction: column;
+                    }
+                `}
             >
                 <main>
                     {children}

@@ -39,6 +39,8 @@ import {
   useDisclosure,
   IconButton,
   useColorModeValue,
+  useColorMode,
+  Input,
 } from "@chakra-ui/react";
 import { useMediaQuery } from "react-responsive";
 import { css } from "@emotion/react";
@@ -108,7 +110,8 @@ const faTwitterIcon = faTwitter as IconProp;
 
 export const Sidebar = () => {
   const bgColor = useColorModeValue('gray.100', 'gray.800');
-  
+  const { colorMode, toggleColorMode } = useColorMode();
+
   const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure()
   const { isOpen: isOpenModal2, onOpen: onOpenModal2, onClose: onCloseModal2 } = useDisclosure()
  
@@ -226,7 +229,7 @@ export const Sidebar = () => {
           <ChakraBox mb="1rem" width="100%">
             {!authenticated && (
               <Link href="/auth/login">
-                <Button bg={bgColor} boxShadow={'0 1px 4px rgb(0 0 0 / 40%)'} width="90%" textAlign={'center'} cursor='pointer' py={3}>{t("mainLogin")}</Button>
+                <Button bg={bgColor} marginBottom={'10px'} boxShadow={'0 1px 4px rgb(0 0 0 / 40%)'} width="90%" textAlign={'center'} cursor='pointer' py={3}>{t("mainLogin")}</Button>
               </Link>
             )}
 
@@ -297,11 +300,11 @@ export const Sidebar = () => {
               >
                 <ChakraBox mr="1rem" maxWidth="25px">
                   {title == "download_apps" && (
-                    <FaAppStoreIos size={"2rem"} color="black" />
+                    <FaAppStoreIos size={"2rem"} color={colorMode === 'dark'? 'white':'black'} />
                   )}
 
                   {title == "about_3speak" && (
-                    <FaInfoCircle size={"1.5rem"} color="black" />
+                    <FaInfoCircle size={"1.5rem"} color={colorMode === 'dark'? 'white':'black'}/>
                   )}
 
                   {title != "download_apps" && title != "about_3speak" && (
@@ -316,7 +319,7 @@ export const Sidebar = () => {
                 {title == "download_apps" && (
                   <ChakraBox position="relative">
                     <Menu>
-                      <MenuButton>Download 3Speak Apps</MenuButton>
+                      <MenuButton color={colorMode === 'dark'? 'white':'black'}>Download 3Speak Apps</MenuButton>
                       <MenuList
                         display={"flex"}
                         flexDirection="column"
@@ -415,7 +418,7 @@ export const Sidebar = () => {
                 {title == "about_3speak" && (
                   <ChakraBox position="relative">
                     <Menu>
-                      <MenuButton>About 3Speak</MenuButton>
+                      <MenuButton color={colorMode === 'dark'? 'white':'black'}>About 3Speak {colorMode}</MenuButton>
                       <MenuList
                         display={"flex"}
                         flexDirection="column"
@@ -434,14 +437,14 @@ export const Sidebar = () => {
                           fontWeight={"bold"}
                           fontSize="13px"
                         >
-                          <MenuItem paddingTop={"5px"} paddingBottom={"10px"}>
+                          <MenuItem color={colorMode === 'dark'? 'white':'black'} paddingTop={"5px"} paddingBottom={"10px"}>
                             About Us
                           </MenuItem>
-                          <MenuItem paddingBottom={"10px"}>FAQ</MenuItem>
-                          <MenuItem paddingBottom={"10px"}>Telegram</MenuItem>
-                          <MenuItem paddingBottom={"10px"}>Discord</MenuItem>
-                          <MenuItem paddingBottom={"10px"}>Twitter</MenuItem>
-                          <MenuItem paddingBottom={"10px"}>
+                          <MenuItem color={colorMode === 'dark'? 'white':'black'} paddingBottom={"10px"}>FAQ</MenuItem>
+                          <MenuItem color={colorMode === 'dark'? 'white':'black'} paddingBottom={"10px"}>Telegram</MenuItem>
+                          <MenuItem color={colorMode === 'dark'? 'white':'black'} paddingBottom={"10px"}>Discord</MenuItem>
+                          <MenuItem color={colorMode === 'dark'? 'white':'black'} paddingBottom={"10px"}>Twitter</MenuItem>
+                          <MenuItem color={colorMode === 'dark'? 'white':'black'} paddingBottom={"10px"}>
                             3Speak - important links
                           </MenuItem>
                           <MenuItem paddingBottom={"10px"}>
@@ -456,7 +459,7 @@ export const Sidebar = () => {
                   </ChakraBox>
                 )}
                 {title != "download_apps" && title != "about_3speak" && (
-                  <Typography>{t(title)}</Typography>
+                  <Typography color={colorMode === 'dark'? 'white':'black'}>{t(title)}</Typography>
                 )}
               </StyledNav>
             ))}
@@ -476,7 +479,16 @@ export const Sidebar = () => {
                 height={45}
               />
             </ChakraBox>
-            <StyledInput
+            <Input
+              color={colorMode === 'dark'? 'white':'black'}
+              focusBorderColor={colorMode === 'dark'? 'white':'black'}
+              variant='flushed'
+              outline='none'
+              border={'none'}
+              borderBottom={'1px solid rgba(0, 0, 0, 0.5)'}
+              padding={'1rem 0.5rem 0.5rem'}
+              marginLeft={'0.5rem'}
+              marginBottom={'1rem'}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) =>
                 e.key === "Enter" &&
@@ -492,14 +504,16 @@ export const Sidebar = () => {
           <ChakraBox ml="0.5rem" mt="1rem">
             <AboutText
               onClick={() => router.push("/about-us")}
-              color="rgba(0,0,0,0.5)"
+              color={colorMode === 'dark'? 'white':'black'}
               mb="1rem"
             >
+              {/* color="rgba(0,0,0,0.5)" */}
+
               {t("aboutUs")}
             </AboutText>
             <AboutText
               onClick={() => router.push("/faq")}
-              color="rgba(0,0,0,0.5)"
+              color={colorMode === 'dark'? 'white':'black'}
               mb="1rem"
             >
               {t("faq")}
@@ -517,6 +531,7 @@ export const Sidebar = () => {
               href="https://twitter.com/3speakonline?utm_source=3speak.tv"
             >
               <FontAwesomeIcon
+                
                 className="fa-2x text-secondary ms-3 mb-1"
                 icon={faTwitterIcon}
               />
@@ -619,15 +634,15 @@ const AboutText = styled(Typography)`
 //   cursor: pointer;
 // `;
 
-const StyledInput = styled.input`
-  width: 100% !important;
-  outline: none;
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-  padding: 1rem 0.5rem 0.5rem;
-  margin-left: 0.5rem;
-  margin-bottom: 1rem;
-`;
+// const StyledInput = styled.input`
+//   width: 100% !important;
+//   outline: none;
+//   border: none;
+//   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+//   padding: 1rem 0.5rem 0.5rem;
+//   margin-left: 0.5rem;
+//   margin-bottom: 1rem;
+// `;
 
 const StyledNav = styled(FlexComponent)`
   cursor: pointer;
