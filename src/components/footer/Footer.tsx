@@ -13,7 +13,7 @@ const Footer = () => {
         <Box>
 
             <Box
-                backgroundColor={"#e8e8e8"}
+                
                 padding="5px"
                 marginBottom={"10px"}
                 paddingTop={"10px"}

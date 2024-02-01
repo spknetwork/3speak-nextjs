@@ -55,10 +55,17 @@ import AccountsList from "./Modal/AccountsList";
 import SignInModal from "./Modal/SignInModal";
 const threespeak = {
   filter: "drop-shadow(2px 4px 6px black)",
+
+};
+const threespeak_light = {
+  filter: "drop-shadow(2px 4px 6px black)",
 };
 // juneroy
 const navblog = {
-  filter: "brightness(0.45)",
+  filter: "brightness(1)",
+};
+const navblog_light = {
+  filter: "brightness(0)",
 };
 const NAVIGATION = [
   {
@@ -308,7 +315,24 @@ export const Sidebar = () => {
               >
                 <ChakraBox mr="1rem" maxWidth="25px">
                   {title == "download_apps" && (
-                    <FaAppStoreIos size={"2rem"} color={colorMode === 'dark' ? 'white' : 'black'} />
+                    // <FaAppStoreIos size={"2rem"} color={colorMode === 'dark' ? 'white' : 'black'} />
+                    <ChakraBox width={'auto'}>
+
+                      <Link
+                        target="_blank"
+                        href="https://testflight.apple.com/join/0tipqwsZ"
+                      >
+
+                        {/* <faAppStoreIos/> */}
+                        <FaAppStoreIos size={"2rem"} color={colorMode === 'dark' ? 'white' : 'black'}  />
+                        {/* <FontAwesomeIcon
+                
+                className="fa-2x text-secondary ms-3"
+                icon={faAppStoreIosIcon}
+              /> */}
+
+                      </Link>
+                    </ChakraBox>
                   )}
 
                   {title == "about_3speak" && (
@@ -542,6 +566,7 @@ export const Sidebar = () => {
 
                 className="fa-2x text-secondary ms-3 mb-1"
                 icon={faTwitterIcon}
+                filter={colorMode == 'dark'? 'brightness(4)':'brightness(0)'} 
               />
             </Link>
           </ChakraBox>
@@ -553,6 +578,7 @@ export const Sidebar = () => {
               <FontAwesomeIcon
                 className="fa-2x text-secondary ms-3 mb-1"
                 icon={faTelegramIcon}
+                filter={colorMode == 'dark'? 'brightness(4)':'brightness(0)'} 
               />
             </Link>
           </ChakraBox>
@@ -561,6 +587,7 @@ export const Sidebar = () => {
               <FontAwesomeIcon
                 className="fa-2x text-secondary ms-3 mb-1"
                 icon={faDiscordIcon}
+                filter={colorMode == 'dark'? 'brightness(4)':'brightness(0)'} 
               />
             </Link>
           </ChakraBox>
@@ -576,7 +603,7 @@ export const Sidebar = () => {
                   alt={"3speak blog"}
                   width={30}
                   height={30}
-                  style={navblog}
+                  style={colorMode == 'dark'?navblog:navblog_light}
                 />
               </span>
             </Link>
@@ -586,25 +613,31 @@ export const Sidebar = () => {
             <Link target="_blank" title="SPK Network" href="https://spk.network">
               <span className="ms-3">
                 <Image
+
                   src="/nav/spk_network.png"
                   alt={"SPK Network"}
                   width={30}
                   height={30}
-                  style={threespeak}
+                  style={colorMode == 'dark'?threespeak:threespeak_light}
+                  
                 />
               </span>
             </Link>
           </ChakraBox>
-          <ChakraBox width={'40px'}>
+          <ChakraBox width={'auto'}>
 
             <Link
               target="_blank"
               href="https://testflight.apple.com/join/0tipqwsZ"
             >
-              <FontAwesomeIcon
+
+              {/* <faAppStoreIos/> */}
+              <FaAppStoreIos size={"2.4rem"} />
+              {/* <FontAwesomeIcon
+                
                 className="fa-2x text-secondary ms-3"
                 icon={faAppStoreIosIcon}
-              />
+              /> */}
 
             </Link>
           </ChakraBox>
@@ -614,7 +647,7 @@ export const Sidebar = () => {
               target="_blank"
               href="https://appdistribution.firebase.dev/i/047cfb506633e639"
             >
-              <AiFillAndroid className="fa-2x text-secondary ms-3" width={'100'} size='30' color="grey" />
+              <AiFillAndroid className="fa-2x text-secondary ms-3" width={'100'} size='30' filter={colorMode == 'dark'? 'brightness(4)':'brightness(0)'} />
               {/* <FontAwesomeIcon
               className="fa-2x text-secondary ms-3"
               icon={faAndroidIcon}
@@ -654,14 +687,9 @@ const AboutText = styled(Typography)`
 
 const StyledNav = styled(FlexComponent)`
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.5);
   transition: all 0.25s ease-in;
 
-  svg {
-    path {
-      fill: rgba(0, 0, 0, 0.5);
-    }
-  }
+ 
 
   &:hover {
     color: black;
