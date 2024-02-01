@@ -45,7 +45,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const isAuth = pathname.includes("/auth");
   const isOtp = pathname.includes("/otp");
   const isStudio = pathname.includes("/studio");
-  const [currentAuthPage, setCurrentAuthPage] = useState<string>("tab1");
   const { checkAuth, allowAccess, getUserDetails, setAccounts, listAccounts } = useAppStore();
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -57,28 +56,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 
   }
-  const updateAuthCurrentPage = (tab: string) => {
-    setCurrentAuthPage(tab);
-    switch (tab) {
-      case "tab1":
-        router.push(`/auth/login`)
-        break;
-      case "tab2":
-        router.push(`/auth/hive_signin`)
-        break;
-      case "tab4":
-        router.push(`/auth/hive_signup`)
-        break;
 
-      case "tab3":
-        window.location.href = "/auth/signup"
-        // router.push(`/auth/signup`)
-        break;
-      default:
-        break;
-    }
-
-  };
 
   useEffect(() => {
     if (allowAccess == true) {
@@ -92,7 +70,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      {!isAuth && !isOtp && (
+      
 
         <ChakraProvider theme={theme}>
           <AccountsList isOpenModal1={isOpenModal1} onCloseModal1={onCloseModal1} listAccounts={listAccounts} addAccounts={addAccounts} />
@@ -101,7 +79,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </ApolloProvider>
         </ChakraProvider>
 
-      )}
+   
     </Provider>
   //     {/* {isOtp && (
   //         <>
