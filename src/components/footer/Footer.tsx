@@ -1,4 +1,6 @@
-import { Box, Flex, Image, Link, Text } from '@chakra-ui/react'
+import { Box, Flex, Link, Text, useColorMode } from '@chakra-ui/react'
+import Image from "next/image";
+
 import { css } from '@emotion/react'
 import React from 'react'
 import { BiEnvelope, BiGlobe } from 'react-icons/bi'
@@ -9,6 +11,8 @@ const FOOTER_TITLE = [
     { name: 'Terms' },
 ]
 const Footer = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
+
     return (
         <Box>
 
@@ -43,14 +47,15 @@ const Footer = () => {
                         `}
                         >
                             <Image
-                                src="/images/3S_logo.svg"
-                                alt="3speak logo"
-                                width={200}
-                                height={100}
+                            loader={() => `${colorMode == 'dark'? '/main_logo_light.svg':'/main_logo.svg'}`}
+                            src={colorMode == 'dark'? '/main_logo_light.svg':'/main_logo.svg'}
+                            alt="3speak logo"
+                            width={200}
+                            height={100}
                             />
                             <Link href="#">
                                 <Flex alignItems={"center"}>
-                                    <BiEnvelope color="black" />
+                                    <BiEnvelope />
                                     <Text fontWeight={"bold"} margin={"0px"}>
                                         helpdesk@3speak.tv
                                     </Text>
@@ -122,11 +127,18 @@ const Footer = () => {
                             >
                                 Accepted Payment Methods
                             </Text>
-                            <Image
+                            {/* <Image
                                 src="/images/hive-blockchain-hive-logo.svg"
                                 alt="3speak logo"
                                 width={200}
                                 height={100}
+                            /> */}
+                            <Image
+                            loader={() => `${colorMode == 'dark'? '/main_logo_light.svg':'/main_logo.svg'}`}
+                            src={colorMode == 'dark'? '/main_logo_light.svg':'/main_logo.svg'}
+                            alt="3speak logo"
+                            width={200}
+                            height={100}
                             />
                         </Box>
                     </Flex>

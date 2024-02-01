@@ -65,7 +65,7 @@ const navblog = {
   filter: "brightness(1)",
 };
 const navblog_light = {
-  filter: "brightness(0)",
+  filter: "brightness(0.50)",
 };
 const NAVIGATION = [
   {
@@ -221,8 +221,8 @@ export const Sidebar = () => {
         <Link style={{ cursor: 'pointer' }} href="/">
           <ChakraBox width={"180px"}>
             <Image
-              loader={() => `/main_logo.svg`}
-              src="/main_logo.svg"
+              loader={() => `${colorMode == 'dark'? '/main_logo_light.svg':'/main_logo.svg'}`}
+              src={colorMode == 'dark'? '/main_logo_light.svg':'/main_logo.svg'}
               alt="3speak logo"
               width={200}
               height={100}
@@ -566,7 +566,7 @@ export const Sidebar = () => {
 
                 className="fa-2x text-secondary ms-3 mb-1"
                 icon={faTwitterIcon}
-                filter={colorMode == 'dark'? 'brightness(4)':'brightness(0)'} 
+                filter={colorMode == 'dark'? 'brightness(4)':'brightness(0.50)'} 
               />
             </Link>
           </ChakraBox>
@@ -578,7 +578,7 @@ export const Sidebar = () => {
               <FontAwesomeIcon
                 className="fa-2x text-secondary ms-3 mb-1"
                 icon={faTelegramIcon}
-                filter={colorMode == 'dark'? 'brightness(4)':'brightness(0)'} 
+                filter={colorMode == 'dark'? 'brightness(4)':'brightness(0.50)'} 
               />
             </Link>
           </ChakraBox>
@@ -587,7 +587,7 @@ export const Sidebar = () => {
               <FontAwesomeIcon
                 className="fa-2x text-secondary ms-3 mb-1"
                 icon={faDiscordIcon}
-                filter={colorMode == 'dark'? 'brightness(4)':'brightness(0)'} 
+                filter={colorMode == 'dark'? 'brightness(4)':'brightness(0.50)'} 
               />
             </Link>
           </ChakraBox>
@@ -632,7 +632,7 @@ export const Sidebar = () => {
             >
 
               {/* <faAppStoreIos/> */}
-              <FaAppStoreIos size={"2.4rem"} />
+              <FaAppStoreIos size={"2.4rem"}  filter={colorMode == 'dark'? 'brightness(4)':'brightness(0.6)'}/>
               {/* <FontAwesomeIcon
                 
                 className="fa-2x text-secondary ms-3"
@@ -647,7 +647,7 @@ export const Sidebar = () => {
               target="_blank"
               href="https://appdistribution.firebase.dev/i/047cfb506633e639"
             >
-              <AiFillAndroid className="fa-2x text-secondary ms-3" width={'100'} size='30' filter={colorMode == 'dark'? 'brightness(4)':'brightness(0)'} />
+              <AiFillAndroid className="fa-2x text-secondary ms-3" width={'100'} size='30' filter={colorMode == 'dark'? 'brightness(4)':'brightness(0.50)'} />
               {/* <FontAwesomeIcon
               className="fa-2x text-secondary ms-3"
               icon={faAndroidIcon}
