@@ -12,6 +12,7 @@ import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
 import SignInHive from "@/components/signup/SignInHive";
+import AuthLayout from "@/components/Layouts/auth_layout";
 const TabsDemo = ({ tab }: any) => {
   console.log("tabhere", tab);
   const router = useRouter();
@@ -25,23 +26,26 @@ const TabsDemo = ({ tab }: any) => {
     // apply to form data
   };
   return (
-    <Flex
-      justifyContent="center"
-      px="1rem"
-      py="1rem"
-      alignItems={{ _: "flex-start", tablet: "flex-start" }}
-      backgroundColor="#F5F5F5"
-    >
-      <Tabs.Content className="TabsContent" value={'tab3'}>
-        <SignUp />
-      </Tabs.Content>
-      {/* <Tabs.Content className="TabsContent" value="tab2">
+    <AuthLayout>
+      <Flex
+        justifyContent="center"
+        px="1rem"
+        py="1rem"
+        alignItems={{ _: "flex-start", tablet: "flex-start" }}
+        backgroundColor="#F5F5F5"
+      >
+        <Tabs.Content className="TabsContent" value={'tab3'}>
+          <SignUp />
+        </Tabs.Content>
+        {/* <Tabs.Content className="TabsContent" value="tab2">
           <SignInHive />
         </Tabs.Content>
         <Tabs.Content className="TabsContent" value="tab3">
           <SignUp />
         </Tabs.Content> */}
-    </Flex>
+      </Flex>
+    </AuthLayout>
+
   );
 };
 

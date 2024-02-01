@@ -10,10 +10,11 @@ import axios from "axios";
 import { API_URL_FROM_WEST } from "@/utils/config";
 import { useAppStore } from "@/lib/store";
 import { HiveLoginInterface } from "types";
+import AuthLayout from "@/components/Layouts/auth_layout";
 
 
 const HiveSignIn = ({ tab }: any) => {
-  
+
 
   const router = useRouter();
   const { allowAccess, checkAuth, login_with_hive } = useAppStore();
@@ -71,7 +72,7 @@ const HiveSignIn = ({ tab }: any) => {
     console.log('_response from login', _response)
     localStorage.setItem("access_token", _response.data.access_token);
     localStorage.setItem(`keychainToken_${username}`, _response.data.access_token);
-    localStorage.setItem(`from_login`,'true');
+    localStorage.setItem(`from_login`, 'true');
     // save users
     // save keychainToken_username
     checkAuth();
@@ -80,7 +81,7 @@ const HiveSignIn = ({ tab }: any) => {
     saveLocalStorage(_response.data.access_token)
   };
 
-  const saveLocalStorage = (token:any) => {
+  const saveLocalStorage = (token: any) => {
     let dataToStore = {
       avatar: 'https source.unsplash.com/random/200x200?sig=3',
       username: username,
@@ -97,39 +98,42 @@ const HiveSignIn = ({ tab }: any) => {
       const checkData = accounts.filter((item: any) => item.username != username)
       console.log('checkData', checkData)
       // if (accounts.length < 6 && checkData.length == 0) {
-        // if (checkData.length == 0) {
-        accounts = checkData
-        accounts.push(dataToStore)
-        localStorage.setItem("accountsList", JSON.stringify(accounts))
+      // if (checkData.length == 0) {
+      accounts = checkData
+      accounts.push(dataToStore)
+      localStorage.setItem("accountsList", JSON.stringify(accounts))
       // }
     }
   }
 
-  
-  const requestHiveLogin = async (e:React.FormEvent<HTMLFormElement>) => {
+
+  const requestHiveLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setOnboarding(true)
-    const request:HiveLoginInterface = {
+    const request: HiveLoginInterface = {
       username: username,
       dateNow: dateNow,
       callback: callback
     }
     login_with_hive(request)
-    
+
   };
 
   return (
-    <Flex
-      justifyContent="center"
-      px="1rem"
-      py="1rem"
-      alignItems={{ _: "flex-start", tablet: "flex-start" }}
-      backgroundColor="#F5F5F5"
-    >
-      <Tabs.Content className="TabsContent w-100" value={'tab2'}>
-        <SignInHive requestHiveLogin={requestHiveLogin} username={username} setUsername={setUsername} />
-      </Tabs.Content>
-    </Flex>
+    <AuthLayout>
+      <Flex
+        justifyContent="center"
+        px="1rem"
+        py="1rem"
+        alignItems={{ _: "flex-start", tablet: "flex-start" }}
+        backgroundColor="#F5F5F5"
+      >
+        <Tabs.Content className="TabsContent w-100" value={'tab2'}>
+          <SignInHive requestHiveLogin={requestHiveLogin} username={username} setUsername={setUsername} />
+        </Tabs.Content>
+      </Flex>
+    </AuthLayout>
+
   );
 };
 

@@ -7,7 +7,8 @@ import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignIn from "@/components/sigin/SignIn";
-const TabsDemo = ({tab}:any) => {
+import AuthLayout from "@/components/Layouts/auth_layout";
+const TabsDemo = ({ tab }: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -18,19 +19,22 @@ const TabsDemo = ({tab}:any) => {
     console.log(token);
   };
   return (
-    <Flex
-      justifyContent="center"
-      px="1rem"
-      py="1rem"
-      alignItems={{ _: "flex-start", tablet: "flex-start" }}
-      backgroundColor="#F5F5F5"
-      
-    >
-    
+    <AuthLayout>
+      <Flex
+        justifyContent="center"
+        px="1rem"
+        py="1rem"
+        alignItems={{ _: "flex-start", tablet: "flex-start" }}
+        backgroundColor="#F5F5F5"
+
+      >
+
         <Tabs.Content className="TabsContent" value={'tab1'}>
           <SignIn />
         </Tabs.Content>
-    </Flex>
+      </Flex>
+    </AuthLayout>
+
   );
 };
 
