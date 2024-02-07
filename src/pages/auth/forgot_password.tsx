@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -10,7 +10,7 @@ import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
 import { FiArrowLeft } from "react-icons/fi";
-import { Text, Box as ChakraBox } from "@chakra-ui/react";
+import { Text, Box as ChakraBox, useColorMode } from "@chakra-ui/react";
 import ReCAPTCHA from "react-google-recaptcha";
 import AuthLayout from "@/components/Layouts/auth_layout";
 
@@ -19,8 +19,14 @@ const ForgotPassword = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRef: any = useRef();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const onSubmitWithReCAPTCHA = async () => {
+    useEffect(() => {
+      if (colorMode == 'dark') {
+        toggleColorMode()
+      }
+    },[])
     const token = await recaptchaRef.current.executeAsync();
     console.log(token);
     // apply to form data

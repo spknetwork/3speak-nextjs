@@ -36,19 +36,27 @@ const SignIn = () => {
     // console.log('herererererere')
   }
   const googlelogin = async () => {
-    const data = await magic.oauth.loginWithRedirect({
-      provider: 'google' /* 'google', 'facebook', 'apple', or 'github' */,
-      redirectURI: 'http://localhost:3050',
-    });
+    // const data = await magic.oauth.loginWithRedirect({
+    //   provider: 'google' /* 'google', 'facebook', 'apple', or 'github' */,
+    //   redirectURI: 'http://localhost:3050/login',
+    // });
 
-    console.log('data', data)
+    // console.log('data', data)
+    try {
+      await magic.oauth.loginWithRedirect({
+        provider: "google",
+        redirectURI: new URL("/login", window.location.origin).href,
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
 
   const githublogin = async () => {
     const data = await magic.oauth.loginWithRedirect({
       provider: 'github' /* 'google', 'facebook', 'apple', or 'github' */,
-      redirectURI: 'http://localhost:3050',
+      redirectURI: new URL("/login", window.location.origin).href,
     });
 
     console.log('data', data)
@@ -57,7 +65,7 @@ const SignIn = () => {
   const discordlogin = async () => {
     const data = await magic.oauth.loginWithRedirect({
       provider: 'discord' /* 'google', 'facebook', 'apple', or 'github' */,
-      redirectURI: 'http://localhost:3050',
+      redirectURI: new URL("/login", window.location.origin).href,
     });
 
     console.log('data', data)

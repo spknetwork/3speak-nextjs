@@ -1,11 +1,17 @@
 import AuthLayout from '@/components/Layouts/auth_layout';
 import HiveSignUpComponent from '@/components/hive_signup/HiveSignUpComponent';
-import { Flex } from '@chakra-ui/react'
+import { Flex, useColorMode } from '@chakra-ui/react'
 import * as Tabs from "@radix-ui/react-tabs";
-import React from 'react'
+import React, { useEffect } from 'react'
 
 
 const HiveSIgnUp = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
+  useEffect(() => {
+    if (colorMode == 'dark') {
+      toggleColorMode()
+    }
+  },[])
   return (
     <AuthLayout>
       <Flex

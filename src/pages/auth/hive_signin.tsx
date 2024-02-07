@@ -11,10 +11,16 @@ import { API_URL_FROM_WEST } from "@/utils/config";
 import { useAppStore } from "@/lib/store";
 import { HiveLoginInterface } from "types";
 import AuthLayout from "@/components/Layouts/auth_layout";
+import { useColorMode } from "@chakra-ui/react";
 
 
 const HiveSignIn = ({ tab }: any) => {
-
+  const { colorMode, toggleColorMode } = useColorMode();
+  useEffect(() => {
+    if (colorMode == 'dark') {
+      toggleColorMode()
+    }
+  },[])
 
   const router = useRouter();
   const { allowAccess, checkAuth, login_with_hive } = useAppStore();

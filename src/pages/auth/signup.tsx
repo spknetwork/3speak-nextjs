@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -13,7 +13,15 @@ import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
 import SignInHive from "@/components/signup/SignInHive";
 import AuthLayout from "@/components/Layouts/auth_layout";
+import { useColorMode } from "@chakra-ui/react";
 const TabsDemo = ({ tab }: any) => {
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  useEffect(() => {
+    if (colorMode == 'dark') {
+      toggleColorMode()
+    }
+  },[])
   console.log("tabhere", tab);
   const router = useRouter();
   const dispatch = useDispatch();

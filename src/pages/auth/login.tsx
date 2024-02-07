@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -8,13 +8,20 @@ import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignIn from "@/components/sigin/SignIn";
 import AuthLayout from "@/components/Layouts/auth_layout";
+import { useColorMode } from "@chakra-ui/react";
 const TabsDemo = ({ tab }: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRef: any = useRef();
-
+  const { colorMode, toggleColorMode } = useColorMode();
+  useEffect(() => {
+    if (colorMode == 'dark') {
+      toggleColorMode()
+    }
+  },[])
   const onSubmitWithReCAPTCHA = async () => {
+   
     const token = await recaptchaRef.current.executeAsync();
     console.log(token);
   };

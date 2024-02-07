@@ -149,6 +149,7 @@ export const Sidebar = () => {
   const { allowAccess, userDetails, userhiveDetails, listAccounts, setAccounts, getUserDetails, getUserHiveDetails } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+  // const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
     if (allowAccess == true) {
@@ -280,6 +281,10 @@ export const Sidebar = () => {
                       <MenuList>
                         <MenuItem onClick={() => {
                           localStorage.removeItem("access_token"); //
+                          if (colorMode == 'dark') {
+                            toggleColorMode()
+                          }
+                         
                           // in order to reset the localstorage it needs to refresh the whole page
                           location.reload();
 
