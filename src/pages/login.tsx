@@ -1,10 +1,12 @@
 // pages/login.js or any other component
 
-import GoogleLoginButton from "@/components/login/GoogleLoginButton";
+// import GoogleLoginButton from "@/components/login/GoogleLoginButton";
 import { useAppStore } from "@/lib/store";
 import { OAuthExtension } from "@magic-ext/oauth";
 import { Magic } from "magic-sdk";
 import { useEffect, useState } from "react";
+import Web3 from "web3";
+import { recoverPersonalSignature } from "@metamask/eth-sig-util";
 
 // import GoogleLoginButton from 'components/GoogleLoginButton';
 
@@ -17,6 +19,7 @@ const LoginPage = () => {
         magic = new Magic('pk_live_773A61B5424F8C7D', {
             extensions: [new OAuthExtension()],
         });
+        
 
         useEffect(() => {
 
@@ -28,15 +31,38 @@ const LoginPage = () => {
 
             const result = await magic.oauth.getRedirectResult();
             setUser(result);
-            console.log("result", result)
-            console.log("result", result.oauth.accessToken)
-            localStorage.setItem("access_token", result.oauth.accessToken);
-
+            // console.log("result", result)
+            // console.log("result", result.oauth.accessToken)
+            // localStorage.setItem("access_token", result.oauth.accessToken);
+            createPersonalSign()
 
         } catch (err) {
             console.error(err);
         }
     };
+
+    const createPersonalSign= async () => {
+        const magic = new Magic("pk_live_773A61B5424F8C7D", {
+            network: "bhive",
+          });
+        const web3 = new Web3(magic.rpcProvider);
+        const signedMessage = await web3.eth.personal.sign(
+            "Login to your account",
+            "juneroy1",
+            ""
+          );
+          console.log("signedMessage:", signedMessage);
+          // recover the public address of the signer to verify
+          const recoveredAddress = recoverPersonalSignature({
+            data: "Login to your account",
+            signature: signedMessage,
+          });
+          console.log(
+            recoveredAddress.toLocaleLowerCase() === "juneroy1"
+              ? "Signing success!"
+              : "Signing failed!"
+          );
+    }
 
     const logout = async () => {
         try {
