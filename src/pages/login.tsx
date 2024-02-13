@@ -5,6 +5,9 @@ import { useAppStore } from "@/lib/store";
 import { OAuthExtension } from "@magic-ext/oauth";
 import { Magic } from "magic-sdk";
 import { useEffect, useState } from "react";
+import { ethers } from 'ethers';
+
+// import { magic as magin2, provider } from '../utils/magic'
 import Web3 from "web3";
 import { recoverPersonalSignature } from "@metamask/eth-sig-util";
 
@@ -15,10 +18,20 @@ const LoginPage = () => {
 
     const [user, setUser] = useState();
     let magic: any
+    let provider: any
     if (typeof window !== "undefined") {
-        magic = new Magic('pk_live_773A61B5424F8C7D', {
-            extensions: [new OAuthExtension()],
-        });
+        // magic = new Magic('pk_live_773A61B5424F8C7D', {
+        //     extensions: [new OAuthExtension()],
+        // });
+
+        // Initialize Magic with your Magic publishable key
+   magic = new Magic('pk_live_773A61B5424F8C7D', {
+    extensions: [new OAuthExtension()],
+    network: 'mainnet',
+  });
+  
+  // Create a Web3 provider using Magic's Ethereum provider
+   provider = new ethers.providers.Web3Provider(magic.rpcProvider);
         
 
         useEffect(() => {
@@ -41,27 +54,69 @@ const LoginPage = () => {
         }
     };
 
-    const createPersonalSign= async () => {
-        const magic = new Magic("pk_live_773A61B5424F8C7D", {
-            network: "bhive",
-          });
-        const web3 = new Web3(magic.rpcProvider);
-        const signedMessage = await web3.eth.personal.sign(
-            "Login to your account",
-            "juneroy1",
-            ""
-          );
-          console.log("signedMessage:", signedMessage);
-          // recover the public address of the signer to verify
-          const recoveredAddress = recoverPersonalSignature({
-            data: "Login to your account",
-            signature: signedMessage,
-          });
-          console.log(
-            recoveredAddress.toLocaleLowerCase() === "juneroy1"
-              ? "Signing success!"
-              : "Signing failed!"
-          );
+    const createPersonalSign= async (message= "Login to your account") => {
+        try {
+            // Ensure the user is logged in with Magic
+            await magic.auth.loginWithMagicLink({ email: "eroyjune@gmail.com" });
+    
+            // Get the signer from the provider
+            const signer = provider.getSigner();
+    
+            // Sign the message
+            const signature = await signer.signMessage(message);
+    
+            // return signature;
+            console.log("signature",signature)
+        } catch (error) {
+            console.error('Error signing message:', error);
+            throw error; // Propagate error for further handling
+        }
+
+
+
+        // try {
+        //     const email = 'eroyjune@gmail.com'; // The email address of the user
+        //     const response = await fetch('/api/signMessage', {
+        //       method: 'POST',
+        //       headers: {
+        //         'Content-Type': 'application/json',
+        //       },
+        //       body: JSON.stringify({ email, message }),
+        //     });
+        
+        //     const data = await response.json();
+        //     if (data.signature) {
+        //       console.log('Signature:', data.signature);
+        //       // Handle the signed message (e.g., display it, send it to a server)
+        //     } else {
+        //       console.error('Failed to sign the message.');
+        //     }
+        //   } catch (error) {
+        //     console.error('Error signing message:', error);
+        //   }
+
+
+        //   1
+        // const magic = new Magic("pk_live_773A61B5424F8C7D", {
+        //     network: `mainnet`,
+        //   });
+        // const web3 = new Web3(magic.rpcProvider);
+        // const signedMessage = await web3.eth.personal.sign(
+        //     "Login to your account",
+        //     "juneroy1",
+        //     ""
+        //   );
+        //   console.log("signedMessage:", signedMessage);
+        //   // recover the public address of the signer to verify
+        //   const recoveredAddress = recoverPersonalSignature({
+        //     data: "Login to your account",
+        //     signature: signedMessage,
+        //   });
+        //   console.log(
+        //     recoveredAddress.toLocaleLowerCase() === "juneroy1"
+        //       ? "Signing success!"
+        //       : "Signing failed!"
+        //   );
     }
 
     const logout = async () => {
