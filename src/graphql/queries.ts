@@ -39,6 +39,29 @@ export const GET_RELATED_FEED = gql`
     }
   }
 `;
+export const GET_SOCIAL_FEED_BY_CREATOR = gql `
+query ProfileVideoData($id: String) {
+  socialFeed(feedOptions: {byCreator: {_eq: $id}}) {
+    items {
+      ... on HivePost {
+        spkvideo
+        body
+        title
+        stats {
+          num_votes
+        }
+        created_at
+        refs
+        author {
+          username
+        }
+        permlink
+      }
+      permlink
+    }
+  }
+}
+`
 export const GET_SOCIAL_FEED = gql`
   query MyQuery {
     socialFeed(
@@ -143,15 +166,36 @@ export const GET_SOCIAL_POST = gql`
 `;
 
 export const GET_PROFILE = gql`
-  query MyQuery {
-    profile {
+  query MyQuery($id: String) {
+    profile(id: $id) {
+      ... on CeramicProfile {
+        id
+        name
+      }
       ... on HiveProfile {
         id
         name
+        about
+        did
+        images {
+          avatar
+          cover
+        }
+        src
+        username
+        website
+        location
+        json_metadata
       }
     }
   }
 `;
+// profile {
+//   ... on HiveProfile {
+//     id
+//     name
+//   }
+// }
 // latestFeed {
 //   items {
 //     body
@@ -260,6 +304,122 @@ export const GET_FOLLOWS = gql`
             id
             name
           }
+        }
+      }
+    }
+  }
+`;
+
+export const LATEST_FEED = gql`
+  query LatestFeed {
+    feed: socialFeed {
+      items {
+        body
+        created_at
+        parent_author
+        parent_permlink
+        permlink
+        title
+        updated_at
+        ... on HivePost {
+          parent_author
+          parent_permlink
+          author {
+            username
+          }
+          json_metadata {
+            raw
+          }
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          app_metadata
+          spkvideo
+          refs
+          post_type
+          permlink
+          title
+          tags
+          updated_at
+          body
+          community
+          created_at
+        }
+      }
+    }
+  }
+`;
+
+export const TRENDING_FEED = gql`
+  query TrendingFeed {
+    feed: trendingFeed {
+      items {
+        created_at
+        parent_author
+        parent_permlink
+        permlink
+        title
+        updated_at
+        ... on HivePost {
+          parent_author
+          parent_permlink
+          author {
+            username
+          }
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          hive_rewards
+          app_metadata
+          spkvideo
+          refs
+          post_type
+          permlink
+          title
+          tags
+          updated_at
+          created_at
+        }
+      }
+    }
+  }
+`;
+
+export const FIRST_UPLOAD_FEED = gql`
+  query TrendingFeed {
+    feed: trendingFeed {
+      items {
+        created_at
+        parent_author
+        parent_permlink
+        permlink
+        title
+        updated_at
+        ... on HivePost {
+          parent_author
+          parent_permlink
+          author {
+            username
+          }
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          hive_rewards
+          app_metadata
+          spkvideo
+          refs
+          post_type
+          permlink
+          title
+          tags
+          updated_at
+          created_at
         }
       }
     }

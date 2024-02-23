@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 import { Col } from "react-bootstrap";
 import { background } from "styled-system";
@@ -19,13 +20,15 @@ export function CommunityTile(props: any) {
             style={{ display: "inline-block", float: "left" }}
           >
             
-            <img
+            <Image
+              alt="hive blog"
               style={{
                 width: "40px",
                 height: "40px",
                 borderRadius: "50%",
                 verticalAlign: "middle",
               }}
+              loader={() => "https://images.hive.blog/u/" + props.name + "/avatar?size=icon"}
               src={
                 "https://images.hive.blog/u/" + props.name + "/avatar?size=icon"
               }

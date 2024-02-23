@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -10,96 +10,117 @@ import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
 import { FiArrowLeft } from "react-icons/fi";
+import { Text, Box as ChakraBox, useColorMode } from "@chakra-ui/react";
+import ReCAPTCHA from "react-google-recaptcha";
+import AuthLayout from "@/components/Layouts/auth_layout";
+
 const ForgotPassword = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRef: any = useRef();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const onSubmitWithReCAPTCHA = async () => {
+    useEffect(() => {
+      if (colorMode == 'dark') {
+        toggleColorMode()
+      }
+    },[])
     const token = await recaptchaRef.current.executeAsync();
     console.log(token);
     // apply to form data
   };
   return (
-    <Flex
-      justifyContent="center"
-      px="1rem"
-      alignItems={{ _: "flex-start", tablet: "flex-start" }}
-      backgroundColor="#F5F5F5"
-      minHeight="100vh"
-      minWidth="100vw"
-      paddingTop="100px"
-    >
-      <Tabs.Root className="TabsRoot" defaultValue="tab1">
+    <AuthLayout>
+      <Flex
+        justifyContent="center"
+        px="1rem"
+        alignItems={{ _: "flex-start", tablet: "flex-start" }}
+        backgroundColor="#F5F5F5"
+        paddingBottom="20px"
+        paddingTop="20px"
+      >
+        {/* <Tabs.Root className="TabsRoot" defaultValue="tab1">
         <Tabs.List className="TabsList" aria-label="Manage your account">
           <Tabs.Trigger className="TabsTrigger" value="tab1">
             Forgot Password
           </Tabs.Trigger>
         </Tabs.List>
-        <Tabs.Content className="TabsContent" value="tab1">
-          <Box width="100%">
-            <Flex justifyContent={'start'}>
-              <FiArrowLeft onClick={() => router.push("/auth/login")} cursor={'pointer'} size={'30px'}/>
-            </Flex>
-            <Box mx="auto" maxWidth="9rem">
-              <img
-                src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
-                alt="3speak logo"
-                width="100%"
-              />
-            </Box>
-            <Formik
-              initialValues={{ password: "", email: "" }}
-              validate={(props) => {
-                const errors: any = {};
+        <Tabs.Content className="TabsContent" value="tab1"> */}
+        <Box className="TabsContent" width="100%">
+          <Flex justifyContent={'start'}>
+            <FiArrowLeft onClick={() => router.push("/auth/login")} cursor={'pointer'} size={'30px'} />
+          </Flex>
+          <Box mx="auto" maxWidth="10rem">
+            <Text as='p' fontWeight={'bold'}>Forgot password</Text>
+            <img
+              src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
+              alt="3speak logo"
+              width="100%"
+            />
 
-                if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(props.email)) {
-                  errors.email = t("login.notValidEmail");
-                }
-
-                if (!props.password) errors.password = t("required");
-                if (!props.email) errors.email = t("required");
-
-                return errors;
-              }}
-              onSubmit={(values) => {
-                console.log(values, "submit");
-              }}
-            >
-              {(props) => (
-                <form onSubmit={onSubmitWithReCAPTCHA}>
-                  <Box mb="2rem" mt="1.5rem" width="100%">
-                    <fieldset className="Fieldset">
-                      <label className="Label" htmlFor="currentPassword">
-                        Email
-                      </label>
-                      <input
-                        className="Input"
-                        id="email"
-                        placeholder={t("login.email")}
-                        type="email"
-                        onChange={props.handleChange}
-                        onBlur={props.handleBlur}
-                        name="email"
-                      />
-                      {!!props.errors.email && (
-                        <Typography color="#FF3333">
-                          {props.errors.email}
-                        </Typography>
-                      )}
-                    </fieldset>
-                  </Box>
-                  <Flex width="100%" justifyContent="center" mt="1rem">
-                    <StyledButton type="submit">Send Email</StyledButton>
-                  </Flex>
-                </form>
-              )}
-            </Formik>
           </Box>
-        </Tabs.Content>
-      </Tabs.Root>
-    </Flex>
+          <Formik
+            initialValues={{ password: "", email: "" }}
+            validate={(props) => {
+              const errors: any = {};
+
+              if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(props.email)) {
+                errors.email = t("login.notValidEmail");
+              }
+
+              if (!props.password) errors.password = t("required");
+              if (!props.email) errors.email = t("required");
+
+              return errors;
+            }}
+            onSubmit={(values) => {
+              console.log(values, "submit");
+            }}
+          >
+            {(props) => (
+              <form onSubmit={onSubmitWithReCAPTCHA}>
+                <Box mb="10px" mt="1.5rem" width="100%">
+                  <fieldset className="Fieldset">
+                    <label className="Label" htmlFor="currentPassword">
+                      Email
+                    </label>
+                    <input
+                      className="Input"
+                      id="email"
+                      placeholder={t("login.email")}
+                      type="email"
+                      onChange={props.handleChange}
+                      onBlur={props.handleBlur}
+                      name="email"
+                    />
+                    {!!props.errors.email && (
+                      <Typography color="#FF3333">
+                        {props.errors.email}
+                      </Typography>
+                    )}
+                  </fieldset>
+                </Box>
+                <ChakraBox display={'flex'} justifyContent='center' alignItems={'center'} marginTop={"10px"}>
+                  <ReCAPTCHA
+                    style={{}}
+                    ref={recaptchaRef}
+                    sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
+                  />
+                </ChakraBox>
+                <Flex width="100%" justifyContent="center" mt="1rem">
+                  <StyledButton type="submit">Send Email</StyledButton>
+                </Flex>
+              </form>
+            )}
+          </Formik>
+        </Box>
+        {/* </Tabs.Content>
+      </Tabs.Root> */}
+      </Flex>
+    </AuthLayout>
+
   );
 };
 

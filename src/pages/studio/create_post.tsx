@@ -2,8 +2,9 @@ import React, { ReactNode, useEffect, useState } from "react";
 import styled from "styled-components";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 import axios from "axios";
-import {generateVideoThumbnails} from '@rajesh896/video-thumbnails-generator'
-
+import { generateVideoThumbnails } from "@rajesh896/video-thumbnails-generator";
+import tus, { Upload, UploadOptions } from "tus-js-client";
+import styles from "../../components/ProgressBar.module.css";
 import {
   Box,
   Flex,
@@ -22,6 +23,7 @@ import {
   Spinner,
   RadioGroup,
   Radio,
+  useToast,
 } from "@chakra-ui/react";
 
 import { FaUpload } from "react-icons/fa";
@@ -31,6 +33,7 @@ import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 import { api } from "@/utils/api";
 import { useAppStore } from "@/lib/store";
+import WizardSteps from "@/components/studio/WizardSteps";
 
 type FilePreview = {
   file: File;
@@ -38,70 +41,248 @@ type FilePreview = {
 };
 
 const CreatePost: React.FC = () => {
+  // video title
+  const [videoTitle, setVideoTitle] = useState<string>("");
+  const [videoDescription, setVideoDesription] = useState<string>("");
+  const [video_upload_id, setVideoUploadId] = useState<string>("");
+  const [savingDetails, setSavingDetails] = useState<Boolean | null>(null);
+
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
-  const [steps, setSteps] = useState<number>(0);
+
+  const [uploadingProgress, setUploadingProgress] = useState<number>(0);
+  const [uploadStatus, setUploadStatus] = useState<Boolean | null>(null);
+  const [uploading, setUploading] = useState<Boolean>(false);
+  const [steps, setSteps] = useState<number>(2);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
     useState<String>("Uploading Video...");
 
-  const [previewThumbnails, setPreviewThumbnails] = useState<string[]>([])
+  const [previewThumbnails, setPreviewThumbnails] = useState<string[]>([]);
+  const [previewManualThumbnails, setPreviewManualThumbnails] = useState<
+    string[]
+  >([]);
+  const toast = useToast();
 
+  const handleFileDropThumbnail = async (
+    acceptedFiles: File[]
+  ): Promise<void> => {
+    const file = acceptedFiles[0];
+    const previewUrl = URL.createObjectURL(file);
+
+    if (!file?.type?.startsWith("image/")) {
+      console.log("Cant upload file, select a image type only");
+      toast({
+        position: "top-right",
+        title: "Cant Upload Thumbnail.",
+        description: "Select a image type only",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      return;
+    }
+    const files = [];
+    files.push(previewUrl);
+    setPreviewManualThumbnails(files);
+  };
   const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
 
-
-    const thumbs = await generateVideoThumbnails(file, 3, 'url')
-    console.log(thumbs)
-
-    setPreviewThumbnails(thumbs.slice(1))
-
-    console.log('dropped file check', file)
-    setSelectedFile({ file, previewUrl });
-    setUploadingVideo(true);
-    // const thumbnailGenerator = new VideoThumbnailGenerator({
-    //   sourcePath: URL.createObjectURL(file),
-    // });
-    // console.log('file',file)
-    // console.log('previewUrl',previewUrl)
-    // setSteps(1);
-    setTimeout(() => {
-      setSteps(1);
-      setUploadingVideo(false);
-    }, 5000);
-  };
-  const proccedtoStep3 = () => {
-    setUploadingVideoLabel("Adding Video Details...");
-    setUploadingVideo(true);
-    setTimeout(() => {
-      setSteps(2);
-      setUploadingVideo(false);
-    }, 5000);
-  };
-  const handleFileUpload = (): void => {
-    if (selectedFile) {
-      const { file } = selectedFile;
-      const formData = new FormData();
-      formData.append("file", file);
-
-      axios
-        .post("http://your-upload-url", formData)
-        .then((response) => {
-          // Handle successful upload
-          console.log(response);
-        })
-        .catch((error) => {
-          // Handle upload error
-          console.error(error);
-        });
+    if (!file?.type?.startsWith("video/")) {
+      console.log("Cant upload file, Select a video type only");
+      toast({
+        position: "top-right",
+        title: "Cant Upload.",
+        description: "select a video type only",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      return;
     }
+
+    const thumbs = await generateVideoThumbnails(file, 3, "url");
+    console.log("thumbs", thumbs);
+
+    setPreviewThumbnails(thumbs.slice(1));
+
+    console.log("dropped file check", file);
+    setSelectedFile({ file, previewUrl });
+
+    // upload process
+    if (!file) return;
+    const token = localStorage.getItem("access_token");
+    console.log("token", token);
+    setUploading(true);
+    const options: UploadOptions = {
+      endpoint: "http://144.48.107.2:1080/files/",
+      retryDelays: [0, 1000, 3000, 5000],
+      onError: (error) => {
+        console.error("Upload error:", error);
+        setUploadStatus(false);
+      },
+      onProgress: (bytesUploaded, bytesTotal) => {
+        const progress = (bytesUploaded / bytesTotal) * 100;
+        // create a loading progress
+        setUploadingProgress(progress);
+        console.log(`Upload progress: ${progress}%`);
+      },
+      onSuccess: () => {
+        console.log("Upload complete");
+        setUploadStatus(true);
+      },
+    };
+
+    const upload = new Upload(file, options);
+    upload.start();
+    console.log("upload", upload);
+  };
+  const handleEncode = (): void => {
+    // set encoding video
+    const params = {
+      upload_id: video_upload_id,
+    };
+    const token = localStorage.getItem("access_token");
+    axios
+      .post(
+        "https://acela.us-02.infra.3speak.tv/api/v1/start_encode",
+        params,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        toast({
+          position: "top-right",
+          title: "Success!",
+          description: "Encoding video, please wait",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        router.push("/studio/studio_videos");
+      })
+      .catch((error) => {
+        toast({
+          position: "top-right",
+          title: "Error!",
+          description: "Something went wrong",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  }
+  const handleCreatePost = (): void => {
+    // get video title
+    // get video description
+    // get thumbnail
+    console.log("videotitle", videoTitle);
+    console.log("videoDescription", videoDescription);
+    const params = {
+      title: videoTitle,
+      description: videoDescription,
+      tags: ["threespeak2", "acela-core2"],
+      community: "hive-101",
+      language: "en",
+    };
+    setSavingDetails(true);
+    const token = localStorage.getItem("access_token");
+    axios
+      .post(
+        "https://acela.us-02.infra.3speak.tv/api/v1/create_upload",
+        params,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        // Handle successful upload
+        console.log("successful", response);
+        saveThumbnail(response);
+        toast({
+          position: "top-right",
+          title: "Success!",
+          description: "Successfully created video details",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        // Handle upload error
+        setSavingDetails(false);
+        console.error("error", error);
+        toast({
+          position: "top-right",
+          title: "Success!",
+          description: "Successfully created video details",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  };
+
+  const saveThumbnail = (response: any) => {
+    let thumbnail = [];
+    if (previewManualThumbnails.length > 0) {
+      thumbnail.push(previewManualThumbnails[0]);
+
+    } else {
+      thumbnail.push(previewThumbnails[0]);
+    }
+    const blobData = new Blob([thumbnail[0]], { type: "image/jpeg" });
+    const file = new File([blobData], "image.jpg", { type: "image/jpeg" });
+
+    const token = localStorage.getItem("access_token");
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_id', response.data.upload_id);
+    // get upload_id
+    setVideoUploadId(response.data.upload_id)
+    axios
+      .post(
+        "https://acela.us-02.infra.3speak.tv/api/v1/upload_thumbnail",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        // Handle successful upload
+        console.log("successful thumbnail", response);
+        setSavingDetails(false);
+        setSteps(2);
+      })
+      .catch((error) => {
+        // Handle upload error
+        setSavingDetails(false);
+        setSteps(2);
+        console.error("error thumbnail", error);
+      });
   };
 
   const dropzoneOptions: DropzoneOptions = {
     onDrop: handleFileDrop,
   };
+  const dropzoneOptionsThumbnail: DropzoneOptions = {
+    onDrop: handleFileDropThumbnail,
+  };
 
   const { getRootProps, getInputProps } = useDropzone(dropzoneOptions);
+  const {
+    getRootProps: getRootPropsThumbnail,
+    getInputProps: getInputPropsThumbnail,
+  } = useDropzone(dropzoneOptionsThumbnail);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
@@ -137,7 +318,7 @@ const CreatePost: React.FC = () => {
 
   useEffect(() => {
     if (authenticated == false && authenticated != null) {
-      router.push("/auth/login");
+      // router.push("/auth/login");
     }
   }, [authenticated, router]);
 
@@ -145,9 +326,9 @@ const CreatePost: React.FC = () => {
     authenticated ? "gray.100" : "gray.100",
     authenticated ? "gray.900" : "gray.900"
   );
-  if (authenticated === null) {
-    return <Box>Loading...</Box>;
-  }
+  // if (authenticated === null) {
+  //   return <Box>Loading...</Box>;
+  // }
 
   if (authenticated === false) {
     return <Box>Unauthorized access, please login first</Box>;
@@ -231,7 +412,7 @@ const CreatePost: React.FC = () => {
                       >
                         <Box
                           width={{ base: "100%", md: "100%", lg: "40%" }}
-                          height={{ base: "100%", md: "100%", lg: "40%" }}
+                          height={{ base: "100%", md: "100%", lg: "100%" }}
                           padding="20px"
                           paddingY={{ base: "5px", md: "5px", lg: "40px" }}
                         >
@@ -327,6 +508,40 @@ const CreatePost: React.FC = () => {
                           </Flex>
                         </Box>
                       </Flex>
+                      {uploading && (
+                        <div className={styles.progressContainer}>
+                          <div
+                            className={styles.progressBar}
+                            style={{ width: `${uploadingProgress}%` }}
+                          >
+                            {uploadStatus == true && (
+                              <>
+                                <Text
+                                  display="flex"
+                                  justifyContent="center"
+                                  alignItems="center"
+                                  color="white"
+                                >
+                                  Upload Complete!
+                                </Text>
+                              </>
+                            )}
+
+                            {uploadStatus == false && (
+                              <>
+                                <Text
+                                  display="flex"
+                                  justifyContent="center"
+                                  alignItems="center"
+                                  color="white"
+                                >
+                                  Error in uploading!
+                                </Text>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      )}
                       <Flex justifyContent={"end"} alignItems="center">
                         {/* <Button
                           onClick={() => router.push("/studio/upload")}
@@ -336,7 +551,7 @@ const CreatePost: React.FC = () => {
                         >
                           Go Back
                         </Button> */}
-                        {selectedFile && (
+                        {selectedFile && uploadStatus == true && (
                           <Button
                             onClick={() => setSteps(1)}
                             size={"lg"}
@@ -506,9 +721,13 @@ const CreatePost: React.FC = () => {
                                 Video Title
                               </Text>
                               <Input
+                                disabled={savingDetails == true ? true : false}
                                 placeholder="Video Title"
                                 width={{ base: "89%", md: "89%", lg: "97%" }}
+                                value={videoTitle}
+                                onChange={(e) => setVideoTitle(e.target.value)}
                               />
+
                               <Text as={"label"}>
                                 Your video title, 2-55 characters
                               </Text>
@@ -521,7 +740,14 @@ const CreatePost: React.FC = () => {
                               >
                                 Video Description
                               </Text>
-                              <Textarea placeholder="Here is a sample placeholder" />
+                              <Textarea
+                                disabled={savingDetails == true ? true : false}
+                                value={videoDescription}
+                                onChange={(e) =>
+                                  setVideoDesription(e.target.value)
+                                }
+                                placeholder="Here is a sample placeholder"
+                              />
                             </fieldset>
                             <fieldset className="w-100 mb-3">
                               <Text
@@ -547,30 +773,22 @@ const CreatePost: React.FC = () => {
                               width={"100%"}
                               height={{ base: "100%", md: "100%", lg: "150px" }}
                             >
-                              <Flex
-                                width={"250px"}
-                                height="100%"
-                                border={"2px dotted"}
-                                justifyContent="center"
-                                alignItems={"center"}
-                                flexDirection="column"
-                                borderRadius={"10px"}
-                              >
-                                <SlPicture
-                                  width={"100px"}
-                                  color="black"
-                                  fontSize="70px"
-                                />
-                                <Text>Upload Thumbnail</Text>
-                              </Flex>
-
-                              {
-                                previewThumbnails.map(e => (<Flex
-                                key={e}
+                              <input {...getInputPropsThumbnail()} />
+                              {previewManualThumbnails.map((e) => (
+                                <Flex
+                                  key={e}
                                   width={"250px"}
-                                  marginX={{ base: "0px", md: "0px", lg: "10px" }}
+                                  marginX={{
+                                    base: "0px",
+                                    md: "0px",
+                                    lg: "10px",
+                                  }}
                                   height="100%"
-                                  paddingY={{ base: "5px", md: "5px", lg: "0px" }}
+                                  paddingY={{
+                                    base: "5px",
+                                    md: "5px",
+                                    lg: "0px",
+                                  }}
                                 >
                                   <Image
                                     objectFit={"cover"}
@@ -578,35 +796,54 @@ const CreatePost: React.FC = () => {
                                     src={e}
                                     alt="Thumbnail preview"
                                   />
-                                </Flex>))
-                              }
-                              
-                              {/* <Flex
-                                width={"250px"}
-                                marginX={{ base: "0px", md: "0px", lg: "10px" }}
-                                height="100%"
-                                paddingY={{ base: "5px", md: "5px", lg: "0px" }}
-                              >
-                                <Image
-                                  objectFit={"cover"}
+                                </Flex>
+                              ))}
+
+                              {previewManualThumbnails.length <= 0 && (
+                                <Flex
+                                  {...getRootPropsThumbnail()}
+                                  width={"250px"}
+                                  height="100%"
+                                  border={"2px dotted"}
+                                  justifyContent="center"
+                                  alignItems={"center"}
+                                  flexDirection="column"
                                   borderRadius={"10px"}
-                                  src="https://i.ytimg.com/vi/a4AtoGyjPVo/maxresdefault.jpg"
-                                  alt="Dan Abramov"
-                                />
-                              </Flex>
-                              <Flex
-                                width={"250px"}
-                                marginX={{ base: "0px", md: "0px", lg: "10px" }}
-                                height="100%"
-                                paddingY={{ base: "5px", md: "5px", lg: "0px" }}
-                              >
-                                <Image
-                                  objectFit={"cover"}
-                                  borderRadius={"10px"}
-                                  src="https://i.ytimg.com/vi/-q4M9yf_ABY/mqdefault.jpg"
-                                  alt="Dan Abramov"
-                                />
-                              </Flex> */}
+                                >
+                                  <SlPicture
+                                    width={"100px"}
+                                    color="black"
+                                    fontSize="70px"
+                                  />
+                                  <Text>Upload Thumbnail</Text>
+                                </Flex>
+                              )}
+
+                              {previewThumbnails.map((e) => (
+                                <Flex
+                                  key={e}
+                                  width={"250px"}
+                                  marginX={{
+                                    base: "0px",
+                                    md: "0px",
+                                    lg: "10px",
+                                  }}
+                                  height="100%"
+                                  paddingY={{
+                                    base: "5px",
+                                    md: "5px",
+                                    lg: "0px",
+                                  }}
+                                >
+                                  <Image
+                                    objectFit={"cover"}
+                                    borderRadius={"10px"}
+                                    src={e}
+                                    alt="Thumbnail preview"
+                                  />
+                                </Flex>
+                              ))}
+
                             </Flex>
                           </Flex>
                         </Box>
@@ -616,6 +853,7 @@ const CreatePost: React.FC = () => {
                         alignItems="center"
                       >
                         <Button
+                          disabled={savingDetails == true ? true : false}
                           onClick={() => setSteps(0)}
                           size={"lg"}
                           colorScheme="gray"
@@ -624,11 +862,14 @@ const CreatePost: React.FC = () => {
                           Go Back
                         </Button>
                         <Button
-                          onClick={proccedtoStep3}
+                          disabled={savingDetails == true ? true : false}
+                          onClick={handleCreatePost}
                           size={"lg"}
                           colorScheme="blue"
                         >
-                          Next Step
+                          {savingDetails == true
+                            ? "Saving Details"
+                            : "Next Step"}
                         </Button>
                       </Flex>
                     </Flex>
@@ -702,12 +943,11 @@ const CreatePost: React.FC = () => {
                                     marginLeft={"20px"}
                                   >
                                     <Stack spacing={5} direction="row">
-                                      <Radio value="1">Public</Radio>
+                                      <Radio value="1">Publish Now</Radio>
                                     </Stack>
 
                                     <Text as="label">
-                                      Publish it now and everyone can watch your
-                                      video
+                                      Publish after encoding and everyone can watch the video
                                     </Text>
                                   </Box>
                                   <Box
@@ -717,14 +957,17 @@ const CreatePost: React.FC = () => {
                                     <Stack spacing={5} direction="row">
                                       <Radio value="2">Schedule</Radio>
                                     </Stack>
-                                    <Text as="label">
-                                      Set a date when do you want publish this
-                                      video
-                                    </Text>
+                                    <Box>
+                                      <Text as="label">
+                                        Set a date and time
+                                      </Text>
+                                    </Box>
+
                                     {publishValue == "2" && (
                                       <Input
+                                        alignItems={'center'}
                                         width={"50%"}
-                                        type="date"
+                                        type="datetime-local"
                                         placeholder="select date"
                                       />
                                     )}
@@ -732,22 +975,6 @@ const CreatePost: React.FC = () => {
                                 </Box>
                               </RadioGroup>
                             </Box>
-                            {/* <Text as={"fieldset"} className="w-100 mb-3">
-                              <Text
-                                as={"legend"}
-                                fontSize="15px"
-                                className="fw-bold"
-                              >
-                                Video Title
-                              </Text>
-                              <Input
-                                placeholder="Video Title"
-                                width={{ base: "89%", md: "89%", lg: "97%" }}
-                              />
-                              <Text as={"label"}>
-                                Your video title, 2-55 characters
-                              </Text>
-                            </Text> */}
                           </Flex>
                         </Box>
                         <Box
@@ -765,7 +992,6 @@ const CreatePost: React.FC = () => {
                             alignItems={"center"}
                             borderRadius="10px 10px 0px 0px"
                           >
-                            {/* juneroy */}
                             {selectedFile ? (
                               <>
                                 {selectedFile.file.type.startsWith("image/") ? (
@@ -877,7 +1103,9 @@ const CreatePost: React.FC = () => {
                         >
                           Go Back
                         </Button>
-                        <Button size={"lg"} colorScheme="blue">
+                        <Button
+                          onClick={() => handleEncode()}
+                          size={"lg"} colorScheme="blue">
                           Save
                         </Button>
                       </Flex>
@@ -886,100 +1114,10 @@ const CreatePost: React.FC = () => {
                 </CardBody>
               )}
 
-              {/* card for wizard */}
-              <Box
-                borderRadius={"10px"}
-                background="white"
-                marginTop={"10px"}
-                height={"auto"}
-                width={"100%"}
-              >
-                <Flex
-                  height={"119px"}
-                  justifyContent={"center"}
-                  alignItems="center"
-                  paddingX={"30px"}
-                  flexDirection="row"
-                >
-                  <Flex
-                    onClick={() => changeCurrentStep(0)}
-                    cursor={"pointer"}
-                    border="none"
-                    color={steps == 0 ? "#fff" : "white"}
-                    background="#1DA1F2"
-                    borderColor={"#1DA1F2"}
-                    justifyContent={"center"}
-                    alignItems="center"
-                    borderRadius={"50%"}
-                    width={"250px"}
-                    height="100px"
-                  >
-                    {/* for upload */}
-                    <Text fontWeight={"bold"}>Upload</Text>
-                  </Flex>
-
-                  {/* border={'1px solid black'} */}
-                  <Flex
-                    border={steps > 0 ? "1px solid #1DA1F2" : "1px solid black"}
-                    borderRight='none'
-                    borderLeft='none'
-                    background={steps > 0 ? "#1DA1F2" : "#000"}
-                    width={"95%"}
-                    height="3px"
-                  >
-                    {/* for line1 */}
-                  </Flex>
-
-                  <Flex
-                    onClick={() => changeCurrentStep(1)}
-                    cursor={"pointer"}
-                    border={steps > 0 ? "1px solid #fff" : "1px solid #fff"}
-                    color={steps > 0 ? "#fff" : "#000"}
-                    background={steps > 0 ? "#1DA1F2" : "#fff"}
-                    borderColor={steps > 0 ? "#1DA1F2" : "#000"}
-                    justifyContent={"center"}
-                    alignItems="center"
-                    borderRadius={"50%"}
-                    width={"250px"}
-                    height="100px"
-                  >
-                    {/* for Details */}
-                    <Text fontWeight={"bold"}>Details</Text>
-                  </Flex>
-
-                  <Flex
-                    border={
-                      steps == 2 ? "1px solid #1DA1F2" : "1px solid black"
-                    }
-                    borderRight='none'
-                    borderLeft='none'
-                    background={steps == 2 ? "#1DA1F2" : "#000"}
-                    width={"95%"}
-                    height="3px"
-                  >
-                    {/* for line2 */}
-                  </Flex>
-
-                  <Flex
-                    onClick={() => changeCurrentStep(2)}
-                    cursor={"pointer"}
-                    border={
-                      steps == 2 ? "1px solid #1DA1F2" : "1px solid black"
-                    }
-                    color={steps == 2 ? "#fff" : "#000"}
-                    background={steps == 2 ? "#1DA1F2" : "white"}
-                    borderColor={steps == 2 ? "#1DA1F2" : "#000"}
-                    justifyContent={"center"}
-                    alignItems="center"
-                    borderRadius={"50%"}
-                    width={"250px"}
-                    height="100px"
-                  >
-                    {/* visibility */}
-                    <Text fontWeight={"bold"}>Visibility</Text>
-                  </Flex>
-                </Flex>
-              </Box>
+              <WizardSteps
+                changeCurrentStep={changeCurrentStep}
+                steps={steps}
+              />
             </Card>
           </Box>
         </Box>

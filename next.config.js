@@ -1,16 +1,29 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const withTM = require("next-transpile-modules")([
+  "magic-sdk",
+  "@magic-sdk/provider",
+  "@magic-sdk/types",
+  "@magic-sdk/commons",
+]);
+
+
+module.exports = withTM({
   reactStrictMode: true,
   images: {
-    domains: ["images.hive.blog"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.hive.blog",
-        port: "",
-        pathname: "/**",
-      },
-    ],
+    // domains: ['*'],
+    domains: [ "bworldonline.com", "www.bworldonline.com", "images.hive.blog","s3.eu-central-1.wasabisys.com", "files.peakd.com"],
+    // remotePatterns: [
+    //   {
+    //     protocol: "https",
+    //     hostname: "images.hive.blog",
+    //     port: "",
+    //     pathname: "/**",
+    //   },
+    //   {
+    //     protocol: "https",
+    //     hostname: "s3.eu-central-1.wasabisys.com",
+    //   },
+    // ],
   },
   async rewrites() {
     return [
@@ -20,6 +33,12 @@ const nextConfig = {
       },
     ];
   },
-};
+});
 
-module.exports = nextConfig;
+const nextConfig = {
+  experimental: {
+    serverActions: true,
+  },
+}
+
+module.exports = nextConfig

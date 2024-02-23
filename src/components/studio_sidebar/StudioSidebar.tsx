@@ -94,6 +94,6 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
 export default SidebarContent;
 
-const StyledLink = styled(Link)`
-  cursor: pointer;
-`;
+// const StyledLink = styled(Link)`
+//   cursor: pointer;
+// `;

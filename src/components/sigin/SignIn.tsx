@@ -14,27 +14,78 @@ import { API_URL_FROM_WEST } from "../../utils/config";
 import axios from "axios";
 import { api } from "@/utils/api";
 import { useAppStore } from "@/lib/store";
+import { Button, Text } from "@chakra-ui/react";
+// import { Magic } from "magic-sdk";
+import { FcGoogle } from "react-icons/fc";
+import { BsDiscord, BsGithub } from "react-icons/bs";
+import { Magic } from 'magic-sdk';
+import { OAuthExtension } from '@magic-ext/oauth';
+import GoogleAuth from "../SocialAuth/GoogleAuth";
+import GithubAuth from "../SocialAuth/GithubAuth";
+import DiscordAuth from "../SocialAuth/DiscordAuth";
+import Image from "next/image";
+// const magic = new Magic("pk_live_7645A843999E2369");
+
 
 const SignIn = () => {
+  let magic: any
+  if (typeof window !== "undefined") {
+    magic = new Magic('pk_live_773A61B5424F8C7D', {
+      extensions: [new OAuthExtension()],
+    });
+    // console.log('herererererere')
+  }
+  const googlelogin = async () => {
+    // const data = await magic.oauth.loginWithRedirect({
+    //   provider: 'google' /* 'google', 'facebook', 'apple', or 'github' */,
+    //   redirectURI: 'http://localhost:3050/login',
+    // });
+
+    // console.log('data', data)
+    try {
+      await magic.oauth.loginWithRedirect({
+        provider: "google",
+        redirectURI: new URL("/login", window.location.origin).href,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+
+  const githublogin = async () => {
+    const data = await magic.oauth.loginWithRedirect({
+      provider: 'github' /* 'google', 'facebook', 'apple', or 'github' */,
+      redirectURI: new URL("/login", window.location.origin).href,
+    });
+
+    console.log('data', data)
+  }
+
+  const discordlogin = async () => {
+    const data = await magic.oauth.loginWithRedirect({
+      provider: 'discord' /* 'google', 'facebook', 'apple', or 'github' */,
+      redirectURI: new URL("/login", window.location.origin).href,
+    });
+
+    console.log('data', data)
+  }
+
+  const [onboarding, setOnboarding] = useState<any>(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRefSignIn: any = useRef();
-
-  const onSubmitWithReCAPTCHASignIn = async () => {
-    const token = await recaptchaRefSignIn.current.executeAsync();
-    console.log(token);
-    // apply to form data
-  };
+  const redirectToForgotPasswordPage = () => {
+    window.location.href = "/auth/forgot_password"
+  }
 
   const { allowAccess, login, checkAuth } = useAppStore();
-  // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (allowAccess == true) {
       setAuthenticated(allowAccess);
-      // return
     } else {
       setAuthenticated(false);
     }
@@ -42,22 +93,40 @@ const SignIn = () => {
 
   useEffect(() => {
     if (authenticated) {
-      router.push("/");
+      if (onboarding) {
+        router.push("/onboarding");
+      } else {
+        router.push("/");
+      }
+
     }
-  }, [authenticated, router]);
+  }, [authenticated, router, onboarding]);
 
   const handleSubmit = async (values: any) => {
+    setOnboarding(true)
     await login(values);
     checkAuth();
   };
 
+  const showThirdPartyLogin = () => {
+    // call the magic link function here
+    console.log("call the magic link function here");
+  };
+  const loadImage=()=>{
+    return "https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png";
+  }
   return (
     <Box width="100%">
       <Box mx="auto" maxWidth="9rem">
-        <img
-          src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
-          alt="3speak logo"
-          width="100%"
+        <Image
+        alt="logo player"
+        loader={loadImage}
+         src={`https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png`} width={'100'}
+        height={'100'}
+          // src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
+          // alt="Logo"
+          // width={100}
+          // height={50}
         />
       </Box>
 
@@ -80,13 +149,13 @@ const SignIn = () => {
         {(props) => (
           // <form onSubmit={onSubmitWithReCAPTCHASignIn}>
           <Form>
-            <Box mb="2rem" mt="1.5rem" width="100%">
+            <Box mb="1.5rem" mt="1.5rem" width="100%">
               <fieldset className="Fieldset">
                 <label className="Label" htmlFor="currentPassword">
                   Email
                 </label>
                 <input
-                  className="Input"
+                  className="Input3"
                   id="email"
                   placeholder={t("login.email")}
                   type="email"
@@ -106,7 +175,7 @@ const SignIn = () => {
                 </label>
                 <input
                   type="password"
-                  className="Input"
+                  className="Input3"
                   placeholder={t("login.password")}
                   onChange={props.handleChange}
                   onBlur={props.handleBlur}
@@ -130,20 +199,25 @@ const SignIn = () => {
               border="1px solid #f5c6cb"
             >
               <Typography textAlign="center" color="#721c24">
-                {/* fontSize="1.75rem" */}
                 {t("login.disclaimer")}
               </Typography>
             </Box>
-            {/* <ReCAPTCHA
-              ref={recaptchaRefSignIn}
-              sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
-            /> */}
             <Flex width="100%" justifyContent="center" mt="1rem">
               <StyledButton type="submit">Log in</StyledButton>
             </Flex>
+            <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+              <GoogleAuth googlelogin={googlelogin} label='Sign in with Google'/>
+            </Flex>
+            <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+              <GithubAuth githublogin={githublogin} label='Sign in with Github'/>
+            </Flex>
+            <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+              <DiscordAuth discordlogin={discordlogin} label='Sign in with Discord' />
+            </Flex>
 
             <Flex width="100%" justifyContent="center" mt="0.5rem">
-              <Link href="/auth/forgot_password">
+              {/* <Link href="/auth/forgot_password"> */}
+              <Box onClick={() => redirectToForgotPasswordPage()} width={'100%'}>
                 <StyledButton
                   className="text-dark"
                   colors={{
@@ -155,7 +229,7 @@ const SignIn = () => {
                 >
                   Forgot password
                 </StyledButton>
-              </Link>
+              </Box>
             </Flex>
             {/* </form> */}
           </Form>

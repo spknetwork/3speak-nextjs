@@ -1,61 +1,47 @@
-/* eslint-disable @next/next/no-img-element */
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
-import SignUp from "@/components/signup/SignUp";
-import Link from "next/link";
 import SignIn from "@/components/sigin/SignIn";
-import SignUpHive from "@/components/signup/SignUpHive";
-const TabsDemo = () => {
+import AuthLayout from "@/components/Layouts/auth_layout";
+import { useColorMode } from "@chakra-ui/react";
+const TabsDemo = ({ tab }: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRef: any = useRef();
-
+  const { colorMode, toggleColorMode } = useColorMode();
+  useEffect(() => {
+    if (colorMode == 'dark') {
+      toggleColorMode()
+    }
+  },[])
   const onSubmitWithReCAPTCHA = async () => {
+   
     const token = await recaptchaRef.current.executeAsync();
     console.log(token);
-    // apply to form data
   };
   return (
-    <Flex
-      justifyContent="center"
-      px="1rem"
-      alignItems={{ _: "flex-start", tablet: "flex-start" }}
-      backgroundColor="#F5F5F5"
-      minHeight="100vh"
-      minWidth="100vw"
-      paddingTop="100px"
-    >
-      <Tabs.Root className="TabsRoot" defaultValue="tab1">
-        <Tabs.List className="TabsList" aria-label="Manage your account">
-          <Tabs.Trigger className="TabsTrigger" value="tab1">
-            Sign In
-          </Tabs.Trigger>
-          <Tabs.Trigger className="TabsTrigger text-center" value="tab2">
-            Sign Up with Hive
-          </Tabs.Trigger>
-          <Tabs.Trigger className="TabsTrigger" value="tab3">
-            Sign Up
-          </Tabs.Trigger>
-        </Tabs.List>
-        <Tabs.Content className="TabsContent" value="tab1">
+    <AuthLayout>
+      <Flex
+        justifyContent="center"
+        px="1rem"
+        py="1rem"
+        alignItems={{ _: "flex-start", tablet: "flex-start" }}
+        backgroundColor="#F5F5F5"
+
+      >
+
+        <Tabs.Content className="TabsContent" value={'tab1'}>
           <SignIn />
         </Tabs.Content>
-        <Tabs.Content className="TabsContent" value="tab2">
-          <SignUpHive />
-        </Tabs.Content>
-        <Tabs.Content className="TabsContent" value="tab3">
-          <SignUp />
-        </Tabs.Content>
-      </Tabs.Root>
-    </Flex>
+      </Flex>
+    </AuthLayout>
+
   );
 };
 

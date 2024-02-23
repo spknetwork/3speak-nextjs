@@ -1,31 +1,74 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useRef } from "react";
-import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-export-i18n";
 import { Typography, Box, Flex } from "src/components";
-import axios from "axios";
-import { API_URL_FROM_WEST } from '../../utils/config';
 import { useToast } from "@chakra-ui/react";
 import { useAppStore } from "@/lib/store";
-// import ReCAPTCHA from "react-google-recaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
+import { Box as ChakraBox } from "@chakra-ui/react";
+import { Magic } from 'magic-sdk';
+import { OAuthExtension } from '@magic-ext/oauth';
+import GoogleAuth from "../SocialAuth/GoogleAuth";
+import DiscordAuth from "../SocialAuth/DiscordAuth";
+import GithubAuth from "../SocialAuth/GithubAuth";
+import Image from "next/image";
 const SignUp = () => {
+
+  let magic: any
+  if (typeof window !== "undefined") {
+    magic = new Magic('pk_live_773A61B5424F8C7D', {
+      extensions: [new OAuthExtension()],
+    });
+  }
+  const googlelogin = async () => {
+    // const data = await magic.oauth.loginWithRedirect({
+    //   provider: 'google' /* 'google', 'facebook', 'apple', or 'github' */,
+    //   redirectURI: 'http://localhost:3050/login',
+    // });
+
+    // console.log('data', data)
+    try {
+      await magic.oauth.loginWithRedirect({
+        provider: "google",
+        redirectURI: new URL("/login", window.location.origin).href,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+
+  const githublogin = async () => {
+    const data = await magic.oauth.loginWithRedirect({
+      provider: 'github' /* 'google', 'facebook', 'apple', or 'github' */,
+      redirectURI: new URL("/login", window.location.origin).href,
+    });
+
+    console.log('data', data)
+  }
+
+  const discordlogin = async () => {
+    const data = await magic.oauth.loginWithRedirect({
+      provider: 'discord' /* 'google', 'facebook', 'apple', or 'github' */,
+      redirectURI: new URL("/login", window.location.origin).href,
+    });
+
+    console.log('data', data)
+  }
   const toast = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRefSignUp: any = useRef();
 
-  const onSubmitWithReCAPTCHASignUp = async () => {
-    const token = await recaptchaRefSignUp.current.executeAsync();
-    console.log(token);
-    // apply to form data
-  };
+
   const { register } = useAppStore();
   const handleSubmit = async (values: any) => {
+    // const token = await recaptchaRefSignUp.current.executeAsync();
+    // console.log(token);
     try {
       await register(values);
       toast({
@@ -36,7 +79,7 @@ const SignUp = () => {
         duration: 9000,
         isClosable: true,
       });
-    }  catch (error: any) {
+    } catch (error: any) {
       toast({
         position: "top-right",
         title: "Something went wrong",
@@ -52,10 +95,11 @@ const SignUp = () => {
     <div>
       <Box width="100%">
         <Box mx="auto" maxWidth="9rem">
-          <img
+          <Image
+            loader={() => 'https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png'}
             src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
             alt="3speak logo"
-            width="100%"
+            width={'100'} height='100'
           />
         </Box>
 
@@ -69,7 +113,6 @@ const SignUp = () => {
             }
 
             if (!props.password) errors.password = t("required");
-            // if (!props.username) errors.username = t("username");
             if (!props.email) errors.email = t("required");
 
             return errors;
@@ -78,13 +121,13 @@ const SignUp = () => {
         >
           {(props) => (
             <Form>
-              <Box mb="2rem" mt="1.5rem" width="100%">
+              <Box mb="1.5rem" mt="1.5rem" width="100%">
                 <fieldset className="Fieldset">
                   <label className="Label" htmlFor="currentPassword">
                     Email
                   </label>
                   <input
-                    className="Input"
+                    className="Input3"
                     id="email"
                     placeholder={t("login.email")}
                     type="email"
@@ -99,24 +142,6 @@ const SignUp = () => {
                   )}
                 </fieldset>
               </Box>
-              {/* <Box width="100%">
-                <fieldset className="Fieldset">
-                  <label className="Label" htmlFor="username">
-                    Hive username
-                  </label>
-                  <input
-                    className="Input"
-                    id="username"
-                    placeholder="hive username"
-                    type="text"
-                  /> */}
-              {/* {!!props.errors.username && (
-                    <Typography color="#FF3333">
-                      {props.errors.username}
-                    </Typography>
-                  )} */}
-              {/* </fieldset>
-              </Box> */}
               <Box width="100%">
                 <fieldset className="Fieldset">
                   <label className="Label" htmlFor="newPassword">
@@ -124,7 +149,7 @@ const SignUp = () => {
                   </label>
                   <input
                     type="password"
-                    className="Input"
+                    className="Input3"
                     placeholder={t("login.password")}
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
@@ -137,63 +162,30 @@ const SignUp = () => {
                     </Typography>
                   )}
                 </fieldset>
-                <Box
-                  width="100%"
-                  borderRadius="0.25rem"
-                  mt="1.5rem"
-                  py="0.75rem"
-                  px="1.25rem"
-                  backgroundColor="#bee5eb"
-                  border="1px solid #bee5eb"
-                >
-                  <Typography color="#0c5460">
-                    {/* fontSize="0.75rem" */}
-                    <StyledList>
-                      {(t("register.passwordRules") as string[]).map((rule) => (
-                        <li key={rule}>{rule}</li>
-                      ))}
-                    </StyledList>
-                  </Typography>
-                </Box>
-                <Box
-                  width="100%"
-                  borderRadius="0.25rem"
-                  mt="1.5rem"
-                  py="0.75rem"
-                  px="1.25rem"
-                  backgroundColor="#f8d7da"
-                  border="1px solid #f5c6cb"
-                >
-                  <Typography textAlign="center" color="#721c24">
-                    Some email services will wrongly sort our our emails,
-                    remember to check your junk/spam folder!
-                  </Typography>
-                </Box>
-                <Box
-                  width="100%"
-                  borderRadius="0.25rem"
-                  mt="1.5rem"
-                  py="0.75rem"
-                  px="1.25rem"
-                  backgroundColor="#f8d7da"
-                  border="1px solid #f5c6cb"
-                >
-                  <Typography textAlign="center" color="#721c24">
-                    In order to claim the keys for the Hive account associated
-                    with your 3speak account you must post at least one video.
-                  </Typography>
-                </Box>
               </Box>
-              {/* <ReCAPTCHA
+              <ChakraBox display={'flex'} justifyContent='center' alignItems={'center'} marginTop={"10px"}>
+                {/* <ReCAPTCHA
                   ref={recaptchaRefSignUp}
                   sitekey="6LczvdokAAAAAGQtbk2MABrUD8oyYbmi9Z3O8Uio"
                 /> */}
+              </ChakraBox>
+
               <Flex width="100%" justifyContent="center" mt="1rem">
                 <StyledButton type="submit">Sign Up</StyledButton>
               </Flex>
             </Form>
+
           )}
         </Formik>
+        <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+          <GoogleAuth googlelogin={googlelogin} label='Sign Up with Google'/>
+        </Flex>
+        <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+          <GithubAuth githublogin={githublogin} label='Sign Up with Github'/>
+        </Flex>
+        <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
+          <DiscordAuth discordlogin={discordlogin} label='Sign Up with Discord'/>
+        </Flex>
       </Box>
     </div>
   );

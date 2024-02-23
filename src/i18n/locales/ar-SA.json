@@ -1,0 +1,1296 @@
+{
+  "g": {
+    "add": "اضف",
+    "edit": "تعديل",
+    "continue": "Continue",
+    "submit": "كتابة منشور",
+    "search": "بحث",
+    "loading-chunk": "Loading chunked component",
+    "downloads": "التنزيلات",
+    "login": "تسجيل الدخول",
+    "login-as": "تسجيل الدخول كـ",
+    "signup": "إنشاء حساب",
+    "permissions": "الصلاحيات",
+    "delete": "حذف",
+    "cancel": "إلغاء",
+    "reply": "رد",
+    "update": "تحديث",
+    "learnMore": "معرفة المزيد",
+    "or": "أو",
+    "muted-message": "ناشر مكتوم، كشف المحتوى",
+    "modmuted-message": "Community Moderators muted, Reveal content",
+    "server-error": "تعذر إكمال المعالجة بسبب خطأ في الخادم",
+    "day": "يوم",
+    "days": "أيام",
+    "finish": "إنهاء",
+    "next": "التالي",
+    "previous": "السابق",
+    "back": "الرجوع",
+    "load-more": "تحميل المزيد",
+    "empty-list": "لاشيء هنا",
+    "no-matches": "لم يتم العثور على شيء",
+    "nothing-found-in": "Nothing found in",
+    "fill-feed": "You can follow more people to fill up this feed.",
+    "fill-community-feed": "You can join more communities to fill up this feed.",
+    "save": "حفظ",
+    "try-again": "حاول مجددا",
+    "show": "إظهار",
+    "on": "تشغيل",
+    "off": "إيقاف",
+    "yes": "نعم",
+    "no": "لا",
+    "hot": "المستجدات",
+    "trending": "المستجدات",
+    "created": "المستجدات",
+    "muted": "مكتوم",
+    "found": "موجود",
+    "feed": "المستجدات",
+    "blog": "مدوّنات",
+    "logs": "سجلات",
+    "posts": "منشورات",
+    "comments": "تعليقات",
+    "replies": "ردود",
+    "done": "تم",
+    "apply": "تطبيق",
+    "warning": "تحذير",
+    "payout": "الدفعة",
+    "learn-more": "تعلم المزيد في",
+    "faq": "الأسئلة الشائعة",
+    "when": "When",
+    "price": "Price",
+    "more-results": "المزيد من النتائج",
+    "close": "إغلاق",
+    "loading": "Loading"
+  },
+  "confirm": {
+    "title": "هل أنت متأكد؟",
+    "ok": "تأكيد",
+    "cancel": "إلغاء"
+  },
+  "entry-filter": {
+    "filter-trending": "الشائع",
+    "filter-hot": "الساخنة",
+    "filter-created": "الجديد",
+    "filter-promoted": "المروّجة",
+    "filter-payout": "المدفوعات",
+    "filter-muted": "كتم",
+    "filter-feed": "المستجدات",
+    "filter-feed-friends": "الأصدقاء",
+    "filter-feed-subscriptions": "المجتمعات",
+    "filter-global": "عام",
+    "filter-community": "My Community",
+    "filter-global-part1": "يحتوي هذا المستجد على ",
+    "filter-global-part2": " مناقشات على كامل المنصة.",
+    "filter-global-part3": " مناقشات من المجتمعات التي اشتركت فيها. يمكنك الانضمام إلى المزيد من المجتمعات لملء هذه التغذية.",
+    "filter-global-part4": " مناقشات من أشخاص تتابعهم. يمكنك متابعة المزيد من الأشخاص لملء هذه التغذية.",
+    "filter-global-discover": "إكتشف أشخاص",
+    "filter-global-join-communities": "انضم إلى مجتمعات"
+  },
+  "navbar": {
+    "discover": "إكتشف",
+    "communities": "المجتمعات",
+    "post": "إنشاء منشور",
+    "day-theme": "الوضع العادي",
+    "night-theme": "الوضع الليلي",
+    "address-placeholder": "أدخل عنوان الكتروني أو استعلام البحث"
+  },
+  "search": {
+    "placeholder": "بحث",
+    "placeholder-proposals": "ابحث في المقترحات",
+    "placeholder-count": "بحث في  {{n}} منشور",
+    "header-tag": "الوسوم",
+    "header-account": "المستخدمون",
+    "header-community": "المجتمعات"
+  },
+  "tag": {
+    "unmoderated": "مواضيع غير مشرف عليها",
+    "moderated": "مجتمع مشرف عليه"
+  },
+  "switch-lang": {
+    "contributors": "المساهمون"
+  },
+  "user-nav": {
+    "wallet": "المحفظة",
+    "unclaimed-reward-notice": "لديك مكافآة معلقة",
+    "points": "النقاط",
+    "unclaimed-points-notice": "لديك نقاط معلقة",
+    "notifications": "الإشعارات",
+    "profile": "الملف الشّخصي",
+    "profile-menu": "قائمة الملف الشخصي",
+    "gallery": "معرض الصور",
+    "drafts": "المسودات",
+    "bookmarks": "محفوظات",
+    "schedules": "جداول زمنية",
+    "fragments": "مقتطفات",
+    "settings": "إعدادات",
+    "logout": "تسجيل الخروج",
+    "theme": "السمة",
+    "light": "فاتح",
+    "dark": "داكن",
+    "switch-to": "تبديل",
+    "vote-power": "قوة التصويت:"
+  },
+  "intro": {
+    "title": "التطلع إلى العظمة",
+    "sub-title": "مكافأة المجتمعات",
+    "c2a": "إبدأ الآن"
+  },
+  "login": {
+    "title": "مرحباً بعودتك!",
+    "with-user-pass": "تسجيل الدخول باستخدام اسم المستخدم الخاص بك والمفتاح الخاص.",
+    "username-placeholder": "إسم المستخدم",
+    "key-placeholder": "كلمة المرور / المفتاح الخاص",
+    "login-info-1": "نحن لا نخزن مفاتيحك الخاصة.",
+    "login-info-2": "مزيد من المعلومات",
+    "error-fields-required": "الرجاء إدخال اسم المستخدم والمفتاح الخاص",
+    "error-public-key": "لقد أدخلت مفتاحًا عامًا. مطلوب كلمة المرور/WIF",
+    "error-user-fetch": "تعذر جلب بيانات المستخدم",
+    "error-user-not-found": "المستخدم غير موجود",
+    "error-user-not-found-cache": "تم اكتشاف عدم اتساق ذاكرة التخزين المؤقت. الرجاء إعادة محاولة تسجيل الدخول باستخدام بيانات الاعتماد الخاصة بك.",
+    "error-permission": "تعذر الحصول على إذن النشر",
+    "error-authenticate": "المفتاح الخاص خاطئ. مطلوب المفتاح الرئيسي أو النشط أو مفتاح النشر الخاص.",
+    "with-hive-signer": "تسجيل الدخول عن طريق hivesigner",
+    "with-keychain": "تسجيل الدخول باستخدام KeyChain",
+    "sign-up-text-1": "ليس لديك حساب؟",
+    "sign-up-text-2": "قم بالتسجيل الآن!"
+  },
+  "sign-up": {
+    "header": "مرحبا بك في Ecency",
+    "description": "موطن حرية التعبير و المجتمعات المكافئة!",
+    "bottom-description": "يتم إنشاء كل حساب على بلوكتشين و أنت فقط من يمتلك التحكم بذلك الحساب. حساب واحد لإدارة كل شيء على البلوكتشين و Ecency.",
+    "learn-more": "تعرف على المزيد من الفوائد في <a href=\"https://starterkit.tech/faqs#how-to-join\">الأسئلة الشائعة</a>",
+    "username": "اختر اسم مستخدم",
+    "email": "أدخل عنوان بريدك الإلكتروني",
+    "ref": "المستخدم المحال (اختياري)",
+    "submit": "متابعة",
+    "validation-username": "اسم المستخدم مطلوب.",
+    "validation-email": "البريد الإلكتروني مطلوب.",
+    "success": "لقد أرسلنا رسالة بريد إلكتروني إلى {{email}}.",
+    "success-2": "اتبع التعليمات لإكمال عملية التسجيل.",
+    "login-text-1": "هل لديك حساب؟",
+    "login-text-2": "تسجيل الدخول"
+  },
+  "trending-tags": {
+    "title": "المواضيع"
+  },
+  "selected-tags": {
+    "title": "موصى بها"
+  },
+  "entry-list-item": {
+    "cross-posted": "متقاطعة التحرير",
+    "cross-posted-to": "إلى",
+    "reblogged": "{{n}} معاد تدوينها",
+    "promoted": "مروج له",
+    "pinned": "منشور مثبت",
+    "replies": "رد واحد. انقر للرد.",
+    "replies-n": "{{n}} ردود. انقر للرد.",
+    "vote-error": "القيمة السابقة غير مقبولة. صوّت بقيمة مختلفة.",
+    "vote-remove": "التصويت ب 0% يلغي تصويت المحتوى.",
+    "vote-warning": "تغيير التصويت...",
+    "no-replies": "لا ردود حتى الآن. انقر للرد."
+  },
+  "nsfw": {
+    "reveal": "اظهار هذا المنشور",
+    "signup": "<a href=\"/signup\" class=\"push-link\">إنشاء حساب</a> لحفظ تفضيلاتك",
+    "settings-1": "اضبط",
+    "settings-2": "تفضيلات العرض"
+  },
+  "bookmark-btn": {
+    "add": "إضافة إلى الإشارات المرجعية",
+    "added": "أضيفت إلى الإشارات المرجعية",
+    "delete": "إزالة من الإشارات المرجعية",
+    "deleted": "أزيلت من الإشارات المرجعية"
+  },
+  "entry-reblog": {
+    "reblog": "إعادة تدوين",
+    "confirm-title": "إعادة تدوين إلى مدونة @{{n}}؟",
+    "confirm-ok": "إعادة تدوين",
+    "success": "أعيد تدوينه!",
+    "delete-reblog": "التراجُع عن إعادة النشر",
+    "delete-confirm-title": "التراجُع عن إعادة النشر؟",
+    "delete-confirm-ok": "تراجع",
+    "delete-success": "تمت إزالة اعادة التدوين"
+  },
+  "entry-tip": {
+    "title": "إكراميّة"
+  },
+  "entry-share": {
+    "title": "مشاركة"
+  },
+  "entry-menu": {
+    "cross-post": "نشر متقاطع",
+    "share": "مشاركة",
+    "edit-history": "تاريخ التحرير",
+    "pin": "تثبيت",
+    "pin-success": "تم تثبيت المنشور",
+    "unpin": "إزالة تثبيت",
+    "unpin-success": "تم إلغاء تثبيت المنشور",
+    "mute": "كتم",
+    "mute-success": "تم كتم المنشور",
+    "unmute": "إلغاء الكتم",
+    "unmute-success": "تم الغاء كتم المنشور",
+    "promote": "قم بالترويج لمقالك",
+    "boost": "تعزيز"
+  },
+  "cross-post": {
+    "title": "تقاطع المنشور",
+    "community-placeholder": "اختر مجتمع",
+    "message-placeholder": "بدء المحادثة برسالة",
+    "submit-label": "تأكيد",
+    "published": "تم نشر المنشور",
+    "no-subscription": "ليس لديك أي اشتراك بمجتمع لتقاطع المنشور.",
+    "info": "يتم رفض المكافآت تلقائياً للمنشور المتقاطع والمناقشات تحت المنشور المتقاطع ستكون مختلفة وسوف تتبع إرشادات مجتمعية مختلفة."
+  },
+  "entry-payout": {
+    "reward": "مكافأة",
+    "full-power": "رفع الطاقة 100%",
+    "pending-payout": "في انتظار الدفع",
+    "promoted": "مروج له",
+    "author-payout": "الدفع للمؤلف",
+    "curators-payout": "مدفوعات المقيمين",
+    "payout-date": "الدفع",
+    "beneficiary": "المستفيد",
+    "breakdown": "التفصيل",
+    "max-accepted": "الحد الأقصى المقبول"
+  },
+  "entry-index": {
+    "feed": "المستجدات",
+    "tags": "الأكثر شعبية",
+    "title": "{{f}} مواضيع",
+    "description": "{{f}} مواضيع على شبكة اجتماعية يملكها ويديرها مستخدمونها.",
+    "description-tag": "{{f}} #{{t}} مواضيع",
+    "description-user-feed": "مستجدات {{u}}",
+    "faq": "الأسئلة الشائعة",
+    "tos": "بنود الخدمة",
+    "pp": "سياسة الخصوصية"
+  },
+  "market-data": {
+    "title": "سعر السوق",
+    "trade": "Trade token",
+    "credits": "بيانات بواسطة <a href=\"https://www.coingecko.com/api\" target=\"_blank\" rel=\"noopener noreferrer\">Coingecko</a>"
+  },
+  "market": {
+    "title": "Token exchange",
+    "description": "Decentralized exchange to Buy and Sell tokens on Hive blockchain. To learn more, read our <a href=\"https://starterkit.tech/faqs#how-exchange-work\">FAQ</a>.",
+    "last-price": "Last Price",
+    "volume": "24h volume",
+    "bid": "Bid",
+    "spread": "Spread",
+    "ask": "Ask",
+    "buy": "Buy",
+    "sell": "Sell",
+    "available": "Available",
+    "highest-bid": "Highest bid",
+    "price": "Price",
+    "amount": "Amount",
+    "total": "Total",
+    "orders": "Orders",
+    "date": "Date",
+    "open-orders": "Open Orders",
+    "type": "Type",
+    "action": "Action",
+    "trade-history": "Trade History",
+    "stock-params": "Params",
+    "stock-info": "Stock information",
+    "barter": "Exchange tokens",
+    "stock-values": "Values",
+    "transaction-low": "Total amount exceeds your available balance. Please add more funds or try with smaller amount.",
+    "confirm-cancel": "Are you sure? You are cancelling order #{{orderid}}!",
+    "confirm-buy": "You're trading {{amount}} HIVE for {{price}} HBD/HIVE and total will be {{total}} HBD.",
+    "confirm-sell": "Values",
+    "transaction-succeeded": "Transaction submitted",
+    "lowest-ask": "Lowest ask",
+    "decimal-error": "Only {{decimals}} decimal digits allowed!"
+  },
+  "list-style": {
+    "title": "تبديل نمط القائمة"
+  },
+  "entry-votes": {
+    "title": "صوت واحد",
+    "title-n": "{{n}} أصوات",
+    "title-empty": "لا أصوات",
+    "sort": "فرز",
+    "sort-reward": "المكافأة",
+    "sort-timestamp": "الوقت",
+    "sort-reputation": "السمعة",
+    "sort-percent": "النسبة المئوية"
+  },
+  "entry": {
+    "via-app": "بواسطة <span class=\"app-name\">{{app}}</span>",
+    "author-reputation": "سمعة المحرر",
+    "comment-entry-title": "أنت تعرض موضوع تعليق واحد من: ",
+    "comment-entry-go-root": "عرض السياق الكامل",
+    "comment-entry-go-parent": "عرض الأصل المباشر",
+    "hidden-warning": "حصل هذا المحتوى على تقييم منخفض من قبل الناس.",
+    "delete-disabled": "لا يمكن حذف المحتوى بعد دفع مستحقاته.",
+    "muted-warning": "تم كتم هذا المحتوى من قبل مشرفي {{community}} لعدم اتباع إرشادات المجتمع.",
+    "lowrep-warning": "مؤلف هذا المحتوى ذو سمعة منخفضة.",
+    "deleted-content-warning": "تم حذف هذا المحتوى من قبل المؤلف. يمكنك رؤيته من Blockchain ",
+    "comments-hidden": "مؤلف هذا المنشور مكتوم من قبلك.",
+    "address-copy": "نسخ عنوان المنشور",
+    "address-copied": "Post address copied to clipboard",
+    "content-copied": "Content copied to clipboard",
+    "browse-original": "فتح المنشور الأصلي",
+    "cross-post-by": "نشر متقاطع بواسطة",
+    "cross-post-community": "مجتمع",
+    "community-in": "في"
+  },
+  "edit-history": {
+    "title": "تعديل التاريخ",
+    "show-diff": "إظهار الفرق",
+    "version": "الإصدار {{n}}"
+  },
+  "similar-entries": {
+    "title": "اقرأ تالياً"
+  },
+  "comment": {
+    "body-placeholder": "اكتب ردّك هنا",
+    "preview": "معاينة"
+  },
+  "discussion": {
+    "join": "Join the conversation now",
+    "btn-join": "انضمام",
+    "replies": "1 تعليق",
+    "n-replies": "{{n}} تعليقات",
+    "order": "ترتيب الفرز",
+    "order-trending": "الرائج",
+    "order-reputation": "السمعة",
+    "order-votes": "الأصوات",
+    "order-created": "العمر",
+    "read-more": "...اقرأ المزيد من الردود...",
+    "reveal-muted": "مؤلف مكتوم - إظهار التعليق",
+    "reveal-muted-long-description": "إظهار الردود الإضافية، بما في ذلك تلك التي قد تحتوي على محتوى مهين",
+    "reveal": "كشف التعليق"
+  },
+  "community": {
+    "page-description": "{{f}} مواضيع",
+    "subscribe": "إنضم",
+    "subscribed": "منضم",
+    "unsubscribe": "غادِر",
+    "post": "منشور جديد",
+    "posts": "منشورات",
+    "subscribers": "الأعضاء",
+    "activities": "الأنشطة",
+    "roles-title": "أدوار المستخدم",
+    "roles-account": "الحساب",
+    "roles-role": "الدور",
+    "roles-account-title": "اللقب",
+    "roles-add": "إضافة مستخدم"
+  },
+  "community-cover": {
+    "rewards": "مكافآت",
+    "authors": "ناشرين",
+    "lang": "لغة",
+    "cover-image": "صورة غلاف المجتمع",
+    "cover-image-edit": "تعديل صورة الغلاف",
+    "cover-image-updated": "تم تحديث صورة الغلاف!"
+  },
+  "community-card": {
+    "description": "الوصف",
+    "rules": "القوانين",
+    "team": "القيادة",
+    "edit": "تعديل الإعدادات",
+    "edit-team": "تعديل الأدوار",
+    "community-rewards": "مكافآت المجتمع",
+    "profile-image": "صورة الملف الشخصي",
+    "profile-image-edit": "تعديل صورة الملف الشخصي",
+    "profile-image-updated": "تم تحديث صورة الملف الشخصي!"
+  },
+  "community-role-edit": {
+    "title": "تعيين دور المستخدم",
+    "username": "اسم المستخدم",
+    "role": "دور",
+    "user-not-found": "المستخدم غير موجود!",
+    "explanations": "<h3>أذونات الدور</h3><p><strong>المالك</strong> - تعيين المدراء</p><p><strong>مدير</strong> - تعديل الإعدادات، تعيين المشرفين</p><p><strong>مشرف</strong> - كتم، تثبيت ، تعيين ألقاب المستخدم</p><p><strong>عضو</strong> - مدرج في فريق القيادة</p><p><strong>ضيف</strong> - افتراضي؛ يمكن نشر وتعليق</p><p><strong>مكتوم</strong> - كتم منشورات جديدة تلقائياً</p>"
+  },
+  "community-settings": {
+    "dialog-title": "إعدادات المجتمع",
+    "title": "العنوان",
+    "about": "حول",
+    "lang": "اللغة",
+    "description": "الوصف",
+    "rules": "القواعد",
+    "rules-help": "واحد لكل سطر",
+    "validation-title": "العنوان مطلوب."
+  },
+  "communities": {
+    "title": "المجتمعات",
+    "description": "أفضل المجتمعات على الإنترنت، اللامركزية، الثابتة المكافئة",
+    "n-subscribers": "{{n}} أعضاء",
+    "n-authors": "{{n}} ناشرين",
+    "n-posts": "{{n}} منشورات",
+    "admins": "مدراء:",
+    "sort-hot": "ساخن",
+    "sort-rank": "المرتبة",
+    "sort-subs": "الأعضاء",
+    "sort-new": "جديد",
+    "no-results": "لم يتم العثور على نتائج",
+    "create": "إنشاء مجتمع"
+  },
+  "communities-create": {
+    "page-title": "إنشاء مجتمع",
+    "title": "عنوان",
+    "about": "حول",
+    "description": "إنشاء مجتمعات أفضل ، لا مركزية ، ثابتة ، مجزية",
+    "fee": "رسوم الإنشاء",
+    "creator": "المُنشئ",
+    "username": "اسم مستخدم المجتمع",
+    "username-available": "متاح.",
+    "username-not-available": "غير متوفر.",
+    "username-wrong-format": "تنسيق غير صالح. تنسيق hive-1xxxxx مطلوب.",
+    "checkbox-validation": "الرجاء وضع علامة في هذا المربع إذا كنت ترغب في المتابعة.",
+    "title-validation": "يرجى ملء هذا الحقل.",
+    "password": "كلمة مرور المجتمع",
+    "confirmation": "لقد قمت بحفظ اسم المستخدم وكلمة المرور للمالك بشكل آمن.",
+    "submit": "إنشاء مجتمع",
+    "progress-account": "يتم إنشاء الحساب...",
+    "progress-user": "جارٍ تحضير بيانات المستخدم...",
+    "progress-role": "تعيين @{{u}} كمدير...",
+    "progress-props": "تحديث إعدادات المجتمع...",
+    "done": "تم إنشاء مجتمعك 🎉",
+    "reason-one": "الملكية الحقيقية",
+    "reason-two": "دائم، مكافئ",
+    "password-copied": "تم نسخ كلمة المرور إلى الحافظة",
+    "reason-three": "مدعوم بتقنية البلوكتشين",
+    "reason-four": "3 HIVE هي تكلفة إنشاء مجتمع دائم، لامتغير، بملكية حقيقية",
+    "done-link-label": "ابدأ."
+  },
+  "community-rewards-registration": {
+    "body-text": "قم بتسجيل مجتمعك للحصول على نقاط Ecency",
+    "btn-next-label": "تسجيل",
+    "done-body-text": "اكتمل التسجيل. سوف يتلقى مجتمعك نقاط مكافآت POINT عندما يقوم أعضاؤك بتحرير منشورات مع تطبيقات Ecency.",
+    "conflict-body-text": "هذا المجتمع مسجل مسبقاً.",
+    "min-required-body-text": "مطلوب 100 مشترك كحد أدنى للتسجيل."
+  },
+  "mute-btn": {
+    "mute": "كتم",
+    "unmute": "إلغاء الكتم",
+    "dialog-title-mute": "كتم المنشور/التعليق",
+    "dialog-title-unmute": "إلغاء كتم المنشور/التعليق",
+    "notes": "مُلاحظات",
+    "note-placeholder-mute": "قدم ملاحظة بشأن قرارك بكتم هذا المحتوى.",
+    "note-placeholder-unmute": "قدم ملاحظة بشأن قرارك بإلغاء كتم هذا المحتوى."
+  },
+  "profile": {
+    "voting-power": "قوة التصويت",
+    "post-count": "عدد المنشورات",
+    "followers": "المتابِعون",
+    "following": "المتابَعين",
+    "follows-you": "يُتابِعُك",
+    "section-blog": "المدونة",
+    "section-posts": "المنشورات",
+    "section-comments": "التعليقات",
+    "section-replies": "الردود",
+    "section-communities": "المجتمعات",
+    "section-wallet": "المحفظة",
+    "section-settings": "الإعدادات",
+    "section-permission": "الصلاحية",
+    "communities-title": "العضوية",
+    "create-community": "إنشاء مجتمع",
+    "witnesses": "الشهود",
+    "proposals": "المقترحات"
+  },
+  "profile-info": {
+    "joined": "انضم: {{n}}",
+    "last-active": "آخر نشاط: {{n}}",
+    "vote-value": "قيمة التصويت: {{n}}",
+    "vote-value-max": "(من حد أقصاه {{n}})",
+    "vote-power": "قوة التصويت: {{n}}%",
+    "rc-power": "رصيد الموارد: {{n}}%",
+    "recharge-time": "(مشحون بالكامل {{n}})",
+    "down-vote-power": "قوة التصويت السلبي: {{n}}%",
+    "no-posts": "No content published, yet",
+    "no-posts-user": "Follow, be first to know",
+    "no-posts-community": "Join and post in this community",
+    "create-posts": "لننشئ منشوراً جديداً",
+    "link-copied": "Search link copied to clipboard",
+    "no-posts-found": "لم يعثر على شيئ!"
+  },
+  "profile-edit": {
+    "title": "الملف الشخصي",
+    "name": "الاسم المعروض",
+    "about": "حول",
+    "cover-image": "صورة الغلاف",
+    "profile-image": "صورة الملف الشخصي",
+    "website": "الموقع الإلكتروني",
+    "location": "المكان",
+    "copied": "Referral link copied to clipboard",
+    "updated": "تم تحديث الملف الشخصي بنجاح!"
+  },
+  "image-upload-button": {
+    "uploaded": "تم رفع الصورة"
+  },
+  "preferences": {
+    "title": "التفضيلات",
+    "notifications": "تنبيهات الإشعارات",
+    "currency": "العملة",
+    "language": "اللغة",
+    "nsfw": "إظهار محتوى غير مناسب لمكان العمل",
+    "referral-link": "رابط الإحالة",
+    "updated": "تم تحديث التفضيل!"
+  },
+  "wallet": {
+    "unclaimed-rewards": "المكافآت غير المستلمة",
+    "claim-reward-balance": "استلام رصيد المكافئة",
+    "claim-reward-balance-ok": "تم استلام رصيد المكافأة",
+    "estimated": "القيمة المقدرة للمحفظة",
+    "estimated-points": "القيمة المقدرة للنقاط",
+    "estimated-description": "تستند القيمة المقدرة إلى متوسط حسابي لسعر HIVE على مدى ٧ أيام.",
+    "estimated-description-points": "تستند القيمة المقدرة على سعر شراء النقاط.",
+    "hive": "HIVE",
+    "hbd": "HBD",
+    "hive-description": "HIVE هي رموز قابلة للتداول يمكن نقلها في أي وقت. يمكن تحويل HIVE إلى HIVE Power في عملية تسمى التقوية.",
+    "hive-power": "قوة HIVE",
+    "hive-power-description": "قوة هايف هي رموز تأثير و تكسب المزيد من القوة بالإحتفاظ بها على المدى الطويل والتصويت على المشاركات. وكلما زادت قوة هايف ، كلما كان بإمكان المرء التأثير على مكافآت الآخرين وكسب مكافآت مقابل التصويت الدقيق.\nقوة هايف هي HIVE مرتهنة و يمكن فكها خلال 13 اسبوع.",
+    "hive-power-apr-rate": "الفائدة السنوية لقوة هايف هي {{value}}%",
+    "hive-dollars-apr-rate": "الفائدة السنوية لدولارات هايف HBD($) هي {{value}}%",
+    "hive-power-delegated": "تفويض قوة هايف",
+    "hive-power-received": "قوة هايف المستلمة",
+    "next-power-down-amount": "كمية خفض الطاقة القادمة",
+    "hive-power-total": "قوة هايف الإجمالية",
+    "hive-dollars": "دولارات هايف",
+    "hive-dollars-description": "الرموز التي تبلغ قيمتها حوالي 1.00$ من HIVE.",
+    "savings": "المدخرات",
+    "savings-description": "الرصيد خاضع لفترة انتظار لمدة 3 أيام.",
+    "next-power-down": "خفض القوة القادم هو {{time}}، {{amount}}",
+    "transfer": "تحويل",
+    "transfer-to-savings": "تحويل إلى المدخرات",
+    "convert": "تحويل",
+    "power-up": "رفع الطاقة",
+    "withdraw-hive": "سحب Hive",
+    "withdraw-hbd": "سحب دولار Hive",
+    "delegate": "تفويض",
+    "power-down": "تخفيض الطاقة",
+    "withdraw-routes": "طرق السحب",
+    "calculating": "جاري الحساب",
+    "converting-hbd-amount": "التحويل إلى HIVE",
+    "withdrawing-amount": "Withdrawing from Savings",
+    "reserved-amount": "Reserved for Open order in Market"
+  },
+  "wallet-engine": {
+    "title": "رموز Hive Engine",
+    "description": "Hive Engine هو منصة عقود ذكية جانبية لبلوكتشين هايف.",
+    "no-results": "لم يتم العثور على رموز.",
+    "token": "الرمز",
+    "balance": "الرصيد",
+    "staked": "مرهون"
+  },
+  "withdraw-routes": {
+    "title": "سحب الحسابات",
+    "account": "الحساب",
+    "percent": "النسبة المئوية",
+    "validation-account": "الحساب مطلوب.",
+    "validation-percent": "النسبة المئوية مطلوبة.",
+    "auto-power-up": "رفع الطاقة تلقائياً"
+  },
+  "points": {
+    "get": "شراء النقاط",
+    "unclaimed-points": "نقاط غير مسحوبة",
+    "claim-reward-points": "استلام نقاط المكافأة",
+    "main-description": "يمكن استخدام النقاط للخدمات داخل التطبيق، مثل الترويج، التعزيز، الإهداء. اكسبها فقط باستخدام تطبيقات Ecency وحسن تجربتك.",
+    "earn-points": "كيفية كسب المزيد من النقاط",
+    "post-desc": "يمكنك الحصول على نقط من خلال النشر بانتظام. النشر يعطيك 15 نقطة.",
+    "comment-desc": "يساعدك كل تعليق تدلي به على تنمية جمهورك وتكوين صداقات ، ولكنه يكسبك أيضًا 5 نقاط.",
+    "checkin-desc": "تسجيل الوصول على Ecency يمنحك 0.25 نقطة و يساعدك في البقاء على تواصل مع أصدقائك.",
+    "vote-desc": "بالتصويت ، تمنح مكافأة للمبدعين الآخرين وتُظهر تقديرك لكنك أيضًا تكسب x 0.01 نقاط وزن تصويت.",
+    "reblog-desc": "شارك المنشور الذي يعجبك مع أصدقائك و اكسب 1 نقطة.",
+    "login-desc": "عند تسجيلك الدخول إلى Ecency ، يحق لك كسب 10 نقاط تلقائيًا.",
+    "checkin-extra-desc": "الاستخدام المستمر للتطبيق يمنحك فرصاً إضافية لكسب 10 نقاط أخرى، كن أكثر نشاطا و إكسب المزيد.",
+    "delegation-desc": "يمكنك كسب ~100 نقطة في اليوم لكل 1000HP مفوضة.",
+    "community-desc": "قم بتسجيل مجتمعك للحصول على 20 نقطة لكل مشاركة منشورة مع تطبيقات Ecency.",
+    "history": "التاريخ",
+    "post-list-desc": "نقاط للمنشور",
+    "comment-list-desc": "نقاط للتعليق",
+    "vote-list-desc": "نقاط للتصويت",
+    "reblog-list-desc": "نقاط لإعادة النشر",
+    "login-list-desc": "نقاط لتسجيل الدخول",
+    "checkin-list-desc": "نقاط لنبض القلب",
+    "checkin-extra-list-desc": "مكافأة الاستخدام",
+    "transfer-sent-list-desc": "تحويل إلى {{n}}",
+    "transfer-incoming-list-desc": "تحويل من {{n}}",
+    "delegation-list-desc": "مكافأة التفويض",
+    "referral-list-desc": "مكافأة الإحالة",
+    "community-list-desc": "مكافأة المجتمع",
+    "transfer": "Gift",
+    "claim-ok": "تمت المطالبة بالنقاط",
+    "promote": "قم بالترويج لمقالك",
+    "boost": "تعزيز",
+    "filter-all": "كل التاريخ",
+    "filter-10": "نقاط لنبض القلب",
+    "filter-20": "نقاط لتسجيل الدخول",
+    "filter-30": "مكافأة الاستخدام",
+    "filter-100": "نقاط للمنشور",
+    "filter-110": "نقاط للتعليق",
+    "filter-120": "نقاط للتصويت",
+    "filter-130": "نقاط لإعادة النشر",
+    "filter-150": "مكافأة التفويض",
+    "filter-160": "مكافأة الإحالة",
+    "filter-170": "مكافأة المجتمع",
+    "filter-998": "التحويل الصادر",
+    "filter-999": "التحويل الوارد"
+  },
+  "purchase": {
+    "select-asset": "اختر الأصل",
+    "slider-hint": "اسحب شريط التمرير لضبط الكمية.",
+    "submit": "شراء",
+    "purchase-message": "أو أرسل أي مبلغ إلى @esteem.app مع 'points' كمذكرة لشراء النقاط."
+  },
+  "promote": {
+    "title": "قم بالترويج لمقالك",
+    "sub-title": "ترويج لمنشورك",
+    "duration": "المدة"
+  },
+  "boost": {
+    "title": "تعزيز",
+    "sub-title": "تعزيز منشورك",
+    "amount": "الكمية",
+    "slider-hint": "اسحب شريط التمرير لضبط الكمية."
+  },
+  "redeem-common": {
+    "balance": "الرصيد",
+    "post": "نشر",
+    "post-hint": "إكمال تلقائي للإدخال",
+    "post-placeholder": "اسم المستخدم/الرابط",
+    "post-error": "عنوان نشر غير صالح",
+    "post-error-exists": "المنشور معزز مسبقاً",
+    "success-message": "تم إرسال طلبك. سيتم تفعيله في بضع دقائق."
+  },
+  "transfer": {
+    "transfer-title": "التحويل إلى الحساب",
+    "transfer-title-point": "إهداء إلى حساب",
+    "transfer-sub-title": "نقل الأموال إلى حساب Hive آخر",
+    "transfer-saving-title": "التحويل إلى المدخرات",
+    "transfer-saving-sub-title": "حماية الأموال بالمطالبة بفترة 3 أيام للسحب",
+    "withdraw-saving-title": "السحب من المدخرات",
+    "withdraw-saving-sub-title": "سحب الأموال بعد فترة الانتظار المطلوبة 3 أيام",
+    "power-up-title": "رهن هايف كقوة",
+    "convert-title": "تحويل",
+    "power-up-sub-title": "رموز تأثير تمنحك المزيد من التحكم في أرباح المنشور، وتسمح لك بالربح من عملية التقييم.",
+    "convert-sub-title": "ينصح فقط عندما يكون HBD أقل من $1. ستحصل على $1 من HIVE خلال 3.5 أيام.",
+    "delegate-title": "تفويض",
+    "delegate-sub-title": "تفويض قوة هايف",
+    "power-down-title": "خفض الطاقة",
+    "power-down-sub-title": "خفض طاقة قوة هايف",
+    "from": "من",
+    "to": "إلى",
+    "to-placeholder": "إسم المستخدم",
+    "to-not-found": "المستخدم الذي تحاول تحويل الأموال له غير موجود!",
+    "to-bad-actor": "احذر عند الإرسال لهذا الحساب. الرجاء التأكد من الأحرف تجنّباً للمخادعين.",
+    "amount": "الكمية",
+    "amount-placeholder": "الكمية",
+    "wrong-amount": "قيمة المبلغ غير صحيحة",
+    "amount-precision-error": "استخدم 3 أرقام فقط من الدقة",
+    "balance": "الرصيد",
+    "power-down-estimated": "+ {{n}} مقدر أسبوعيا",
+    "memo": "مذكرة",
+    "memo-placeholder": "enter your notes here",
+    "memo-help": "This memo is public",
+    "available-hp-hint": "* available hive power",
+    "override-warning-1": "The new amount overrides the previous one.",
+    "override-warning-2": "Account ({{account}}) has already been delegated with {{previousAmount}}.",
+    "confirm-title": "Confirm your transaction",
+    "confirm-sub-title": "Please, check if everything is correct",
+    "confirm": "Confirm",
+    "recent-transfers": "Recent transfers",
+    "transfer-summary": "<span class=\"amount\">{{amount}}</span> transferred from <span class=\"from-user\">{{from}}</span> to <span class=\"to-user\">{{to}}</span>",
+    "transfer-saving-summary": "<span class=\"amount\">{{amount}}</span> transferred from <span class=\"from-user\">{{from}}</span> to <span class=\"to-user\">{{to}}</span>",
+    "withdraw-saving-summary": "<span class=\"amount\">{{amount}}</span> transferred from <span class=\"from-user\">{{from}}</span> to <span class=\"to-user\">{{to}}</span>",
+    "convert-summary": "<span class=\"amount\">{{amount}}</span> being converted",
+    "power-up-summary": "<span class=\"amount\">{{amount}}</span> staked from <span class=\"from-user\">{{from}}</span> to <span class=\"to-user\">{{to}}</span>",
+    "delegate-summary": "<span class=\"amount\">{{amount}}</span> delegated from <span class=\"from-user\">{{from}}</span> to <span class=\"to-user\">{{to}}</span>",
+    "power-down-summary": "Power down completed as <span class=\"amount\">{{amount}}</span>",
+    "reset": "Reset",
+    "powering-down": "You are currently powering down.",
+    "stop-power-down": "Stop"
+  },
+  "trx-common": {
+    "insufficient-funds": "Insufficient funds",
+    "sign-title": "Sign transaction",
+    "sign-sub-title": "Sign your transaction",
+    "success-title": "Success",
+    "success-sub-title": "Transaction successful"
+  },
+  "transactions": {
+    "title": "History",
+    "group-all": "All History",
+    "group-transfers": "Transfers",
+    "group-market-orders": "Market Orders",
+    "group-interests": "Interests",
+    "group-stake-operations": "عمليات الحجز",
+    "group-rewards": "المكافأت",
+    "type-curation_reward": "مكافأة التفاعل",
+    "type-author_reward": "مكافأة المؤلف",
+    "type-comment_benefactor_reward": "مكافأة مستفيد التعليق",
+    "type-claim_reward_balance": "تحصيل المكافآت",
+    "type-transfer": "تحويل",
+    "type-transfer_to_vesting": "رفع الطاقة",
+    "type-withdraw_vesting": "تخفيض الطاقة",
+    "type-set_withdraw_vesting_route": "Withdraw route changed",
+    "type-fill_vesting_withdraw": "حدث تخفيض جزئي في الطاقة",
+    "type-fill_order": "Open trade filled",
+    "type-producer_reward": "مكافأة المنتج",
+    "type-interest": "الفائدة",
+    "type-transfer_to_savings": "تحويل إلى المدخرات",
+    "type-fill_convert_request": "تم التحويل",
+    "type-fill_collateralized_convert_request": "تم تنفيذ التحويل المرهون",
+    "type-fill_collateralized_convert-detail": "المعرف: <strong>{{request}}</strong>، أرجع: {{returned}}",
+    "type-cancel_transfer_from_savings": "إلغاء التحويل من المدخرات",
+    "type-cancel_transfer_from_savings-detail": "من: <strong>@{{from}}</strong> <br/> معرف الطلب: <strong>{{request}}</strong>",
+    "type-return_vesting_delegation": "التفويضات العائدة",
+    "type-proposal_pay": "الأجر المقترح",
+    "type-update_proposal_votes": "التصويت المقترح",
+    "type-comment_payout_update": "تحديث دفعة المحتوى",
+    "type-comment_reward": "مكافأة المحتوى",
+    "type-recurrent_transfer": "تحويل متكرر",
+    "type-recurrent_transfer-detail": "{{executions}} ينقل، كل {{recurrence}} ساعة",
+    "type-fill_recurrent_transfer": "حدث تحويل متكرر",
+    "type-fill_recurrent_transfer-detail": "الباقي {{remaining_executions}} تحويلات",
+    "type-delegate_vesting_shares": "التفويض",
+    "type-collateralized_convert": "التحويل المرهون",
+    "type-collateralized_convert-detail": "معرف الطلب: <strong>{{request}}</strong>",
+    "type-update_proposal_vote-detail": "معرف الاقتراح: <strong>{{pid}}</strong>",
+    "type-limit_order_create": "New trade created",
+    "type-limit_order_cancel": "Open trade cancelled",
+    "type-effective_comment_vote": "التصويت الفعال"
+  },
+  "key-or-hot": {
+    "sign": "توقيع",
+    "key-placeholder": "أدخل المفتاح النشط/المالك/الرئيسي",
+    "with-hivesigner": "توقيع باستخدام hivesigner",
+    "with-keychain": "توقيع باستخدام keychain"
+  },
+  "delegated-vesting": {
+    "title": "تفويض قوة هايف",
+    "undelegate": "إلغاء تفويض",
+    "subtitle": " HP بانتظار إستعادة الرهن"
+  },
+  "received-vesting": {
+    "title": "قوة هايف المستلمة"
+  },
+  "conversion-requests": {
+    "title": "Convert requests",
+    "request-id": "Request id",
+    "amount": "Amount",
+    "pending": "Pending"
+  },
+  "savings-withdraw": {
+    "title": "Withdraw from Savings",
+    "to": "To"
+  },
+  "open-orders-list": {
+    "title": "Open orders",
+    "created": "Created",
+    "expires": "Expires",
+    "order-id": "Order id"
+  },
+  "friends": {
+    "followers": "المتابِعون ({{n}})",
+    "following": "المتابَعين ({{n}})",
+    "search-placeholder": "البحث"
+  },
+  "follow-controls": {
+    "follow": "تابع",
+    "unFollow": "إلغاء المتابعة",
+    "mute": "كتم",
+    "unMute": "إلغاء الكتم"
+  },
+  "favorite-btn": {
+    "add": "الإضافة إلى المفضلة",
+    "added": "تمت الإضافة إلى المفضلة",
+    "delete": "إزالة من المفضلة",
+    "deleted": "تمت الإزالة من المفضلة"
+  },
+  "editor-toolbar": {
+    "bold": "عريض",
+    "italic": "مائل",
+    "header": "الترويسة",
+    "code": "الكود",
+    "quote": "إقتباس",
+    "ul": "قائمة غير مرتبة",
+    "ol": "قائمة مرتبة",
+    "link": "الرابط",
+    "image": "الصورة",
+    "table": "جدول",
+    "table-3-col": "3 أعمدة",
+    "table-2-col": "عمودان",
+    "table-1-col": "عمود 1",
+    "upload": "رفع",
+    "gallery": "المعرض",
+    "emoji": "إيموجي",
+    "image-error": "تعذر رفع الصورة.",
+    "image-error-cache": "تعذر رفع الصورة. يبدو أنك مسجل خارجاً. حاول تسجيل الدخول مرة أخرى.",
+    "image-error-size": "حجم الصورة كبير جداً، حاول بحجم صورة أصغر مرة أخرى.",
+    "fragments": "قصاصات"
+  },
+  "emoji-picker": {
+    "filter-placeholder": "فلترة",
+    "filter-no-match": "لا يوجد تطابق",
+    "recently-used": "مستخدم حديثاً"
+  },
+  "submit": {
+    "page-title": "إنشاء منشور",
+    "page-description": "انشر مقالة، احصل على مكافأة، محتوى غير مراقب، غير قابل للتغيير، لامركزي!",
+    "title-placeholder": "العنوان",
+    "body-placeholder": "محتوى المنشور",
+    "reward": "المكافأة",
+    "reward-hint": "تعيين نسبة مكافأة المؤلف للرموز السائلة والمرهونة",
+    "reward-default": "الافتراضي 50%/50%",
+    "reward-sp": "رفع الطاقة 100%",
+    "reward-dp": "Decline Payout",
+    "preview": "Preview",
+    "publish": "Publish",
+    "update": "Update",
+    "save-draft": "Save Draft",
+    "draft-saved": "Draft saved",
+    "update-draft": "Update Draft",
+    "draft-updated": "Draft updated",
+    "cancel-update": "Cancel",
+    "clear": "Clear",
+    "published": "Post Published",
+    "updated": "Post Updated",
+    "thumbnail": "Thumbnail",
+    "advanced": "Advanced",
+    "beneficiaries": "Beneficiaries",
+    "beneficiaries-hint": "Set beneficiaries to share author reward with other accounts",
+    "reblog": "Reblog",
+    "reblog-hint": "Auto share content to your blog",
+    "schedule": "Schedule",
+    "schedule-hint": "Auto publish content on specific time",
+    "scheduled": "Post scheduled",
+    "empty-title-alert": "Enter post title",
+    "empty-tags-alert": "Enter post tags",
+    "empty-body-alert": "Enter post body"
+  },
+  "tag-selector": {
+    "placeholder-empty": "Tags. First tag is main category. Sortable.",
+    "placeholder-focus": "Enter tag",
+    "placeholder-has-tags": "Add More",
+    "suggestion-header": "Tags",
+    "error-max": "Max {{n}} tags",
+    "limited_tags": "Only 10 tags allowed, remove some",
+    "limited_length": "Maximum length of each tag should be 24",
+    "limited_dash": "Use one dash in each tag",
+    "limited_space": "Use space to separate tags",
+    "limited_lowercase": "Only use lower letters in tag",
+    "limited_characters": "Use only lowercase letters, digits and one dash",
+    "limited_firstchar": "Tag must start with a letter",
+    "limited_lastchar": "Tag must end with letter or number"
+  },
+  "community-selector": {
+    "choose": "Choose a community",
+    "my-blog": "My Blog",
+    "search-placeholder": "Search Communities"
+  },
+  "word-count": {
+    "label": "{{n}} words",
+    "read-time-less-1-min": "< 1 min read",
+    "read-time-n-min": "~ {{n}} min read"
+  },
+  "beneficiary-editor": {
+    "title": "Beneficiaries",
+    "btn-label": "Set Beneficiaries",
+    "btn-label-n": "Set Beneficiaries ({{n}})",
+    "username": "Username",
+    "reward": "Reward",
+    "user-error": "{{n}} is not a valid user.",
+    "validation-percentage": "Percentage is required.",
+    "validation-username": "اسم المستخدم مطلوب.",
+    "user-exists-error": "{{n}} موجود مسبقاً في القائمة"
+  },
+  "post-scheduler": {
+    "title": "الجدول الزمني",
+    "btn-label": "الجدول الزمني"
+  },
+  "notification": {
+    "popup-title": "لديك إشعار جديد",
+    "voted": "{{source}} صوّت على منشورك",
+    "mention-post": "{{source}} ذكرك في منشور",
+    "mention-comment": "{{source}} ذكرك في تعليق",
+    "followed": "{{source}} تابعك",
+    "replied": "{{source}} رد عليك",
+    "reblogged": "{{source}} أعاد تدوين منشورك",
+    "transfer": "{{source}} أرسل لك {{amount}}"
+  },
+  "notifications": {
+    "type-all": "جميع الإشعارات",
+    "type-all-short": "الكل",
+    "type-rvotes": "الأصوات",
+    "type-replies": "الردود",
+    "type-mentions": "الإشارات",
+    "type-follows": "المتابعات",
+    "type-reblogs": "إعادات التدوين",
+    "type-transfers": "التحويلات",
+    "group-title-recent": "الأحدث",
+    "vote-str": "{{p}}% يحب منشورك:",
+    "reply-str": "رد على منشورك:",
+    "mention-str": "ذكرك في:",
+    "followed-str": "تابع",
+    "unfollowed-str": "ألغى المتابعة",
+    "ignored-str": "تجاهل",
+    "reblog-str": "أعاد تدوين منشورك:",
+    "transfer-str": "أرسل لك",
+    "spin-str": "حان الوقت لكسب المزيد من النقاط، العب الدولاب على تطبيق Ecency للهاتف النقال",
+    "inactive-str": "كن نشطًا! اكتب منشور، واصل الكسب",
+    "referral-str": "انضم برابط إحالتك ، رحب بهم",
+    "refresh": "تحديث",
+    "mark-all-read": "تحديد الكل كمقروء",
+    "mark-read": "تحديد كمقروء",
+    "mute": "إيقاف تنبيهات الإشعارات",
+    "unmute": "تشغيل تنبيهات الإشعارات"
+  },
+  "leaderboard": {
+    "title-stars": "الأكثر نشاطا",
+    "title-curators": "القيمون",
+    "title-day": "القادة اليوميون",
+    "title-week": "القادة الأسبوعيون",
+    "title-month": "القادة الشهريون",
+    "period-day": "يومياً",
+    "period-week": "أسبوعياً",
+    "period-month": "شهرياً",
+    "header-score": "الأنشطة",
+    "header-score-tip": "النشر + التعليقات التي أبداها مستخدم للفترة المحددة",
+    "header-reward": "المكافأة",
+    "header-votes": "الأصوات",
+    "header-votes-tip": "عدد الأصوات في هذه الفترة"
+  },
+  "popular-users": {
+    "title": "Popular Users"
+  },
+  "discover": {
+    "title": "Discover",
+    "description": "Discover top online users"
+  },
+  "search-page": {
+    "title": "Search",
+    "description": "Find uncensored content, communities and users"
+  },
+  "search-comment": {
+    "title": "Results",
+    "matches": "{{n}} matches",
+    "matches-singular": "1 match",
+    "advanced": "Advanced",
+    "search": "Search",
+    "search-placeholder": "Search content",
+    "author": "Author",
+    "author-placeholder": "username",
+    "type": "Type",
+    "type-": "All",
+    "type-post": "Post",
+    "type-comment": "Comment",
+    "category": "Category",
+    "category-placeholder": "category",
+    "tags": "Tags",
+    "tags-placeholder": "comma separated tags",
+    "date": "Date",
+    "date-week": "Last Week",
+    "date-month": "Last Month",
+    "date-year": "Last Year",
+    "date-all": "All",
+    "sort": "Sort",
+    "sort-popularity": "Popularity",
+    "sort-relevance": "Relevance",
+    "sort-newest": "Recent",
+    "hide-low": "Hide low payout content",
+    "show-more": "show more"
+  },
+  "search-people": {
+    "title": "People"
+  },
+  "search-topics": {
+    "title": "Topics"
+  },
+  "search-communities": {
+    "title": "Communities"
+  },
+  "witnesses": {
+    "page-title": "Witnesses",
+    "page-description": "Consensus block producers selection",
+    "page-description-long": "Role of witnesses or block producers in Hive blockchain is to act as the network's governance body. Community elects them to represent their voice and each user can elect up to 30 witnesses. Top 20 witnesses are producing blocks every minute while rest remain as backup witness and gets randomized chance every minute. This role is integral part of consensus mechanism blockchain runs on and recommend user engagement to vote on trusted witnesses.",
+    "remaining": "<span>{{n}}</span> of {{max}} votes remaining",
+    "list-rank": "Rank",
+    "list-witness": "Witness",
+    "list-miss": "Miss",
+    "list-url": "URL",
+    "list-fee": "Fee",
+    "list-feed": "Feed",
+    "list-version": "Version",
+    "username-placeholder": "username",
+    "extra-description": "Enter account name below to vote for a witness outside of Top 50",
+    "proxy-description": "You can also choose a proxy that will vote for witnesses for you. This will reset your current witness selection.",
+    "proxy-btn-label": "Set Proxy",
+    "proxy-active-description": "لقد قمت بتعيين وكيل التصويت. إذا كنت ترغب في إعادة تمكين التصويت اليدوي، الرجاء مسح الوكيل الخاص بك.",
+    "proxy-active-current": "الوكيل الحالي الخاص بك هو",
+    "proxy-active-btn-label": "مسح الوكيل",
+    "proxy-votes-for": "@{{username}} يصوت ل"
+  },
+  "proposals": {
+    "page-title": "المقترحات",
+    "page-description": "صندوق نقد هايف اللامركزي (DHF) هو آلية تمويل على السلسلة و يسمح لأي كان بتقديم مقترح و الحصول على تمويل مجرد أن تجاوزت أصوات المجتمع له عتبة معينة. لمعرفة المزيد اقرأ <a href=\"https://starterkit.tech/faqs#how-dhf-work\">الأسئلة الشائعة</a>.",
+    "by": "من",
+    "for": "من أجل",
+    "duration-days": "{{n}} أيام",
+    "daily-pay": "يومياً {{n}}",
+    "votes": "الأصوات: {{n}}",
+    "status-active": "نشط",
+    "status-expired": "منتهية الصلاحية",
+    "status-inactive": "القادم",
+    "remaining-days": "المتبقي: {{n}} أيام",
+    "filter-all": "الكل",
+    "filter-active": "نشط",
+    "filter-inactive": "القادم",
+    "filter-team": "مشاريع Ecency",
+    "return-description": "هذا هو المقترح المرجعي. ولن يحصل كل مقترح بعدد أقل من الأصوات على الأموال.",
+    "threshold-description": "This is a threshold proposal.",
+    "votes-dialog-title": "Votes on Proposal #{{n}}",
+    "see-all": "see all proposals",
+    "daily-funded": "daily funded",
+    "daily-budget": "daily budget",
+    "total-budget": "total budget"
+  },
+  "gallery": {
+    "title": "Gallery",
+    "copied": "Copied to clipboard"
+  },
+  "drafts": {
+    "title": "Drafts",
+    "filter": "Search by title"
+  },
+  "schedules": {
+    "title": "Scheduled Posts",
+    "move": "Move to drafts"
+  },
+  "bookmarks": {
+    "title": "Bookmarks"
+  },
+  "favorites": {
+    "title": "Favorites"
+  },
+  "fragments": {
+    "title": "Snippets",
+    "create-first": "Create your first snippet",
+    "filter": "Search by title",
+    "form-title": "Title",
+    "validation-title": "Title is required.",
+    "validation-value": "Value is required.",
+    "validation-body": "Body is required.",
+    "form-body": "Body"
+  },
+  "password-update": {
+    "title": "Change Password",
+    "account": "Account",
+    "cur-pass": "Current password",
+    "new-pass": "New password",
+    "new-pass2": "Confirm new password",
+    "error-new2": "Passwords must be same",
+    "pass-gen": "Click to generate password",
+    "label-check": "I have securely saved my generated password",
+    "validation-password": "Password is invalid.",
+    "validation-label": "Please tick this box to proceed.",
+    "updated": "Password updated successfully!"
+  },
+  "view-keys": {
+    "title": "View Private keys",
+    "header": "Manage keys",
+    "account": "Account",
+    "cur-pass": "Current password",
+    "owner": "Owner",
+    "active": "Active",
+    "posting": "Posting",
+    "memo": "Memo",
+    "view-keys": "Click to view keys",
+    "copied": "Private key copied into clipboard",
+    "error": "Password seem incorrect, please double check!"
+  },
+  "add-image": {
+    "title": "Add Image",
+    "text-label": "Image Text",
+    "link-label": "Image Link",
+    "validation-text": "Text is required.",
+    "validation-image": "Image is required."
+  },
+  "add-image-mobile": {
+    "title": "Add Image",
+    "recent-title": "Recently uploaded",
+    "gallery": "Gallery",
+    "upload": "Upload image"
+  },
+  "add-link": {
+    "title": "Add Link",
+    "text-label": "Text",
+    "link-label": "https://",
+    "validation-text": "Text is required.",
+    "validation-link": "Link is required."
+  },
+  "scroll-to-top": {
+    "title": "Scroll to Top"
+  },
+  "static": {
+    "about": {
+      "page-title": "About",
+      "intro-title": "What is <span>Ecency</span>",
+      "intro-content": "Ecency is beautiful and handy wrapper interface around the Hive blockchain network allowing you to create your own posts, surf your feeds, vote what you like, write comments, read replies, do all major Hive functions in your daily social surfing as well as wallet actions and other extras such as search, discover different tags etc.",
+      "faq-title": "FAQ",
+      "faqs": "All FAQs",
+      "contact-title": "Contacts",
+      "contact-blog": "Founder's blog",
+      "contact-news": "News on Hive",
+      "contact-email": "Email us"
+    },
+    "faq": {
+      "page-title": "How can we help you?",
+      "search-link-copied": "Search link copied to clipboard",
+      "page-sub-title": "Table of Contents",
+      "what-is-ecency-header": "What is Ecency?",
+      "search": "Related results for {{search}} filtered below",
+      "search-not-found": "Nothing was found. To ask our community, join our ",
+      "search-placeholder": "Search our articles",
+      "what-is-ecency-body": "<p>Ecency is a <a href=\"https://en.wikipedia.org/wiki/Blockchain\" target=\"_blank\" rel=\"noopener noreferrer\">blockchain</a> based decentralized social network - powered by <a href=\"https://hive.io\" target=\"_blank\" rel=\"noopener noreferrer\">Hive</a>.</p><p>Ecency is home of free speech and rewarding communities for content creators with true/full ownership.</p><p>Project is founded by <a class=\"push-link\" href=\"/@good-karma\">@good-karma</a> in August 2016 as an alternative social network that's uncensored, user controled, immutable and opensource. There are <a class=\"push-link\" href=\"/contributors\">many independent and voluntary contributors</a> who work together to bring the vision to masses.</p><p>Ecency is hub of communities powered by cutting edge technology where users are getting paid for their time, resources and learn while having complete control over their account, communities and content. Through ease of use, users not only learn but also become investors, innovators of the new internet.</p>",
+      "what-is-hive-header": "What is Hive blockchain?",
+      "what-is-hive-body": "<p>Hive is a blockchain that was designed to be fast, feeless, decentralized, uncensored platform for Web3.0 applications, with built-in features where stake holders can earn rewards by staking, curating, posting, playing games, trading - all without any middle man (decentralized). Tokens on Hive blockchain called HIVE, HIVE DOLLARS, HIVE POWER.</p>",
+      "what-is-difference-header": "What's the difference from other Social Networks?",
+      "what-is-difference-body": "<p>The primary difference, Ecency is based on a blockchain which means content is immutable and uncensorable. You own your community and account, nobody but you have full control of your data. Empowering true free speech. Ecency is also opensource, rewarding and innovative, built and owned by users. Aspire for greatness!</p>",
+      "why-choose-ecency-header": "Why would I choose Ecency?",
+      "why-choose-ecency-body": "<p>Tailored feature set to empower you to create, inspire your audience and community. Ecency mobile application giving you on-go solution. With desktop app you are always sure to get uncensored content right from the blockchain, with website reach thousands of readers accross globe with best ranked content on search engines. State of art security measures so your keys will always stay encrypted and out of reach for ill-intentioned individuals. Fast and beautiful website, helps you to get discovered online and gain exposure for your content and gain loyal followers and readers. Build your community with Ecency today and take advantages of emerging blockchain technology and uncensored content, true free speech!</p>",
+      "how-ecency-works-header": "How does Ecency work?",
+      "how-ecency-works-body": "<p>Ecency stores and reads data from the blockchain, and thus data is accessible and uncensored. Ecency rewards content creators with built-in incentive mechanism of blockchain, with tokens (HIVE, HIVE DOLLARS, HIVE POWER) as well as Points. Tokens can be purchased and sold in major cryptocurrency exchanges (e.g. Binance, Bittrex). Points could be utilized within platform and traded for goods, services.</p>",
+      "how-to-join-header": "How to join Ecency?",
+      "how-to-join-body": "<p>Go to <a class=\"push-link\" href=\"/signup?referral=ecency\">https://ecency.com/signup?referral=ecency</a> and create an account. After signup you will receive email with further instructions. Your password is your master password to your account. Please store it safely, if you loose your password, you ultimately loose access to your account and your funds. Accounts cannot be deactivated or deleted, account names can not be changed as well. The account along with all of its activity is permanently stored in the blockchain. Without password, accounts cannot be restored, store your keys safely.</p>",
+      "how-to-signin-header": "How to sign in to Ecency?",
+      "how-to-signin-body": "<p>You can sign-in to Ecency by using your Username and Master password or by using Active Private Keys. We take security very seriously, that's why we never store your private keys, on mobile app they are encrypted with extra PIN code of your choice, on website they are never stored. You can also use <a href=\"https://hivesigner.com\" target=\"_blank\" rel=\"noopener noreferrer\">Hivesigner OAuth2</a> authentication service to easily login, manage and perform actions.</p>",
+      "how-referrals-work-header": "How referral system work on Ecency?",
+      "how-referrals-work-body": "<p>Referral system is simple, you can invite your friends by adding your username in this link https://ecency.com/signup?referral=username and share it with your friends. Once your friends join Ecency and earn their first 250 Points, you will earn 100 Points. There is no limits on referrals and its reward.</p>",
+      "what-is-points-header": "What are Ecency Points and how to use them?",
+      "what-is-points-body": "<p>Ecency Points are continually minted and rewarded for all users for various social activities they perform on website, mobile or desktop app. Points can be used for promoting, boosting your content, can even be transferred or gifted to another user. You can also purchase Points with our mobile apps.</p>",
+      "where-tokens-come-header": "Where do the tokens come from?",
+      "where-tokens-come-body": "<p>The Hive network continually creates new digital tokens to reward content creators and curators. Some of the newly-created tokens are transferred to users who add value to platform by posting, commenting, and voting on other people's posts. The remainder is distributed to holders of HIVE POWER and the witnesses that secures the blockchain.</p>",
+      "how-promotion-work-header": "كيف يتم الترويج ؟",
+      "how-promotion-work-body": "<p>Promoting content on Ecency is very simple and easy. Ecency Points are used to promote content for 1, 2, 3, 7 or 14 days to get more exposure. Promoted posts are shuffled across the feeds to all users in mobile app, desktop app and website. There is no limit or restrictions, any post can be promoted to get more exposure and engagement. We hold right to remove posts from promotion list if it violates certain internet etiquette.</p>",
+      "how-boosting-work-header": "How content boosting works?",
+      "how-boosting-work-body": "<p>Points can be used for boosting content (post and comments). Boosting requests are manually reviewed by our moderators and curators which might take upto 24 hours. <p>As part of the qualities check, we may consider: a) Content is original content, b) Not detected by cheetah, mackbot, hivewatchers, or any other blacklists etc. c) User is not in Ecency blacklist due to abusive behavior.</p>Boosting does not guarantee curation, if content is not curated within 24 hours Points will be refunded.</p>",
+      "how-to-transfer-header": "How to transfer blockchain tokens?",
+      "how-to-transfer-body": "<p>After login, you will find Wallet page in top header on website and desktop app or in Profile page, bottom navigation bar on mobile app. In wallet page you can initiate transfer of any token you hold to another user or exchange accounts, click on arrow next to your balance and find transfer operations. Transfers are irreversible because they are registered on blockchain, make sure to send correct recipient.</p>",
+      "how-see-rewards-header": "How do I see my post rewards?",
+      "how-see-rewards-body": "<p>In Wallet page (in top header on website and desktop app, bottom navigation bar on mobile app), you can see Curation rewards (the rewards earned for upvoting posts and comments) and Author rewards (the rewards earned by your own posts and comments)</p><p>You can also view the same information for other users by visiting their wallet profile.</p>",
+      "how-dhf-work-header": "How DHF works?",
+      "how-dhf-work-body": "<p>Anyone can create a proposal and convince community to vote on their proposal to get funded. Before creating proposal, normal post should be published on blockchain and it is recommended to gather feedback before creating proposal. Proposal creation has fee of 10 HBD + 1 HBD for each day it lasts over 60 days.</p><p>Once proposal reaches certain threshold of tallied votes, it will start receiving funds each hour. If proposal falls below threshold, system will halt funding for that proposal. You can vote as many proposals as you want, there are no limits. Proposal cannot be edited, but can be deleted/withdrawn by creator.</p>",
+      "when-claim-rewards-header": "When can I claim my rewards?",
+      "when-claim-rewards-body": "<p>Posts and comments remain active for 7 days and rewards are fluctuates depending on votes and market price of token, that is why rewards are approximated as pending reward. When the period is over, pending reward changes to actual reward and you are able to claim earned rewards. In your Wallet, click the Claim Rewards button to add the tokens to your account.</p>",
+      "what-are-rc-header": "What are Resource Credits?",
+      "what-are-rc-body": "<p>Transacting on the Hive blockchain has zero fees, transaction rate-limiting is employed to safeguard the blockchain from spam attacks. Every action that you take on the blockchain will consume a small amount of Resource Credits. This includes posting, commenting, voting, transferring tokens, etc. Viewing content does not consume Resource Credits.</p><p>Every user has a limited amount of Resource Credits to use each week. The more transactions a user does, the less Resource Credits they will have left (until they recharge). Users with more HIVE POWER will have more Resource Credits.</p><p>If you run out of Resource Credits, you will be unable to transact with the blockchain until your Resource Credits recharge (happens automatically) or you acquire additional HIVE POWER to increase your Resource Credit balance or you can <a href=\"https://starterkit.tech/faqs#how-boost-account\">request Boosting account from Ecency</a> to receive temporary delegation.</p>",
+      "how-boost-account-header": "How to request account boosting?",
+      "how-boost-account-body": "<p>If your account is low on <a href=\"https://starterkit.tech/faqs#what-are-rc\">Resource Credits</a>, you can request account boosting from Ecency. You will receive temporary delegation which should boost your account to perform more activities on blockchain. You can find account boosting feature in Points options.</p>",
+      "what-spam-abuse-header": "What is considered spam or abuse?",
+      "what-spam-abuse-body": "<p><ul><li>Plagiarized posts or copied content.</li><li>Leaving nearly identical or materially similar comments on multiple posts.</li><li>Using tags that are unrelated to the post.</li><li>Threatening users with any type of physical violence.</li><li>Not citing sources when using someone else’s material.</li><li>Posting ‘not safe for work’ content without using the “nsfw” tag.</li><li>Scams or Fraudulent offers.</li></ul></p>",
+      "can-link-post-header": "Can I request adding backlink to my website from Ecency team?",
+      "can-link-post-body": "<p>All the content on our site is created by our users and we don't modify or able to add backlinks. You are free to contact author of the post or <a href=\"/signup?referral=ecency\" class=\"push-link\">Signup</a> to open your own blog and community, publish articles to create backlinks for free.</p>",
+      "can-guest-post-header": "Is it possible to guest post on your website?",
+      "can-guest-post-body": "<p>Publishing on Ecency is simple and easy, <a href=\"/signup?referral=ecency\" class=\"push-link\">Signup</a> to open your own blog and community, start posting your content.</p>",
+      "source-label-header": "Content source labels, what are those?",
+      "source-label-body": "<p>Content source helps you understand how content was published. In some cases you may see a third-party client name, which indicates the Content came from a non-Ecency application. Authors sometimes use third-party client applications to manage their blogs, communities. Third-party clients are software tools used by authors and therefore are not affiliated with, nor do they reflect the views of, the content. Content can be directly created by humans or, in some circumstances, automated by an application.</p>",
+      "how-to-contribute-header": "How to contribute to the Ecency?",
+      "how-to-contribute-body": "<p>Our <a href=\"/contributors\" class=\"push-link\">awesome contributors</a> helping us to shape Ecency. You can be part of this great movement, by joining our Translation team: <a href=\"https://translate-desktop.ecency.com\" target=\"_blank\" rel=\"noopener noreferrer\">Website</a>, <a href=\"https://translate-mobile.ecency.com\" target=\"_blank\" rel=\"noopener noreferrer\">Mobile</a> or by contributing with Ideas, Developing, Designing, Social media outreach skills. We try our best to support our contributors!</p>",
+      "why-refund-points-header": "Why refund happens on boosting?",
+      "why-refund-points-body": "<p>Boosting content reviewed and evaluated by our curators in their first 24 hours. Refund might happen due to multiple reasons, after 24 hours if no curator reviewed/curated content, if content is template or low effort based, if author has history of plagiarism, abuse, phishing or spamming, if content is too old to curate as new content gets more priority during review process.</p>",
+      "can-change-username-header": "Can I change my username?",
+      "can-change-username-body": "<p>Account names on Ecency and Hive blockchain can not be changed. If you would like a new account name, you can create new account.</p>",
+      "can-delete-account-header": "Can I delete or deactivate my account?",
+      "can-delete-account-body": "<p>Accounts on Ecency can not be deactivated or deleted. The account along with all of its activity is permanently stored in the Hive blockchain.</p>",
+      "different-reward-choices-header": "What are the differences in Reward types?",
+      "different-reward-choices-body": "<p>In publishing settings section, you can see 3 different Reward types/choices.<ul><li>50%/50% - This rewards in half Hive Power, and half liquid HIVE / Hive Dollars. The ratio of liquid HIVE to Hive Dollars rewarded is based on network conditions at the time of payout. This is the default payout option.</li><li>Power Up 100% - This option rewards the post in 100% Hive Power.</li><li>Decline Payout - Use this option to receive no post rewards. Votes will affect the post's position on the trending ranking but no rewards are paid from Hive's reward pool. Replies made to the post are still eligible for rewards.</li></ul></p>",
+      "boosting-vote-buying-header": "Is boosting considered a vote buying?",
+      "boosting-vote-buying-body": "<p>No! Because, there is no guarantee of receiving vote, there is no guarantee of exact amount of vote, boosting maximum amount is limited, each content reviewed by our curators, there is no profit in it. All curation rewards are sent back to delegators 100%. Only measurable success we seek is to see engagement and growth on entire ecosystem. Boosting is simply creating additional use case for Ecency Points to improve engagement on platform, so it is essentially same as any other curation guilds on Hive. Goal of those guilds ultimately to improve engagement on platform and grow activity, the way each measures that success is the different.</p>",
+      "how-exchange-work-header": "How token exchange works?",
+      "how-exchange-work-body": "<p>Exchanging and trading tokens on Ecency is very simple. We utilize internal peer to peer, decentralized exchange built into Hive blockchain. Offer easy to use interface so you can exchange one token to another, completely decentralized manner. Create buy or sell order and wait for other people to fill your order. If you want to quickly swap tokens then you can fill someone else's open order for quick trade.</p>"
+    }
+  },
+  "contributors": {
+    "title": "Contributors",
+    "description": "These great people contributed in one way or another to Ecency, we would like to thank them all. If you want to join our team by contributing with Translation, Ideas, Development, Designing, Social awareness, feel free to join. To learn more read our <a href=\"https://starterkit.tech/faqs#how-to-contribute\">FAQ</a>."
+  },
+  "context-menu": {
+    "cut": "Cut",
+    "copy": "Copy",
+    "paste": "Paste",
+    "open-image-browser": "Open image in browser",
+    "copy-image-url": "Copy image url"
+  },
+  "updater": {
+    "new-version-available": "New version is available",
+    "download": "Download",
+    "update": "Update",
+    "dismiss": "Dismiss",
+    "downloading": "Downloading new version...",
+    "download-completed": "Download is completed",
+    "restart": "Restart"
+  },
+  "chain-error": {
+    "min-root-comment": "You may only post once every five minutes.",
+    "identical-vote": "Your current vote on this content is identical to this vote.",
+    "insufficient-resource": "Insufficient Resource Credits. Please wait to transact, or power up HIVE.",
+    "delete-comment-with-vote": "Cannot delete a content with positive pending rewards.",
+    "comment-cashout": "Content after their payout cannot be deleted.",
+    "comment-children": "Cannot delete a content with replies.",
+    "paid-out-post-forbidden": "Voting for paid out content is not available."
+  },
+  "landing-page": {
+    "welcome-text": "Welcome to Ecency!",
+    "what-is-ecency": "Decentralized, rewarding, true ownership social network",
+    "powered-by-hive": "powered by Hive",
+    "get-started": "Get started",
+    "earn-money": "Earn money",
+    "earn-money-block-chain-based": "Blockchain-based social network, ",
+    "join-us": "join-us",
+    "various-digital-tokens": " and earn various digital tokens, reward others and build a rewarding community.",
+    "read-more": "Read more",
+    "true-ownership": "True ownership",
+    "true-ownership-desc": "Ecency is the next generation social network for Web 3.0. Blockchain technology gives you a real free speech, without any censorship or banning. Only you control your own account, content and communities.",
+    "decentralization": "Decentralization",
+    "hive-blockchain": "Hive blockchain",
+    "decentralization-desc": " has many social, gaming and financial apps that you can access with a single account you own. Access your social network account and content from any other 3rd party apps in decentralized way.",
+    "open-source": "Open source",
+    "open-source-desc": "Join and be part of the building team on Web 3.0. Everything that we build is blockchain-based and open source. We welcome tech talents, developers, creators and entrepreneurs.",
+    "feel-free-join": " Join and lets build together!",
+    "posts": "Posts",
+    "unique-visitors": "Unique visitors",
+    "points-distrubuted": "Points distributed",
+    "new-users": "New users",
+    "download-our-application": "Download our application",
+    "download-our-application-desc-1": "Looking for a unique experience?",
+    "download-our-application-desc-2": "The social network with real free speech experience on your mobile phone or desktop. Blockchain's powerful benefits now always under your fingertips.",
+    "download-for-windows": "Download for Computer",
+    "download-for-ios": "Download for IOS",
+    "download-for-android": "Download for Android",
+    "our-history": "Our History",
+    "our-history-p-one": "<b>Ecency</b> (previously Esteem) started out in 2016, founder <span> <a href=\"/@good-karma\" class=\"push-link\"> @good-karma </a></span> started implementing a mobile application that would revolutionize the way you interact and create, build, engage online. With time grew to something much bigger.",
+    "our-history-p-two": "Since then we have been continuing to build for Web 3.0 and improve our blockchain-based social network, making sure apps are as accessible as possible, secure and in many languages the world speaks.",
+    "our-vision": "Our Vision",
+    "our-vision-p-one": "We want to bring a secure and rewarding blockchain experience to all people. Social media without any limits and censorship, where only you control your own account and your communities. Secured by blockchain, powered by people.",
+    "our-vision-p-two": "<b>Our main principles: </b>Bring rewarding communities, true ownership, empowered creators, free speech into the hands of millions.",
+    "our-team": "Our Team",
+    "founder": "Founder",
+    "devops-guru": "Devops master",
+    "design-guru": "Design guru",
+    "community-contributors": "Community Contributors",
+    "blockchain-witnesses": "Blockchain Witnesses",
+    "about": "About Us",
+    "privacy-policy": "Privacy Policy",
+    "terms-of-service": "Terms of Service",
+    "faq": "FAQ",
+    "discover": "Discover",
+    "sign-in": "Sign in",
+    "communities": "Communities",
+    "help": "Help",
+    "subscribe-us": "Subscribe Us",
+    "enter-your-email-adress": "Enter your email adress",
+    "send": "Send",
+    "subscribe-paragraph": "Be first to know what's happening in decentralized web.",
+    "copy-rights": "©2021 Ecency. All right reserved.",
+    "success-message-subscribe": "A verification link has been sent to your email account!",
+    "validation-email": "A valid email is required",
+    "error-occured": "A server error has been occured."
+  },
+  "layouts": {
+    "grid": "Grid",
+    "classic": "Classic"
+  }
+}

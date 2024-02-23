@@ -32,6 +32,7 @@ import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useAppStore } from "@/lib/store";
+import { FaRegEdit } from "react-icons/fa";
 
 export default function StudioVideos({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -60,7 +61,7 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (authenticated == false && authenticated != null) {
-      router.push("/auth/login");
+      // router.push("/auth/login");
     }
   }, [authenticated, router]);
 
@@ -68,9 +69,9 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
     authenticated ? "gray.100" : "gray.100",
     authenticated ? "gray.900" : "gray.900"
   );
-  if (authenticated === null) {
-    return <Box>Loading...</Box>;
-  }
+  // if (authenticated === null) {
+  //   return <Box>Loading...</Box>;
+  // }
 
   if (authenticated === false) {
     return <Box>Unauthorized access, please login first</Box>;
@@ -168,6 +169,7 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
                               <Th>Status</Th>
                               <Th>Date</Th>
                               <Th>Views</Th>
+                              <Th>Edit</Th>
                             </Tr>
                           </Thead>
                           <Tbody>
@@ -185,6 +187,7 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
                               </Td>
                               <Td>{date}</Td>
                               <Td>100</Td>
+                              <Td><Button colorScheme='blue'><FaRegEdit /></Button></Td>
                             </Tr>
                             <Tr>
                               <Td>
@@ -200,6 +203,9 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
                               </Td>
                               <Td>{date}</Td>
                               <Td>200</Td>
+                              <Td><Button colorScheme='blue'><FaRegEdit /></Button></Td>
+
+
                             </Tr>
                             <Tr>
                               <Td>
@@ -215,6 +221,9 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
                               </Td>
                               <Td>{date}</Td>
                               <Td>1M</Td>
+                              <Td><Button colorScheme='blue'><FaRegEdit /></Button></Td>
+
+
                             </Tr>
                           </Tbody>
                         </Table>
