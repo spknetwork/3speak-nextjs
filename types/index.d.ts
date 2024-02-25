@@ -35,6 +35,7 @@ export interface VideoInterface {
   thumbnail: any;
   author?: any;
   index?: number;
+  price?: number
 }
 
 export interface UsernameInterface {

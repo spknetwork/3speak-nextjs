@@ -48,7 +48,10 @@ const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
 
         </Flex>
       </form>
-      <Flex>
+      <Flex justifyContent={"center"} backgroundColor={"grey.200"} opacity={0.3} position={"relative"} py={4}>
+        <Text position={"absolute"} left={72} fontSize={"2xl"} top={28}>
+          Coming Soon
+        </Text>
         <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'black'} mt="11px" mr='10px'>
           <Image width={'100'} height='100' src="/hiveauth.ac85800f.svg" alt="3speak logo" />
         </Flex>
@@ -68,7 +71,7 @@ const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
           <Button height={'92%'} disabled={true}><FaLongArrowAltRight /></Button>
         </Box>
       </Flex>
-      <Flex>
+      <Flex backgroundColor={"grey.200"} opacity={0.3} position={"relative"}>
         <Flex width={'30rem'} borderRadius={'10px'} padding='10px' justifyContent={'center'} height={'50px'} backgroundColor={'#d1d5da'} mt="11px" mr='10px'>
           <Image width={'100'} height='100' src="/hivesigner.6958efa0.svg" alt="3speak logo" />
         </Flex>
@@ -80,7 +83,7 @@ const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
               className="Input2"
               id="text"
               placeholder="Enter username"
-              type="text"
+              type="text" 
             />
           </fieldset>
         </Box>
@@ -88,8 +91,6 @@ const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
           <Button height={'92%'} cursor={'not-allowed'} disabled={true}><FaLongArrowAltRight /></Button>
         </Box>
       </Flex>
-
-
       {/* </form> */}
     </Box>
   );

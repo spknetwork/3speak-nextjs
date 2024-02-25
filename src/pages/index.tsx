@@ -1,6 +1,16 @@
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
-import { Box, Flex, Grid, GridItem, Image, Switch, Text, useColorMode, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Image,
+  Switch,
+  Text,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { VideoInterface } from "types";
 import { MdPlayArrow } from "react-icons/md";
@@ -9,27 +19,33 @@ import { css } from "@emotion/react";
 import { Sidebar } from "@/components";
 import MainLayout from "@/components/Layouts/main_layout";
 import { videoData } from "./constData";
+import { BiDollar } from "react-icons/bi";
 const NewIndex = () => {
-  const bgColor = useColorModeValue('gray.100', 'gray.800');
-  const textColor = useColorModeValue('black', 'white');
+  const bgColor = useColorModeValue("gray.100", "gray.800");
+  const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
   const [videos, setVideos] = useState<VideoInterface[]>(videoData);
   return (
-
     <MainLayout>
-
-      <Box bg={bgColor} >
-
-        <Flex marginRight={'30px'} justifyContent={'space-between'} alignItems='center'>
+      <Box bg={"white"}>
+        <Flex
+          marginRight={"30px"}
+          justifyContent={"space-between"}
+          alignItems="center"
+        >
           <Box padding="20px">
             <Text as="h1" fontWeight={"300 !important"}>
               &nbsp;
             </Text>
           </Box>
           <Text>
-            <Switch isChecked={colorMode === 'dark'} onChange={toggleColorMode} /> {colorMode === 'dark' && (<MoonIcon />)} {colorMode !== 'dark' && (<SunIcon />)}
+            <Switch
+              isChecked={colorMode === "dark"}
+              onChange={toggleColorMode}
+            />{" "}
+            {colorMode === "dark" && <MoonIcon />}{" "}
+            {colorMode !== "dark" && <SunIcon />}
           </Text>
-
         </Flex>
         <Grid
           padding={"20px"}
@@ -38,16 +54,17 @@ const NewIndex = () => {
             md: "repeat(2, 1fr)",
             lg: "repeat(2, 1fr)",
             xl: "repeat(5, 1fr)",
-          }} gap={10}
+          }}
+          gap={10}
         >
           {/* {videos.length} */}
           {videos.map((video: VideoInterface, index: number) => (
             <GridItem w="100%" h="100%" key={index}>
-              <Box cursor={'pointer'} position='relative'>
+              <Box cursor={"pointer"} position="relative">
                 <Box
-                  display={'flex'}
-                  justifyContent='center'
-                  alignItems={'center'}
+                  display={"flex"}
+                  justifyContent="center"
+                  alignItems={"center"}
                   position={"absolute"}
                   bottom="5px"
                   color={"#000"}
@@ -59,8 +76,57 @@ const NewIndex = () => {
                   paddingLeft={"4px"}
                   paddingRight={"8px"}
                 >
-                  <MdPlayArrow size='15px' color="grey" />
-                  <Text as='span' marginLeft={'2px'} fontSize='11px' fontWeight={'bold'}>{video.number_views}</Text>
+
+                </Box>
+                <Box
+                  display={"flex"}
+                  justifyContent="center"
+                  alignItems={"center"}
+                  position={"absolute"}
+                  bottom="5px"
+                  color={"#000"}
+                  left="5px"
+                  fontSize="11px"
+                  fontWeight={"500"}
+                  background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
+                  borderRadius="2px"
+                  paddingLeft={"4px"}
+                  paddingRight={"4px"}
+                >
+                  <MdPlayArrow size="15px" color="grey" />
+                  <Text
+                    as="span"
+                    fontSize="11px"
+                    fontWeight={"bold"}
+                  >
+                    {video.number_views}
+                  </Text>
+                </Box>
+                {/* Integrating the dollar sign  */}
+                <Box
+                  display={"flex"}
+                  justifyContent="center"
+                  alignItems={"center"}
+                  position={"absolute"}
+                  bottom="5px"
+                  left="52px"
+                  color={"#000"}
+                  fontSize="11px"
+                  fontWeight={"500"}
+                  background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
+                  borderRadius="2px"
+                  paddingLeft={"4px"}
+                  paddingRight={"4px"}
+                >
+                  <BiDollar size="12px" color="black" />
+                  <Text
+                    as="span"
+                    marginLeft={"2px"}
+                    fontSize="11px"
+                    fontWeight={"bold"}
+                  >
+                    {video.price}
+                  </Text>
                 </Box>
                 <Box
                   position={"absolute"}
@@ -75,27 +141,25 @@ const NewIndex = () => {
                 >
                   01:19
                 </Box>
-                <Box height="13em !important"
-                  width="100% !important">
+                <Box height="13em !important" width="100% !important">
                   <Image
                     height="13em !important"
                     width="100% !important"
-                    borderRadius={'10px'}
+                    borderRadius={"10px"}
                     objectFit="cover"
                     alt="test"
                     src={`${video.thumbnail}`}
                   />
                 </Box>
-
               </Box>
               <VideosTitle title={`${video.title}`} />
               <Name username={`${video.username}`} />
               <Text as="p" margin={"1px"}>
                 a day ago
               </Text>
-              <Text fontWeight={"bold"} as="p">
+              {/* <Text fontWeight={"bold"} as="p">
                 $ 10.10
-              </Text>
+              </Text> */}
             </GridItem>
           ))}
         </Grid>
