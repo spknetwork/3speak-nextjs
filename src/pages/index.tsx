@@ -18,7 +18,7 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { css } from "@emotion/react";
 import { Sidebar } from "@/components";
 import MainLayout from "@/components/Layouts/main_layout";
-import { videoData } from "./constData";
+import { videoData } from "../pages/data/constData"
 import { BiDollar } from "react-icons/bi";
 const NewIndex = () => {
   const bgColor = useColorModeValue("gray.100", "gray.800");

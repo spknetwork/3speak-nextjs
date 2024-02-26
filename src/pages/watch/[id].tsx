@@ -25,6 +25,13 @@ import Title from "@/components/watch/Title";
 import VideoPlayer from "@/components/watch/VideoPlayer";
 import Community from "@/components/watch/Community";
 // https://3speak.tv/watch?v=neopch/bttopqjl
+
+//import the sidebar 
+import { Sidebar } from "@/components";
+/**
+ * 
+ * @returns watch page with sidebar
+ */
 export default function Watch() {
   return (
     <Box background={"#EFF4F5"}>
