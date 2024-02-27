@@ -57,7 +57,7 @@ const LoginPage = () => {
     const createPersonalSign= async (message= "Login to your account") => {
         try {
             // Ensure the user is logged in with Magic
-            await magic.auth.loginWithMagicLink({ email: "eroyjune@gmail.com" });
+            // await magic.auth.loginWithMagicLink({ email: "eroyjune@gmail.com" });
     
             // Get the signer from the provider
             const signer = provider.getSigner();
@@ -174,6 +174,7 @@ const LoginPage = () => {
                     <pre className="user-info">{JSON.stringify(user, null, 3)}</pre>
                     <button className="logout-button" onClick={checkauth}>
                         Check Auth now
+                        {/* {user?.oauth?.userInfo?.email} */}
                     </button>
                 </div>
             )}
