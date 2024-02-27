@@ -7,31 +7,51 @@ import { FIRST_UPLOAD_FEED } from "../graphql/queries";
 import { VideoInterface } from "types";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import MainLayout from "@/components/Layouts/main_layout";
+import { useAppStore } from "@/lib/store";
+import { useRouter } from "next/router";
 // import { useColorMode, Switch } from '@chakra-ui/react';
 const FirstTime = () => {
+  const router = useRouter();
+
   const { loading, error, data } = useQuery(FIRST_UPLOAD_FEED);
 
   const [videos, setVideos] = useState<VideoInterface[]>([]);
   const bgColor = useColorModeValue('gray.100', 'gray.800');
   const textColor = useColorModeValue('black', 'white');
   const { colorMode, toggleColorMode } = useColorMode();
+  const { setVideo, video: videoSelected } = useAppStore();
+
   useEffect(() => {
     if (!loading && !error && data) {
+      console.log("setVideos data",data);
       setVideos(
         data.feed.items
           .filter((e: any) => !!e.spkvideo)
           .map((e: any) => {
-            console.log(e);
+            // console.log("setVideos",videos);
             return {
               title: e.title,
               username: e.author.username,
               thumbnail: e.spkvideo.thumbnail_url,
+              spkvideo: e.spkvideo,
+              author: e.author,
+              permlink: e.permlink,
+              tags: e.tags,
             };
           })
       );
     }
   }, [loading, data, error]);
+  const setVideoDetails = (video:any) => {
+    console.log("video",video)
+    setVideo(video)
+    router.push("/watch?username="+video.author.username+"&v="+video.permlink)
+  }
 
+  useEffect(() => {
+    console.log("videoSelected",videoSelected)
+
+  },[videoSelected])
   return (
     <MainLayout>
 
@@ -62,7 +82,7 @@ const FirstTime = () => {
           {!loading &&
             !error &&
             videos.map((video: VideoInterface, index: number) => (
-              <GridItem w="100%" h="100%" key={index}>
+              <GridItem  onClick={() => setVideoDetails(video)} w="100%" h="100%" key={index}>
                 <Box height="13em !important"
                   width="100% !important">
                   {/* backgroundColor={"#222 !important"} */}
