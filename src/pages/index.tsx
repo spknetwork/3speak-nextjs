@@ -21,13 +21,14 @@ import MainLayout from "@/components/Layouts/main_layout";
 import { videoData } from "../pages/data/constData"
 import { BiDollar } from "react-icons/bi";
 const NewIndex = () => {
-  const bgColor = useColorModeValue("gray.100", "gray.800");
+  const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
   const [videos, setVideos] = useState<VideoInterface[]>(videoData);
   return (
     <MainLayout>
-      <Box bg={"white"}>
+      <Box bg={bgColor}>
+
         <Flex
           marginRight={"30px"}
           justifyContent={"space-between"}
