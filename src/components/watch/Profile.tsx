@@ -57,7 +57,7 @@ const Profile = ({ profile, getVideo }: any) => {
             alignSelf={"start"}
             src={profile?.images?.avatar}
           />
-          <Flex flexDirection={"column"} className="ms-4">
+          <Flex flexDirection={"column"} className="ms-2">
             <Link fontWeight={"bolder"}>{getVideo.author.username}</Link>
             {/* <Flex justifyContent={"start"}>
               <Box bg="white" p={4} paddingLeft="0px" color="black">
