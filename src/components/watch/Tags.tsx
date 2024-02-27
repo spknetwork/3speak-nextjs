@@ -11,11 +11,11 @@ const Tags = ({getVideo}:any) => {
       marginBottom={"0.5rem"}
     >
       {
-        getVideo.tags.map((video:any) => {
+        getVideo.tags.map((tag:any) => {
           return (
             <Box>
-        <Link href="#" color={"blue"} display={"inline-block"}>
-          #{video}&nbsp;
+        <Link href={"/tags/"+`${tag}`} color={"blue"} display={"inline-block"}>
+          #{tag}&nbsp;
         </Link>
       </Box>
           )
