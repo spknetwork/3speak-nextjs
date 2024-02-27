@@ -1,8 +1,11 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Button, Flex, Link, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-const Profile = ({ getVideo }: any) => {
+const Profile = ({ profile, getVideo }: any) => {
+  const router = useRouter();
+
   const [videoUrl, setvideoUrl] = useState<any>(null)
   const [videoUrlSelected, setvideoUrlSelected] = useState<any>(null)
   useEffect(() => {
@@ -39,14 +42,20 @@ const Profile = ({ getVideo }: any) => {
   if (!videoUrl) {
     return <Box>getting video details</Box>;
   }
+
+  const gotoProfile = () => {
+    router.push(`/user/${profile?.username}`)
+  }
   return (
     <Flex justifyContent={"space-between"}>
-      <Box bg="white" p={4} color="black">
+      <Box cursor={'pointer'} onClick={() => gotoProfile()} bg="white" p={4} color="black">
+      {/* src="https://bit.ly/dan-abramov" */}
+
         <Flex alignItems={"center"}>
           <Avatar
             name="Dan Abrahmov"
             alignSelf={"start"}
-            src="https://bit.ly/dan-abramov"
+            src={profile?.images?.avatar}
           />
           <Flex flexDirection={"column"} className="ms-4">
             <Link fontWeight={"bolder"}>{getVideo.author.username}</Link>
