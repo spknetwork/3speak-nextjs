@@ -18,9 +18,10 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { css } from "@emotion/react";
 import { Sidebar } from "@/components";
 import MainLayout from "@/components/Layouts/main_layout";
-import { videoData } from "../components/data/constData"
+import { videoData } from "../components/data/constData";
 import { BiDollar } from "react-icons/bi";
 import MiniSidebar from "@/components/MiniSidebar/MiniSidebar";
+import { BsDot } from "react-icons/bs";
 const NewIndex = () => {
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
@@ -77,9 +78,7 @@ const NewIndex = () => {
                   borderRadius="2px"
                   paddingLeft={"4px"}
                   paddingRight={"8px"}
-                >
-
-                </Box>
+                ></Box>
                 <Box
                   display={"flex"}
                   justifyContent="center"
@@ -96,11 +95,7 @@ const NewIndex = () => {
                   paddingRight={"4px"}
                 >
                   <MdPlayArrow size="15px" color="grey" />
-                  <Text
-                    as="span"
-                    fontSize="11px"
-                    fontWeight={"bold"}
-                  >
+                  <Text as="span" fontSize="11px" fontWeight={"bold"}>
                     {video.number_views}
                   </Text>
                 </Box>
@@ -155,11 +150,12 @@ const NewIndex = () => {
                 </Box>
               </Box>
               <VideosTitle title={`${video.title}`} />
-              <Flex justify={"space-between"}>
-              <Name username={`${video.username}`} />
-              <Text as="p" margin={"1px"}>
-                a day ago
-              </Text>
+              <Flex>
+                <Name username={`${video.username}`} />
+                <Text mt={2}>
+                  <BsDot />
+                </Text>
+                <Text fontSize={"sm"} mt={1}>a day ago</Text>
               </Flex>
               {/* <Text fontWeight={"bold"} as="p">
                 $ 10.10
