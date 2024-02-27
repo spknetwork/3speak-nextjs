@@ -1,3 +1,5 @@
+import { GET_TOTAL_COUNT_OF_FOLLOWING } from "@/graphql/queries";
+import { useQuery } from "@apollo/client";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Button, Flex, Link, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -5,8 +7,22 @@ import React, { useEffect, useState } from "react";
 
 const Profile = ({ profile, getVideo }: any) => {
   const router = useRouter();
+  const { loading, error, data } = useQuery(GET_TOTAL_COUNT_OF_FOLLOWING, {
+    variables: { id: router.query.username },
+});
 
+useEffect(() => {
+  if (!loading && !error && data) {
+    console.log("GET_TOTAL_COUNT_OF_FOLLOWING", data);
+    setfollowings_count(data.follows.followings_count)
+    setfollowers_count(data.follows.followers_count)
+    
+  }
+}, [loading, data, error]);
   const [videoUrl, setvideoUrl] = useState<any>(null)
+  const [followings_count, setfollowings_count] = useState<any>(null)
+  const [followers_count, setfollowers_count] = useState<any>(null)
+  
   const [videoUrlSelected, setvideoUrlSelected] = useState<any>(null)
   useEffect(() => {
     if (videoUrl) {
@@ -58,7 +74,11 @@ const Profile = ({ profile, getVideo }: any) => {
             src={profile?.images?.avatar}
           />
           <Flex flexDirection={"column"} className="ms-2">
-            <Link fontWeight={"bolder"}>{getVideo.author.username}</Link>
+            <Link fontSize={'15px'}  fontWeight={"bolder"}>{getVideo.author.username}</Link>
+            <Box display={'flex'} >
+              <Text color={'grey'} fontSize={'12px'} marginRight='10px'>followers {followers_count}</Text>
+              <Text color={'grey'} fontSize={'12px'}>following {followings_count}</Text>
+            </Box>
             {/* <Flex justifyContent={"start"}>
               <Box bg="white" p={4} paddingLeft="0px" color="black">
                 <Text marginBottom={"10px"} fontSize={"11px"}>
@@ -94,7 +114,7 @@ const Profile = ({ profile, getVideo }: any) => {
           fontWeight={"400"}
           color={"#212121"}
         >
-          FOLLOW 47
+          FOLLOW 
         </Button>
         <Button
           marginRight={"10px"}

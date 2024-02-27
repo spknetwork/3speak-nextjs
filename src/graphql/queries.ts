@@ -99,6 +99,21 @@ export const GET_SOCIAL_FEED = gql`
   }
 `;
 
+export const GET_TOTAL_COUNT_OF_FOLLOWING = gql`
+  query GETTOTALCOUNTOFFOLLOWING($id: String) {
+    follows(id: $id) {
+      followings {
+        followed_at
+        follower
+        following
+      }
+      followings_count
+      followers_count
+    }
+  }
+
+`
+
 export const GET_TRENDING_TAGS = gql`
   query TrendingTagFeed($tag: String) {
     trendingFeed(
