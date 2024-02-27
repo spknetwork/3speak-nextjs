@@ -8,6 +8,9 @@ const About = ({ getVideo }: any) => {
   };
   const [videoUrl, setvideoUrl] = useState<any>(null)
   const [videoUrlSelected, setvideoUrlSelected] = useState<any>(null)
+  let remaningTags:any = [];
+
+
   useEffect(() => {
     if (videoUrl) {
       // console.log("setvideoUrl4 final step",videoUrl)
@@ -30,6 +33,8 @@ const About = ({ getVideo }: any) => {
       }
       // console.log("ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8")
       setvideoUrl(getVideo.spkvideo)
+      remaningTags = [...getVideo.tags.slice(5)]
+      console.log("remaningTags",remaningTags)
     }
   }, [getVideo])
 
@@ -199,31 +204,18 @@ const About = ({ getVideo }: any) => {
           Tags:
         </Text>
         <Box display={"flex"} flexWrap="wrap" flexDirection={"row"}>
-          <Text>
-            <Link href="#" color={"blue"} display={"inline-block"}>
-              #onlinehotelbookingmanagementsystem&nbsp;
-            </Link>
-          </Text>
-          <Text>
-            <Link href="#" color={"blue"} display={"inline-block"}>
-              #system&nbsp;
-            </Link>
-          </Text>
-          <Text>
-            <Link href="#" color={"blue"} display={"inline-block"}>
-              #3speakspeaking&nbsp;
-            </Link>
-          </Text>
-          <Text>
-            <Link href="#" color={"blue"} display={"inline-block"}>
-              #tagateam&nbsp;
-            </Link>
-          </Text>
-          <Text>
-            <Link href="#" color={"blue"} display={"inline-block"}>
-              #thisisatestshow&nbsp;
-            </Link>
-          </Text>
+          {
+            getVideo.tags.slice(5).map((tag: any) => {
+              return (
+                <Box>
+                  <Link href={"/tags/" + `${tag}`} color={"blue"} display={"inline-block"}>
+                    #{tag}&nbsp;
+                  </Link>
+                </Box>
+              )
+            })
+          }
+
         </Box>
       </Box>
 
