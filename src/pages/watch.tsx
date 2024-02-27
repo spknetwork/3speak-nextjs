@@ -28,8 +28,36 @@ import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { useAppStore } from "@/lib/store";
 import MainLayout from "@/components/Layouts/main_layout";
+import { useQuery } from "@apollo/client";
+import { TRENDING_FEED } from "@/graphql/queries";
+import { VideoInterface } from "types";
 
 export default function Watch() {
+  const { loading, error, data } = useQuery(TRENDING_FEED);
+  const [videos, setVideos] = useState<VideoInterface[]>([]);
+
+  useEffect(() => {
+    if (!loading && !error && data) {
+      console.log("setVideos data TRENDING_FEED", data);
+
+      setVideos(
+        data.trendingFeed.items
+          .filter((e: any) => !!e.spkvideo)
+          .map((e: any) => {
+            console.log(e);
+            return {
+              title: e.title,
+              username: e.author.username,
+              thumbnail: e.spkvideo.thumbnail_url,
+              spkvideo: e.spkvideo,
+              author: e.author,
+              permlink: e.permlink,
+              tags: e.tags,
+            };
+          })
+      );
+    }
+  }, [loading, data, error]);
   const [count, setCount] = useState<number>(0);
   const [getVideo, setVideoSelected] = useState<any>(null)
   console.log(count)
@@ -135,7 +163,7 @@ export default function Watch() {
            <Video videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVcJpKJDN8sx7ZjXNkfrVDtAkjdi59a6bGJtSa9MJdsqxYnqALaV6iRcMCMd5TL4RfZMhnbb6e?format=jpeg&mode=cover&width=340&height=191" />
         </Box> */}
           <Box
-            w={{ base: "100%", md: "33%", lg: "33%" }}
+            w={{ base: "100%", md: "25%", lg: "33%" }}
             bg="white"
             color={"black"}
             marginTop="15px"
@@ -144,6 +172,8 @@ export default function Watch() {
             marginLeft={"10px"}
             paddingTop="10px"
             paddingX={'10px'}
+            paddingRight="25px"
+            maxWidth={"25%"}
           >
             <Box margin={'15px'}>
               <Text
@@ -163,13 +193,14 @@ export default function Watch() {
                 h="10"
                 bg="white.600"
               >
-                <Video number_views='23' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVcJpKJDN8sx7ZjXNkfrVDtAkjdi59a6bGJtSa9MJdsqxYnqALaV6iRcMCMd5TL4RfZMhnbb6e?format=jpeg&mode=cover&width=340&height=191" />
-                <Video number_views='11' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVim5xXXBHudVXW7uT6ErgMsQHTXm2ELwa6JxMMvR1j9aYic2jgGRz4wcXHkeUnAJM5CWiwria?format=jpeg&mode=cover&width=340&height=191" />
-                <Video number_views='66' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVhcN63NCz569HVsSov72VRbsEsSxSrf7JQJBhpsDNxyNfNKrnmLNvLJCfNaX26VjPcZpap3f4?format=jpeg&mode=cover&width=340&height=191" />
-                <Video number_views='200' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVeUsu1qEtX9RpZ8NAWnhCRjimECuPV5shWf4r96HKR9u7G1CQv26vfFSDsFs8k41YwWaDDg6J?format=jpeg&mode=cover&width=340&height=191" />
-                <Video number_views='4' videoSrc="https://images.hive.blog/p/eAyTuXc4toTXvjczQpXyRFR18E7ALGyK7bKRqmpLVRT2K6Dw3vqp1HBU47x9jcw8bRw8xadHDYJ?format=jpeg&mode=cover&width=340&height=191" />
-                <Video number_views='1' videoSrc="https://images.hive.blog/p/eAyTuXc4toTXvjczQpXyRFR18E7ALGyK7gdoY79fNxSmJmDgPua44kR8BdATGS4C3NTPtF7Swv6?format=jpeg&mode=cover&width=340&height=191" />
-                <Video number_views='6' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbGs8rF69qxxfW7SdHLkQcmo3YEiD4agxV19oco2hcKTPS49UMjd93Xc8X8yvLreZtFoEEgr2?format=jpeg&mode=cover&width=340&height=191" />
+                {!loading &&
+                  !error &&
+                  videos.map((video: VideoInterface, index: number) => (
+
+
+                    <Video number_views='23' video={video} videoSrc={`${video.thumbnail}`} />
+
+                  ))}
               </GridItem>
             </Grid>
             <Box margin={'15px'} marginTop='35px'>

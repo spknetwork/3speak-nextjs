@@ -2,7 +2,7 @@ import { Box, Image, Link, Text } from "@chakra-ui/react";
 import React from "react";
 import { MdPlayArrow } from "react-icons/md";
 
-const Video = ({ videoSrc, number_views }: any) => {
+const Video = ({ video, videoSrc, number_views }: any) => {
   return (
     <Box w="100%" bg="white.500" color={"black"} marginBottom="3rem">
       {/* cursor={'pointer'} */}
@@ -71,7 +71,7 @@ const Video = ({ videoSrc, number_views }: any) => {
             color={'black'}
             textDecor={'none !important'}
           >
-            (Eng/Esp)🔴¡VIVIR EN EL PASADO TE HACE DAÑO! Despabila
+            {video.title}
           </Link>
         </Box>
         <Box
