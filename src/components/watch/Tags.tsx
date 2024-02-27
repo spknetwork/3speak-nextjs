@@ -1,7 +1,8 @@
 import { Box, Link, Text } from "@chakra-ui/react";
 import React from "react";
 
-const Tags = () => {
+const Tags = ({getVideo}:any) => {
+  console.log("getVideo TAGS", getVideo)
   return (
     <Box
       display={"flex"}
@@ -9,12 +10,19 @@ const Tags = () => {
       flexDirection={"row"}
       marginBottom={"0.5rem"}
     >
-      <Box>
+      {
+        getVideo.tags.map((video:any) => {
+          return (
+            <Box>
         <Link href="#" color={"blue"} display={"inline-block"}>
-          #onlinehotelbookingmanagementsystem&nbsp;
+          #{video}&nbsp;
         </Link>
       </Box>
-      <Box>
+          )
+        })
+      }
+      
+      {/* <Box>
         <Link href="#" color={"blue"} display={"inline-block"}>
           #system&nbsp;
         </Link>
@@ -23,7 +31,7 @@ const Tags = () => {
         <Link href="#" color={"blue"} display={"inline-block"}>
           #3speakspeaking
         </Link>
-      </Box>
+      </Box> */}
     </Box>
   );
 };
