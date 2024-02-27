@@ -29,14 +29,49 @@ import { useEffect, useState } from "react";
 import { useAppStore } from "@/lib/store";
 import MainLayout from "@/components/Layouts/main_layout";
 import { useQuery } from "@apollo/client";
-import { TRENDING_FEED } from "@/graphql/queries";
+import { GET_PROFILE, TRENDING_FEED } from "@/graphql/queries";
 import { VideoInterface } from "types";
 import { useRouter } from "next/router";
 
 export default function Watch() {
+  const router = useRouter();
+
   const { loading, error, data } = useQuery(TRENDING_FEED);
   const [videos, setVideos] = useState<VideoInterface[]>([]);
+  const [profile, setProfile] = useState<any>(null);
+  console.log("router",router.query.username)
 
+  const { loading:loadingforProfile, error:errorforProfile, data:dataorProfile } = useQuery(GET_PROFILE, {
+    variables: { id: router.query.username },
+});
+useEffect(() => {
+  console.log("profile get", profile)
+},[profile])
+useEffect(() => {
+  if (!loadingforProfile && !errorforProfile && dataorProfile) {
+    console.log("setVideos data PROFILE", dataorProfile);
+    if (dataorProfile) {
+      setProfile(dataorProfile.profile)
+    }
+    // setVideos(
+    //   data.trendingFeed.items
+    //     .filter((e: any) => !!e.spkvideo)
+    //     .map((e: any) => {
+    //       console.log(e);
+    //       return {
+    //         title: e.title,
+    //         username: e.author.username,
+    //         thumbnail: e.spkvideo.thumbnail_url,
+    //         spkvideo: e.spkvideo,
+    //         author: e.author,
+    //         permlink: e.permlink,
+    //         tags: e.tags,
+    //       };
+    //     })
+    // );
+  }
+}, [loadingforProfile, dataorProfile, errorforProfile]);
+  
   useEffect(() => {
     if (!loading && !error && data) {
       console.log("setVideos data TRENDING_FEED", data);
@@ -126,7 +161,7 @@ export default function Watch() {
               flex="1"
               bg="white"
             >
-              <Profile getVideo={getVideo} />
+              <Profile profile={profile} getVideo={getVideo} />
             </Box>
 
             <Box
