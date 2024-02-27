@@ -100,11 +100,37 @@ export const GET_SOCIAL_FEED = gql`
 `;
 
 export const GET_TRENDING_TAGS = gql`
-  query MyQuery {
-    trendingTags(limit: 10) {
-      tags {
-        score
-        tag
+  query TrendingTagFeed($tag: String) {
+    trendingFeed(
+  spkvideo: {only: true, firstUpload: true}
+
+  feedOptions: { byTag: {_eq: $tag} 
+    }
+
+  pagination: { limit: 50, skip: 0 }
+  )
+  {
+      items {
+        created_at
+        title
+        ... on HivePost {
+          permlink
+          lang
+          title
+          tags
+          spkvideo
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          author {
+            username
+          }
+  json_metadata {
+            raw
+          }
+        }
       }
     }
   }
