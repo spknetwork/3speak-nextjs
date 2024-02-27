@@ -25,15 +25,33 @@ import Title from "@/components/watch/Title";
 import VideoPlayer from "@/components/watch/VideoPlayer";
 import Community from "@/components/watch/Community";
 import { css } from "@emotion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppStore } from "@/lib/store";
+import MainLayout from "@/components/Layouts/main_layout";
 
 export default function Watch() {
   const [count, setCount] = useState<number>(0);
+  const [getVideo, setVideoSelected] = useState<any>(null)
   console.log(count)
+
+  const { video: videoSelected, setVideo } = useAppStore();
+  useEffect(() => {
+    setVideoSelected(videoSelected)
+
+  }, [videoSelected])
+
+
+  useEffect(() => {
+    if (getVideo) {
+      console.log("getVideo 2", getVideo)
+      // setVideo(null)
+    }
+  }, [getVideo])
   return (
-    <Box background={"#EFF4F5"}>
-      <Flex 
-         css={css`
+    <MainLayout>
+      <Box background={"#EFF4F5"}>
+        <Flex
+          css={css`
          @media (max-width: 768px) {
            flex-direction: column;
          }
@@ -42,65 +60,68 @@ export default function Watch() {
            flex-direction: row;
          }
        `}
-      
-      color="white" padding={"10px"}>
-        <Box flex="1">
-          <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg="white">
-            <Box
-              m={5}
-              bg="white"
-              p={4}
-              paddingLeft="0px"
-              paddingRight={"0px"}
-              color="black"
-            >
-              <VideoPlayer />
-              <Box>
-                <Flex flexDirection={"column"}>
-                  <Box>
-                    <Title />
-                    <Tags />
-                  </Box>
-                  <Flex justifyContent={"end"} marginTop="1rem">
-                    <Reactions />
+
+          color="white" padding={"10px"}>
+          <Box flex="1">
+            <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg="white">
+              <Box
+                m={5}
+                bg="white"
+                p={4}
+                paddingLeft="0px"
+                paddingRight={"0px"}
+                color="black"
+              >
+                {getVideo && (
+                  <VideoPlayer getVideo={getVideo} />
+                )}
+
+                <Box>
+                  <Flex flexDirection={"column"}>
+                    <Box>
+                      <Title getVideo={getVideo} />
+                      <Tags getVideo={videoSelected} />
+                    </Box>
+                    <Flex justifyContent={"end"} marginTop="1rem">
+                      <Reactions />
+                    </Flex>
                   </Flex>
-                </Flex>
+                </Box>
               </Box>
             </Box>
-          </Box>
-          <Box
-            marginBottom={"30px"}
-            borderRadius={4}
-            boxShadow="base"
-            mr={2}
-            flex="1"
-            bg="white"
-          >
-            <Profile />
-          </Box>
+            <Box
+              marginBottom={"30px"}
+              borderRadius={4}
+              boxShadow="base"
+              mr={2}
+              flex="1"
+              bg="white"
+            >
+              <Profile getVideo={getVideo} />
+            </Box>
 
-          <Box
-            marginBottom={"30px"}
-            borderRadius={4}
-            boxShadow="base"
-            mr={2}
-            flex="1"
-            bg="white"
-          >
-            <Community />
-          </Box>
+            <Box
+              marginBottom={"30px"}
+              borderRadius={4}
+              boxShadow="base"
+              mr={2}
+              flex="1"
+              bg="white"
+            >
+              <Community />
+            </Box>
 
-          <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg="white">
-            {/* published or about components */}
-            <About />
+            <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg="white">
+              {/* published or about components */}
+              <About getVideo={getVideo} />
+            </Box>
+            <Box>
+              {/* comment */}
+              <Comment />
+            </Box>
           </Box>
-          <Box>
-            {/* comment */}
-            <Comment />
-          </Box>
-        </Box>
-        {/* borderRadius={4} boxShadow="base" mr={2} flex="1" bg="white" */}
-        {/* <Box
+          {/* borderRadius={4} boxShadow="base" mr={2} flex="1" bg="white" */}
+          {/* <Box
           w={{ base:  "100%", md: "33%", lg: "33%" }}
           bg="white"
           color={"black"}
@@ -113,64 +134,66 @@ export default function Watch() {
         >
            <Video videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVcJpKJDN8sx7ZjXNkfrVDtAkjdi59a6bGJtSa9MJdsqxYnqALaV6iRcMCMd5TL4RfZMhnbb6e?format=jpeg&mode=cover&width=340&height=191" />
         </Box> */}
-        <Box
-          w={{ base:  "100%", md: "33%", lg: "33%" }}
-          bg="white"
-          color={"black"}
-          marginTop="15px"
-          borderRadius={4}
-          boxShadow="base"
-          marginLeft={"10px"}
-          paddingTop="10px"
-          paddingX={'10px'}
-        >
+          <Box
+            w={{ base: "100%", md: "33%", lg: "33%" }}
+            bg="white"
+            color={"black"}
+            marginTop="15px"
+            borderRadius={4}
+            boxShadow="base"
+            marginLeft={"10px"}
+            paddingTop="10px"
+            paddingX={'10px'}
+          >
             <Box margin={'15px'}>
-            <Text
-              as="h2"
-              fontWeight={'bolder'}
-              lineHeight='1.2'
-              fontSize={'1.5rem'}
-            >
-              Suggested video you may like
-            </Text>
+              <Text
+                as="h2"
+                fontWeight={'bolder'}
+                lineHeight='1.2'
+                fontSize={'1.5rem'}
+              >
+                Suggested video you may like
+              </Text>
+            </Box>
+            <Grid display={{ base: 'inline-table', md: 'inline-table', lg: 'inline-table' }} templateColumns="repeat(1, 1fr)" gap={2}>
+              <GridItem
+                marginTop={"1px !important"}
+                m={5}
+                w="100%"
+                h="10"
+                bg="white.600"
+              >
+                <Video number_views='23' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVcJpKJDN8sx7ZjXNkfrVDtAkjdi59a6bGJtSa9MJdsqxYnqALaV6iRcMCMd5TL4RfZMhnbb6e?format=jpeg&mode=cover&width=340&height=191" />
+                <Video number_views='11' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVim5xXXBHudVXW7uT6ErgMsQHTXm2ELwa6JxMMvR1j9aYic2jgGRz4wcXHkeUnAJM5CWiwria?format=jpeg&mode=cover&width=340&height=191" />
+                <Video number_views='66' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVhcN63NCz569HVsSov72VRbsEsSxSrf7JQJBhpsDNxyNfNKrnmLNvLJCfNaX26VjPcZpap3f4?format=jpeg&mode=cover&width=340&height=191" />
+                <Video number_views='200' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVeUsu1qEtX9RpZ8NAWnhCRjimECuPV5shWf4r96HKR9u7G1CQv26vfFSDsFs8k41YwWaDDg6J?format=jpeg&mode=cover&width=340&height=191" />
+                <Video number_views='4' videoSrc="https://images.hive.blog/p/eAyTuXc4toTXvjczQpXyRFR18E7ALGyK7bKRqmpLVRT2K6Dw3vqp1HBU47x9jcw8bRw8xadHDYJ?format=jpeg&mode=cover&width=340&height=191" />
+                <Video number_views='1' videoSrc="https://images.hive.blog/p/eAyTuXc4toTXvjczQpXyRFR18E7ALGyK7gdoY79fNxSmJmDgPua44kR8BdATGS4C3NTPtF7Swv6?format=jpeg&mode=cover&width=340&height=191" />
+                <Video number_views='6' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbGs8rF69qxxfW7SdHLkQcmo3YEiD4agxV19oco2hcKTPS49UMjd93Xc8X8yvLreZtFoEEgr2?format=jpeg&mode=cover&width=340&height=191" />
+              </GridItem>
+            </Grid>
+            <Box margin={'15px'} marginTop='35px'>
+              <Text
+                as="h2"
+                fontWeight={'bolder'}
+                lineHeight='1.2'
+                fontSize={'1.5rem'}
+              >
+                More from (username)
+              </Text>
+              <Text
+                padding={'15px'}
+                background='black'
+                borderRadius={'10px'}
+                color='white'
+              >
+                (username) has no more videos yet.
+              </Text>
+            </Box>
           </Box>
-          <Grid display={{base:'inline-table', md: 'inline-table', lg: 'inline-table'}} templateColumns="repeat(1, 1fr)" gap={2}>
-            <GridItem
-              marginTop={"1px !important"}
-              m={5}
-              w="100%"
-              h="10"
-              bg="white.600"
-            >
-              <Video number_views='23' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVcJpKJDN8sx7ZjXNkfrVDtAkjdi59a6bGJtSa9MJdsqxYnqALaV6iRcMCMd5TL4RfZMhnbb6e?format=jpeg&mode=cover&width=340&height=191" />
-              <Video number_views='11' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVim5xXXBHudVXW7uT6ErgMsQHTXm2ELwa6JxMMvR1j9aYic2jgGRz4wcXHkeUnAJM5CWiwria?format=jpeg&mode=cover&width=340&height=191" />
-              <Video number_views='66' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVhcN63NCz569HVsSov72VRbsEsSxSrf7JQJBhpsDNxyNfNKrnmLNvLJCfNaX26VjPcZpap3f4?format=jpeg&mode=cover&width=340&height=191" />
-              <Video number_views='200' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVeUsu1qEtX9RpZ8NAWnhCRjimECuPV5shWf4r96HKR9u7G1CQv26vfFSDsFs8k41YwWaDDg6J?format=jpeg&mode=cover&width=340&height=191" />
-              <Video number_views='4' videoSrc="https://images.hive.blog/p/eAyTuXc4toTXvjczQpXyRFR18E7ALGyK7bKRqmpLVRT2K6Dw3vqp1HBU47x9jcw8bRw8xadHDYJ?format=jpeg&mode=cover&width=340&height=191" />
-              <Video number_views='1' videoSrc="https://images.hive.blog/p/eAyTuXc4toTXvjczQpXyRFR18E7ALGyK7gdoY79fNxSmJmDgPua44kR8BdATGS4C3NTPtF7Swv6?format=jpeg&mode=cover&width=340&height=191" />
-              <Video number_views='6' videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbGs8rF69qxxfW7SdHLkQcmo3YEiD4agxV19oco2hcKTPS49UMjd93Xc8X8yvLreZtFoEEgr2?format=jpeg&mode=cover&width=340&height=191" />
-            </GridItem>
-          </Grid>
-          <Box margin={'15px'} marginTop='35px'>
-            <Text
-              as="h2"
-              fontWeight={'bolder'}
-              lineHeight='1.2'
-              fontSize={'1.5rem'}
-            >
-              More from (username)
-            </Text>
-            <Text
-              padding={'15px'}
-              background='black'
-              borderRadius={'10px'}
-              color='white'
-            >
-              (username) has no more videos yet.
-            </Text>
-          </Box>
-        </Box>
-      </Flex>
-    </Box>
+        </Flex>
+      </Box>
+    </MainLayout>
+
   );
 }
