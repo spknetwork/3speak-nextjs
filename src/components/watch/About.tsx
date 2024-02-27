@@ -8,7 +8,7 @@ const About = ({ getVideo }: any) => {
   };
   const [videoUrl, setvideoUrl] = useState<any>(null)
   const [videoUrlSelected, setvideoUrlSelected] = useState<any>(null)
-  let remaningTags:any = [];
+  // let remaningTags:any = [];
 
 
   useEffect(() => {
@@ -33,8 +33,7 @@ const About = ({ getVideo }: any) => {
       }
       // console.log("ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8")
       setvideoUrl(getVideo.spkvideo)
-      remaningTags = [...getVideo.tags.slice(5)]
-      console.log("remaningTags",remaningTags)
+      
     }
   }, [getVideo])
 
@@ -205,9 +204,9 @@ const About = ({ getVideo }: any) => {
         </Text>
         <Box display={"flex"} flexWrap="wrap" flexDirection={"row"}>
           {
-            getVideo.tags.slice(5).map((tag: any) => {
+            getVideo.tags.slice(5).map((tag: any, index:number) => {
               return (
-                <Box>
+                <Box key={index}>
                   <Link href={"/tags/" + `${tag}`} color={"blue"} display={"inline-block"}>
                     #{tag}&nbsp;
                   </Link>

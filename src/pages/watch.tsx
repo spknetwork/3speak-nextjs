@@ -39,39 +39,39 @@ export default function Watch() {
   const { loading, error, data } = useQuery(TRENDING_FEED);
   const [videos, setVideos] = useState<VideoInterface[]>([]);
   const [profile, setProfile] = useState<any>(null);
-  console.log("router",router.query.username)
+  console.log("router", router.query.username)
 
-  const { loading:loadingforProfile, error:errorforProfile, data:dataorProfile } = useQuery(GET_PROFILE, {
+  const { loading: loadingforProfile, error: errorforProfile, data: dataorProfile } = useQuery(GET_PROFILE, {
     variables: { id: router.query.username },
-});
-useEffect(() => {
-  console.log("profile get", profile)
-},[profile])
-useEffect(() => {
-  if (!loadingforProfile && !errorforProfile && dataorProfile) {
-    console.log("setVideos data PROFILE", dataorProfile);
-    if (dataorProfile) {
-      setProfile(dataorProfile.profile)
+  });
+  useEffect(() => {
+    console.log("profile get", profile)
+  }, [profile])
+  useEffect(() => {
+    if (!loadingforProfile && !errorforProfile && dataorProfile) {
+      console.log("setVideos data PROFILE", dataorProfile);
+      if (dataorProfile) {
+        setProfile(dataorProfile.profile)
+      }
+      // setVideos(
+      //   data.trendingFeed.items
+      //     .filter((e: any) => !!e.spkvideo)
+      //     .map((e: any) => {
+      //       console.log(e);
+      //       return {
+      //         title: e.title,
+      //         username: e.author.username,
+      //         thumbnail: e.spkvideo.thumbnail_url,
+      //         spkvideo: e.spkvideo,
+      //         author: e.author,
+      //         permlink: e.permlink,
+      //         tags: e.tags,
+      //       };
+      //     })
+      // );
     }
-    // setVideos(
-    //   data.trendingFeed.items
-    //     .filter((e: any) => !!e.spkvideo)
-    //     .map((e: any) => {
-    //       console.log(e);
-    //       return {
-    //         title: e.title,
-    //         username: e.author.username,
-    //         thumbnail: e.spkvideo.thumbnail_url,
-    //         spkvideo: e.spkvideo,
-    //         author: e.author,
-    //         permlink: e.permlink,
-    //         tags: e.tags,
-    //       };
-    //     })
-    // );
-  }
-}, [loadingforProfile, dataorProfile, errorforProfile]);
-  
+  }, [loadingforProfile, dataorProfile, errorforProfile]);
+
   useEffect(() => {
     if (!loading && !error && data) {
       console.log("setVideos data TRENDING_FEED", data);
@@ -144,10 +144,12 @@ useEffect(() => {
                   <Flex flexDirection={"column"}>
                     <Box>
                       <Title getVideo={getVideo} />
-                      <Tags getVideo={videoSelected} />
+                      {videoSelected && (
+                        <Tags getVideo={videoSelected} />
+                      )}
                     </Box>
                     <Flex justifyContent={"end"} marginTop="1rem">
-                      <Reactions  getVideo={getVideo}/>
+                      <Reactions getVideo={getVideo} />
                     </Flex>
                   </Flex>
                 </Box>
@@ -234,7 +236,7 @@ useEffect(() => {
                   videos.map((video: VideoInterface, index: number) => (
 
 
-                    <Video number_views='23' video={video} videoSrc={`${video.thumbnail}`} />
+                    <Video key={index} number_views='23' video={video} videoSrc={`${video.thumbnail}`} />
 
                   ))}
               </GridItem>

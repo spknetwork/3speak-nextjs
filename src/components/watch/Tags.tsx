@@ -2,8 +2,8 @@ import { Box, Link, Text } from "@chakra-ui/react";
 import React from "react";
 
 const Tags = ({getVideo}:any) => {
-  console.log("getVideo TAGS", getVideo)
-  const firstFive = getVideo.tags.slice(0, 5);
+  // console.log("getVideo TAGS", getVideo)
+  const firstFive = getVideo?.tags.slice(0, 5);
   return (
     <Box
       display={"flex"}
@@ -12,9 +12,9 @@ const Tags = ({getVideo}:any) => {
       marginBottom={"0.5rem"}
     >
       {
-        firstFive.map((tag:any) => {
+        firstFive.map((tag:any, index:number) => {
           return (
-            <Box>
+            <Box key={index}>
         <Link href={"/tags/"+`${tag}`} color={"blue"} display={"inline-block"}>
           #{tag}&nbsp;
         </Link>

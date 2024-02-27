@@ -19,7 +19,7 @@ const TabsDemo = ({ tab }: any) => {
     if (colorMode == 'dark') {
       toggleColorMode()
     }
-  },[])
+  },[colorMode, toggleColorMode])
   const onSubmitWithReCAPTCHA = async () => {
    
     const token = await recaptchaRef.current.executeAsync();

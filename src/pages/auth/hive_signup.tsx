@@ -11,7 +11,7 @@ const HiveSIgnUp = () => {
     if (colorMode == 'dark') {
       toggleColorMode()
     }
-  },[])
+  },[colorMode, toggleColorMode])
   return (
     <AuthLayout>
       <Flex

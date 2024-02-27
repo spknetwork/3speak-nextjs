@@ -21,7 +21,7 @@ const TabsDemo = ({ tab }: any) => {
     if (colorMode == 'dark') {
       toggleColorMode()
     }
-  },[])
+  },[colorMode, toggleColorMode])
   console.log("tabhere", tab);
   const router = useRouter();
   const dispatch = useDispatch();
