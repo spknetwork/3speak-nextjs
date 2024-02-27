@@ -22,8 +22,10 @@ const NewComers2 = () => {
 
   useEffect(() => {
     if (!loading && !error && data) {
+      console.log("setVideos data TRENDING_FEED",data);
+
       setVideos(
-        data.feed.items
+        data.trendingFeed.items
           .filter((e: any) => !!e.spkvideo)
           .map((e: any) => {
             console.log(e);
@@ -74,7 +76,7 @@ const NewComers2 = () => {
           }}
           gap={10}
         >
-          {/* {videos.length} */}
+          
           {!loading &&
             !error &&
             videos.map((video: VideoInterface, index: number) => (

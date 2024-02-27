@@ -23,9 +23,9 @@ const FirstTime = () => {
 
   useEffect(() => {
     if (!loading && !error && data) {
-      console.log("setVideos data",data);
+      console.log("setVideos data FIRST_UPLOAD_FEED",data);
       setVideos(
-        data.feed.items
+        data.trendingFeed.items
           .filter((e: any) => !!e.spkvideo)
           .map((e: any) => {
             // console.log("setVideos",videos);
