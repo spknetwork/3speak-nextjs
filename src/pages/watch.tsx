@@ -31,6 +31,7 @@ import MainLayout from "@/components/Layouts/main_layout";
 import { useQuery } from "@apollo/client";
 import { TRENDING_FEED } from "@/graphql/queries";
 import { VideoInterface } from "types";
+import { useRouter } from "next/router";
 
 export default function Watch() {
   const { loading, error, data } = useQuery(TRENDING_FEED);
