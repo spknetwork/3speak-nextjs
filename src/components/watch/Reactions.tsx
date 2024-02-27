@@ -4,14 +4,18 @@ import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
 import MenuButtons from "./MenuButtons";
 import Views from "./Views";
 
-const Reactions = () => {
+const Reactions = ({ getVideo }: any) => {
   return (
     <Flex justifyContent={"center"}>
       <Flex justifyContent={"center"} alignItems="center" className="mr-4">
         <FaRegThumbsUp />
-        <Text marginBottom={'0px !important'} fontWeight={"bolder"} marginLeft={"10px"}>
-          123
-        </Text>
+        {
+          getVideo?.stats.num_votes > 0 && (
+            <Text marginBottom={'0px !important'} fontWeight={"bolder"} marginLeft={"10px"}>
+              {getVideo?.stats.num_votes}
+            </Text>
+          )
+        }
       </Flex>
       <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
         <FaRegThumbsDown />

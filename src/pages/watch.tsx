@@ -147,7 +147,7 @@ useEffect(() => {
                       <Tags getVideo={videoSelected} />
                     </Box>
                     <Flex justifyContent={"end"} marginTop="1rem">
-                      <Reactions />
+                      <Reactions  getVideo={getVideo}/>
                     </Flex>
                   </Flex>
                 </Box>

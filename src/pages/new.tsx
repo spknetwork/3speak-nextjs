@@ -37,6 +37,8 @@ const New2 = () => {
               author: e.author,
               permlink: e.permlink,
               tags: e.tags,
+              stats: e.stats,
+
             };
           })
       );

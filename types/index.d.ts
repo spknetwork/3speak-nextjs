@@ -36,6 +36,7 @@ export interface VideoInterface {
   author?: any;
   index?: number;
   tags?: any;
+  stats?: any;
   price?: number
 }
 
