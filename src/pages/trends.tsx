@@ -8,10 +8,15 @@ import { TRENDING_FEED } from "../graphql/queries";
 import { VideoInterface } from "types";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import MainLayout from "@/components/Layouts/main_layout";
+import { useRouter } from "next/router";
+import { useAppStore } from "@/lib/store";
 const NewComers2 = () => {
+  const router = useRouter();
+
   const { loading, error, data } = useQuery(TRENDING_FEED);
   const bgColor = useColorModeValue('gray.100', 'gray.800');
   const { colorMode, toggleColorMode } = useColorMode();
+  const { setVideo, video: videoSelected } = useAppStore();
 
   const [videos, setVideos] = useState<VideoInterface[]>([]);
 
@@ -26,12 +31,25 @@ const NewComers2 = () => {
               title: e.title,
               username: e.author.username,
               thumbnail: e.spkvideo.thumbnail_url,
+              spkvideo: e.spkvideo,
+              author: e.author,
+              permlink: e.permlink,
+              tags: e.tags,
             };
           })
       );
     }
   }, [loading, data, error]);
+  const setVideoDetails = (video:any) => {
+    console.log("video",video)
+    setVideo(video)
+    router.push("/watch?username="+video.author.username+"&v="+video.permlink)
+  }
 
+  useEffect(() => {
+    console.log("videoSelected",videoSelected)
+
+  },[videoSelected])
   return (
     <MainLayout>
       <Box bg={bgColor}>
@@ -60,7 +78,7 @@ const NewComers2 = () => {
           {!loading &&
             !error &&
             videos.map((video: VideoInterface, index: number) => (
-              <GridItem w="100%" h="100%" key={index}>
+              <GridItem onClick={() => setVideoDetails(video)} w="100%" h="100%" key={index}>
                 <Box height="13em !important"
                   width="100% !important">
 
