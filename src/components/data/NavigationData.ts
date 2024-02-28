@@ -94,7 +94,7 @@ export const NAVIGATION= [
     },
     {
       img: "nav/spk_network.png",
-      img_light: "nav/home_light.svg",
+      img_light: "nav/spk_network.png",
       title: "about_3speak",
     },
   ]
