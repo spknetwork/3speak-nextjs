@@ -24,8 +24,7 @@ const AuthLayout = ({ children }: any) => {
                 break;
 
             case "tab3":
-                window.location.href = "/auth/signup"
-                // router.push(`/auth/signup`)
+                router.push(`/auth/signup`)
                 break;
             default:
                 break;
