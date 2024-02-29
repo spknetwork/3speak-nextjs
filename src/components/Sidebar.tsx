@@ -241,7 +241,7 @@
                   <ChakraBox>
                     <ChakraBox mb="1rem" width="100%">
                       {!authenticated && (
-                        <Link href="/auth/login">
+                        <Link href="/auth/modals">
                           <Button
                             bg={bgColor}
                             marginBottom={"10px"}
