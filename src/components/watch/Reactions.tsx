@@ -10,7 +10,7 @@ const Reactions = ({ getVideo }: any) => {
       <Flex justifyContent={"center"} alignItems="center" className="mr-4">
         <FaRegThumbsUp />
         {
-          getVideo?.stats.num_votes > 0 && (
+          getVideo && getVideo.stats && getVideo.stats.num_votes > 0 && (
             <Text marginBottom={'0px !important'} fontWeight={"bolder"} marginLeft={"10px"}>
               {getVideo?.stats.num_votes}
             </Text>
