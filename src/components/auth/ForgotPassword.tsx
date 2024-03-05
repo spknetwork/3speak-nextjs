@@ -22,12 +22,12 @@ const ForgotPassword = () => {
   const recaptchaRef: any = useRef();
   const { colorMode, toggleColorMode } = useColorMode();
 
+  useEffect(() => {
+    if (colorMode == "dark") {
+      toggleColorMode();
+    }
+  }, [colorMode]);
   const onSubmitWithReCAPTCHA = async () => {
-    useEffect(() => {
-      if (colorMode == "dark") {
-        toggleColorMode();
-      }
-    }, []);
     const token = await recaptchaRef.current.executeAsync();
     console.log(token);
     // apply to form data

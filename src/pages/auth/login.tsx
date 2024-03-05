@@ -16,12 +16,11 @@ const TabsDemo = ({ tab }: any) => {
   const recaptchaRef: any = useRef();
   const { colorMode, toggleColorMode } = useColorMode();
   useEffect(() => {
-    if (colorMode == 'dark') {
-      toggleColorMode()
+    if (colorMode == "dark") {
+      toggleColorMode();
     }
-  },[])
+  }, [colorMode]);
   const onSubmitWithReCAPTCHA = async () => {
-   
     const token = await recaptchaRef.current.executeAsync();
     console.log(token);
   };
@@ -31,15 +30,12 @@ const TabsDemo = ({ tab }: any) => {
         justifyContent="center"
         alignItems={{ _: "flex-start", tablet: "flex-start" }}
         backgroundColor="#F5F5F5"
-
       >
-
-        <Tabs.Content className="TabsContent" value={'tab1'}>
+        <Tabs.Content className="TabsContent" value={"tab1"}>
           <SignIn />
         </Tabs.Content>
       </Flex>
     </AuthLayout>
-
   );
 };
 
