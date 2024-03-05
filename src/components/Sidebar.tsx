@@ -1,6 +1,7 @@
 
   import Image from "next/image";
   import Link from "next/link";
+  import {Icon} from "@chakra-ui/react";
   import React, { useEffect, useRef, useState } from "react";
   import styled from "styled-components";
   import { Box as BoxContainer } from "./Box";
@@ -370,7 +371,7 @@
                       </Flex>
                     </ChakraBox>
                     <ChakraBox>
-                      {NAVIGATION.map(({ img, img_light, title, route }) => (
+                      {NAVIGATION.map(({ icon, title, route }) => (
                         <StyledNav
                           onClick={() =>
                             route ? router.push(route) : setCommunitiesPopup(true)
@@ -415,13 +416,18 @@
 
                             {title != "download_apps" &&
                               title != "about_3speak" && (
-                                <Image
-                                  src={`/${
-                                    colorMode == "dark" ? img_light : img
-                                  }`}
-                                  alt={title}
-                                  width={30}
-                                  height={30}
+                                // <Image
+                                //   src={`/${
+                                //     colorMode == "dark" ? img_light : img
+                                //   }`}
+                                //   alt={title}
+                                //   width={30}
+                                //   height={30}
+                                // />
+                                <Icon
+                                as={icon}
+                                width={30}
+                                height={30}
                                 />
                               )}
                           </ChakraBox>

@@ -1,8 +1,8 @@
 import React from "react";
-import { Flex, VStack, Text, Image, useColorModeValue, useColorMode} from "@chakra-ui/react";
+import { Flex, VStack, Text, Image, useColorModeValue, useColorMode, Icon} from "@chakra-ui/react";
 import Link from "next/link";
 //importing the data
-import { MiniNavigationData } from "../../components/data/NavigationData";
+import {NAVIGATION} from "../../components/data/NavigationData" 
 import { bgcolor } from "@mui/system";
 
 type Props = {};
@@ -23,15 +23,14 @@ const MiniSidebar = (props: Props) => {
       backgroundColor={colorMode === "dark" ? "gray.600" : "gray.300"}
       borderRadius={"xl"}
     >
-      <VStack spacing={8}>
-        {MiniNavigationData.map((item, index) => (
+      <VStack spacing={8} mt={8}>
+        {NAVIGATION.map((item, index) => (
          <Link key={index} href={`${item.route!}`}>
-         <Image 
-           src={colorMode === "dark" ? item.img_light : item.img} 
-           alt={"icon"} 
-           cursor={"pointer"} 
-           width="24px" 
-           height="24px"
+         <Icon 
+         width={"24px"}
+         height={"24px"}
+         as={item.icon}
+         color={colorMode === "dark" ? "white": "black"}
          />
        </Link>       
         ))}

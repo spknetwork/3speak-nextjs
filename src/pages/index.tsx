@@ -1,5 +1,6 @@
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
+import { useMemo } from "react";
 import {
   Box,
   Flex,
@@ -15,8 +16,6 @@ import React, { useState } from "react";
 import { VideoInterface } from "types";
 import { MdPlayArrow } from "react-icons/md";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { css } from "@emotion/react";
-import { Sidebar } from "@/components";
 import MainLayout from "@/components/Layouts/main_layout";
 import { videoData } from "../components/data/constData";
 import { BiDollar } from "react-icons/bi";
@@ -26,7 +25,8 @@ const NewIndex = () => {
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
-  const [videos, setVideos] = useState<VideoInterface[]>(videoData);
+  // const [videos, setVideos] = useState<VideoInterface[]>(videoData);
+  const videos = useMemo(()=> videoData, []);
   return (
     <MainLayout>
       <Box bg={bgColor}>
