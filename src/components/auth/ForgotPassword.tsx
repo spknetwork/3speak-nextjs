@@ -42,13 +42,6 @@ const ForgotPassword = () => {
       paddingTop="20px"
     >
       <Flex width={"35%"}>
-        {/* <Tabs.Root className="TabsRoot" defaultValue="tab1">
-        <Tabs.List className="TabsList" aria-label="Manage your account">
-          <Tabs.Trigger className="TabsTrigger" value="tab1">
-            Forgot Password
-          </Tabs.Trigger>
-        </Tabs.List>
-        <Tabs.Content className="TabsContent" value="tab1"> */}
         <Box className="TabsContent" width="100%">
           <Flex justifyContent={"start"}>
             <FiArrowLeft

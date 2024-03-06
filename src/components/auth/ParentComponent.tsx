@@ -51,8 +51,7 @@ const ParentComponent = (props: Props) => {
       <main>
         <Box
           width={"100%"}
-          backgroundColor="#EFF4F6"
-          boxShadow={"10px 10px 5px lightblue"}
+          boxShadow={"8px 0px 5px lightblue"}
         >
           <Tabs.Root className="TabsRoot">
             <Tabs.List className="TabsList" aria-label="Manage your account">

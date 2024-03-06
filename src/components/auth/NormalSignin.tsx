@@ -27,13 +27,12 @@ const NormalSignin = ({ tab }: any) => {
   return (
     <Flex justifyContent="center">
       <Flex
-          width={"35%"}
-          border={"solid black px"}
-          backgroundColor="#F5F5F5"
-          px="1rem"
-          alignItems={{ _: "flex-start", tablet: "flex-start" }}
-          paddingBottom="20px"
-          paddingTop="20px"
+        width={"35%"}
+        boxShadow={"10px 10px 5px lightblue"}
+        px="2rem"
+        alignItems={{ _: "flex-start", tablet: "flex-start" }}
+        paddingBottom="20px"
+        paddingTop="20px"
       >
         <SignIn />
       </Flex>

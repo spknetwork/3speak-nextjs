@@ -37,9 +37,8 @@ const NormalSignup = ({ tab }: any) => {
     <Flex justifyContent="center">
       <Flex
         width={"35%"}
-        border={"solid black px"}
-        backgroundColor="#F5F5F5"
-        px="1rem"
+        boxShadow={"10px 10px 5px lightblue"}
+        px="2rem"
         alignItems={{ _: "flex-start", tablet: "flex-start" }}
         paddingBottom="20px"
         paddingTop="20px"

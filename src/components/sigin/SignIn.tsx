@@ -36,12 +36,6 @@ const SignIn = () => {
     // console.log('herererererere')
   }
   const googlelogin = async () => {
-    // const data = await magic.oauth.loginWithRedirect({
-    //   provider: 'google' /* 'google', 'facebook', 'apple', or 'github' */,
-    //   redirectURI: 'http://localhost:3050/login',
-    // });
-
-    // console.log('data', data)
     try {
       await magic.oauth.loginWithRedirect({
         provider: "google",

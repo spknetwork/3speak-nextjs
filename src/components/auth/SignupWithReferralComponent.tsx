@@ -14,9 +14,12 @@ const SignupWithReferralComponent = () => {
   return (
     <Flex justifyContent="center">
       <Flex
-        alignItems={{ _: "flex-start", tablet: "flex-start" }}
-        backgroundColor="#F5F5F5"
-        width={"35%"}
+         width={"35%"}
+         boxShadow={"10px 10px 5px lightblue"}
+         px="2rem"
+         alignItems={{ _: "flex-start", tablet: "flex-start" }}
+         paddingBottom="20px"
+         paddingTop="20px"
       >
           <HiveSignUpComponent />
       </Flex>
