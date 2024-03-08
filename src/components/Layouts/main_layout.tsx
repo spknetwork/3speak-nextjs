@@ -3,6 +3,7 @@ import { css } from '@emotion/react'
 import React from 'react'
 import { Sidebar } from '../Sidebar'
 import Footer from '../footer/Footer'
+import MiniSidebar from '../MiniSidebar/MiniSidebar'
 
 const MainLayout = ({ children }: any) => {
     return (
@@ -16,12 +17,13 @@ const MainLayout = ({ children }: any) => {
             flex-direction: row;
             }
         `}
+        justifyContent={"flex-end"}
         >
             <nav>
-                <Box><Sidebar /></Box>
+                <Box><MiniSidebar /></Box>
             </nav>
             <Flex
-                width={"100%"}
+                width={"97%"}
                 css={css`
                     @media (max-width: 768px) {
                         flex-direction: column;

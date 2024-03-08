@@ -82,8 +82,8 @@ const CommunityDetails = () => {
             borderRadius: "50px",
           }}
           src={`https://images.hive.blog/u/${id}/avatar`}
-          width={"90px"}
-          height={"90px"}
+          width="90px"
+          height="90px"
           alt="Picture of the author"
         />
         <Text
@@ -262,7 +262,9 @@ const CommunityDetails = () => {
                         <Image
                           src="https://3speak.tv/img/play.svg"
                           alt="play"
-                        ></Image>
+                          width={"12px"}
+                          height={"12px"}
+                        />
                         <Text as={"span"}>20</Text>
                       </Box>
                       <Box
@@ -377,7 +379,9 @@ const CommunityDetails = () => {
                         <Image
                           src="https://3speak.tv/img/play.svg"
                           alt="play"
-                        ></Image>
+                          width={"12px"}
+                          height={"12px"}
+                         />
                         <Text as={"span"}>20</Text>
                       </Box>
                       <Box

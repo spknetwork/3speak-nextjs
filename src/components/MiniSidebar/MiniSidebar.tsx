@@ -1,38 +1,46 @@
 import React from "react";
-import { Flex, VStack, Text, Image, useColorModeValue, useColorMode, Icon} from "@chakra-ui/react";
+import {
+  Flex,
+  VStack,
+  Text,
+  Image,
+  useColorModeValue,
+  useColorMode,
+  Icon,
+} from "@chakra-ui/react";
 import Link from "next/link";
 //importing the data
-import {NAVIGATION} from "../../components/data/NavigationData" 
+import { NAVIGATION } from "../../components/data/NavigationData";
 import { bgcolor } from "@mui/system";
+import { Sidebar } from "../Sidebar";
 
 type Props = {};
 
 const MiniSidebar = (props: Props) => {
-    const bgColor = useColorModeValue("gray.100", "gray.800");
-    const { colorMode, toggleColorMode } = useColorMode();
+  const bgColor = useColorModeValue("gray.100", "gray.800");
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Flex
       justifyContent={"center"}
-      height={"424"}
+      height={"full"}
       w={16}
       position={"absolute"}
       left={0}
-      top={64}
-      mt={12}
       backgroundColor={colorMode === "dark" ? "gray.600" : "gray.300"}
-      borderRadius={"xl"}
     >
-      <VStack spacing={8} mt={8}>
+      <Sidebar />
+      <VStack spacing={8} mt={8} position="absolute" top={"64"}>
         {NAVIGATION.map((item, index) => (
-         <Link key={index} href={`${item.route!}`}>
-         <Icon 
-         width={"24px"}
-         height={"24px"}
-         as={item.icon}
-         color={colorMode === "dark" ? "white": "black"}
-         />
-       </Link>       
+          <Link key={index} href={`${item.route!}`}>
+            <Icon
+              cursor="pointer"
+              width={"24px"}
+              height={"24px"}
+              as={item.icon}
+              color={colorMode === "dark" ? "white" : "black"}
+            />
+          </Link>
         ))}
       </VStack>
     </Flex>

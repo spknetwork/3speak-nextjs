@@ -26,13 +26,18 @@ import VideoPlayer from "@/components/watch/VideoPlayer";
 import Community from "@/components/watch/Community";
 import { css } from "@emotion/react";
 import { useState } from "react";
+import MiniSidebar from "@/components/MiniSidebar/MiniSidebar";
 
 export default function Watch() {
   const [count, setCount] = useState<number>(0);
   console.log(count)
   return (
-    <Box background={"#EFF4F5"}>
+    <Flex 
+    justifyContent={"right"}
+    background={"#EFF4F5"}>
+      <MiniSidebar />
       <Flex 
+        width={"97%"}
          css={css`
          @media (max-width: 768px) {
            flex-direction: column;
@@ -171,6 +176,6 @@ export default function Watch() {
           </Box>
         </Box>
       </Flex>
-    </Box>
+    </Flex>
   );
 }

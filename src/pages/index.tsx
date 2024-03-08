@@ -30,7 +30,6 @@ const NewIndex = () => {
   return (
     <MainLayout>
       <Box bg={bgColor}>
-        <MiniSidebar />
         <Flex
           marginRight={"30px"}
           justifyContent={"space-between"}
