@@ -1,7 +1,11 @@
 import { Box, Link, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-const About = () => {
+type Props = {
+  bgColor: string,
+  colorMode: string
+}
+const About = (props: Props) => {
   const [showLess, setShowLess] = useState(true);
   const showLessFunction = () => {
     setShowLess(!showLess);
@@ -13,11 +17,11 @@ const About = () => {
       borderRadius={"2px"}
       boxShadow="0 0 11px #ececec;"
       transitionDuration={"0.4s"}
-      background="#fff none repeat scroll 0 0"
+      background={props.bgColor}
     >
       <Text
         marginBottom={"5px"}
-        color={"black"}
+        color={props.colorMode==="dark"?"white": "black"}
         fontSize={"15px"}
         fontWeight="600"
       >
@@ -30,7 +34,7 @@ const About = () => {
         paddingBottom={"10px"}
       >
         <span className="description">
-          <Text color={"black"}>
+          <Text  color={props.colorMode==="dark"?"white": "black"}>
             Hotel management is really about successfully overseeing every
             operation of the business to make sure consistent growth and
             development. This can involve the management of anything related to
@@ -152,7 +156,7 @@ const About = () => {
         </span>
         <Text
           marginTop={"18px"}
-          color={"black"}
+          color={props.colorMode==="dark"?"white": "black"}
           fontSize="15px"
           fontWeight={"600"}
         >

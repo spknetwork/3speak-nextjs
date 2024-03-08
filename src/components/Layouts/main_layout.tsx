@@ -6,6 +6,7 @@ import Footer from '../footer/Footer'
 import MiniSidebar from '../MiniSidebar/MiniSidebar'
 
 const MainLayout = ({ children }: any) => {
+
     return (
         <Flex
             css={css`

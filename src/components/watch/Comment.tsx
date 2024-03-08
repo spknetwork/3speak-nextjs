@@ -11,9 +11,13 @@ import React, { useState } from "react";
 import { FaCommentAlt } from "react-icons/fa";
 import CommentFooter from "./CommentFooter";
 import { BiComment } from "react-icons/bi";
-const Comment = () => {
-  const [comment, setComment] = useState("");
 
+type Props= {
+  bgColor: string
+  colorMode: string,
+}
+const Comment = (props: Props) => {
+  const [comment, setComment] = useState("");
   return (
     <Box>
       <Box
@@ -42,9 +46,7 @@ const Comment = () => {
               Add Comment:
             </Text> */}
             <Text
-              background={
-                "#9C27B0 linear-gradient(180deg, #ab47bc, #9C27B0) repeat-x"
-              }
+              background={"#9C27B0 linear-gradient(180deg, #ab47bc, #9C27B0) repeat-x"}
               color="#fff"
               paddingRight={"2.5rem"}
               border="none"
@@ -67,7 +69,7 @@ const Comment = () => {
                   <Flex flexDirection={"column"}>
                     <Textarea
                       width={"100%"}
-                      color="black"
+                      color={props.colorMode==="dark"?"white" : "black"}
                       placeholder="Add comment"
                       onChange={(e) => setComment(e.target.value)}
                     />

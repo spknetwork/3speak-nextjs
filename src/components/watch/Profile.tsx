@@ -2,10 +2,16 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Button, Flex, Link, Text } from "@chakra-ui/react";
 import React from "react";
 
-const Profile = () => {
+
+type Props = {
+  bgColor: string,
+  colorMode: string
+}
+
+const Profile = (props: Props) => {
   return (
     <Flex justifyContent={"space-between"}>
-      <Box bg="white" p={4} color="black">
+      <Box bg={props.bgColor} p={4} color={props.colorMode==="dark"? "white": "black"}>
         <Flex alignItems={"center"}>
           <Avatar
             name="Dan Abrahmov"
@@ -14,29 +20,10 @@ const Profile = () => {
           />
           <Flex flexDirection={"column"} className="ms-4">
             <Link fontWeight={"bolder"}>stellamartinez</Link>
-            {/* <Flex justifyContent={"start"}>
-              <Box bg="white" p={4} paddingLeft="0px" color="black">
-                <Text marginBottom={"10px"} fontSize={"11px"}>
-                  Community
-                </Text>
-                <Flex alignItems={"center"}>
-                  <Avatar
-                    size={"sm"}
-                    name="Dan Abrahmov"
-                    src="https://bit.ly/tioluwani-kolawole"
-                  />
-                  <Flex flexDirection={"column"} className="ms-2">
-                    <Link fontWeight={"bolder"} fontSize={"11px"}>
-                      Humanitas
-                    </Link>
-                  </Flex>
-                </Flex>
-              </Box>
-            </Flex> */}
           </Flex>
         </Flex>
       </Box>
-      <Flex alignItems={"center"} bg="white" p={4} color="black">
+      <Flex alignItems={"center"} bg={props.bgColor} p={4} color={props.colorMode==="dark"? "white": "black"}>
         <Button
           marginRight={"10px"}
           textTransform="uppercase"
@@ -47,7 +34,7 @@ const Profile = () => {
           lineHeight={"1.5"}
           background="#fff linear-gradient(180deg, white, #fff) repeat-x"
           fontWeight={"400"}
-          color={"#212121"}
+          color={props.colorMode==="dark"? "#212121" : "white"}
         >
           FOLLOW 47
         </Button>

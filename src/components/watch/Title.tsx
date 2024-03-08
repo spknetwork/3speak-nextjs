@@ -1,11 +1,16 @@
 import { Text } from "@chakra-ui/react";
 import React from "react";
 
-const Title = () => {
+type Props = {
+  bgColor: string,
+  colorMode: string
+}
+
+const Title = (props:Props) => {
   return (
     <Text
       fontSize={"20px"}
-      color="#333"
+      color={props.colorMode==="dark"? "white": "dark"}
       fontWeight={"500"}
       textTransform="initial"
       marginTop={"0.5rem"}
