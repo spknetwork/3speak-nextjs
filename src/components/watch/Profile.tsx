@@ -32,9 +32,9 @@ const Profile = (props: Props) => {
           transition={"all 0.4s"}
           fontSize="0.7109375rem"
           lineHeight={"1.5"}
-          background="#fff linear-gradient(180deg, white, #fff) repeat-x"
+          background={props.colorMode==="dark"?"black": "#fff linear-gradient(180deg, white, #fff) repeat-x"}
           fontWeight={"400"}
-          color={props.colorMode==="dark"? "#212121" : "white"}
+          color={props.colorMode==="dark"? "white" : "black"}
         >
           FOLLOW 47
         </Button>
@@ -46,13 +46,13 @@ const Profile = (props: Props) => {
           transition={"all 0.4s"}
           fontSize="0.7109375rem"
           lineHeight={"1.5"}
-          background="#fff linear-gradient(180deg, white, #fff) repeat-x"
+          background={props.colorMode==="dark"?"black": "#fff linear-gradient(180deg, white, #fff) repeat-x"}
           fontWeight={"400"}
-          color={"#212121"}
+          color={props.colorMode==="dark"? "white" : "black"}
         >
           DONATE CRYPTO
         </Button>
-        <Button colorScheme="red">Buzz</Button>
+        {/* <Button colorScheme="red">Buzz</Button> */}
       </Flex>
     </Flex>
   );

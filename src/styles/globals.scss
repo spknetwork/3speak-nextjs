@@ -130,3 +130,13 @@ h1 {
 * {
   box-sizing: border-box;
 }
+
+#parent:hover > #dollar_sign {
+  display: none;;
+}
+#parent:hover > #views {
+  display: none;;
+}
+#parent:hover > #timestamp {
+  display: none;;
+}

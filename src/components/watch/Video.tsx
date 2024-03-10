@@ -1,28 +1,36 @@
 import { Box, Image, Link, Text } from "@chakra-ui/react";
 import React from "react";
 import { MdPlayArrow } from "react-icons/md";
+import { BsDot } from "react-icons/bs";
 
-const Video = ({ videoSrc, number_views }: any) => {
+const Video = ({ videoSrc, number_views, bgColor, colorMode }: any) => {
   return (
-    <Box w="100%" bg="white.500" color={"black"} marginBottom="3rem">
+    <Box
+      w="100%"
+      bgColor={bgColor}
+      color={colorMode === "dark" ? "white" : "black"}
+      marginBottom="3rem"
+    >
       {/* cursor={'pointer'} */}
       <Box
-        cursor={'pointer'} 
+        id="parent"
+        cursor={"pointer"}
         float="left"
         w="calc(136px * 1.25)"
         height="calc(77px * 1.25)"
-        bg="white.500"
-        color={"black"}
+        bgColor={bgColor}
+        color={colorMode === "dark" ? "white" : "black"}
         marginRight="6px"
         position={"relative"}
       >
         <Box
-          display={'flex'}
-          justifyContent='center'
-          alignItems={'center'}
+          id="views"
+          display={"flex"}
+          justifyContent="center"
+          alignItems={"center"}
           position={"absolute"}
           bottom="5px"
-          color={"#000"}
+          color="black"
           fontSize="11px"
           fontWeight={"500"}
           left="5px"
@@ -31,10 +39,18 @@ const Video = ({ videoSrc, number_views }: any) => {
           paddingLeft={"4px"}
           paddingRight={"8px"}
         >
-          <MdPlayArrow size='15px' color="grey" />
-          <Text as='span' marginLeft={'2px'} fontSize='11px' fontWeight={'bold'}>{number_views}</Text>
+          <MdPlayArrow size="15px" color="grey" />
+          <Text
+            as="span"
+            marginLeft={"2px"}
+            fontSize="11px"
+            fontWeight={"bold"}
+          >
+            {number_views}
+          </Text>
         </Box>
         <Box
+         id="timestamp"
           position={"absolute"}
           bottom="5px"
           color={"#000"}
@@ -57,19 +73,15 @@ const Video = ({ videoSrc, number_views }: any) => {
         />
       </Box>
       <Box bg="white.500" color={"black"}>
-        <Box
-          lineHeight="17px"
-          bg="white.500"
-          color={"black"}
-        >
-           {/* textDecor={'none !important'} */}
+        <Box lineHeight="17px" bg="white.500" color={"black"}>
+          {/* textDecor={'none !important'} */}
           <Link
             fontSize="13px"
             fontWeight={"600"}
             cursor="pointer"
             transition={"all 0.2s"}
-            color={'black'}
-            textDecor={'none !important'}
+            color={colorMode === "dark" ? "white" : "black"}
+            textDecor={"none !important"}
           >
             (Eng/Esp)🔴¡VIVIR EN EL PASADO TE HACE DAÑO! Despabila
           </Link>
@@ -77,10 +89,11 @@ const Video = ({ videoSrc, number_views }: any) => {
         <Box
           lineHeight="17px"
           bg="white.500"
-          color={"black"}
+          color={colorMode === "dark" ? "white" : "black"}
         >
           <Link
-            textDecor={'none !important'}
+            paddingRight={1}
+            textDecor={"none !important"}
             fontSize="11px"
             fontWeight={"500"}
             cursor="pointer"
@@ -88,29 +101,26 @@ const Video = ({ videoSrc, number_views }: any) => {
           >
             stellamartinez
           </Link>
-        </Box>
-        <Box
-          lineHeight="17px"
-          bg="white.500"
-          color={"#acacac"}
-        >
+          .{/* <BsDot /> */}
           <Link
-            fontSize="10px"
+            paddingLeft={1}
+            fontSize="9px"
             fontWeight={"bolder"}
             cursor="pointer"
             transition={"all 0.2s"}
-            textDecor={'none !important'}
+            textDecor={"none !important"}
           >
             1 month ago
           </Link>
         </Box>
+        <Box lineHeight="17px" bg="white.500" color={"#acacac"}></Box>
         <Box
           lineHeight="17px"
           bg="white.500"
-          color={"black"}
+          color={colorMode === "dark" ? "white" : "black"}
         >
           <Link
-            textDecor={'none !important'}
+            textDecor={"none !important"}
             fontSize="11px"
             fontWeight={"bold"}
             cursor="pointer"

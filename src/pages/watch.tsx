@@ -11,6 +11,9 @@
 //   };
 // }
 
+//TODO: modify the author section
+//TODO: remove the widgets on hover
+
 import Video from "@/components/watch/Video";
 import {
   Box,
@@ -20,7 +23,7 @@ import {
   Text,
   useColorMode,
   useColorModeValue,
-  Switch
+  Switch,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import About from "@/components/watch/About";
@@ -60,11 +63,11 @@ export default function Watch() {
             flex-direction: row;
           }
         `}
-        color={colorMode === "dark" ? "white": "dark"}
+        color={colorMode === "dark" ? "white" : "dark"}
         padding={"10px"}
       >
         <Box flex="1">
-        <Text position={"absolute"} >
+          <Text position={"absolute"} right={12}>
             <Switch
               isChecked={colorMode === "dark"}
               onChange={toggleColorMode}
@@ -79,16 +82,21 @@ export default function Watch() {
               p={4}
               paddingLeft="0px"
               paddingRight={"0px"}
-              color={colorMode === "dark" ? "white": "dark"}
+              color={colorMode === "dark" ? "white" : "dark"}
             >
               <VideoPlayer />
               <Box>
                 <Flex flexDirection={"column"} bgColor={bgColor}>
-                  <Box  bgColor={bgColor}>
+                  <Box bgColor={bgColor}>
                     <Title bgColor={bgColor} colorMode={colorMode} />
-                    <Tags bgColor={bgColor} colorMode={colorMode}  />
+                    <Tags bgColor={bgColor} colorMode={colorMode} />
                   </Box>
-                  <Flex justifyContent={"end"} marginTop="1rem"  bgColor={bgColor}>
+                  <Flex
+                    justifyContent={"space-between"}
+                    marginTop="1rem"
+                    bgColor={bgColor}
+                  >
+                    <Profile bgColor={bgColor} colorMode={colorMode} />
                     <Reactions />
                   </Flex>
                 </Flex>
@@ -98,23 +106,12 @@ export default function Watch() {
           <Box
             marginBottom={"30px"}
             borderRadius={4}
-            boxShadow="base"
-            mr={2}
-            flex="1"
-            bg={bgColor}
-            >
-            <Profile bgColor={bgColor} colorMode={colorMode}/>
-          </Box>
-
-          <Box
-            marginBottom={"30px"}
-            borderRadius={4}
-            boxShadow="base"
+            // boxShadow="base"
             mr={2}
             flex="1"
             bg={bgColor}
           >
-            <Community bgColor={bgColor} colorMode={colorMode}/>
+            <Community bgColor={bgColor} colorMode={colorMode} />
           </Box>
 
           <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg={bgColor}>
@@ -123,27 +120,13 @@ export default function Watch() {
           </Box>
           <Box>
             {/* comment */}
-            <Comment bgColor={bgColor} colorMode={colorMode}/>
+            <Comment bgColor={bgColor} colorMode={colorMode} />
           </Box>
         </Box>
-        {/* borderRadius={4} boxShadow="base" mr={2} flex="1" bg="white" */}
-        {/* <Box
-          w={{ base:  "100%", md: "33%", lg: "33%" }}
-          bg="white"
-          color={"black"}
-          marginTop="15px"
-          borderRadius={4}
-          boxShadow="base"
-          marginLeft={"10px"}
-          paddingTop="10px"
-          paddingX={'10px'}
-        >
-           <Video videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVcJpKJDN8sx7ZjXNkfrVDtAkjdi59a6bGJtSa9MJdsqxYnqALaV6iRcMCMd5TL4RfZMhnbb6e?format=jpeg&mode=cover&width=340&height=191" />
-        </Box> */}
         <Box
           w={{ base: "100%", md: "33%", lg: "33%" }}
           bg={bgColor}
-          color={colorMode==="dark" ? "white": "black"}
+          color={colorMode === "dark" ? "white" : "black"}
           marginTop="15px"
           borderRadius={4}
           boxShadow="base"
@@ -176,35 +159,49 @@ export default function Watch() {
               w="100%"
               h="10"
               bg={bgColor}
-              textColor={colorMode==="dark" ? "white": "black"}
+              color={colorMode === "dark" ? "white" : "black"}
             >
               <Video
                 number_views="23"
                 videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVcJpKJDN8sx7ZjXNkfrVDtAkjdi59a6bGJtSa9MJdsqxYnqALaV6iRcMCMd5TL4RfZMhnbb6e?format=jpeg&mode=cover&width=340&height=191"
+                bgcolor={bgColor}
+                colorMode={colorMode}
               />
               <Video
                 number_views="11"
                 videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVim5xXXBHudVXW7uT6ErgMsQHTXm2ELwa6JxMMvR1j9aYic2jgGRz4wcXHkeUnAJM5CWiwria?format=jpeg&mode=cover&width=340&height=191"
+                bgcolor={bgColor}
+                colorMode={colorMode}
               />
               <Video
                 number_views="66"
                 videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVhcN63NCz569HVsSov72VRbsEsSxSrf7JQJBhpsDNxyNfNKrnmLNvLJCfNaX26VjPcZpap3f4?format=jpeg&mode=cover&width=340&height=191"
+                bgcolor={bgColor}
+                colorMode={colorMode}
               />
               <Video
                 number_views="200"
                 videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVeUsu1qEtX9RpZ8NAWnhCRjimECuPV5shWf4r96HKR9u7G1CQv26vfFSDsFs8k41YwWaDDg6J?format=jpeg&mode=cover&width=340&height=191"
+                bgcolor={bgColor}
+                colorMode={colorMode}
               />
               <Video
                 number_views="4"
                 videoSrc="https://images.hive.blog/p/eAyTuXc4toTXvjczQpXyRFR18E7ALGyK7bKRqmpLVRT2K6Dw3vqp1HBU47x9jcw8bRw8xadHDYJ?format=jpeg&mode=cover&width=340&height=191"
+                bgcolor={bgColor}
+                colorMode={colorMode}
               />
               <Video
                 number_views="1"
                 videoSrc="https://images.hive.blog/p/eAyTuXc4toTXvjczQpXyRFR18E7ALGyK7gdoY79fNxSmJmDgPua44kR8BdATGS4C3NTPtF7Swv6?format=jpeg&mode=cover&width=340&height=191"
+                bgcolor={bgColor}
+                colorMode={colorMode}
               />
               <Video
                 number_views="6"
                 videoSrc="https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbGs8rF69qxxfW7SdHLkQcmo3YEiD4agxV19oco2hcKTPS49UMjd93Xc8X8yvLreZtFoEEgr2?format=jpeg&mode=cover&width=340&height=191"
+                bgcolor={bgColor}
+                colorMode={colorMode}
               />
             </GridItem>
           </Grid>

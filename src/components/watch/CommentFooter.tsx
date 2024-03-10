@@ -9,7 +9,12 @@ import {
   FaRegThumbsDown,
 } from "react-icons/fa";
 import { BiComment, BiShare } from "react-icons/bi";
-const CommentFooter = () => {
+
+type Props = {
+  bgColor: string;
+  colorMode: string;
+};
+const CommentFooter = (props: Props) => {
   const [comment, setComment] = useState(false);
 
   const showComment = () => {
@@ -33,12 +38,12 @@ const CommentFooter = () => {
               marginLeft={"5px"}
               justifyContent={"center"}
               alignItems="center"
-              color={"black"}
+              color={props.colorMode === "dark" ? "white" : "black"}
             >
               {/* <Button variant="outline"> */}
               <FaRegThumbsUp />
               <Text
-                color={"#1A1A1B"}
+                color={props.colorMode === "dark" ? "white" : "black"}
                 margin="4px"
                 marginBottom={"0px"}
                 width={"auto"}
@@ -59,10 +64,14 @@ const CommentFooter = () => {
             marginLeft={"5px"}
             justifyContent={"center"}
             alignItems="center"
-            color={"black"}
+            color={props.colorMode === "dark" ? "white" : "black"}
           >
             {/* <Button variant="outline"> */}
-            <FaRegThumbsDown /> <Text marginBottom={'0px'} marginLeft={"5px"}> Dislike</Text>
+            <FaRegThumbsDown />{" "}
+            <Text marginBottom={"0px"} marginLeft={"5px"}>
+              {" "}
+              Dislike
+            </Text>
             {/* </Button> */}
           </Flex>
         </Box>
@@ -79,7 +88,10 @@ const CommentFooter = () => {
           {/* <Button color={"black"} variant="outline">
                         Reply
                       </Button> */}
-          <Box color={"black"} marginLeft={"5px"}>
+          <Box
+            color={props.colorMode === "dark" ? "white" : "black"}
+            marginLeft={"5px"}
+          >
             <Flex
               cursor={"pointer"}
               onClick={showComment}
@@ -87,7 +99,10 @@ const CommentFooter = () => {
               alignItems="center"
             >
               {/* <Button onClick={showComment} variant="outline"> */}
-              <BiComment fontSize={'14px'}  /> <Text marginBottom={'0px'} marginLeft={"3px"}>Comments</Text>
+              <BiComment fontSize={"14px"} />{" "}
+              <Text marginBottom={"0px"} marginLeft={"3px"}>
+                Comments
+              </Text>
               {/* </Button> */}
             </Flex>
           </Box>
@@ -97,10 +112,16 @@ const CommentFooter = () => {
                           Comments
                         </Text>
                       </Flex> */}
-          <Box color={"black"} marginLeft={"10px"}>
+          <Box
+            color={props.colorMode === "dark" ? "white" : "black"}
+            marginLeft={"10px"}
+          >
             <Flex justifyContent={"center"} alignItems="center">
               {/* <Button variant="outline"> */}
-              <BiShare fontSize={'15px'} /> <Text marginBottom={'0px'} marginLeft={"3px"}>Share</Text>
+              <BiShare fontSize={"15px"} />{" "}
+              <Text marginBottom={"0px"} marginLeft={"3px"}>
+                Share
+              </Text>
               {/* </Button> */}
             </Flex>
           </Box>

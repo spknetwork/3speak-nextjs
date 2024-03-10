@@ -12,10 +12,10 @@ import { FaCommentAlt } from "react-icons/fa";
 import CommentFooter from "./CommentFooter";
 import { BiComment } from "react-icons/bi";
 
-type Props= {
-  bgColor: string
-  colorMode: string,
-}
+type Props = {
+  bgColor: string;
+  colorMode: string;
+};
 const Comment = (props: Props) => {
   const [comment, setComment] = useState("");
   return (
@@ -28,6 +28,7 @@ const Comment = (props: Props) => {
         borderRadius={"2px"}
         boxShadow="0 0 11px #ececec"
         transitionDuration={"0.4s"}
+        bgColor={props.bgColor}
       >
         <Box>
           <Box
@@ -36,17 +37,10 @@ const Comment = (props: Props) => {
             paddingRight={"15px"}
             paddingLeft="15px"
           >
-            {/* <Text
-              color={"#666"}
-              fontSize="0.8125rem"
-              marginBottom={"0.5rem"}
-              fontWeight="500"
-              lineHeight={"1.2"}
-            >
-              Add Comment:
-            </Text> */}
             <Text
-              background={"#9C27B0 linear-gradient(180deg, #ab47bc, #9C27B0) repeat-x"}
+              background={
+                "#9C27B0 linear-gradient(180deg, #ab47bc, #9C27B0) repeat-x"
+              }
               color="#fff"
               paddingRight={"2.5rem"}
               border="none"
@@ -69,7 +63,7 @@ const Comment = (props: Props) => {
                   <Flex flexDirection={"column"}>
                     <Textarea
                       width={"100%"}
-                      color={props.colorMode==="dark"?"white" : "black"}
+                      color={props.colorMode === "dark" ? "white" : "black"}
                       placeholder="Add comment"
                       onChange={(e) => setComment(e.target.value)}
                     />
@@ -80,14 +74,14 @@ const Comment = (props: Props) => {
                     >
                       <Button
                         colorScheme="gray"
-                        color={"black"}
+                        color={props.colorMode === "dark" ? "white" : "black"}
                         marginRight={"10px"}
                       >
                         Cancel
                       </Button>
                       <Button
                         disabled={true}
-                        color={comment ? "white" : "black"}
+                        color={props.colorMode === "dark" ? "white" : "black"}
                         colorScheme={comment ? "messenger" : "gray"}
                       >
                         Comment
@@ -108,8 +102,15 @@ const Comment = (props: Props) => {
         fontWeight={"500"}
         lineHeight="1.2"
       >
-        <BiComment fontSize={"15px"} />{" "}
-        <Text fontSize={"15px"} marginLeft={"5px"}>
+        <BiComment
+          fontSize={"15px"}
+          color={props.colorMode === "dark" ? "white" : "black"}
+        />
+        <Text
+          fontSize={"15px"}
+          marginLeft={"5px"}
+          color={props.colorMode === "dark" ? "white" : "black"}
+        >
           Comments:
         </Text>
       </Flex>
@@ -123,6 +124,7 @@ const Comment = (props: Props) => {
         paddingLeft={"16px"}
         margin="1px 0px 16px 0px"
         paddingBottom={"16px"}
+        bgColor={props.bgColor}
       >
         <Box maxHeight={"2000px"} overflow="hidden" position={"relative"}>
           <Box padding={"0px"} paddingTop="20px">
@@ -189,7 +191,6 @@ const Comment = (props: Props) => {
                     alignItems={"flex-start"}
                   >
                     <Text
-                      color={"black"}
                       fontSize="xl"
                       fontWeight={"bold"}
                       minHeight={"18px"}
@@ -197,12 +198,13 @@ const Comment = (props: Props) => {
                       alignItems={"center"}
                       flexFlow="row wrap"
                       justifyContent={"flex-start"}
+                      color={props.colorMode === "dark" ? "white" : "black"}
                     >
                       (sm) In love with React & Next
                     </Text>
                   </Box>
                   {/* box for maint content */}
-                  <Box padding={"2px 0"} width="100%" color={"black"}>
+                  <Box padding={"2px 0"} width="100%" color={props.colorMode==="dark"? "white": "black"}>
                     Hotel management is really about successfully overseeing
                     every operation of the business to make sure consistent
                     growth and development. This can involve the management of
@@ -221,7 +223,7 @@ const Comment = (props: Props) => {
                   </Box>
 
                   {/* box for footer */}
-                  <CommentFooter />
+                  <CommentFooter bgColor={props.bgColor} colorMode={props.colorMode}/>
 
                   {/* reply */}
                   <Box marginLeft={"28px"}>
@@ -280,7 +282,9 @@ const Comment = (props: Props) => {
                           alignItems={"flex-start"}
                         >
                           <Text
-                            color={"black"}
+                            color={
+                              props.colorMode === "dark" ? "white" : "black"
+                            }
                             fontSize="xl"
                             fontWeight={"bold"}
                             minHeight={"18px"}
@@ -293,7 +297,7 @@ const Comment = (props: Props) => {
                           </Text>
                         </Box>
                         {/* box for maint content */}
-                        <Box padding={"2px 0"} width="100%" color={"black"}>
+                        <Box padding={"2px 0"} width="100%"  color={props.colorMode==="dark"? "white":"black"}>
                           Hotel management is really about successfully
                           overseeing every operation of the business to make
                           sure consistent growth and development. This can
@@ -314,7 +318,7 @@ const Comment = (props: Props) => {
                         </Box>
 
                         {/* box for footer */}
-                        <CommentFooter />
+                        <CommentFooter bgColor={props.bgColor} colorMode={props.colorMode}/>
                       </Box>
                     </Box>
                   </Box>
@@ -385,7 +389,7 @@ const Comment = (props: Props) => {
                     alignItems={"flex-start"}
                   >
                     <Text
-                      color={"black"}
+                      color={props.colorMode === "dark" ? "white" : "black"}
                       fontSize="xl"
                       fontWeight={"bold"}
                       minHeight={"18px"}
@@ -398,7 +402,7 @@ const Comment = (props: Props) => {
                     </Text>
                   </Box>
                   {/* box for maint content */}
-                  <Box padding={"2px 0"} width="100%" color={"black"}>
+                  <Box padding={"2px 0"} width="100%"  color={props.colorMode==="dark"? "white":"black"}>
                     Hotel management is really about successfully overseeing
                     every operation of the business to make sure consistent
                     growth and development. This can involve the management of
@@ -417,7 +421,7 @@ const Comment = (props: Props) => {
                   </Box>
 
                   {/* box for footer */}
-                  <CommentFooter />
+                  <CommentFooter bgColor={props.bgColor} colorMode={props.colorMode} />
 
                   {/* reply */}
                   <Box marginLeft={"28px"}>
@@ -476,7 +480,9 @@ const Comment = (props: Props) => {
                           alignItems={"flex-start"}
                         >
                           <Text
-                            color={"black"}
+                            color={
+                              props.colorMode === "dark" ? "white" : "black"
+                            }
                             fontSize="xl"
                             fontWeight={"bold"}
                             minHeight={"18px"}
@@ -486,10 +492,10 @@ const Comment = (props: Props) => {
                             justifyContent={"flex-start"}
                           >
                             (sm) In love with React & Next
-                          </Text>
+                          </Text> 
                         </Box>
                         {/* box for maint content */}
-                        <Box padding={"2px 0"} width="100%" color={"black"}>
+                        <Box padding={"2px 0"} width="100%"  color={props.colorMode==="dark"? "white":"black"}>
                           Hotel management is really about successfully
                           overseeing every operation of the business to make
                           sure consistent growth and development. This can
@@ -510,7 +516,7 @@ const Comment = (props: Props) => {
                         </Box>
 
                         {/* box for footer */}
-                        <CommentFooter />
+                        <CommentFooter bgColor={props.bgColor} colorMode={props.colorMode}/>
                       </Box>
                     </Box>
                   </Box>

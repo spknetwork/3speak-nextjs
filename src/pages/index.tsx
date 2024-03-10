@@ -21,12 +21,14 @@ import { videoData } from "../components/data/constData";
 import { BiDollar } from "react-icons/bi";
 import MiniSidebar from "@/components/MiniSidebar/MiniSidebar";
 import { BsDot } from "react-icons/bs";
+
+
 const NewIndex = () => {
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
   // const [videos, setVideos] = useState<VideoInterface[]>(videoData);
-  const videos = useMemo(()=> videoData, []);
+  const videos = useMemo(() => videoData, []);
   return (
     <MainLayout>
       <Box bg={bgColor}>
@@ -62,23 +64,9 @@ const NewIndex = () => {
           {/* {videos.length} */}
           {videos.map((video: VideoInterface, index: number) => (
             <GridItem w="100%" h="100%" key={index}>
-              <Box cursor={"pointer"} position="relative">
+              <Box id="parent" cursor={"pointer"} position="relative">
                 <Box
-                  display={"flex"}
-                  justifyContent="center"
-                  alignItems={"center"}
-                  position={"absolute"}
-                  bottom="5px"
-                  color={"#000"}
-                  fontSize="11px"
-                  fontWeight={"500"}
-                  left="5px"
-                  background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
-                  borderRadius="2px"
-                  paddingLeft={"4px"}
-                  paddingRight={"8px"}
-                ></Box>
-                <Box
+                  id={"views"}
                   display={"flex"}
                   justifyContent="center"
                   alignItems={"center"}
@@ -100,6 +88,7 @@ const NewIndex = () => {
                 </Box>
                 {/* Integrating the dollar sign  */}
                 <Box
+                  id="dollar_sign"
                   display={"flex"}
                   justifyContent="center"
                   alignItems={"center"}
@@ -125,6 +114,7 @@ const NewIndex = () => {
                   </Text>
                 </Box>
                 <Box
+                  id="timestamp"
                   position={"absolute"}
                   bottom="5px"
                   color={"#000"}
@@ -154,7 +144,9 @@ const NewIndex = () => {
                 <Text mt={2}>
                   <BsDot />
                 </Text>
-                <Text fontSize={"sm"} mt={1}>a day ago</Text>
+                <Text fontSize={"sm"} mt={1}>
+                  a day ago
+                </Text>
               </Flex>
               {/* <Text fontWeight={"bold"} as="p">
                 $ 10.10
