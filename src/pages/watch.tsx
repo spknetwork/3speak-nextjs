@@ -1,18 +1,3 @@
-// README: legacy redirect only
-
-// export async function getServerSideProps(context: any) {
-//   const [author, permlink] = context.query.v.split('/')
-//   return {
-//     redirect: {
-//       permanent: false,
-//       destination: `/@${author}/${permlink}`,
-//     },
-//     props:{},
-//   };
-// }
-
-//TODO: modify the author section
-//TODO: remove the widgets on hover
 
 import Video from "@/components/watch/Video";
 import {
@@ -28,7 +13,7 @@ import {
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import About from "@/components/watch/About";
 import Profile from "@/components/watch/Profile";
-import Comment from "@/components/watch/Comment";
+import Comment from "@/components/watch/Comment/Comment";
 import MenuButtons from "@/components/watch/MenuButtons";
 import Reactions from "@/components/watch/Reactions";
 import Views from "@/components/watch/Views";

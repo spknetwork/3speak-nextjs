@@ -1,6 +1,7 @@
 import { Box, Link, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 
+
 type Props = {
   bgColor: string,
   colorMode: string
@@ -196,7 +197,7 @@ const About = (props: Props) => {
         borderTop={"1px solid rgba(0,0,0,0.2)"}
         cursor="pointer"
       >
-        <Text className="text-dark" textAlign={"center"}>
+        <Text className="text-dark" textAlign={"center"} color={props.colorMode==="dark" ? "white" : "black"}>
           {showLess ? "Show more" : "Show less"}
         </Text>
       </Box>

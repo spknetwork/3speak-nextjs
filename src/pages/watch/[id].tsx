@@ -16,7 +16,7 @@ import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 
 import About from "@/components/watch/About";
 import Profile from "@/components/watch/Profile";
-import Comment from "@/components/watch/Comment";
+import Comment from "@/components/watch/Comment/Comment";
 import MenuButtons from "@/components/watch/MenuButtons";
 import Reactions from "@/components/watch/Reactions";
 import Views from "@/components/watch/Views";

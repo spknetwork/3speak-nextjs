@@ -13,6 +13,9 @@ import { BiComment, BiShare } from "react-icons/bi";
 type Props = {
   bgColor: string;
   colorMode: string;
+  commentId: number;
+  toggleCollapse: (key: number) => void;
+  isCollapsed: { [key: number]: boolean; };
 };
 const CommentFooter = (props: Props) => {
   const [comment, setComment] = useState(false);
