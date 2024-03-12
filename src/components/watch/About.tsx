@@ -1,11 +1,11 @@
 import { Box, Link, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
-
+import Community from "@/components/watch/Community";
 
 type Props = {
-  bgColor: string,
-  colorMode: string
-}
+  bgColor: string;
+  colorMode: string;
+};
 const About = (props: Props) => {
   const [showLess, setShowLess] = useState(true);
   const showLessFunction = () => {
@@ -16,13 +16,15 @@ const About = (props: Props) => {
       marginBottom={"30px"}
       padding="15px"
       borderRadius={"2px"}
-      boxShadow="0 0 11px #ececec;"
+      boxShadow={
+        props.colorMode === "dark" ? "0 0 11px black" : "0 0 11px #ececec;"
+      }
       transitionDuration={"0.4s"}
       background={props.bgColor}
     >
       <Text
         marginBottom={"5px"}
-        color={props.colorMode==="dark"?"white": "black"}
+        color={props.colorMode === "dark" ? "white" : "black"}
         fontSize={"15px"}
         fontWeight="600"
       >
@@ -35,7 +37,7 @@ const About = (props: Props) => {
         paddingBottom={"10px"}
       >
         <span className="description">
-          <Text  color={props.colorMode==="dark"?"white": "black"}>
+          <Text color={props.colorMode === "dark" ? "white" : "black"}>
             Hotel management is really about successfully overseeing every
             operation of the business to make sure consistent growth and
             development. This can involve the management of anything related to
@@ -157,7 +159,7 @@ const About = (props: Props) => {
         </span>
         <Text
           marginTop={"18px"}
-          color={props.colorMode==="dark"?"white": "black"}
+          color={props.colorMode === "dark" ? "white" : "black"}
           fontSize="15px"
           fontWeight={"600"}
         >
@@ -190,6 +192,16 @@ const About = (props: Props) => {
             </Link>
           </Text>
         </Box>
+        <Box
+          marginBottom={"30px"}
+          borderRadius={4}
+          // boxShadow="base"
+          mr={2}
+          flex="1"
+          bg={props.bgColor}
+        >
+          <Community bgColor={props.bgColor} colorMode={props.colorMode} />
+        </Box>
       </Box>
 
       <Box
@@ -197,7 +209,11 @@ const About = (props: Props) => {
         borderTop={"1px solid rgba(0,0,0,0.2)"}
         cursor="pointer"
       >
-        <Text className="text-dark" textAlign={"center"} color={props.colorMode==="dark" ? "white" : "black"}>
+        <Text
+          className="text-dark"
+          textAlign={"center"}
+          color={"white"}
+        >
           {showLess ? "Show more" : "Show less"}
         </Text>
       </Box>

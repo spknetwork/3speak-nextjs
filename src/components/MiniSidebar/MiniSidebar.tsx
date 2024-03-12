@@ -3,34 +3,42 @@ import {
   Flex,
   VStack,
   Text,
-  Image,
+  Icon,
   useColorModeValue,
   useColorMode,
-  Icon,
 } from "@chakra-ui/react";
 import Link from "next/link";
-//importing the data
 import { NAVIGATION } from "../../components/data/NavigationData";
-import { bgcolor } from "@mui/system";
 import { Sidebar } from "../Sidebar";
+import Image from "next/image";
 
-type Props = {};
 
-const MiniSidebar = (props: Props) => {
+const MiniSidebar = () => {
   const bgColor = useColorModeValue("gray.100", "gray.800");
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
 
   return (
     <Flex
-      justifyContent={"center"}
-      height={"full"}
-      w={16}
-      position={"absolute"}
+      direction="column"
+      height="100vh"
+      w={20}
+      position="sticky"
       left={0}
+      top={0}
+      py={4}
       backgroundColor={colorMode === "dark" ? "gray.600" : "gray.300"}
+      overflowY="auto"
     >
       <Sidebar />
-      <VStack spacing={8} mt={8} position="absolute" top={"64"}>
+      <VStack spacing={8} mt={8} position="relative" top={"112px"}>
+        <Image
+          src="/images/3speak.gif" 
+          alt=""
+          width={24} 
+          height={24} 
+          objectFit="cover" 
+          layout="fixed" 
+        />
         {NAVIGATION.map((item, index) => (
           <Link key={index} href={`${item.route!}`}>
             <Icon

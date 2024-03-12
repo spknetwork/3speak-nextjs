@@ -1,5 +1,6 @@
+//TODO: to make a tree collapsing for the comment section 
 
-import Video from "@/components/watch/Video";
+import Video from "@/components/watch/video/Video";
 import {
   Box,
   Flex,
@@ -16,7 +17,7 @@ import Profile from "@/components/watch/Profile";
 import Comment from "@/components/watch/Comment/Comment";
 import MenuButtons from "@/components/watch/MenuButtons";
 import Reactions from "@/components/watch/Reactions";
-import Views from "@/components/watch/Views";
+// import Views from "@/components/watch/Views";
 import Tags from "@/components/watch/Tags";
 import Title from "@/components/watch/Title";
 import VideoPlayer from "@/components/watch/VideoPlayer";
@@ -36,7 +37,7 @@ export default function Watch() {
 
   return (
     <Flex justifyContent={"right"} background={bgColor}>
-      <MiniSidebar />
+      <MiniSidebar  />
       <Flex
         width={"97%"}
         css={css`
@@ -88,16 +89,6 @@ export default function Watch() {
               </Box>
             </Box>
           </Box>
-          <Box
-            marginBottom={"30px"}
-            borderRadius={4}
-            // boxShadow="base"
-            mr={2}
-            flex="1"
-            bg={bgColor}
-          >
-            <Community bgColor={bgColor} colorMode={colorMode} />
-          </Box>
 
           <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg={bgColor}>
             {/* published or about components */}
@@ -140,7 +131,7 @@ export default function Watch() {
           >
             <GridItem
               marginTop={"1px !important"}
-              m={5}
+              mx={4}
               w="100%"
               h="10"
               bg={bgColor}

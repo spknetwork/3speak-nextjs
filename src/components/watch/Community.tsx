@@ -8,7 +8,7 @@ type Props = {
 const Community = (props: Props) => {
   return (
     <Flex justifyContent={"start"}>
-      <Box bg={props.bgColor} p={4} color={props.colorMode==="dark" ? "white" : "black"}>
+      <Box bg={props.bgColor} color={props.colorMode==="dark" ? "white" : "black"}>
         <Text marginBottom={"10px"} fontSize={"11px"}>
           Community
         </Text>

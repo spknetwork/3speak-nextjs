@@ -2,6 +2,7 @@ import { Box, Image, Link, Text } from "@chakra-ui/react";
 import React from "react";
 import { MdPlayArrow } from "react-icons/md";
 import { BsDot } from "react-icons/bs";
+import { BiDollar } from "react-icons/bi";
 
 const Video = ({ videoSrc, number_views, bgColor, colorMode }: any) => {
   return (
@@ -50,6 +51,31 @@ const Video = ({ videoSrc, number_views, bgColor, colorMode }: any) => {
           </Text>
         </Box>
         <Box
+          id="views"
+          display={"flex"}
+          justifyContent="center"
+          alignItems={"center"}
+          position={"absolute"}
+          bottom="5px"
+          color="black"
+          fontSize="11px"
+          fontWeight={"500"}
+          left="48px"
+          background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
+          borderRadius="2px"
+          paddingLeft={"4px"}
+          paddingRight={"8px"}
+        >
+          <BiDollar size="12px" color="grey" />
+          <Text
+            as="span"
+            fontSize="11px"
+            fontWeight={"bold"}
+          >
+            10.0
+          </Text>
+        </Box>
+        <Box
          id="timestamp"
           position={"absolute"}
           bottom="5px"
@@ -91,17 +117,7 @@ const Video = ({ videoSrc, number_views, bgColor, colorMode }: any) => {
           bg="white.500"
           color={colorMode === "dark" ? "white" : "black"}
         >
-          <Link
-            paddingRight={1}
-            textDecor={"none !important"}
-            fontSize="11px"
-            fontWeight={"500"}
-            cursor="pointer"
-            transition={"all 0.2s"}
-          >
-            stellamartinez
-          </Link>
-          .{/* <BsDot /> */}
+          {/* <BsDot /> */}
           <Link
             paddingLeft={1}
             fontSize="9px"
@@ -112,9 +128,20 @@ const Video = ({ videoSrc, number_views, bgColor, colorMode }: any) => {
           >
             1 month ago
           </Link>
+          <br />
+          <Link
+            paddingLeft={1}
+            textDecor={"none !important"}
+            fontSize="14px"
+            fontWeight={"500"}
+            cursor="pointer"
+            transition={"all 0.2s"}
+          >
+            stellamartinez
+          </Link>
         </Box>
         <Box lineHeight="17px" bg="white.500" color={"#acacac"}></Box>
-        <Box
+        {/* <Box
           lineHeight="17px"
           bg="white.500"
           color={colorMode === "dark" ? "white" : "black"}
@@ -128,7 +155,7 @@ const Video = ({ videoSrc, number_views, bgColor, colorMode }: any) => {
           >
             $10.00
           </Link>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );

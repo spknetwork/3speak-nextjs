@@ -4,7 +4,7 @@ import React from "react";
 
 const Views = () => {
   return (
-    
+    <h1>Hey there!</h1>
   );
 };
 

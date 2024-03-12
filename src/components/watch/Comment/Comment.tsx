@@ -13,12 +13,32 @@ type Props = {
 const Comment = ({ bgColor, colorMode }: Props) => {
  const [isCollapsed, setIsCollapsed] = useState<{ [key: number]: boolean }>({});
 
- const toggleCollapse = (commentId: number) => {
-    setIsCollapsed((prevState) => ({
-      ...prevState,
-      [commentId]: !prevState[commentId],
-    }));
+ const toggleCollapse = (commentId: number, isParent = false) => {
+      setIsCollapsed((prevState) => {
+      const newState = {...prevState};
+      if(isParent){
+        const replies = commentsData.find((comment) => comment.id === commentId)?.replies || []; 
+        const allReplies = getAllReplies(replies);
+
+        allReplies.forEach((reply) => {
+          newState[reply.id] = !prevState[commentId];
+        });
+      }
+      newState[commentId] = !prevState[commentId];
+      return newState;
+    })
  };
+
+ const getAllReplies = (replies: any): any[] => {
+   let allReplies: any[] = [];
+   replies.forEach((reply: any)=> {
+     allReplies.push(reply);
+     if(reply.replies) {
+      allReplies = [...allReplies, ...getAllReplies(reply.replies)]
+     }
+   })
+   return allReplies;
+ }
 
  const renderReplies = (replies: any, depth = 1) => {
     return replies.map((reply: any) => (
@@ -135,11 +155,11 @@ const Comment = ({ bgColor, colorMode }: Props) => {
                 >
                  {isCollapsed[commentData.id] ? (
                    <Box position={"absolute"} top={3} left={-1}>
-                   <CiCirclePlus onClick={() => toggleCollapse(commentData.id)} />
+                   <CiCirclePlus onClick={() => toggleCollapse(commentData.id, true)} />
                  </Box>
                  ) : (
                   <Box position={"absolute"} top={3} left={-1}>
-                  <CiCircleMinus onClick={() => toggleCollapse(commentData.id)} />
+                  <CiCircleMinus onClick={() => toggleCollapse(commentData.id, true)} />
                 </Box>
                  )}
                 </Box>

@@ -11,7 +11,7 @@
 //   };
 // }
 
-import Video from "@/components/watch/Video";
+import Video from "@/components/watch/video/Video";
 import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 
 import About from "@/components/watch/About";
