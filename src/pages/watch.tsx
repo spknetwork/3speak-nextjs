@@ -1,5 +1,3 @@
-//TODO: to make a tree collapsing for the comment section 
-
 import Video from "@/components/watch/video/Video";
 import {
   Box,
@@ -37,7 +35,7 @@ export default function Watch() {
 
   return (
     <Flex justifyContent={"right"} background={bgColor}>
-      <MiniSidebar  />
+      <MiniSidebar />
       <Flex
         width={"97%"}
         css={css`
