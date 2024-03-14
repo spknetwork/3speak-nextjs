@@ -4,16 +4,21 @@ import { Box, Flex, Grid, GridItem, Image, Switch, Text, useColorMode, useColorM
 import { css } from "@emotion/react";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
-import { TRENDING_FEED } from "../graphql/queries";
+import { GET_TRENDING_TAGS, TRENDING_FEED } from "../../graphql/queries";
 import { VideoInterface } from "types";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import MainLayout from "@/components/Layouts/main_layout";
 import { useRouter } from "next/router";
 import { useAppStore } from "@/lib/store";
-const NewComers2 = () => {
+const VideoTags = () => {
   const router = useRouter();
 
-  const { loading, error, data } = useQuery(TRENDING_FEED);
+  const { tag } = router.query;
+
+
+  const { loading, error, data } = useQuery(GET_TRENDING_TAGS, {
+    variables: { tag },
+});
   const bgColor = useColorModeValue('gray.100', 'gray.800');
   const { colorMode, toggleColorMode } = useColorMode();
   const { setVideo, video: videoSelected } = useAppStore();
@@ -22,7 +27,7 @@ const NewComers2 = () => {
 
   useEffect(() => {
     if (!loading && !error && data) {
-      console.log("setVideos data TRENDING_FEED",data);
+      console.log("setVideos data GET_TRENDING_TAGS",data);
 
       setVideos(
         data.trendingFeed.items
@@ -37,8 +42,6 @@ const NewComers2 = () => {
               author: e.author,
               permlink: e.permlink,
               tags: e.tags,
-              stats: e.stats,
-
             };
           })
       );
@@ -60,7 +63,7 @@ const NewComers2 = () => {
         <Flex marginRight={'30px'} justifyContent={'space-between'} alignItems='center'>
           <Box padding="20px">
             <Text as="h1" fontWeight={"300 !important"}>
-              TRENDING VIDEOS
+              #{tag} VIDEOS
             </Text>
           </Box>
           <Text>
@@ -112,4 +115,4 @@ const NewComers2 = () => {
   );
 };
 
-export default NewComers2;
+export default VideoTags;

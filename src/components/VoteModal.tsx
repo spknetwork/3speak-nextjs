@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import { modal } from 'src/styles';
 
+
 export default function VoteModal(props: any) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);

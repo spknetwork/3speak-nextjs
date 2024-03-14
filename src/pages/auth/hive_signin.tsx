@@ -20,7 +20,7 @@ const HiveSignIn = ({ tab }: any) => {
     if (colorMode == 'dark') {
       toggleColorMode()
     }
-  },[])
+  },[colorMode,toggleColorMode ])
 
   const router = useRouter();
   const { allowAccess, checkAuth, login_with_hive } = useAppStore();
@@ -129,8 +129,6 @@ const HiveSignIn = ({ tab }: any) => {
     <AuthLayout>
       <Flex
         justifyContent="center"
-        px="1rem"
-        py="1rem"
         alignItems={{ _: "flex-start", tablet: "flex-start" }}
         backgroundColor="#F5F5F5"
       >

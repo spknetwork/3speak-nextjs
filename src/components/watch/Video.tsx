@@ -1,10 +1,20 @@
+import { useAppStore } from "@/lib/store";
 import { Box, Image, Link, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React from "react";
 import { MdPlayArrow } from "react-icons/md";
 
-const Video = ({ videoSrc, number_views }: any) => {
+const Video = ({ video, videoSrc, number_views }: any) => {
+  const router = useRouter();
+  const { setVideo, video: videoSelected } = useAppStore();
+
+  const setVideoDetails = (video:any) => {
+    console.log("video",video)
+    setVideo(video)
+    router.push("/watch?username="+video.author.username+"&v="+video.permlink)
+  }
   return (
-    <Box w="100%" bg="white.500" color={"black"} marginBottom="3rem">
+    <Box onClick={() => setVideoDetails(video)} w="100%" bg="white.500" color={"black"} marginBottom="3rem">
       {/* cursor={'pointer'} */}
       <Box
         cursor={'pointer'} 
@@ -71,7 +81,7 @@ const Video = ({ videoSrc, number_views }: any) => {
             color={'black'}
             textDecor={'none !important'}
           >
-            (Eng/Esp)🔴¡VIVIR EN EL PASADO TE HACE DAÑO! Despabila
+            {video.title}
           </Link>
         </Box>
         <Box

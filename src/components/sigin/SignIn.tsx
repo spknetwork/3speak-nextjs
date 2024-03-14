@@ -189,7 +189,7 @@ const SignIn = () => {
                 )}
               </fieldset>
             </Box>
-            <Box
+            {/* <Box
               width="100%"
               borderRadius="0.25rem"
               mt="1.5rem"
@@ -201,7 +201,7 @@ const SignIn = () => {
               <Typography textAlign="center" color="#721c24">
                 {t("login.disclaimer")}
               </Typography>
-            </Box>
+            </Box> */}
             <Flex width="100%" justifyContent="center" mt="1rem">
               <StyledButton type="submit">Log in</StyledButton>
             </Flex>

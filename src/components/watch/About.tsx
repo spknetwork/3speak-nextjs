@@ -1,11 +1,51 @@
 import { Box, Link, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const About = () => {
+const About = ({ getVideo }: any) => {
   const [showLess, setShowLess] = useState(true);
   const showLessFunction = () => {
     setShowLess(!showLess);
   };
+  const [videoUrl, setvideoUrl] = useState<any>(null)
+  const [videoUrlSelected, setvideoUrlSelected] = useState<any>(null)
+  // let remaningTags:any = [];
+
+
+  useEffect(() => {
+    if (videoUrl) {
+      // console.log("setvideoUrl4 final step",videoUrl)
+    }
+
+  }, [videoUrl])
+
+  useEffect(() => {
+    if (getVideo) {
+      // console.log("getVideo in player 3", getVideo.spkvideo.play_url)
+      if (getVideo.spkvideo.play_url) {
+        const url = getVideo.spkvideo.play_url
+        // Splitting the string by "ipfs://" and getting the first result
+        const splitResult = url.split("ipfs://");
+
+        // The first element after splitting might be an empty string if the string starts with "ipfs://"
+        // So, we check if the first element is empty and select the second element in that case
+        const result = splitResult[0] === "" ? splitResult[1] : splitResult[0];
+        setvideoUrlSelected("https://ipfs-3speak.b-cdn.net/ipfs/" + result)
+      }
+      // console.log("ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8")
+      setvideoUrl(getVideo.spkvideo)
+      
+    }
+  }, [getVideo])
+
+  useEffect(() => {
+    console.log("videoUrlSelected", videoUrlSelected)
+  }, [videoUrlSelected])
+  // "https://ipfs-3speak.b-cdn.net/ipfs/QmWoqdoLtsF4obB5sfSUc3GEZGY87TmcJrt6JpH8bJqsuK/manifest.m3u8" thumbnail_url
+  // "https://ipfs-3speak.b-cdn.net/ipfs/bafybeibqxbf652lmfbdf7zoht3pbhkx4m76agdwn5mnw33vjhlxrzvccoe/"
+  // `${videoUrl.play_url}` ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8
+  if (!videoUrl) {
+    return <Box>getting video details</Box>;
+  }
   return (
     <Box
       marginBottom={"30px"}
@@ -31,7 +71,11 @@ const About = () => {
       >
         <span className="description">
           <Text color={"black"}>
-            Hotel management is really about successfully overseeing every
+            <div>
+              {/* Use dangerouslySetInnerHTML to insert the HTML */}
+              <div dangerouslySetInnerHTML={{ __html: videoUrl.body /* or sanitizedHtml if you sanitized it */ }} />
+            </div>
+            {/* Hotel management is really about successfully overseeing every
             operation of the business to make sure consistent growth and
             development. This can involve the management of anything related to
             the hotel industry and needs knowledge of distribution strategy,
@@ -147,7 +191,7 @@ const About = () => {
               title="Link expanded to plain text; beware of a potential phishing attempt"
             >
               https://www.travelopro.com/hotel-management-software.php
-            </a>
+            </a> */}
           </Text>
         </span>
         <Text
@@ -159,31 +203,18 @@ const About = () => {
           Tags:
         </Text>
         <Box display={"flex"} flexWrap="wrap" flexDirection={"row"}>
-          <Text>
-            <Link href="#" color={"blue"} display={"inline-block"}>
-              #onlinehotelbookingmanagementsystem&nbsp;
-            </Link>
-          </Text>
-          <Text>
-            <Link href="#" color={"blue"} display={"inline-block"}>
-              #system&nbsp;
-            </Link>
-          </Text>
-          <Text>
-            <Link href="#" color={"blue"} display={"inline-block"}>
-              #3speakspeaking&nbsp;
-            </Link>
-          </Text>
-          <Text>
-            <Link href="#" color={"blue"} display={"inline-block"}>
-              #tagateam&nbsp;
-            </Link>
-          </Text>
-          <Text>
-            <Link href="#" color={"blue"} display={"inline-block"}>
-              #thisisatestshow&nbsp;
-            </Link>
-          </Text>
+          {
+            getVideo.tags.slice(5).map((tag: any, index:number) => {
+              return (
+                <Box key={index}>
+                  <Link href={"/tags/" + `${tag}`} color={"blue"} display={"inline-block"}>
+                    #{tag}&nbsp;
+                  </Link>
+                </Box>
+              )
+            })
+          }
+
         </Box>
       </Box>
 

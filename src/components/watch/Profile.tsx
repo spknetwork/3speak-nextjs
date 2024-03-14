@@ -1,19 +1,84 @@
+import { GET_TOTAL_COUNT_OF_FOLLOWING } from "@/graphql/queries";
+import { useQuery } from "@apollo/client";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Button, Flex, Link, Text } from "@chakra-ui/react";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 
-const Profile = () => {
+const Profile = ({ profile, getVideo }: any) => {
+  const router = useRouter();
+  const { loading, error, data } = useQuery(GET_TOTAL_COUNT_OF_FOLLOWING, {
+    variables: { id: router.query.username },
+});
+
+useEffect(() => {
+  if (!loading && !error && data) {
+    console.log("GET_TOTAL_COUNT_OF_FOLLOWING", data);
+    setfollowings_count(data.follows.followings_count)
+    setfollowers_count(data.follows.followers_count)
+    
+  }
+}, [loading, data, error]);
+  const [videoUrl, setvideoUrl] = useState<any>(null)
+  const [followings_count, setfollowings_count] = useState<any>(null)
+  const [followers_count, setfollowers_count] = useState<any>(null)
+  
+  const [videoUrlSelected, setvideoUrlSelected] = useState<any>(null)
+  useEffect(() => {
+    if (videoUrl) {
+      // console.log("setvideoUrl4 final step",videoUrl)
+    }
+
+  }, [videoUrl])
+
+  useEffect(() => {
+    if (getVideo) {
+      // console.log("getVideo in player 3", getVideo.spkvideo.play_url)
+      if (getVideo.spkvideo.play_url) {
+        const url = getVideo.spkvideo.play_url
+        // Splitting the string by "ipfs://" and getting the first result
+        const splitResult = url.split("ipfs://");
+
+        // The first element after splitting might be an empty string if the string starts with "ipfs://"
+        // So, we check if the first element is empty and select the second element in that case
+        const result = splitResult[0] === "" ? splitResult[1] : splitResult[0];
+        setvideoUrlSelected("https://ipfs-3speak.b-cdn.net/ipfs/" + result)
+      }
+      // console.log("ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8")
+      setvideoUrl(getVideo.spkvideo)
+    }
+  }, [getVideo])
+
+  useEffect(() => {
+    console.log("videoUrlSelected", videoUrlSelected)
+  }, [videoUrlSelected])
+  // "https://ipfs-3speak.b-cdn.net/ipfs/QmWoqdoLtsF4obB5sfSUc3GEZGY87TmcJrt6JpH8bJqsuK/manifest.m3u8" thumbnail_url
+  // "https://ipfs-3speak.b-cdn.net/ipfs/bafybeibqxbf652lmfbdf7zoht3pbhkx4m76agdwn5mnw33vjhlxrzvccoe/"
+  // `${videoUrl.play_url}` ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8
+  if (!videoUrl) {
+    return <Box>getting video details</Box>;
+  }
+
+  const gotoProfile = () => {
+    router.push(`/user/${profile?.username}`)
+  }
   return (
     <Flex justifyContent={"space-between"}>
-      <Box bg="white" p={4} color="black">
+      <Box cursor={'pointer'} onClick={() => gotoProfile()} bg="white" p={4} color="black">
+      {/* src="https://bit.ly/dan-abramov" */}
+
         <Flex alignItems={"center"}>
           <Avatar
             name="Dan Abrahmov"
             alignSelf={"start"}
-            src="https://bit.ly/dan-abramov"
+            src={profile?.images?.avatar}
           />
-          <Flex flexDirection={"column"} className="ms-4">
-            <Link fontWeight={"bolder"}>stellamartinez</Link>
+          <Flex flexDirection={"column"} className="ms-2">
+            <Link fontSize={'15px'}  fontWeight={"bolder"}>{getVideo.author.username}</Link>
+            <Box display={'flex'} >
+              <Text color={'grey'} fontSize={'12px'} marginRight='10px'>followers {followers_count}</Text>
+              <Text color={'grey'} fontSize={'12px'}>following {followings_count}</Text>
+            </Box>
             {/* <Flex justifyContent={"start"}>
               <Box bg="white" p={4} paddingLeft="0px" color="black">
                 <Text marginBottom={"10px"} fontSize={"11px"}>
@@ -49,7 +114,7 @@ const Profile = () => {
           fontWeight={"400"}
           color={"#212121"}
         >
-          FOLLOW 47
+          FOLLOW 
         </Button>
         <Button
           marginRight={"10px"}

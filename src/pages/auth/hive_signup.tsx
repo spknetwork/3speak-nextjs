@@ -11,13 +11,11 @@ const HiveSIgnUp = () => {
     if (colorMode == 'dark') {
       toggleColorMode()
     }
-  },[])
+  },[colorMode, toggleColorMode])
   return (
     <AuthLayout>
       <Flex
         justifyContent="center"
-        px="1rem"
-        py="1rem"
         alignItems={{ _: "flex-start", tablet: "flex-start" }}
         backgroundColor="#F5F5F5"
       >
