@@ -1,4 +1,4 @@
-import { Box, Image, Link, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Link, Text } from "@chakra-ui/react";
 import React from "react";
 import { MdPlayArrow } from "react-icons/md";
 import { BsDot } from "react-icons/bs";
@@ -24,59 +24,55 @@ const Video = ({ videoSrc, number_views, bgColor, colorMode }: any) => {
         marginRight="6px"
         position={"relative"}
       >
-        <Box
-          id="views"
-          display={"flex"}
-          justifyContent="center"
-          alignItems={"center"}
-          position={"absolute"}
-          bottom="5px"
-          color="black"
-          fontSize="11px"
-          fontWeight={"500"}
-          left="5px"
-          background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
-          borderRadius="2px"
-          paddingLeft={"4px"}
-          paddingRight={"8px"}
-        >
-          <MdPlayArrow size="15px" color="grey" />
-          <Text
-            as="span"
-            marginLeft={"2px"}
+        <Flex position={"absolute"} left={0} bottom={1}>
+          <Box
+            id="views"
+            display={"flex"}
+            justifyContent="center"
+            alignItems={"center"}
+            bottom="5px"
+            color="black"
             fontSize="11px"
-            fontWeight={"bold"}
+            fontWeight={"500"}
+            left="1px"
+            background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
+            borderRadius="2px"
+            paddingRight={"2px"}
+            paddingLeft={"2px"}
+            marginX={2}
           >
-            {number_views}
-          </Text>
-        </Box>
-        <Box
-          id="views"
-          display={"flex"}
-          justifyContent="center"
-          alignItems={"center"}
-          position={"absolute"}
-          bottom="5px"
-          color="black"
-          fontSize="11px"
-          fontWeight={"500"}
-          left="48px"
-          background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
-          borderRadius="2px"
-          paddingLeft={"4px"}
-          paddingRight={"8px"}
-        >
-          <BiDollar size="12px" color="grey" />
-          <Text
-            as="span"
+            <MdPlayArrow size="15px" color="grey" />
+            <Text
+              as="span"
+              marginLeft={"2px"}
+              fontSize="11px"
+              fontWeight={"bold"}
+            >
+              {number_views}
+            </Text>
+          </Box>
+          <Box
+            id="views"
+            display={"flex"}
+            justifyContent="center"
+            alignItems={"center"}
+            color="black"
             fontSize="11px"
-            fontWeight={"bold"}
+            fontWeight={"500"}
+            background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
+            borderRadius="2px"
+            paddingLeft={"2px"}
+            paddingRight={"2px"}
+            marginX={2}
           >
-            10.0
-          </Text>
-        </Box>
+            <BiDollar size="12px" color="grey" />
+            <Text as="span" fontSize="11px" fontWeight={"bold"}>
+              10.0
+            </Text>
+          </Box>
+        </Flex>
         <Box
-         id="timestamp"
+          id="timestamp"
           position={"absolute"}
           bottom="5px"
           color={"#000"}
