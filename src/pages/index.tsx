@@ -23,9 +23,8 @@ import { BsDot } from "react-icons/bs";
 
 
 const NewIndex = () => {
+  const {colorMode} = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
-  const textColor = useColorModeValue("black", "white");
-  const { colorMode, toggleColorMode } = useColorMode();
   // const [videos, setVideos] = useState<VideoInterface[]>(videoData);
   const videos = useMemo(() => videoData, []);
   return (

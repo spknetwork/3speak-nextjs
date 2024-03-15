@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { LeaderTile } from "@/components/LeaderTile";
-
-//TODO: make a widget coming soon and remove everything
+import { Flex, Text } from "@chakra-ui/react";
+import MainLayout from "@/components/Layouts/main_layout";
 
 export default function LeaderboardView() {
   const [first, setFirst] = useState<any>();
@@ -86,46 +86,12 @@ export default function LeaderboardView() {
   }, [first]);
 
   return (
-    <div>
-      <div className="header_sec">
-        <Container fluid className="header_sec">
-          <div className="row">
-            <div className="col-lg-6 col-md-6 col-xs-12 header_dist1">
-              <h1 className="white_col">Content Creator Leaderboard</h1>
-            </div>
-          </div>
-        </Container>
-      </div>
-      <section className="p-5">
-        <Container fluid>
-          <Row className="justify-content-md-center">
-            <div className="col-xl-8 col-sm-8 col-12 mb-3">
-              {first && (
-                <LeaderTile info={first} reflink={`hive:${first.username}`} />
-              )}
-            </div>
-          </Row>
-          <Row className="justify-content-md-center">
-            <div className="col-xl-5 col-sm-8 col-12 mb-3">
-              {second ? (
-                <LeaderTile info={second} reflink={`hive:${second.username}`} />
-              ) : null}
-            </div>
-            <div className="col-xl-5 col-sm-8 col-12 mb-3">
-              {third ? (
-                <LeaderTile info={third} reflink={`hive:${third.username}`} />
-              ) : null}
-            </div>
-            <Row>
-              {bronze.map((value) => (
-                <div key={value.username} className="col-xl-2 col-sm-4 mb-3">
-                  <LeaderTile info={value} reflink={`hive:${value.username}`} />
-                </div>
-              ))}
-            </Row>
-          </Row>
-        </Container>
-      </section>
-    </div>
+    <MainLayout>
+    <Flex w="full" h="96vh" justifyContent={"center"} alignItems="center">
+      <Text fontSize={"4xl"}>
+        Coming Soon!
+      </Text>
+      </Flex>
+    </MainLayout>
   );
 }
