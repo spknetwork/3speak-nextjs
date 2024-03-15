@@ -19,7 +19,6 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import MainLayout from "@/components/Layouts/main_layout";
 import { videoData } from "../components/data/constData";
 import { BiDollar } from "react-icons/bi";
-import MiniSidebar from "@/components/MiniSidebar/MiniSidebar";
 import { BsDot } from "react-icons/bs";
 
 
@@ -42,14 +41,6 @@ const NewIndex = () => {
               &nbsp;
             </Text>
           </Box>
-          <Text>
-            <Switch
-              isChecked={colorMode === "dark"}
-              onChange={toggleColorMode}
-            />{" "}
-            {colorMode === "dark" && <MoonIcon />}{" "}
-            {colorMode !== "dark" && <SunIcon />}
-          </Text>
         </Flex>
         <Grid
           padding={"20px"}

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { LeaderTile } from "@/components/LeaderTile";
 
+//TODO: make a widget coming soon and remove everything
+
 export default function LeaderboardView() {
   const [first, setFirst] = useState<any>();
   const [second, setSecond] = useState<any>();

@@ -3,6 +3,9 @@ import Achievements from "@/components/user/Achievements";
 import Earnings from "@/components/user/Earnings";
 import Livestream from "@/components/user/Livestream";
 import { HamburgerIcon } from "@chakra-ui/icons";
+//TODO: remove the earnings and achievements in the user page
+//TODO: also correct the alignment for the cover page
+
 import {
     Alert,
     AlertIcon,
@@ -148,33 +151,6 @@ const UserPage: React.FC = () => {
         }
     }, [isMobile, showNav]);
 
-    // const [videos] = useState<VideoInterface[]>([
-    //     {
-    //         thumbnail:
-    //             "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVijsuv81Cu6QUxATfwLCchp7dhexyXdq6vj7hSxy7PKLRNLf5CYPBTwYKRDj6dR95KAhZkjwL?format=jpeg&mode=cover&width=340&height=191",
-    //         title:
-    //             "The Adventure trail of Mount Naupa and Mind2Mind Talk with Lakwatserong Engineer",
-    //         username: "thetrollingmind",
-    //     },
-    //     {
-    //         thumbnail:
-    //             "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVhbe9xjZvwDJDwq34KonBAhp6aDi5QWVMa8GKtBZHpfb4pz88JsvtNudXgZBf9vd4ahzvcP1p?format=jpeg&mode=cover&width=340&height=191",
-    //         title: "Refreshing Communal Ranch in Bukidnon Philippines",
-    //         username: "thetrollingmind",
-    //     },
-    //     {
-    //         thumbnail:
-    //             "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVb4cnggfP19UUoMFibN8JndfBo44LsTNKVZ5tXRYFs7vB9bWocqyN3CFG7xfRFuKAomRBmvQ6?format=jpeg&mode=cover&width=340&height=191",
-    //         title: "Via Crucis at Camari Hill | Lenten Tradition",
-    //         username: "thetrollingmind",
-    //     },
-    //     {
-    //         thumbnail:
-    //             "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbFQdnkVpujsZq5ivaUS3RobVsvgoUMDXSTgZCHfbwNsgBSuTKvqmnzt9EUtxERKUQ5963fSE?format=jpeg&mode=cover&width=340&height=191",
-    //         title: "Weekend Adventure- to the Mountain of Kan-irag",
-    //         username: "thetrollingmind",
-    //     },
-    // ]);
 
     const [directDelegations, setDirectDelegations] = useState<any>(null);
     const list_rc_direct_delegations = async (from: any, to: any, limit: any) => {

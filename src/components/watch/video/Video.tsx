@@ -24,9 +24,8 @@ const Video = ({ videoSrc, number_views, bgColor, colorMode }: any) => {
         marginRight="6px"
         position={"relative"}
       >
-        <Flex position={"absolute"} left={0} bottom={1}>
+        <Flex id="widget" position={"absolute"} left={0} bottom={1}>
           <Box
-            id="views"
             display={"flex"}
             justifyContent="center"
             alignItems={"center"}
@@ -52,7 +51,6 @@ const Video = ({ videoSrc, number_views, bgColor, colorMode }: any) => {
             </Text>
           </Box>
           <Box
-            id="views"
             display={"flex"}
             justifyContent="center"
             alignItems={"center"}

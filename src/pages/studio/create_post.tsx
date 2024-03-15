@@ -89,6 +89,7 @@ const CreatePost: React.FC = () => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
 
+
     if (!file?.type?.startsWith("video/")) {
       console.log("Cant upload file, Select a video type only");
       toast({
@@ -330,9 +331,9 @@ const CreatePost: React.FC = () => {
   //   return <Box>Loading...</Box>;
   // }
 
-  if (authenticated === false) {
-    return <Box>Unauthorized access, please login first</Box>;
-  }
+  // if (authenticated === false) {
+  //   return <Box>Unauthorized access, please login first</Box>;
+  // }
 
   return (
     <Box minH="100vh" bg={colorModeValue}>

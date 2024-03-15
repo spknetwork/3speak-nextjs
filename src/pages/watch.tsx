@@ -22,20 +22,21 @@ import VideoPlayer from "@/components/watch/VideoPlayer";
 import Community from "@/components/watch/Community";
 import { css } from "@emotion/react";
 import { useState } from "react";
-import MiniSidebar from "@/components/MiniSidebar/MiniSidebar";
+import MainLayout from "@/components/Layouts/main_layout";
+
+
 
 export default function Watch() {
   const [count, setCount] = useState<number>(0);
   console.log(count);
 
-  //for the dark mode
+  const {colorMode} = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
-  const textColor = useColorModeValue("black", "white");
-  const { colorMode, toggleColorMode } = useColorMode();
+
 
   return (
+    <MainLayout>
     <Flex justifyContent={"right"} background={bgColor}>
-      <MiniSidebar />
       <Flex
         width={"97%"}
         css={css`
@@ -51,14 +52,6 @@ export default function Watch() {
         padding={"10px"}
       >
         <Box flex="1">
-          <Text position={"absolute"} right={12}>
-            <Switch
-              isChecked={colorMode === "dark"}
-              onChange={toggleColorMode}
-            />{" "}
-            {colorMode === "dark" && <MoonIcon />}{" "}
-            {colorMode !== "dark" && <SunIcon />}
-          </Text>
           <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg={bgColor}>
             <Box
               m={5}
@@ -78,7 +71,7 @@ export default function Watch() {
                   <Flex
                     justifyContent={"space-between"}
                     marginTop="1rem"
-                    bgColor={bgColor}
+                    bgColor={bgColor} 
                   >
                     <Profile bgColor={bgColor} colorMode={colorMode} />
                     <Reactions />
@@ -200,5 +193,6 @@ export default function Watch() {
         </Box>
       </Flex>
     </Flex>
+</MainLayout>
   );
 }

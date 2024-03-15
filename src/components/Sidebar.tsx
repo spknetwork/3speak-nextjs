@@ -179,7 +179,7 @@
 
     return (
       <Box>
-        <Button ref={btnRef} colorScheme="grey.100" textColor={colorMode === "dark" ? "white" : "black"} onClick={onOpen} fontSize={"4xl"}>
+        <Button ref={btnRef} colorScheme="grey.100" textColor={colorMode === "dark" ? "white" : "black"} onClick={onOpen} fontSize={"3xl"}>
         <TbLayoutSidebarRightCollapseFilled />
         </Button>
 
