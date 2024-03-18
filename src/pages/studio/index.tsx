@@ -125,7 +125,7 @@ export default function StudioPage({ children }: { children: ReactNode }) {
             >
               Dashboard
             </Text>
-
+  
             <Text
               as={"h3"}
               textTransform="inherit"

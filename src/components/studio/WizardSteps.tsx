@@ -1,14 +1,19 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
-
-const WizardSteps = ({changeCurrentStep, steps }:any) => {
+//TODO: make the progress bar buttons clickable
+type props = {
+  bgColor: string
+  toggleDetails: () => boolean
+}
+const WizardSteps = ({changeCurrentStep, steps, bgColor, toggleDetails }:any) => {
   return (
     <Box
     borderRadius={"10px"}
-    background="white"
+    backgroundColor={bgColor}
     marginTop={"10px"}
     height={"auto"}
     width={"100%"}
+    boxShadow={"0px 0px 2px 2px lightblue"}
   >
     <Flex
       height={"119px"}
@@ -60,7 +65,7 @@ const WizardSteps = ({changeCurrentStep, steps }:any) => {
         height="60px"
       >
         {/* for Details */}
-        <Text margin='0px' fontWeight={"bold"}>Details</Text>
+        <Text margin='0px' fontWeight={"bold"}  onClick={toggleDetails}>Details</Text>
       </Flex>
 
       <Flex

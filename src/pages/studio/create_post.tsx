@@ -1,6 +1,7 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import styled from "styled-components";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
+import { MentionsInput, Mention } from 'react-mentions';
 import axios from "axios";
 import { generateVideoThumbnails } from "@rajesh896/video-thumbnails-generator";
 import tus, { Upload, UploadOptions } from "tus-js-client";
@@ -24,6 +25,8 @@ import {
   RadioGroup,
   Radio,
   useToast,
+  Switch,
+  useColorMode,
 } from "@chakra-ui/react";
 
 import { FaUpload } from "react-icons/fa";
@@ -41,6 +44,10 @@ type FilePreview = {
 };
 
 const CreatePost: React.FC = () => {
+  //for the dark mode
+  const { colorMode } = useColorMode();
+  const bgColor = useColorModeValue("white", "gray.800");
+
   // video title
   const [videoTitle, setVideoTitle] = useState<string>("");
   const [videoDescription, setVideoDesription] = useState<string>("");
@@ -88,7 +95,6 @@ const CreatePost: React.FC = () => {
   const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
-
 
     if (!file?.type?.startsWith("video/")) {
       console.log("Cant upload file, Select a video type only");
@@ -146,15 +152,11 @@ const CreatePost: React.FC = () => {
     };
     const token = localStorage.getItem("access_token");
     axios
-      .post(
-        "https://acela.us-02.infra.3speak.tv/api/v1/start_encode",
-        params,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post("https://acela.us-02.infra.3speak.tv/api/v1/start_encode", params, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         toast({
           position: "top-right",
@@ -176,7 +178,7 @@ const CreatePost: React.FC = () => {
           isClosable: true,
         });
       });
-  }
+  };
   const handleCreatePost = (): void => {
     // get video title
     // get video description
@@ -234,7 +236,6 @@ const CreatePost: React.FC = () => {
     let thumbnail = [];
     if (previewManualThumbnails.length > 0) {
       thumbnail.push(previewManualThumbnails[0]);
-
     } else {
       thumbnail.push(previewThumbnails[0]);
     }
@@ -243,10 +244,10 @@ const CreatePost: React.FC = () => {
 
     const token = localStorage.getItem("access_token");
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_id', response.data.upload_id);
+    formData.append("file", file);
+    formData.append("upload_id", response.data.upload_id);
     // get upload_id
-    setVideoUploadId(response.data.upload_id)
+    setVideoUploadId(response.data.upload_id);
     axios
       .post(
         "https://acela.us-02.infra.3speak.tv/api/v1/upload_thumbnail",
@@ -319,7 +320,7 @@ const CreatePost: React.FC = () => {
 
   useEffect(() => {
     if (authenticated == false && authenticated != null) {
-      // router.push("/auth/login");
+      // router.push("/auth/modals");
     }
   }, [authenticated, router]);
 
@@ -327,16 +328,25 @@ const CreatePost: React.FC = () => {
     authenticated ? "gray.100" : "gray.100",
     authenticated ? "gray.900" : "gray.900"
   );
-  // if (authenticated === null) {
-  //   return <Box>Loading...</Box>;
-  // }
+  
+  //array for the hashtag data
+  const hashtagData = [
+    { id: '1', display: 'React' },
+    { id: '2', display: 'Next.js' },
+    // Add more hashtags as needed
+ ];
 
-  // if (authenticated === false) {
-  //   return <Box>Unauthorized access, please login first</Box>;
-  // }
+  const [showDetails, setShowDetails] = useState(false);
+  //render the parts after clicking on progress bar
+   const toggleDetails = () => {
+    setShowDetails(showDetails)
+   }
 
   return (
-    <Box minH="100vh" bg={colorModeValue}>
+    <Box minH="100vh">
+      {/* add the toggle button to the sidebar for opening and close */}
+      {/* for mobile view is already there  */}
+
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -393,9 +403,9 @@ const CreatePost: React.FC = () => {
         {/* {children} */}
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">
           <Box>
-            <Card background={"#ededed"}>
+            <Card backgroundColor={bgColor}>
               {steps == 0 && (
-                <CardBody borderRadius="10px" background={"white"}>
+                <CardBody borderRadius="10px" backgroundColor={bgColor}>
                   <Box height={"60vh"} width={"100%"}>
                     <Flex
                       height={"100%"}
@@ -425,6 +435,7 @@ const CreatePost: React.FC = () => {
                             border={"1px solid black"}
                             padding="20px"
                             paddingY={"40px"}
+                            backgroundColor={bgColor}
                             borderRadius={"5px"}
                           >
                             {/* <div {...getRootProps()} className="dropzone"> */}
@@ -543,7 +554,11 @@ const CreatePost: React.FC = () => {
                           </div>
                         </div>
                       )}
-                      <Flex justifyContent={"end"} alignItems="center">
+                      <Flex
+                        justifyContent={"space-between"}
+                        alignItems="center"
+                        w={"full"}
+                      >
                         {/* <Button
                           onClick={() => router.push("/studio/upload")}
                           size={"lg"}
@@ -568,7 +583,7 @@ const CreatePost: React.FC = () => {
               )}
 
               {steps == 1 && (
-                <CardBody borderRadius="10px" background={"white"}>
+                <CardBody backgroundColor={bgColor}>
                   <Box
                     height={{ base: "auto", md: "auto", lg: "65vh" }}
                     width={"100%"}
@@ -741,14 +756,20 @@ const CreatePost: React.FC = () => {
                               >
                                 Video Description
                               </Text>
-                              <Textarea
+                              <MentionsInput
                                 disabled={savingDetails == true ? true : false}
                                 value={videoDescription}
-                                onChange={(e) =>
+                                onChange={(e: any) =>
                                   setVideoDesription(e.target.value)
                                 }
-                                placeholder="Here is a sample placeholder"
-                              />
+                                placeholder="Put all the hashtags here!"
+                              >
+                                <Mention
+                                trigger="#"
+                                data={hashtagData}
+                                />
+                                <Mention />
+                                </MentionsInput>
                             </fieldset>
                             <fieldset className="w-100 mb-3">
                               <Text
@@ -762,7 +783,7 @@ const CreatePost: React.FC = () => {
                               <Text fontSize={"15px"}>
                                 Select or upload a picture that shows what`s in
                                 your video. A good thumbnail stands out and
-                                draws viewer`s attention
+                                draws viewer`s attention  
                               </Text>
                             </fieldset>
                             <Flex
@@ -844,7 +865,6 @@ const CreatePost: React.FC = () => {
                                   />
                                 </Flex>
                               ))}
-
                             </Flex>
                           </Flex>
                         </Box>
@@ -879,7 +899,7 @@ const CreatePost: React.FC = () => {
               )}
 
               {steps == 2 && (
-                <CardBody borderRadius="10px" background={"white"}>
+                <CardBody backgroundColor={bgColor}>
                   <Box
                     height={{ base: "auto", md: "auto", lg: "65vh" }}
                     width={"100%"}
@@ -887,10 +907,11 @@ const CreatePost: React.FC = () => {
                     <Flex
                       margin={"auto"}
                       height={"100%"}
-                      width={"70%"}
+                      width={"100%"}
                       flexDirection="column"
                       justifyContent={"center"}
                     >
+                      
                       <Flex
                         flexDirection={{
                           base: "column",
@@ -948,7 +969,8 @@ const CreatePost: React.FC = () => {
                                     </Stack>
 
                                     <Text as="label">
-                                      Publish after encoding and everyone can watch the video
+                                      Publish after encoding and everyone can
+                                      watch the video
                                     </Text>
                                   </Box>
                                   <Box
@@ -966,7 +988,7 @@ const CreatePost: React.FC = () => {
 
                                     {publishValue == "2" && (
                                       <Input
-                                        alignItems={'center'}
+                                        alignItems={"center"}
                                         width={"50%"}
                                         type="datetime-local"
                                         placeholder="select date"
@@ -1096,6 +1118,7 @@ const CreatePost: React.FC = () => {
                         justifyContent={"space-between"}
                         alignItems="center"
                       >
+                        
                         <Button
                           onClick={() => setSteps(1)}
                           size={"lg"}
@@ -1106,7 +1129,9 @@ const CreatePost: React.FC = () => {
                         </Button>
                         <Button
                           onClick={() => handleEncode()}
-                          size={"lg"} colorScheme="blue">
+                          size={"lg"}
+                          colorScheme="blue"
+                        >
                           Save
                         </Button>
                       </Flex>
@@ -1118,6 +1143,8 @@ const CreatePost: React.FC = () => {
               <WizardSteps
                 changeCurrentStep={changeCurrentStep}
                 steps={steps}
+                bgColor={bgColor}
+                toggleDetais = {toggleDetails}
               />
             </Card>
           </Box>
