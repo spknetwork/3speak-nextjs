@@ -1,5 +1,6 @@
-//TODO: remove the earnings and achievements in the user page
 //TODO: also correct the alignment for the cover page
+//TODO: making this a mobile responsive page with the nain layout 
+
 
 import MainLayout from "@/components/Layouts/main_layout";
 import About from "@/components/user/About";
@@ -22,6 +23,8 @@ import {
 import { css } from "@emotion/react";
 
 import React, { useEffect, useState } from "react";
+import { BiDollar } from "react-icons/bi";
+import { BsDot } from "react-icons/bs";
 import { useMediaQuery } from "react-responsive";
 import { VideoInterface } from "types";
 const UserPage = () => {
@@ -69,16 +72,22 @@ const UserPage = () => {
       title: "Weekend Adventure- to the Mountain of Kan-irag",
       username: "thetrollingmind",
     },
+    {
+      thumbnail:
+        "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbFQdnkVpujsZq5ivaUS3RobVsvgoUMDXSTgZCHfbwNsgBSuTKvqmnzt9EUtxERKUQ5963fSE?format=jpeg&mode=cover&width=340&height=191",
+      title: "Weekend Adventure- to the Mountain of Kan-irag",
+      username: "thetrollingmind",
+    },
   ]);
 
-  const {colorMode} = useColorMode();
+  const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
 
   return (
     <MainLayout>
-      <div>
+      <Box>
         <Box minHeight={"280px"} position={"relative"} bgColor={bgColor}>
-          <Image
+          {/* <Image
             alt="image"
             src={"https://media.3speak.tv/user/thestrollingmind/cover.png"}
             objectFit="cover"
@@ -86,7 +95,16 @@ const UserPage = () => {
             maxHeight="500px"
             maxWidth={"100%"}
             height="auto"
-          />
+          /> */}
+          <Flex
+            w={"full"}
+            h={"32vh"}
+            backgroundColor={"red"}
+            backgroundImage="url('https://marketplace.canva.com/EAFEUwUPzkY/1/0/1600w/canva-black-modern-vlogger-youtube-banner-voJxGX5HW3Q.jpg')"
+            backgroundSize={"cover"}
+            backgroundPosition="center"
+            backgroundRepeat="no-repeat"
+          ></Flex>
           <Flex
             bottom={"0"}
             left="0"
@@ -143,7 +161,7 @@ const UserPage = () => {
             flexFlow="row nowrap"
             flexDirection={{ base: "column", md: "column", lg: "row" }}
             bgColor={bgColor}
-            color={colorMode === "dark"? "whitesmoke": "black"}
+            color={colorMode === "dark" ? "whitesmoke" : "black"}
           >
             {/* flexDirection={{base:"column", md: "column", lg:"row"}} */}
             <Flex
@@ -199,7 +217,9 @@ const UserPage = () => {
                         href="#"
                         _hover={{
                           borderBottom: "2px solid red",
-                          color: `${colorMode === "dark" ? "whitesmoke": "black"}`,
+                          color: `${
+                            colorMode === "dark" ? "whitesmoke" : "black"
+                          }`,
                         }}
                         _focus={{
                           color: `${"black"} `,
@@ -452,9 +472,9 @@ const UserPage = () => {
             )}
           </Box>
         </Box>
-        <Box padding={"15px"}>
-          <Box>
-            <Box className="row">
+        <Flex padding={"15px"} justifyContent={"center"}>
+          <Flex justifyContent="center">
+            <Flex className="row" justifyContent={"center"}>
               {showFeed == 2 && <Earnings />}
               {showFeed == 3 && (
                 // <About profile={} />
@@ -467,37 +487,61 @@ const UserPage = () => {
 
               {showFeed == 1 &&
                 videos.map((item: VideoInterface, index: number) => (
-                  <Box
+                  <Flex
+                    direction={"column"}
                     key={index}
                     className="col-xl-2 col-lg-3  col-6 p-2 mb-3"
                   >
                     <Box
+                      id="parent"
                       opacity={"1"}
                       position="relative"
                       transition={"all .6s ease-in-out"}
                       textAlign="center"
                     >
-                      <Box
+                      <Flex
+                        id="widget"
+                        position={"absolute"}
                         left={"5px"}
-                        width="50px"
-                        background={"#e8e8e8 none repeat scroll 0 0"}
-                        borderRadius="2px"
                         bottom={"5px"}
-                        color="#000"
-                        fontSize={"11px"}
-                        fontWeight="500"
-                        padding={"0 6px"}
-                        position="absolute"
-                        display="flex"
-                        justifyContent={"space-between"}
                       >
-                        <Image
-                          src="https://3speak.tv/img/play.svg"
-                          alt="play"
-                        ></Image>
-                        <Text as={"span"}>20</Text>
-                      </Box>
+                        <Box
+                          width="35px"
+                          paddingX={1}
+                          background={"#e8e8e8 none repeat scroll 0 0"}
+                          borderRadius="2px"
+                          color="#000"
+                          fontSize={"11px"}
+                          fontWeight="500"
+                          marginX={1}
+                          display="flex"
+                          justifyContent={"space-between"}
+                        >
+                          <Image
+                            src="https://3speak.tv/img/play.svg"
+                            alt="play"
+                          ></Image>
+                          <Text as={"span"}>20</Text>
+                        </Box>
+                        <Box
+                          width="35px"
+                          paddingX={1}
+                          background={"#e8e8e8 none repeat scroll 0 0"}
+                          borderRadius="2px"
+                          color="#000"
+                          marginX={1}
+                          fontSize={"11px"}
+                          fontWeight="500"
+                          display="flex"
+                          justifyContent={"space-between"}
+                          alignItems="center"
+                        >
+                          <BiDollar />
+                          <Text as={"span"}>10</Text>
+                        </Box>
+                      </Flex>
                       <Box
+                        id="timestamp"
                         right={"5px"}
                         width="auto"
                         background={"#e8e8e8 none repeat scroll 0 0"}
@@ -528,7 +572,7 @@ const UserPage = () => {
                         />
                       </Link>
                     </Box>
-                    <Box minHeight={"65px"}>
+                    <Box minHeight={"60px"}>
                       <Link
                         textDecoration={"none"}
                         href={`/watch?v=${item.username}`}
@@ -543,7 +587,6 @@ const UserPage = () => {
                           lineHeight="1.4em"
                           display={"block"}
                           marginTop="0.5rem !important"
-                          marginBottom="0.5rem !important"
                           fontWeight={"500"}
                         >
                           {item.title}
@@ -554,32 +597,31 @@ const UserPage = () => {
                         display="block"
                         position={"unset"}
                       >
-                        <Box
-                          display={"block !important"}
-                          marginTop="0.5rem !important"
+                        <Flex
                           justifyContent={"justify !important"}
+                          alignItems="center"
                         >
-                          <p className="black_col mb-0">
-                            <b>
-                              <Link href="/user/cttpodcast">
-                                <i className="fa fa-user"></i>
-                                {item.username}
-                              </Link>
-                            </b>
-                          </p>
-                          <p className="mb-0">a day ago</p>
-                          <p>
-                            <b>$63.17</b>
-                          </p>
-                        </Box>
+                          <Flex className="black_col mb-0">
+                            <Link href="/user/cttpodcast">
+                              <i className="fa fa-user"></i>
+                              {item.username}
+                            </Link>
+                            <Text mt={1}>
+                              <BsDot />
+                            </Text>
+                            <Flex className="mb-0">
+                              <Text>a day ago</Text>
+                            </Flex>
+                          </Flex>
+                        </Flex>
                       </Box>
                     </Box>
-                  </Box>
+                  </Flex>
                 ))}
-            </Box>
-          </Box>
-        </Box>
-      </div>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Box>
     </MainLayout>
   );
 };

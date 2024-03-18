@@ -48,7 +48,7 @@ const AuthLayout = ({ children }: any) => {
               `}
         >
             <main>
-                <Box width={"100%"} backgroundColor="#EFF4F6" boxShadow={'10px 10px 5px lightblue'}>
+                <Box width={"100%"} backgroundColor="#EFF4F6" boxShadow={'5px 5px 3px lightblue'}>
                     <Tabs.Root className="TabsRoot" defaultValue={router.pathname == '/auth/signup' ? "tab3" : router.pathname == '/auth/hive_signin' ? 'tab2' : 'tab1'}>
                         <Tabs.List
                             className="TabsList"

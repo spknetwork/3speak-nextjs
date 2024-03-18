@@ -187,3 +187,5 @@ const StyledInput = styled.input<{ error: boolean }>`
 `;
 
 export default ForgotPassword;
+
+
