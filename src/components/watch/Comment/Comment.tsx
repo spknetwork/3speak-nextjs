@@ -17,34 +17,36 @@ const Comment = ({ bgColor, colorMode }: Props) => {
 
   const toggleCollapse = (commentId: number, isParent = false) => {
     setIsCollapsed((prevState) => {
-      const newState = { ...prevState };
-      if (isParent) {
-        const replies =
-          commentsData.find((comment) => comment.id === commentId)?.replies ||
-          [];
-        const allReplies = getAllReplies(replies);
-
-        allReplies.forEach((reply) => {
-          newState[reply.id] = !prevState[commentId];
-        });
-      }
-      newState[commentId] = !prevState[commentId];
-      return newState;
+       const newState = { ...prevState };
+       if (isParent) {
+         const replies =
+           commentsData.find((comment) => comment.id === commentId)?.replies || [];
+         const allReplies = getAllReplies(replies);
+   
+         allReplies.forEach((reply) => {
+           newState[reply.id] = !prevState[commentId];
+         });
+       }
+       newState[commentId] = !prevState[commentId];
+       return newState;
     });
-  };
+   };
+   
 
-  const getAllReplies = (replies: any): any[] => {
+   const getAllReplies = (replies: any): any[] => {
     let allReplies: any[] = [];
     replies.forEach((reply: any) => {
-      allReplies.push(reply);
-      if (reply.replies) {
-        allReplies = [...allReplies, ...getAllReplies(reply.replies)];
-      }
+       allReplies.push(reply);    
+       if (reply.replies) {
+         allReplies = [...allReplies, ...getAllReplies(reply.replies)];
+       }
     });
     return allReplies;
-  };
+   };
+   
 
   const renderReplies = (replies: any, depth = 1) => { 
+    
     return replies.map((reply: any) => (
       <Box key={reply.id} marginLeft={`${depth * 28}px`}>
         <Box
@@ -210,7 +212,9 @@ const Comment = ({ bgColor, colorMode }: Props) => {
                   />
                 </Box>
               </Box>
+              <Collapse in={!isCollapsed[commentData.id]} unmountOnExit>
               {commentData.replies && renderReplies(commentData.replies)}
+              </Collapse> 
             </Box>
           ))}
         </Box>

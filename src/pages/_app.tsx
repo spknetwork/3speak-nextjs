@@ -37,6 +37,8 @@ const theme = extendTheme({
   },
 });
 
+//init function for the magic link 
+// MagicLinkPopupActions.init(process.env.magicApiKey,   )
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure()

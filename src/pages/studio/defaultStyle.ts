@@ -61,7 +61,6 @@ function getMentionStyle(theme: "light" | "dark") {
   const bgColor = theme == "dark" ? "#75c0e6" : "#75c0e6";
   return {
     backgroundColor: bgColor,
-    
   };
 }
 
