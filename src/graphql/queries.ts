@@ -153,30 +153,26 @@ export const GET_TRENDING_TAGS = gql`
 
 export const GET_TRENDING_FEED = gql`
   query MyQuery {
-    trendingFeed(
-      apps: {
-        _eq: ""
-        _gt: 10
-        _gte: 10
-        _in: ""
-        _lt: 10
-        _lte: 10
-        _ne: ""
-        _nin: ""
-        _regex: ""
-      }
-      feedOptions: {
-        byFollower: ""
-        includeCeramic: false
-        includeComments: false
-      }
-    ) {
+    trendingFeed(spkvideo: { only: true }) {
       items {
-        body
-        author {
-          id
-          profile
-          username
+        ... on HivePost {
+          permlink
+          spkvideo
+          author {
+            username
+          }
+          body
+          title
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          tags
+          lang
+          hive_rewards
+          created_at
+          community
         }
       }
     }

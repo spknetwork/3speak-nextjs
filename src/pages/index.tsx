@@ -18,17 +18,22 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { css } from "@emotion/react";
 import { Sidebar } from "@/components";
 import MainLayout from "@/components/Layouts/main_layout";
-import { videoData } from "../data/constData"
+import { videoData } from "../data/constData";
 import { BiDollar } from "react-icons/bi";
+
+import { useQuery } from "@apollo/react-hooks";
+import { GET_TRENDING_FEED } from "../graphql/queries";
+
 const NewIndex = () => {
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
   const [videos, setVideos] = useState<VideoInterface[]>(videoData);
+  const getTrendingFeed = useQuery(GET_TRENDING_FEED);
+
   return (
     <MainLayout>
       <Box bg={bgColor}>
-
         <Flex
           marginRight={"30px"}
           justifyContent={"space-between"}
@@ -48,6 +53,7 @@ const NewIndex = () => {
             {colorMode !== "dark" && <SunIcon />}
           </Text>
         </Flex>
+        {getTrendingFeed.loading ? <h1>Loading</h1> : <h1>done loading</h1>}
         <Grid
           padding={"20px"}
           templateColumns={{
@@ -58,7 +64,6 @@ const NewIndex = () => {
           }}
           gap={10}
         >
-          {/* {videos.length} */}
           {videos.map((video: VideoInterface, index: number) => (
             <GridItem w="100%" h="100%" key={index}>
               <Box cursor={"pointer"} position="relative">
@@ -76,9 +81,7 @@ const NewIndex = () => {
                   borderRadius="2px"
                   paddingLeft={"4px"}
                   paddingRight={"8px"}
-                >
-
-                </Box>
+                ></Box>
                 <Box
                   display={"flex"}
                   justifyContent="center"
@@ -95,15 +98,11 @@ const NewIndex = () => {
                   paddingRight={"4px"}
                 >
                   <MdPlayArrow size="15px" color="grey" />
-                  <Text
-                    as="span"
-                    fontSize="11px"
-                    fontWeight={"bold"}
-                  >
+                  <Text as="span" fontSize="11px" fontWeight={"bold"}>
                     {video.number_views}
                   </Text>
                 </Box>
-                {/* Integrating the dollar sign  */}
+
                 <Box
                   display={"flex"}
                   justifyContent="center"
@@ -158,9 +157,6 @@ const NewIndex = () => {
               <Text as="p" margin={"1px"}>
                 a day ago
               </Text>
-              {/* <Text fontWeight={"bold"} as="p">
-                $ 10.10
-              </Text> */}
             </GridItem>
           ))}
         </Grid>
