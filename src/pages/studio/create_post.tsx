@@ -1,11 +1,20 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
-import { MentionsInput, Mention } from 'react-mentions';
+import { MentionsInput, Mention } from "react-mentions";
 import axios from "axios";
 import { generateVideoThumbnails } from "@rajesh896/video-thumbnails-generator";
 import tus, { Upload, UploadOptions } from "tus-js-client";
 import styles from "../../components/ProgressBar.module.css";
+import { getMentionInputStyle, getMentionStyle } from "./defaultStyle";
+import { FaUpload } from "react-icons/fa";
+import { SlCheck, SlPicture } from "react-icons/sl";
+import { useRouter } from "next/router";
+import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
+import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
+import { api } from "@/utils/api";
+import { useAppStore } from "@/lib/store";
+import WizardSteps from "@/components/studio/WizardSteps";
 import {
   Box,
   Flex,
@@ -29,24 +38,26 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 
-import { FaUpload } from "react-icons/fa";
-import { SlCheck, SlPicture } from "react-icons/sl";
-import { useRouter } from "next/router";
-import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
-import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
-import { api } from "@/utils/api";
-import { useAppStore } from "@/lib/store";
-import WizardSteps from "@/components/studio/WizardSteps";
-
 type FilePreview = {
   file: File;
   previewUrl: string;
 };
 
+const hashRegex = /#\w+(-?\w+)*/gm;
+
+//data for the hashtags
+const base_mentions = [
+  { id: "1", display: "John" },
+  { id: "2", display: "Jane" },
+  { id: "3", display: "Doe" },
+];
+
 const CreatePost: React.FC = () => {
   //for the dark mode
   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
+  const mentionStyle = getMentionStyle(colorMode);
+  const mentionInputStyle = getMentionInputStyle(colorMode);
 
   // video title
   const [videoTitle, setVideoTitle] = useState<string>("");
@@ -59,7 +70,7 @@ const CreatePost: React.FC = () => {
   const [uploadingProgress, setUploadingProgress] = useState<number>(0);
   const [uploadStatus, setUploadStatus] = useState<Boolean | null>(null);
   const [uploading, setUploading] = useState<Boolean>(false);
-  const [steps, setSteps] = useState<number>(2);
+  const [steps, setSteps] = useState<number>(1);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
     useState<String>("Uploading Video...");
@@ -92,6 +103,7 @@ const CreatePost: React.FC = () => {
     files.push(previewUrl);
     setPreviewManualThumbnails(files);
   };
+
   const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
@@ -328,19 +340,33 @@ const CreatePost: React.FC = () => {
     authenticated ? "gray.100" : "gray.100",
     authenticated ? "gray.900" : "gray.900"
   );
-  
-  //array for the hashtag data
-  const hashtagData = [
-    { id: '1', display: 'React' },
-    { id: '2', display: 'Next.js' },
-    // Add more hashtags as needed
- ];
 
-  const [showDetails, setShowDetails] = useState(false);
-  //render the parts after clicking on progress bar
-   const toggleDetails = () => {
-    setShowDetails(showDetails)
-   }
+  //logic for the hashtag data
+  const [transformedMentions, setTransformedMentions] = useState(base_mentions);
+
+  const generateHashtags = useMemo(() => {
+    const hashtags = Array.from(
+      videoDescription.matchAll(hashRegex),
+      (match) => match[0]
+    );
+    return hashtags.map((hash) => ({
+      id: hash.replace("#", ""),
+      display: hash.replace("#", ""),
+    }));
+  }, [videoDescription]);
+
+  function onChange(event: any, newValue: string) {
+    const hashtags = Array.from(
+      newValue.matchAll(hashRegex),
+      (match) => match[0]
+    );
+    const generated = hashtags.map((hash) => ({
+      id: hash.replace("#", ""),
+      display: hash.replace("#", ""),
+    }));
+    setTransformedMentions([...base_mentions, ...generated]);
+    setVideoDesription(newValue);
+  }
 
   return (
     <Box minH="100vh">
@@ -756,20 +782,22 @@ const CreatePost: React.FC = () => {
                               >
                                 Video Description
                               </Text>
+
                               <MentionsInput
-                                disabled={savingDetails == true ? true : false}
                                 value={videoDescription}
-                                onChange={(e: any) =>
-                                  setVideoDesription(e.target.value)
-                                }
+                                disabled={savingDetails == true ? true : false}
+                                style={mentionInputStyle}
+                                onChange={onChange}
                                 placeholder="Put all the hashtags here!"
                               >
                                 <Mention
-                                trigger="#"
-                                data={hashtagData}
+                                  trigger="#"
+                                  data={transformedMentions}
+                                  appendSpaceOnAdd={true}
+                                  style={mentionStyle}
+                                  displayTransform={(_id, value) => `#${value}`}
                                 />
-                                <Mention />
-                                </MentionsInput>
+                              </MentionsInput>
                             </fieldset>
                             <fieldset className="w-100 mb-3">
                               <Text
@@ -783,7 +811,7 @@ const CreatePost: React.FC = () => {
                               <Text fontSize={"15px"}>
                                 Select or upload a picture that shows what`s in
                                 your video. A good thumbnail stands out and
-                                draws viewer`s attention  
+                                draws viewer`s attention
                               </Text>
                             </fieldset>
                             <Flex
@@ -911,7 +939,6 @@ const CreatePost: React.FC = () => {
                       flexDirection="column"
                       justifyContent={"center"}
                     >
-                      
                       <Flex
                         flexDirection={{
                           base: "column",
@@ -1118,7 +1145,6 @@ const CreatePost: React.FC = () => {
                         justifyContent={"space-between"}
                         alignItems="center"
                       >
-                        
                         <Button
                           onClick={() => setSteps(1)}
                           size={"lg"}
@@ -1144,7 +1170,7 @@ const CreatePost: React.FC = () => {
                 changeCurrentStep={changeCurrentStep}
                 steps={steps}
                 bgColor={bgColor}
-                toggleDetais = {toggleDetails}
+                // toggleDetais={toggleDetails}
               />
             </Card>
           </Box>

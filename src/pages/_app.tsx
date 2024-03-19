@@ -1,5 +1,6 @@
+//TODO: integrate the magiclink-react library
+import {useMagicLinkPopup, MagicLinkPopupActions} from "magic-link-popup-react"
 import "../styles/globals.scss";
-
 import "../styles/styles.css";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
@@ -36,6 +37,7 @@ const theme = extendTheme({
   },
 });
 
+
 function MyApp({ Component, pageProps }: AppProps) {
   const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure()
   const { isOpen: isOpenModal2, onOpen: onOpenModal2, onClose: onCloseModal2 } = useDisclosure()
@@ -53,8 +55,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     // show modal list of accounts available
     onCloseModal1()
     onOpenModal2()
-
-
   }
 
 
