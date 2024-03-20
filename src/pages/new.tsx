@@ -9,6 +9,7 @@ import { useQuery } from "@apollo/client";
 import { NEW_CONTENT } from "@/graphql/queries";
 import { useAppStore } from "@/lib/store";
 import { useRouter } from "next/router";
+
 const New2 = () => {
   const router = useRouter();
   const bgColor = useColorModeValue('gray.100', 'gray.800');
@@ -54,134 +55,7 @@ const New2 = () => {
     console.log("videoSelected",videoSelected)
 
   },[videoSelected])
-  // const [videos, setVideos] = useState<VideoInterface[]>([
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVeExQngEq7iRUrnhc6nn53bkCVBsgFpHS7MyjhEFTNWBf73wdgVAiYs1bRwEXPsRfwGEUec54?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbG93Si1Pof3Bp3SEoYnPNKtbHG2hmqSDhp9WVT7QEboptYxvDofQRog5ZtF2Mj6QXAxsbNPp?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbFfGR7ZUTupbsAmkiGxmsGFMazc7fs8C9Da6r49Va7sXUUxwEpMs9Lp8kLufQoT7nHCojSg6?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVb4dHDxLG1Fefpe4k4AmqEgewJw6TMbjKkXmd6EpNKDDSY7jajEbHFUDkuNFFGj3QHTXGgwi6?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVeUe5z9NZYeLaAjAAD5cJkxV4PRBZnpDR1KknD4EJbrmG3Q9yNQgcEncQJwMeScuZQCF964RC?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVigXNQ9i2Sj17Sn3n278qQDgwZjFj63SVyowrUwLLy3b4XjctSSXPrUQzfGWnYFenbacvxXNn?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfHesJoVwVwkncjGuS3rGBYn5aS66yk9ripBpXdrZC3PDze6nrQmCgcnqLVtF7dmTz85o6rdCJk8XgTG?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfHesJoVwVwkncjGuS3rGBYn5aS66yk9ripBpXdrZC3PDze6nrQmCgcnqLVtF7dmTz85o6rdCJk8XgTG?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfHesJoVwVwkncjGuS3rGBYn5aS66yk9ripBpXdrZC3PDze6nrQmCgcnqLVtF7dmTz85o6rdCJk8XgTG?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfHesJoVwVwkncjGuS3rGBYn5aS66yk9ripBpXdrZC3PDze6nrQmCgcnqLVtF7dmTz85o6rdCJk8XgTG?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfHesJoVwVwkncjGuS3rGBYn5aS66yk9ripBpXdrZC3PDze6nrQmCgcnqLVtF7dmTz85o6rdCJk8XgTG?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfHesJoVwVwkncjGuS3rGBYn5aS66yk9ripBpXdrZC3PDze6nrQmCgcnqLVtF7dmTz85o6rdCJk8XgTG?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfHesJoVwVwkncjGuS3rGBYn5aS66yk9ripBpXdrZC3PDze6nrQmCgcnqLVtF7dmTz85o6rdCJk8XgTG?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfHesJoVwVwkncjGuS3rGBYn5aS66yk9ripBpXdrZC3PDze6nrQmCgcnqLVtF7dmTz85o6rdCJk8XgTG?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfHesJoVwVwkncjGuS3rGBYn5aS66yk9ripBpXdrZC3PDze6nrQmCgcnqLVtF7dmTz85o6rdCJk8XgTG?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfHesJoVwVwkncjGuS3rGBYn5aS66yk9ripBpXdrZC3PDze6nrQmCgcnqLVtF7dmTz85o6rdCJk8XgTG?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfHesJoVwVwkncjGuS3rGBYn5aS66yk9ripBpXdrZC3PDze6nrQmCgcnqLVtF7dmTz85o6rdCJk8XgTG?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  //   {
-  //     title:
-  //       "The new update of LIKETU 📱 (subtitled) - Conoce la nueva actualización de LIKETU",
-  //     username: " hiveredcarpet",
-  //     thumbnail:
-  //       "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfHesJoVwVwkncjGuS3rGBYn5aS66yk9ripBpXdrZC3PDze6nrQmCgcnqLVtF7dmTz85o6rdCJk8XgTG?format=jpeg&mode=cover&width=340&height=191",
-  //   },
-  // ]);
+  
   return (
     <MainLayout>
       <Box bg={bgColor} >

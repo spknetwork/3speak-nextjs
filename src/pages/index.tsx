@@ -6,13 +6,10 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { VideoInterface } from "types";
+import React from "react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { css } from "@emotion/react";
-import { Sidebar } from "@/components";
+import { InfinitySpin } from "react-loader-spinner";
 import MainLayout from "@/components/Layouts/main_layout";
-import { videoData } from "../data/constData";
 
 import { useQuery } from "@apollo/react-hooks";
 import { GET_TRENDING_FEED } from "../graphql/queries";
@@ -23,7 +20,6 @@ const NewIndex = () => {
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
-  const [videos, setVideos] = useState<VideoInterface[]>(videoData);
   const getTrendingFeed = useQuery(GET_TRENDING_FEED);
 
   return (
@@ -49,7 +45,9 @@ const NewIndex = () => {
           </Text>
         </Flex>
         {getTrendingFeed.loading ? (
-          <h1>&nbsp;</h1>
+          <InfinitySpin
+            width="200"
+          />
         ) : (
           <FeedGrid videos={getTrendingFeed.data.trendingFeed.items} />
         )}

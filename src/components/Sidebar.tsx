@@ -105,7 +105,7 @@
       img: "nav/communities.svg",
       img_light: "nav/communities_light.svg",
       title: "nav.communities",
-      route: "communities",
+      route: "/communities",
     },
     {
       img: "nav/leaderboard.svg",
