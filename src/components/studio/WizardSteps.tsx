@@ -1,6 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
-//TODO: make the progress bar buttons clickable
 type props = {
   bgColor: string
   toggleDetails: () => boolean

@@ -1,3 +1,4 @@
+//TODO: accessible only after login 
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
@@ -62,6 +63,7 @@ const CreatePost: React.FC = () => {
   // video title
   const [videoTitle, setVideoTitle] = useState<string>("");
   const [videoDescription, setVideoDesription] = useState<string>("");
+  const [hashtagData, setHashTagData] = useState<string>("");
   const [video_upload_id, setVideoUploadId] = useState<string>("");
   const [savingDetails, setSavingDetails] = useState<Boolean | null>(null);
 
@@ -346,14 +348,14 @@ const CreatePost: React.FC = () => {
 
   const generateHashtags = useMemo(() => {
     const hashtags = Array.from(
-      videoDescription.matchAll(hashRegex),
+      hashtagData.matchAll(hashRegex),
       (match) => match[0]
     );
     return hashtags.map((hash) => ({
       id: hash.replace("#", ""),
       display: hash.replace("#", ""),
     }));
-  }, [videoDescription]);
+  }, [hashtagData]);
 
   function onChange(event: any, newValue: string) {
     const hashtags = Array.from(
@@ -365,7 +367,7 @@ const CreatePost: React.FC = () => {
       display: hash.replace("#", ""),
     }));
     setTransformedMentions([...base_mentions, ...generated]);
-    setVideoDesription(newValue);
+    setHashTagData(newValue);
   }
 
   return (
@@ -431,7 +433,11 @@ const CreatePost: React.FC = () => {
           <Box>
             <Card backgroundColor={bgColor}>
               {steps == 0 && (
-                <CardBody borderRadius="10px" backgroundColor={bgColor}>
+                <CardBody
+                  borderRadius="10px"
+                  backgroundColor={bgColor}
+                  minH={"75vh"}
+                >
                   <Box height={"60vh"} width={"100%"}>
                     <Flex
                       height={"100%"}
@@ -609,7 +615,7 @@ const CreatePost: React.FC = () => {
               )}
 
               {steps == 1 && (
-                <CardBody backgroundColor={bgColor}>
+                <CardBody backgroundColor={bgColor} minH={"75vh"}>
                   <Box
                     height={{ base: "auto", md: "auto", lg: "65vh" }}
                     width={"100%"}
@@ -636,12 +642,13 @@ const CreatePost: React.FC = () => {
                         >
                           <Flex
                             width={"100%"}
-                            height="200px"
+                            height="250px"
                             border={"1px solid"}
                             justifyContent="center"
                             background={"black"}
                             alignItems={"center"}
                             borderRadius="10px 10px 0px 0px"
+                            position={"relative"}
                           >
                             {/* juneroy */}
                             {selectedFile ? (
@@ -650,14 +657,16 @@ const CreatePost: React.FC = () => {
                                   <Image
                                     src={selectedFile.previewUrl}
                                     alt="Preview"
-                                    className="preview"
+                                    // className="preview"
                                   />
                                 ) : (
-                                  <video
-                                    src={selectedFile.previewUrl}
-                                    className="preview"
-                                    controls
-                                  />
+                                  <Box position={"absolute"}>
+                                    <video
+                                      src={selectedFile.previewUrl}
+                                      className="preview"
+                                      controls
+                                    />
+                                  </Box>
                                 )}
                               </>
                             ) : (
@@ -671,7 +680,7 @@ const CreatePost: React.FC = () => {
                           <Flex
                             background={"grey"}
                             width={"100%"}
-                            height="100px"
+                            height="90px"
                             justifyContent="start"
                             alignItems={"start"}
                             flexDirection="column"
@@ -724,6 +733,7 @@ const CreatePost: React.FC = () => {
                             >
                               <SlCheck fontSize={"20px"} color="white" />
                               <Text
+                                mt={2}
                                 fontSize={{
                                   base: "12px",
                                   md: "12px",
@@ -783,8 +793,26 @@ const CreatePost: React.FC = () => {
                                 Video Description
                               </Text>
 
-                              <MentionsInput
+                              <Textarea
+                                disabled={savingDetails == true ? true : false}
                                 value={videoDescription}
+                                onChange={(e) =>
+                                  setVideoDesription(e.target.value)
+                                }
+                                placeholder="Here is a sample placeholder"
+                              />
+                            </fieldset>
+                            <fieldset className="w-100 mb-4 ">
+                              <Text
+                                as={"legend"}
+                                fontSize="15px"
+                                className="fw-bold"
+                              >
+                                Hashtags
+                              </Text>
+
+                              <MentionsInput
+                                value={hashtagData}
                                 disabled={savingDetails == true ? true : false}
                                 style={mentionInputStyle}
                                 onChange={onChange}
@@ -927,7 +955,7 @@ const CreatePost: React.FC = () => {
               )}
 
               {steps == 2 && (
-                <CardBody backgroundColor={bgColor}>
+                <CardBody backgroundColor={bgColor} minH={"75vh"}>
                   <Box
                     height={{ base: "auto", md: "auto", lg: "65vh" }}
                     width={"100%"}
@@ -1034,8 +1062,8 @@ const CreatePost: React.FC = () => {
                           paddingBottom={"10px"}
                         >
                           <Flex
-                            width={"100%"}
-                            height="200px"
+                            width={"83%"}
+                            height="260px"
                             border={"1px solid"}
                             justifyContent="center"
                             background={"black"}
@@ -1049,13 +1077,16 @@ const CreatePost: React.FC = () => {
                                     src={selectedFile.previewUrl}
                                     alt="Preview"
                                     className="preview"
+                                    position={"relative"}
                                   />
                                 ) : (
-                                  <video
-                                    src={selectedFile.previewUrl}
-                                    className="preview"
-                                    controls
-                                  />
+                                  <Box position={"absolute"}>
+                                    <video
+                                      src={selectedFile.previewUrl}
+                                      className="preview_visibility"
+                                      controls
+                                    />
+                                  </Box>
                                 )}
                               </>
                             ) : (
@@ -1068,8 +1099,8 @@ const CreatePost: React.FC = () => {
                           </Flex>
                           <Flex
                             background={"grey"}
-                            width={"100%"}
-                            height="100px"
+                            width={"83%"}
+                            height="70px"
                             justifyContent="start"
                             alignItems={"start"}
                             flexDirection="column"
@@ -1098,11 +1129,11 @@ const CreatePost: React.FC = () => {
                                   md: "0px",
                                   lg: "10px",
                                 }}
-                                padding={{
-                                  base: "0px 10px",
-                                  md: "0px 10px",
-                                  lg: "10px",
-                                }}
+                                // padding={{
+                                //   base: "0px 10px",
+                                //   md: "0px 10px",
+                                //   lg:"10px",
+                                // }}
                                 width={{ base: "100%", md: "100%", lg: "100%" }}
                               >
                                 {selectedFile?.file?.name
@@ -1129,6 +1160,7 @@ const CreatePost: React.FC = () => {
                                 }}
                                 fontWeight="bold"
                                 color={"whiteAlpha.900"}
+                                mt={2}
                                 marginLeft={{
                                   base: "5px",
                                   md: "5px",

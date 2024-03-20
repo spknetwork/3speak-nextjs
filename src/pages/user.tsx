@@ -1,5 +1,3 @@
-//TODO: also correct the alignment for the cover page
-//TODO: making this a mobile responsive page with the nain layout 
 
 
 import MainLayout from "@/components/Layouts/main_layout";
@@ -145,7 +143,7 @@ const UserPage = () => {
         </Box>
         <Box
           padding={"0 0px "}
-          boxShadow="0 0 11px #ececec"
+          boxShadow= {colorMode === "dark" ?  "0 0 11px black": "0 0 11px #ececec"}
           background={"#fff none repeat scroll 0 0!important"}
         >
           {/* nav */}
@@ -214,15 +212,18 @@ const UserPage = () => {
                   >
                     <ListItem>
                       <Link
+                       
                         href="#"
                         _hover={{
-                          borderBottom: "2px solid red",
+                          // borderBottom: "2px solid red",npm i react-mentions
                           color: `${
                             colorMode === "dark" ? "whitesmoke" : "black"
                           }`,
+                          backgroundColor: "#4a5568"
                         }}
                         _focus={{
-                          color: `${"black"} `,
+                          // borderBottom: "2px solid red",
+                          color: `${"white"} `,
                         }}
                         color={colorMode === "dark" ? "whitesmoke" : "black"}
                         borderColor={"red"}
@@ -230,7 +231,8 @@ const UserPage = () => {
                         borderBottom={showFeed == 1 ? "2px solid red" : ""}
                         display={"block"}
                         margin="0 7px"
-                        padding={"14px 0 !important"}
+                        padding={"14px 7px"}
+                        borderRadius={"10px 10px 0px 0px"}
                         onClick={() => updateShowFeed(1)}
                       >
                         Videos
@@ -456,7 +458,8 @@ const UserPage = () => {
                   <Button
                     textTransform={"uppercase"}
                     border="none"
-                    boxShadow={"0 1px 4px rgba(0,0,0,0.4)"}
+                    backgroundColor={"#4a5568"}
+                    boxShadow={ colorMode === "dark" ? "0  1px 4px black": "0 1px 4px white"}
                     transition="all 0.4s"
                     variant={"outline"}
                     colorScheme="white"

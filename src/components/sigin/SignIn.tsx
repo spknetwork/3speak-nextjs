@@ -24,14 +24,17 @@ import GoogleAuth from "../SocialAuth/GoogleAuth";
 import GithubAuth from "../SocialAuth/GithubAuth";
 import DiscordAuth from "../SocialAuth/DiscordAuth";
 import Image from "next/image";
-// const magic = new Magic("pk_live_7645A843999E2369");
+import { MagicLinkPopupActions } from "magic-link-popup-react";
+
 
 
 const SignIn = () => {
+  
+  console.log("THIS IS THE KEY", process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY)
   let magic: any
   if (typeof window !== "undefined") {
-    magic = new Magic('pk_live_773A61B5424F8C7D', {
-      extensions: [new OAuthExtension()],
+    magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY!, {
+    extensions: [new OAuthExtension()],
     });
     // console.log('herererererere')
   }

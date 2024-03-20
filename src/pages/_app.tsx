@@ -37,8 +37,16 @@ const theme = extendTheme({
   },
 });
 
-//init function for the magic link 
-// MagicLinkPopupActions.init(process.env.magicApiKey,   )
+// const initOptions = {
+//   width:"100px",  //this need to be function
+//   height:"100px",
+//   top:"50px",
+//   left:"35px"
+// }
+
+//TODO: useEffect
+// //init function for the magic link 
+// MagicLinkPopupActions.init(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY!, "/auth/modals", initOptions!)
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure()

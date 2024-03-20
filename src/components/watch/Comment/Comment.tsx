@@ -8,7 +8,7 @@ type Props = {
   bgColor: string;
   colorMode: string;
 };
-//TODO: comment collapse in the whole child container
+
 
 const Comment = ({ bgColor, colorMode }: Props) => {
   const [isCollapsed, setIsCollapsed] = useState<{ [key: number]: boolean }>(

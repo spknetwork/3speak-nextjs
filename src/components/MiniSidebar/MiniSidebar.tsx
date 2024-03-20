@@ -13,8 +13,6 @@ import { NAVIGATION } from "../../components/data/NavigationData";
 import { Sidebar } from "../Sidebar";
 import Image from "next/image";
 
-//TODO:  make 3speak logo mobile responsive
-
 const MiniSidebar = () => {
   const bgColor = useColorModeValue("gray.100", "gray.800");
   const { colorMode } = useColorMode();

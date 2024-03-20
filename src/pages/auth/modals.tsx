@@ -18,13 +18,11 @@ enum AuthPage {
   Tab4 = "tab4",
 }
 
-
-const Modals = (props: Props) => {
-    
+const Modals = (props: Props) => {    
     const [currentAuthPage, setCurrentAuthPage] = useState<string>("tab1");
   return (
     <>
-    <Box backgroundColor={"gray.800"} h={"100vh"} w={"full"} padding={0} margin={0}>
+    <Box id="parent_auth_modal" h={"100vh"} w={"full"} padding={0} margin={0}>
       <ParentComponent currentAuthPage={currentAuthPage} setCurrentAuthPage={setCurrentAuthPage}/>
       {currentAuthPage === AuthPage.Tab1 && <NormalSignin />}
       {currentAuthPage === AuthPage.Tab2 && <SigninWithHiveComponent />}
