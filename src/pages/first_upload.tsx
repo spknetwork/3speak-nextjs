@@ -15,10 +15,10 @@ import { InfinitySpin } from "react-loader-spinner";
 
 import FeedGrid from "../components/feedgrid/FeedGrid";
 
-const FirstTime = () => {
+const FirstUploads = () => {
   const bgColor = useColorModeValue("white", "gray.800");
   const { colorMode, toggleColorMode } = useColorMode();
-  const getTrendingFeed = useQuery(FIRST_UPLOAD_FEED);
+  const getFeed = useQuery(FIRST_UPLOAD_FEED);
 
   return (
     <MainLayout>
@@ -42,14 +42,14 @@ const FirstTime = () => {
             {colorMode !== "dark" && <SunIcon />}
           </Text>
         </Flex>
-        {getTrendingFeed.loading ? (
-          <InfinitySpin width="200" />
+        {getFeed.loading ? (
+          <InfinitySpin width="200" color="#6DC5D7" />
         ) : (
-          <FeedGrid videos={getTrendingFeed.data.trendingFeed.items} />
+          <FeedGrid videos={getFeed.data.trendingFeed.items} />
         )}
       </Box>
     </MainLayout>
   );
 };
 
-export default FirstTime;
+export default FirstUploads;

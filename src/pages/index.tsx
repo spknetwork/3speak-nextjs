@@ -16,7 +16,7 @@ import { GET_TRENDING_FEED } from "../graphql/queries";
 
 import FeedGrid from "../components/feedgrid/FeedGrid";
 
-const NewIndex = () => {
+const IndexPage = () => {
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
@@ -45,9 +45,7 @@ const NewIndex = () => {
           </Text>
         </Flex>
         {getTrendingFeed.loading ? (
-          <InfinitySpin
-            width="200"
-          />
+          <InfinitySpin width="200" color="#6DC5D7" />
         ) : (
           <FeedGrid videos={getTrendingFeed.data.trendingFeed.items} />
         )}
@@ -56,4 +54,4 @@ const NewIndex = () => {
   );
 };
 
-export default NewIndex;
+export default IndexPage;

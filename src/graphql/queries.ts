@@ -434,130 +434,59 @@ export const TRENDING_FEED = gql`
     }
   }
 `;
-// query FIRST_UPLOAD_FEED {
-//   feed: trendingFeed {
-//     items {
-//       created_at
-//       parent_author
-//       parent_permlink
-//       permlink
-//       title
-//       updated_at
-//       ... on HivePost {
-//         parent_author
-//         parent_permlink
-//         author {
-//           username
-//         }
-//         stats {
-//           num_comments
-//           num_votes
-//           total_hive_reward
-//         }
-//         hive_rewards
-//         app_metadata
-//         spkvideo
-//         refs
-//         post_type
-//         permlink
-//         title
-//         tags
-//         updated_at
-//         created_at
-//       }
-//     }
-//   }
-// }
+
 export const FIRST_UPLOAD_FEED = gql`
-query MyTrendingFeed {
-  trendingFeed(
-    spkvideo: {only: true, firstUpload: true}
-    feedOptions: {}
-    pagination: {limit: 10, skip: 0}
-  ) {
-    items {
-      created_at
-      title
-      ... on HivePost {
-        parent_author
-        parent_permlink
-        lang
-        spkvideo
-        stats {
-          num_comments
-          num_votes
-          total_hive_reward
+  query MyQuery {
+    trendingFeed(spkvideo: { only: true, firstUpload: true }) {
+      items {
+        ... on HivePost {
+          permlink
+          spkvideo
+          author {
+            username
+          }
+          body
+          title
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          tags
+          lang
+          hive_rewards
+          created_at
+          community
         }
-        author {
-          id
-          username
-        }
-        community
-        json_metadata {
-          app
-          image
-          raw
-        }
-        tags
-        title
-        permlink
-        post_type
-        refs
-        body
       }
-      permlink
-      parent_permlink
-      parent_author
-      body
     }
   }
-}
- 
 `;
 
 export const NEW_CONTENT = gql`
-query NewUploadsFeed  {
-  socialFeed(
-    spkvideo: {only: true}
-    feedOptions: {}
-    pagination: {limit: 50, skip: 0}
-  ) {
-    items {
-      created_at
-      title
-      ... on HivePost {
-        parent_author
-        parent_permlink
-        lang
-        spkvideo
-        stats {
-          num_comments
-          num_votes
-          total_hive_reward
+  query MyQuery {
+    socialFeed(spkvideo: { only: true, firstUpload: true }) {
+      items {
+        ... on HivePost {
+          permlink
+          spkvideo
+          author {
+            username
+          }
+          body
+          title
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          tags
+          lang
+          hive_rewards
+          created_at
+          community
         }
-        author {
-          id
-          username
-        }
-        community
-        json_metadata {
-          app
-          image
-          raw
-        }
-        tags
-        title
-        permlink
-        post_type
-        refs
-        body
       }
-      permlink
-      parent_permlink
-      parent_author
-      body
     }
   }
-}
- 
 `;
