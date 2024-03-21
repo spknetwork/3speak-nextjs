@@ -40,7 +40,7 @@ const MainLayout = ({ children }: any) => {
           >
             <MiniSidebar />
           </Box>
-            <Text position={"absolute"} right={[2, 6, 8, 12]} top={[1, 2, 3, 4]} fontSize={["xs", "sm", "md", "xl"]}>
+            <Text position={"absolute"} right={[2, 6, 8, 12]} top={[1, 2, 3, 4]} fontSize={["xs", "sm", "md", "xl"]} zIndex={2}>
               <Switch
                 // size={["sm", "sm", "md", "4xl"]}
                 isChecked={colorMode === "dark"}

@@ -6849,7 +6849,7 @@ longest-streak@^3.0.0:
   resolved "https://registry.yarnpkg.com/longest-streak/-/longest-streak-3.1.0.tgz#62fa67cd958742a1574af9f39866364102d90cd4"
   integrity sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
+loose-envify@^1.0.0, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -6863,18 +6863,18 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-magic-link-popup-react@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/magic-link-popup-react/-/magic-link-popup-react-0.0.3.tgz#9b7970f06eadca76ef02dca3e12a603f0d6d6b8a"
-  integrity sha512-a/Yy37YfkQ+a5I4bNUIQL39biz35dpTPChC+u6Pn4s/4aJ+rLOIc6D0FzrjXd6uVgH5+Dc8IE8LcwUaNqkG57w==
+magic-link-popup-react@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/magic-link-popup-react/-/magic-link-popup-react-0.1.0.tgz#91ac937f2b53ba0af45caa8df6c66fd0a522b6ad"
+  integrity sha512-cxwmgRS9AHkyk3gOAuP2KjiMyYuWvjfSzK7qwn+sIMxLYHSIAdDwFLQ+I6/mXj3zrFBbxTaQMYVL6XZPtx4Qew==
   dependencies:
-    magic-link-popup "^0.0.6"
+    magic-link-popup "^0.1.0"
     zustand "^4.5.2"
 
-magic-link-popup@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/magic-link-popup/-/magic-link-popup-0.0.6.tgz#5a2afa1e9a0fe3e223f3b8ed12782d39acce8ea3"
-  integrity sha512-VDzixsVQd3H1rIfXjBZHaBHyFTTqE+mGH9oQ2vxZv2nu3jam9P02KPsowsSTb0Y9tdjLIfG+gzRdmw6+VTQPww==
+magic-link-popup@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/magic-link-popup/-/magic-link-popup-0.1.0.tgz#e728d52015f902503ad0b5d2f37e2f365e510f49"
+  integrity sha512-7FUyGC00L8QB+GlDr9LmqrMY+mKow0VhiUMCk7H9WEL1p7Vs7LeWOmGhzrNDYxKxWwYdtscer0P/qVWX09j8pw==
   dependencies:
     "@magic-ext/oauth" "^21.0.0"
     magic-sdk "^27.0.0"
@@ -8094,13 +8094,12 @@ react-clientside-effect@^1.2.6:
   dependencies:
     "@babel/runtime" "^7.12.13"
 
-react-dom@18.1.0:
-  version "18.1.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.1.0.tgz#7f6dd84b706408adde05e1df575b3a024d7e8a2f"
-  integrity sha512-fU1Txz7Budmvamp7bshe4Zi32d0ll7ect+ccxNu9FlObT605GOEB8BfO4tmRJ39R5Zj831VCpvQ05QPBW5yb+w==
+react-dom@^18.3.0-canary-a870b2d54-20240314:
+  version "18.3.0-canary-a870b2d54-20240314"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.3.0-canary-a870b2d54-20240314.tgz#10cdc81fb2cad14cbf0108108c376a9850f76e4a"
+  integrity sha512-m56pjWn6kmg0M4GLxtC8A+Uh1AVIc+IESfi1mV810nCoHdMcO/tmhC6pIaWtxHBb3szP0x0p+BXF42nf8lKkVA==
   dependencies:
-    loose-envify "^1.1.0"
-    scheduler "^0.22.0"
+    scheduler "0.24.0-canary-a870b2d54-20240314"
 
 react-dropzone@^14.2.3:
   version "14.2.3"
@@ -8277,12 +8276,10 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@18.1.0:
-  version "18.1.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-18.1.0.tgz#6f8620382decb17fdc5cc223a115e2adbf104890"
-  integrity sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ==
-  dependencies:
-    loose-envify "^1.1.0"
+react@^18.3.0-canary-a870b2d54-20240314:
+  version "18.3.0-canary-a870b2d54-20240314"
+  resolved "https://registry.yarnpkg.com/react/-/react-18.3.0-canary-a870b2d54-20240314.tgz#d63e2a675c613569b675abd5fbe5df327564c734"
+  integrity sha512-/sjBAVN6TJ1G+Ia3hGMaLGZE3w/OKtO6FEzz/wBUKdmK3obyJvxK0FmHGVPpM9nDzrw5f1WJDoPE8nGgkvpKog==
 
 read-cache@^1.0.0:
   version "1.0.0"
@@ -8537,12 +8534,10 @@ save@^2.9.0:
     lodash.assign "^4.2.0"
     mingo "^6.1.0"
 
-scheduler@^0.22.0:
-  version "0.22.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.22.0.tgz#83a5d63594edf074add9a7198b1bae76c3db01b8"
-  integrity sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==
-  dependencies:
-    loose-envify "^1.1.0"
+scheduler@0.24.0-canary-a870b2d54-20240314:
+  version "0.24.0-canary-a870b2d54-20240314"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.24.0-canary-a870b2d54-20240314.tgz#40da8a3cc2e984c3fbbdc6fc8a7d169d1c672301"
+  integrity sha512-HS8crSVpnKgW1ZlzEA+tahjDjLYGre5D/7d4xmYcTjGw6Lcf8Bi1xbHO5QKz3aUqKNN8+Yhde8FcsuEO82+lug==
 
 scrypt-js@3.0.1, scrypt-js@^3.0.0:
   version "3.0.1"

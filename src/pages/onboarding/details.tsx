@@ -126,7 +126,7 @@ const OnBoarding = () => {
               width={{base:"100%", md: "100%", lg:"40%"}}
               padding="10px"
               paddingX={"50px"}
-              paddingTop={"20px"}
+              paddingTop={"20px"} 
               margin="auto"
               minHeight={"80vh"}
             >
@@ -144,10 +144,10 @@ const OnBoarding = () => {
                 marginTop={"1px"}
                 width="100%"
               >
-                <Text as="h6">
+                {/* <Text as="h6">
                   This will give you a place to store workouts and help your
                   friends find you.
-                </Text>
+                </Text> */}
               </Flex>
               <Box mb="1.5rem" mt="1.5rem" width="100%">
                 <fieldset className="Fieldset">
@@ -188,9 +188,7 @@ const OnBoarding = () => {
                     value={website}
                     onChange={(e) => setWebsite(e.target.value)}
                     className="Input3"
-                    id="email"
                     type="text"
-                    name="email"
                   />
                 </fieldset>
               </Box>

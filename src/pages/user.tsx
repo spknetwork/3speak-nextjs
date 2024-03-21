@@ -1,5 +1,5 @@
 
-
+//TODO: fix the dark mode here
 import MainLayout from "@/components/Layouts/main_layout";
 import About from "@/components/user/About";
 import Achievements from "@/components/user/Achievements";
@@ -83,7 +83,7 @@ const UserPage = () => {
 
   return (
     <MainLayout>
-      <Box>
+      <Box backgroundColor={bgColor}>
         <Box minHeight={"280px"} position={"relative"} bgColor={bgColor}>
           {/* <Image
             alt="image"
@@ -215,7 +215,7 @@ const UserPage = () => {
                        
                         href="#"
                         _hover={{
-                          // borderBottom: "2px solid red",npm i react-mentions
+                          // borderBottom: "2px solid red",npm i react-go   s
                           color: `${
                             colorMode === "dark" ? "whitesmoke" : "black"
                           }`,
@@ -264,19 +264,24 @@ const UserPage = () => {
                       <Link
                         href="#"
                         _hover={{
-                          borderBottom: "2px solid red",
-                          color: `${"black"} `,
+                          // borderBottom: "2px solid red",npm i react-mentions
+                          color: `${
+                            colorMode === "dark" ? "whitesmoke" : "black"
+                          }`,
+                          backgroundColor: "#4a5568"
                         }}
                         _focus={{
-                          color: `${"black"} `,
+                          // borderBottom: "2px solid red",
+                          color: `${"white"} `,
                         }}
                         color={colorMode === "dark" ? "whitesmoke" : "black"}
                         borderColor={"red"}
                         textDecoration="none"
-                        borderBottom={showFeed == 3 ? "2px solid red" : ""}
+                        borderBottom={showFeed == 1 ? "2px solid red" : ""}
                         display={"block"}
                         margin="0 7px"
-                        padding={"14px 0 !important"}
+                        padding={"14px 7px"}
+                        borderRadius={"10px 10px 0px 0px"}
                         onClick={() => updateShowFeed(3)}
                       >
                         About

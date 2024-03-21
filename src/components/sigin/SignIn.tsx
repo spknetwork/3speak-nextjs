@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,  useLayoutEffect } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -24,50 +24,46 @@ import GoogleAuth from "../SocialAuth/GoogleAuth";
 import GithubAuth from "../SocialAuth/GithubAuth";
 import DiscordAuth from "../SocialAuth/DiscordAuth";
 import Image from "next/image";
-import { MagicLinkPopupActions } from "magic-link-popup-react";
-
+import { useMagicLinkPopup, MagicLinkPopupActions } from "magic-link-popup-react";
 
 
 const SignIn = () => {
-  
-  console.log("THIS IS THE KEY", process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY)
-  let magic: any
-  if (typeof window !== "undefined") {
-    magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY!, {
-    extensions: [new OAuthExtension()],
-    });
-    // console.log('herererererere')
-  }
-  const googlelogin = async () => {
+
+  //making an instance for the useMagicApiKey()
+
+  console.log("this is the return hook", useMagicLinkPopup)
+  const googlelogin = () => {
     try {
-      await magic.oauth.loginWithRedirect({
-        provider: "google",
-        redirectURI: new URL("/login", window.location.origin).href,
-      });
+      MagicLinkPopupActions.login({
+      type:"oauth",
+      provider:"google"
+      })
     } catch (err) {
       console.error(err);
     }
   }
-
-
+    
   const githublogin = async () => {
-    const data = await magic.oauth.loginWithRedirect({
-      provider: 'github' /* 'google', 'facebook', 'apple', or 'github' */,
-      redirectURI: new URL("/login", window.location.origin).href,
-    });
-
-    console.log('data', data)
+    try{
+      MagicLinkPopupActions.login({
+        type:"oauth",
+        provider: "github"
+      })
+    }catch(err){
+      console.error(err);
+    }
   }
 
-  const discordlogin = async () => {
-    const data = await magic.oauth.loginWithRedirect({
-      provider: 'discord' /* 'google', 'facebook', 'apple', or 'github' */,
-      redirectURI: new URL("/login", window.location.origin).href,
-    });
-
-    console.log('data', data)
+  const discordLogin = async () => {
+    try{
+      MagicLinkPopupActions.login({
+        type:"oauth",
+        provider: "discord"
+      })
+    }catch(err){
+      console.error(err);
+    }
   }
-
   const [onboarding, setOnboarding] = useState<any>(false);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -120,10 +116,6 @@ const SignIn = () => {
         loader={loadImage}
          src={`https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png`} width={'100'}
         height={'100'}
-          // src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
-          // alt="Logo"
-          // width={100}
-          // height={50}
         />
       </Box>
 
@@ -209,7 +201,7 @@ const SignIn = () => {
               <GithubAuth githublogin={githublogin} label='Sign in with Github'/>
             </Flex>
             <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-              <DiscordAuth discordlogin={discordlogin} label='Sign in with Discord' />
+              <DiscordAuth discordLogin={discordLogin} label='Sign in with Discord' />
             </Flex>
 
             <Flex width="100%" justifyContent="center" mt="0.5rem">
@@ -274,3 +266,7 @@ const StyledButton = styled.button<{
   }
 `;
 export default SignIn;
+function useEffectLayout(arg0: () => void) {
+  throw new Error("Function not implemented.");
+}
+

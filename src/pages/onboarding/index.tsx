@@ -116,7 +116,7 @@ const OnBoarding = () => {
                 marginTop={"10px"}
                 width="100%"
               >
-                <Text as="h2">Let`s start with reviewing of username</Text>
+                <Text as="h2">Lewt's start with reviewing of username</Text>
               </Flex>
               <Flex
                 justifyContent={"center"}
