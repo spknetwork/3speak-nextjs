@@ -32,7 +32,7 @@ const TrendingPage = () => {
         >
           <Box padding="20px">
             <Text as="h1" fontWeight={"300 !important"}>
-              &nbsp;
+              Trending Content
             </Text>
           </Box>
           <Text>

@@ -95,7 +95,7 @@ const FeedGridItem = ({video}: any) => {
           />
         </Box>
       </Box>
-      <VideosTitle title={`${video.title}`} />
+      <VideosTitle title={`${video.title}`} author={`${video.author.username}`} permlink={`${video.permlink}`} />
       <Name username={`${video.author.username}`} />
       <Text as="p" margin={"1px"}>
         {moment(video.created_at).fromNow()}

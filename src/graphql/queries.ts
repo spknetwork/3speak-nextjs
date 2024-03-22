@@ -253,6 +253,7 @@ export const GET_PROFILE = gql`
 //     }
 //   }
 // }
+
 export const GET_COMMUNITIES = gql`
   query MyQuery($id: String) {
     community(id: $id) {
@@ -433,6 +434,34 @@ export const TRENDING_FEED = gql`
       }
     }
   }
+`;
+
+export const GET_RELATED=gql`
+query MyQuery($author: String, $permlink: String) {
+  relatedFeed(author: $author, permlink: $permlink, spkvideo: { only: true}) {
+    items {
+      ... on HivePost {
+        permlink
+        spkvideo
+        author {
+          username
+        }
+        body
+        title
+        stats {
+          num_comments
+          num_votes
+          total_hive_reward
+        }
+        tags
+        lang
+        hive_rewards
+        created_at
+        community
+      }
+    }
+  }
+}
 `;
 
 export const FIRST_UPLOAD_FEED = gql`
