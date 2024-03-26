@@ -17,7 +17,6 @@ const ParentComponent = (props: Props) => {
     switch (tab) {
       case "tab1":
         props.setCurrentAuthPage("tab1");
-
         break;
       case "tab2":
         props.setCurrentAuthPage("tab2");
@@ -37,6 +36,7 @@ const ParentComponent = (props: Props) => {
     <Flex
       margin="auto"
       paddingTop={"30px"}
+    
       css={css`
         @media (max-width: 820px) {
           flex-direction: column;
@@ -47,11 +47,12 @@ const ParentComponent = (props: Props) => {
           flex-direction: column;
           width: 35%;
         }
+        
       `}
     >
       <main>
-        <Box width={"100%"} boxShadow={"5px 0px 5px lightblue"} borderTopLeftRadius={"10px"} borderTopRightRadius={"10px"}>
-          <Tabs.Root className="TabsRoot">
+        <Box width={"100%"} boxShadow={"5px 0px 5px lightblue"} borderTopLeftRadius={"10px"} borderTopRightRadius={"10px"} >
+          <Tabs.Root className="TabsRoot" >
             <Tabs.List className="TabsList" aria-label="Manage your account">
               <Tabs.Trigger
                 onClick={() => updateAuthCurrentPage("tab1")}

@@ -1,4 +1,5 @@
 import { Typography } from "@/components";
+import MainLayout from "@/components/Layouts/main_layout";
 import OBWizardSteps from "@/components/onboarding/OBWizardSteps";
 import { useAppStore } from "@/lib/store";
 import { Box, Button, Card, CardBody, Flex, Text } from "@chakra-ui/react";
@@ -6,10 +7,13 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
+import styles from "../../styles/pages/onboarding/index.module.scss";
+
 type FilePreview = {
   file: File;
   previewUrl: string;
 };
+
 const OnBoarding = () => {
   // const { getUserHiveDetails, userhiveDetails, userName, userDetails } = useAppStore();
   const router = useRouter();
@@ -19,23 +23,20 @@ const OnBoarding = () => {
     userDetails,
     userhiveDetails,
     setUserHiveDetails,
-    
   } = useAppStore();
   const [name, setName] = useState<string>("");
-  const [checkDone, setcheckDone] = useState<boolean|null>(null);
+  const [checkDone, setcheckDone] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (userDetails?.username) {
       getUserHiveDetails(`${userDetails?.username}`);
-
     }
-   
-  }, [getUserHiveDetails,userDetails?.username]);
+  }, [getUserHiveDetails, userDetails?.username]);
 
   useEffect(() => {
     if (userDetails) {
-        const name = `${userDetails.username}`
-        console.log("userDetails",userDetails)
+      const name = `${userDetails.username}`;
+      console.log("userDetails", userDetails);
       setName(name);
     }
   }, [userDetails]);
@@ -43,23 +44,24 @@ const OnBoarding = () => {
   useEffect(() => {
     // console.log("userhiveDetails",userhiveDetails)
     if (userhiveDetails) {
-      const from_login = localStorage.getItem("from_login")
-      if ((userhiveDetails?.name || userhiveDetails?.name != "" ) && from_login == 'true') {
-        setcheckDone(true)
-        localStorage.setItem("from_login", "false")
+      const from_login = localStorage.getItem("from_login");
+      if (
+        (userhiveDetails?.name || userhiveDetails?.name != "") &&
+        from_login == "true"
+      ) {
+        setcheckDone(true);
+        localStorage.setItem("from_login", "false");
         router.push("/");
-
-      }else{
-        localStorage.setItem("from_login", "false")
-        setcheckDone(true)
+      } else {
+        localStorage.setItem("from_login", "false");
+        setcheckDone(true);
       }
-    }else{
-      setcheckDone(true)
-
+    } else {
+      setcheckDone(true);
     }
-   
-  }, [userhiveDetails, router])
+  }, [userhiveDetails, router]);
 
+  //function for changing the name
   const onchangeName = (e: any) => {
     setName(e.target.value);
     setUserHiveDetails(e.target.value);
@@ -83,7 +85,7 @@ const OnBoarding = () => {
     return <Box>Loading...</Box>;
   }
   return (
-    <Box minHeight={"100vh"}>
+    <Box maxH={"50vh"} className={styles.my_class_name}>
       <Flex
         flexDirection={"column"}
         padding={"20px"}
@@ -92,23 +94,24 @@ const OnBoarding = () => {
         justifyContent={"center"}
         alignItems="center"
       >
-        <Card height={"100%"} width="100%">
+        <Card height={"100%"} width="100%" >
           <CardBody>
             <Box
               border={"1px solid"}
               borderRadius="10px"
-              width={{base:"100%", md: "100%", lg:"40%"}}
+              width={{ base: "100%", md: "100%", lg: "40%" }}
               padding="10px"
               paddingX={"50px"}
               paddingTop={"20px"}
               margin="auto"
               height={"80vh"}
+              className={styles.my_child_name}
             >
               {/* <Flex justifyContent={'center'} height={'200px'} width='100%' >
                 <Box  {...getRootProps()} cursor={'pointer'} borderRadius={'50%'} height={'200px'} width='200px' border={'1px solid'}>
-                  <input {...getInputProps()} />
+                <input {...getInputProps()} />
                   <img src={selectedFile?selectedFile.previewUrl:'/images/avatar3.png'} style={{margin:'0', width:'100%', borderRadius:'100px', height:'100%', objectFit:'cover'}} />
-                </Box>
+                  </Box>
               </Flex> */}
               <Flex
                 justifyContent={"center"}
@@ -116,7 +119,7 @@ const OnBoarding = () => {
                 marginTop={"10px"}
                 width="100%"
               >
-                <Text as="h2">Lewt's start with reviewing of username</Text>
+                <Text as="h2">Let's start with reviewing of username</Text>
               </Flex>
               <Flex
                 justifyContent={"center"}
@@ -124,25 +127,18 @@ const OnBoarding = () => {
                 marginTop={"1px"}
                 width="100%"
               >
-                <Text as="h6">
-                  This will be your username
-                </Text>
+                <Text as="h6">This will be your username</Text>
               </Flex>
-              <Box mb="1.5rem" mt="1.5rem" width="100%">
+              <Box className={styles.username} mb="1.5rem" mt="1.5rem" width="100%" >
                 <fieldset className="Fieldset">
-                  <label className="LabelOnboarding" htmlFor="currentPassword">
+                  <label
+                    className="LabelOnboarding"
+                    htmlFor="currentPassword"
+                    color=""
+                  >
                     Username
                   </label>
-                  <input
-                    value={name}
-                    disabled
-                    
-                    className="Input3"
-                    id="email"
-                    type="email"
-                    name="email"
-                    style={{cursor: 'not-allowed'}}
-                  />
+                  <input onChange={onchangeName} value={name} type="text" />
                 </fieldset>
               </Box>
               <Flex
@@ -166,13 +162,13 @@ const OnBoarding = () => {
                   px="1.25rem"
                   backgroundColor="#f8d7da"
                   border="1px solid #f5c6cb"
-                >
+                  >
                   <Typography textAlign="center" color="#721c24">
                     Some email services will wrongly sort our emails,
                     remember to check your junk/spam folder!
-                  </Typography>
+                    </Typography>
                 </Box> */}
-                {/* <Box
+              {/* <Box
                   width="100%"
                   borderRadius="0.25rem"
                   mt="1.5rem"
@@ -182,13 +178,13 @@ const OnBoarding = () => {
                   border="1px solid #f5c6cb"
                 >
                   <Typography textAlign="center" color="#721c24">
-                    In order to claim the keys for the Hive account associated
-                    with your 3speak account you must post at least one video.
+                  In order to claim the keys for the Hive account associated
+                  with your 3speak account you must post at least one video.
                   </Typography>
                 </Box>  */}
               {/* <Flex cursor={'pointer'} onClick={() => router.push('/onboarding/profile')} justifyContent={'center'} alignItems='center' padding={'10px'} marginTop={'10px'} width='100%' >
                                 <Button width={'lg'} colorScheme='blue'>Add display name</Button>
-                            </Flex> */}
+                              </Flex> */}
               {/* <Flex
                 cursor={"pointer"}
                 onClick={() => router.push("/onboarding/profile")}

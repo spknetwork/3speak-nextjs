@@ -108,6 +108,17 @@ const SignIn = () => {
   const loadImage=()=>{
     return "https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png";
   }
+
+  const magic = useMagicLinkPopup();
+
+  // useEffect(() => {
+  //   if (magic.initialized) {
+  //     if (magic.loggedIn) {
+  //       // redirect
+        
+  //     }
+  //   c
+  // }, [magic])
   return (
     <Box width="100%">
       <Box mx="auto" maxWidth="9rem">

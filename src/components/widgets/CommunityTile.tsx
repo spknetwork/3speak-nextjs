@@ -22,6 +22,8 @@ export function CommunityTile(props: any) {
             
             <Image
               alt="hive blog"
+              width={"40px"}
+              height={"40px"}
               style={{
                 width: "40px",
                 height: "40px",

@@ -1,14 +1,19 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
+import styles from "../../styles/pages/onboarding/wizard.module.scss"
+
 
 const WizardSteps = ({changeCurrentStep, steps }:any) => {
   return (
     <Box
+    className={styles.parent_container}
     borderRadius={"10px"}
     background="white"
     marginTop={"10px"}
     height={"auto"}
     width={"100%"}
+    // backgroundColor={"green"}
+
   >
     <Flex
       height={"119px"}

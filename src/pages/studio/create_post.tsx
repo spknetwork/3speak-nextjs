@@ -1,5 +1,12 @@
-//TODO: accessible only after login 
-import React, { ReactNode, useEffect, useMemo, useState } from "react";
+//TODO: accessible only after login
+import React, {
+  ComponentProps,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { Button, FormControl, FormLabel, Select, VStack } from '@chakra-ui/react';
 import styled from "styled-components";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 import { MentionsInput, Mention } from "react-mentions";
@@ -28,7 +35,6 @@ import {
   Card,
   CardBody,
   Stack,
-  Button,
   Textarea,
   Input,
   Spinner,
@@ -38,6 +44,7 @@ import {
   Switch,
   useColorMode,
 } from "@chakra-ui/react";
+const { Client: HiveClient } = require("@hiveio/dhive");
 
 type FilePreview = {
   file: File;
@@ -45,6 +52,10 @@ type FilePreview = {
 };
 
 const hashRegex = /#\w+(-?\w+)*/gm;
+
+const HASHTAG_LIMIT = 2;
+
+const SHOW_HASHTAG_LIMIT_ERROR_TIME_MS = 3000;
 
 //data for the hashtags
 const base_mentions = [
@@ -54,11 +65,13 @@ const base_mentions = [
 ];
 
 const CreatePost: React.FC = () => {
+  //setting a global for the hashtags
+  const limitHashtags = 150;
+
   //for the dark mode
   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
   const mentionStyle = getMentionStyle(colorMode);
-  const mentionInputStyle = getMentionInputStyle(colorMode);
 
   // video title
   const [videoTitle, setVideoTitle] = useState<string>("");
@@ -72,7 +85,7 @@ const CreatePost: React.FC = () => {
   const [uploadingProgress, setUploadingProgress] = useState<number>(0);
   const [uploadStatus, setUploadStatus] = useState<Boolean | null>(null);
   const [uploading, setUploading] = useState<Boolean>(false);
-  const [steps, setSteps] = useState<number>(1);
+  const [steps, setSteps] = useState<number>(3);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
     useState<String>("Uploading Video...");
@@ -159,6 +172,8 @@ const CreatePost: React.FC = () => {
     upload.start();
     console.log("upload", upload);
   };
+ 
+
   const handleEncode = (): void => {
     // set encoding video
     const params = {
@@ -343,10 +358,20 @@ const CreatePost: React.FC = () => {
     authenticated ? "gray.900" : "gray.900"
   );
 
+  //function for hashtag validator
+  // function hashtagValidator(text, mentions, typekey) {
+
+  // }
   //logic for the hashtag data
   const [transformedMentions, setTransformedMentions] = useState(base_mentions);
 
+  // useEffect(() => {
+  //   console.log("transforms", transformedMentions);
+  //   console.log("hash tags", hashtagData);
+  // }, [transformedMentions, hashtagData]);
+
   const generateHashtags = useMemo(() => {
+    console.log(transformedMentions);
     const hashtags = Array.from(
       hashtagData.matchAll(hashRegex),
       (match) => match[0]
@@ -357,21 +382,92 @@ const CreatePost: React.FC = () => {
     }));
   }, [hashtagData]);
 
-  function onChange(event: any, newValue: string) {
+  //   export type OnChangeHandlerFunc = (
+  //     event: { target: { value: string } },
+  //     newValue: string,
+  //     newPlainTextValue: string,
+  //     mentions: MentionItem[],
+  // ) => void;
+
+  const [showHashtagLimitError, setShowHashtagLimitError] = useState(false);
+  const mentionInputStyle = getMentionInputStyle(
+    colorMode,
+    showHashtagLimitError
+  );
+
+  const onChange: ComponentProps<typeof MentionsInput>["onChange"] = (
+    event,
+    newValue,
+    newPlainTextValue,
+    mentions
+  ) => {
+    console.log("mentions", mentions);
+    console.log("value", event.target.value);
+    // @[processed_hashtag](processed_hashtag)#typing_hashtag
+
+    // const lastMention = mentions[mentions.length -1];
+    if (mentions.length > HASHTAG_LIMIT) {
+      setShowHashtagLimitError(true);
+      setTimeout(
+        () => setShowHashtagLimitError(false),
+        SHOW_HASHTAG_LIMIT_ERROR_TIME_MS
+      );
+      // const lastMentionRaw = `@[${lastMention.id}](${lastMention.id})`;
+      // event.target.value = event.target.value.slice(0, event.target.value.indexOf(lastMentionRaw) + lastMentionRaw.length)
+      return;
+    }
+
     const hashtags = Array.from(
       newValue.matchAll(hashRegex),
       (match) => match[0]
     );
+
+    console.log(hashtags);
+
     const generated = hashtags.map((hash) => ({
       id: hash.replace("#", ""),
       display: hash.replace("#", ""),
     }));
     setTransformedMentions([...base_mentions, ...generated]);
     setHashTagData(newValue);
-  }
+  };
 
-  return (
-    <Box minH="100vh">
+
+  /**
+   * api import 
+   */
+  const client = new HiveClient("https://api.openhive.network");
+  /**
+   * useState for setting the community data
+   */
+  const [communityData, setCommunityData] = useState([]);
+
+  /**
+   * HiveClient api is needed to integrate here
+   * query here
+   */
+  const fetchData = async () : void[] => {
+   try{
+     const result = await client.call("bridge", "list_communities", {
+       last: "",
+      limit: 100
+     });
+     setCommunityData(result)
+     console.log(result);    
+   }catch(err){
+    console.log(err)
+   }
+  }
+  
+  useEffect(() => {
+    fetchData();
+  }, [])
+  
+
+
+  
+   return (
+    <Box maxH="100vh">
       {/* add the toggle button to the sidebar for opening and close */}
       {/* for mobile view is already there  */}
 
@@ -394,12 +490,12 @@ const CreatePost: React.FC = () => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
-
       <Box
         position={"relative"}
         className="hellotesting"
         ml={{ base: 0, md: 60 }}
         p="4"
+        maxH={"50vh"}
       >
         {uploadingVideo && (
           <Flex
@@ -417,13 +513,13 @@ const CreatePost: React.FC = () => {
             width="100%"
             height={"90vh"}
           >
-            <Spinner
+          <Spinner
               size="xl"
               thickness="4px"
               speed="0.65s"
               emptyColor="gray.200"
               color="black.500"
-            />
+           />
             <Text color={"white"}>{uploadingVideoLabel}</Text>
           </Flex>
         )}
@@ -439,6 +535,41 @@ const CreatePost: React.FC = () => {
                   minH={"75vh"}
                 >
                   <Box height={"60vh"} width={"100%"}>
+                    {uploading && (
+                      <div className={styles.progressContainer}>
+                        <div
+                          className={styles.progressBar}
+                          style={{ width: `${uploadingProgress}%` }}
+                        >
+                          {uploadStatus == true && (
+                            <>
+                              <Text
+                                display="flex"
+                                justifyContent="center"
+                                alignItems="center"
+                                color="white"
+                              >
+                                Upload Complete!
+                              </Text>
+                            </>
+                          )}
+
+                          {uploadStatus == false && (
+                            <>
+                              <Text
+                                position={"absolute"}
+                                display="flex"
+                                justifyContent="center"
+                                alignItems="center"
+                                color="white"
+                              >
+                                Error in uploading!
+                              </Text>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    )}
                     <Flex
                       height={"100%"}
                       width={"100%"}
@@ -476,7 +607,7 @@ const CreatePost: React.FC = () => {
                               className="dropzone"
                               borderRadius={"5px"}
                               width={"100%"}
-                              height="100%"
+                              height="90%"
                               justifyContent="center"
                               alignItems={"center"}
                               border={"1px dotted grey"}
@@ -552,40 +683,6 @@ const CreatePost: React.FC = () => {
                           </Flex>
                         </Box>
                       </Flex>
-                      {uploading && (
-                        <div className={styles.progressContainer}>
-                          <div
-                            className={styles.progressBar}
-                            style={{ width: `${uploadingProgress}%` }}
-                          >
-                            {uploadStatus == true && (
-                              <>
-                                <Text
-                                  display="flex"
-                                  justifyContent="center"
-                                  alignItems="center"
-                                  color="white"
-                                >
-                                  Upload Complete!
-                                </Text>
-                              </>
-                            )}
-
-                            {uploadStatus == false && (
-                              <>
-                                <Text
-                                  display="flex"
-                                  justifyContent="center"
-                                  alignItems="center"
-                                  color="white"
-                                >
-                                  Error in uploading!
-                                </Text>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      )}
                       <Flex
                         justifyContent={"space-between"}
                         alignItems="center"
@@ -595,25 +692,27 @@ const CreatePost: React.FC = () => {
                           onClick={() => router.push("/studio/upload")}
                           size={"lg"}
                           colorScheme="gray"
-                          color={"black"}
+                          color={"white"}
                         >
                           Go Back
                         </Button> */}
-                        {selectedFile && uploadStatus == true && (
-                          <Button
-                            onClick={() => setSteps(1)}
-                            size={"lg"}
-                            colorScheme="blue"
-                          >
-                            Next Step
-                          </Button>
-                        )}
+                        {/* {selectedFile && uploadStatus == true && ( */}
+                        <Button
+                          position={"absolute"}
+                          right={5}
+                          bottom={180}
+                          onClick={() => setSteps(1)}
+                          size={"lg"}
+                          colorScheme="blue"
+                        >
+                          Next Step
+                        </Button>
+                        {/* )} */}
                       </Flex>
                     </Flex>
                   </Box>
                 </CardBody>
               )}
-
               {steps == 1 && (
                 <CardBody backgroundColor={bgColor} minH={"75vh"}>
                   <Box
@@ -814,7 +913,12 @@ const CreatePost: React.FC = () => {
                               <MentionsInput
                                 value={hashtagData}
                                 disabled={savingDetails == true ? true : false}
-                                style={mentionInputStyle}
+                                style={{
+                                  ...mentionInputStyle,
+                                  border: !showHashtagLimitError
+                                    ? "2px solid red"
+                                    : "2px solid green",
+                                }}
                                 onChange={onChange}
                                 placeholder="Put all the hashtags here!"
                               >
@@ -826,6 +930,9 @@ const CreatePost: React.FC = () => {
                                   displayTransform={(_id, value) => `#${value}`}
                                 />
                               </MentionsInput>
+                              {showHashtagLimitError && (
+                                <Text color={"red"}>Limit exceeded!</Text>
+                              )}
                             </fieldset>
                             <fieldset className="w-100 mb-3">
                               <Text
@@ -897,7 +1004,7 @@ const CreatePost: React.FC = () => {
                                 </Flex>
                               )}
 
-                              {previewThumbnails.map((e) => (
+                              {previewThumbnails.map((e, index) => (
                                 <Flex
                                   key={e}
                                   width={"250px"}
@@ -912,6 +1019,9 @@ const CreatePost: React.FC = () => {
                                     md: "5px",
                                     lg: "0px",
                                   }}
+                                  border={
+                                    index === 0 ? "2px solid red" : undefined
+                                  }
                                 >
                                   <Image
                                     objectFit={"cover"}
@@ -933,7 +1043,7 @@ const CreatePost: React.FC = () => {
                           disabled={savingDetails == true ? true : false}
                           onClick={() => setSteps(0)}
                           size={"lg"}
-                          colorScheme="gray"
+                          colorScheme="blue"
                           color={"black"}
                         >
                           Go Back
@@ -953,7 +1063,33 @@ const CreatePost: React.FC = () => {
                   </Box>
                 </CardBody>
               )}
-
+              {/* From here the new component will start */}
+              {steps == 3 && (
+                <CardBody minH={"75vh"}>
+                  <Box
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    overflow="hidden"
+                    p={4}
+                  >
+                    <FormControl id="community-select" p={2}>
+                      <FormLabel>Select Communities</FormLabel>
+                      <Select placeholder="Select a community">
+                        {/* <option value="community1">Community 1</option>
+                        <option value="community2">Community 2</option>
+                        <option value="community3">Community 3</option> */}
+                        {communityData.map((item, index) => (
+                          <option value={item} key={index}>{item.title}</option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <VStack align="stretch" p={4}>
+                      {/* <Button colorScheme="blue">Dropdown Button</Button> */}
+                      {/*<Button colorScheme="green">Select Button</Button>*/}
+                    </VStack>
+                  </Box>
+                </CardBody>
+              )}
               {steps == 2 && (
                 <CardBody backgroundColor={bgColor} minH={"75vh"}>
                   <Box
@@ -1197,7 +1333,6 @@ const CreatePost: React.FC = () => {
                   </Box>
                 </CardBody>
               )}
-
               <WizardSteps
                 changeCurrentStep={changeCurrentStep}
                 steps={steps}
