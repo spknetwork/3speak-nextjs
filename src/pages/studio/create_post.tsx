@@ -1,5 +1,7 @@
 //TODO: accessible only after login
-//TODO: tp upgrade the progress bar for another step
+//TODO: make a detail card for the community
+//TODO: make appear top 3 default communities at the top of the search bar
+//
 import React, {
   ComponentProps,
   ReactNode,
@@ -59,7 +61,8 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-// import { CommunityTile } from "@/components/widgets/CommunityTile";
+import CommunityCard from "../../components/Create_POST/CommunityCard"
+import { backgroundColor } from "styled-system";
 const { Client: HiveClient } = require("@hiveio/dhive");
 
 type FilePreview = {
@@ -93,6 +96,12 @@ const CreatePost: React.FC = () => {
   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
   const mentionStyle = getMentionStyle(colorMode);
+
+  /**
+   * for the filteration of the results
+   */
+  const [search, setSearch] = useState<string>("");
+  const [cardData, setCardData] = useState<any[]>([]);
 
   // video title
   const [videoTitle, setVideoTitle] = useState<string>("");
@@ -482,6 +491,7 @@ const CreatePost: React.FC = () => {
       console.log(err);
     }
   };
+
 
   useEffect(() => {
     fetchData();
@@ -1097,19 +1107,85 @@ const CreatePost: React.FC = () => {
                     width={"100%"}
                   >
                     <Flex w={"full"}>
-                      <Flex w={"50%"}></Flex>
+                      <Flex w={"50%"}>
+                        <CommunityCard
+                          info={cardData}
+                        />
+                      </Flex>
                       <Flex w={"50%"} flexDirection={"column"}>
                         <Flex>
-                        <InputGroup>
-                          <InputLeftElement pointerEvents="none">
-                            <SearchIcon color="gray.300" />
-                          </InputLeftElement>
-                          <Input type="tel" placeholder="Search" />
-                        </InputGroup>
+                          <InputGroup>
+                            <InputLeftElement pointerEvents="none">
+                              <SearchIcon color="gray.300" />
+                            </InputLeftElement>
+                            <Input
+                              type="tel"
+                              placeholder="Search"
+                              onChange={(e) => setSearch(e.target.value)}
+                            />
+                          </InputGroup>
                         </Flex>
                         {/* the result card will go here  */}
                         <Flex>
-                         <Card w={712} h={612}></Card>
+                          <Card w={712} h={522} mt={2}>
+                            <VStack
+                              spacing={1}
+                              overflowY={"auto"}
+                              maxHeight="522px"
+                            >
+                              {communityData
+                                .filter((item: any) => {
+                                  return search.toLowerCase() === ""
+                                    ? item
+                                    : item.title
+                                        .toLowerCase()
+                                        .includes(search.toLowerCase());
+                                })
+                                .map((item: any, index) => (
+                                  <Flex
+                                    key={index}
+                                    w={"full"}
+                                    p={2}
+                                    boxShadow={`0.5px 0.5px 0.5px 0.5px ${
+                                      colorMode === "dark" ? "#3f444e" : "black"
+                                    }`}
+                                    _hover={{ backgroundColor: "#1a202c" }}
+                                    _active={{ backgroundColor: "#1a202c" }}
+                                    cursor="pointer"
+                                    onClick={() => setCardData(item)}
+                                  >
+                                    <Image
+                                      alt="hive blog"
+                                      width={"22px"}
+                                      height={"22px"}
+                                      loader={() =>
+                                        "https://images.hive.blog/u/" +
+                                        item.name +
+                                        "/avatar?size=icon"
+                                      }
+                                      src={
+                                        "https://images.hive.blog/u/" +
+                                        item.name +
+                                        "/avatar?size=icon"
+                                      }
+                                    />
+                                    <Flex
+                                      px={8}
+                                      w={"full"}
+                                      justifyContent="space-between"
+                                      alignItems={"center"}
+                                    >
+                                      <Flex>
+                                        <Text>{item.title}</Text>
+                                      </Flex>
+                                      <Flex>
+                                        <Text>{`id: ${item.id}`}</Text>
+                                      </Flex>
+                                    </Flex>
+                                  </Flex>
+                                ))}
+                            </VStack>
+                          </Card>
                         </Flex>
                       </Flex>
                     </Flex>
