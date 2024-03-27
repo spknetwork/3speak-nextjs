@@ -10,10 +10,9 @@ const WizardSteps = ({changeCurrentStep, steps }:any) => {
     borderRadius={"10px"}
     background="white"
     marginTop={"10px"}
-    height={"auto"}
+    height={"15vh"}
     width={"100%"}
     // backgroundColor={"green"}
-
   >
     <Flex
       height={"119px"}

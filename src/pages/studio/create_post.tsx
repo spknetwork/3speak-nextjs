@@ -1,4 +1,5 @@
 //TODO: accessible only after login
+//TODO: tp upgrade the progress bar for another step
 import React, {
   ComponentProps,
   ReactNode,
@@ -6,7 +7,20 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { Button, FormControl, FormLabel, Select, VStack } from '@chakra-ui/react';
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  HStack,
+  InputGroup,
+  InputLeftElement,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Select,
+  VStack,
+} from "@chakra-ui/react";
 import styled from "styled-components";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 import { MentionsInput, Mention } from "react-mentions";
@@ -44,6 +58,8 @@ import {
   Switch,
   useColorMode,
 } from "@chakra-ui/react";
+import { SearchIcon } from "@chakra-ui/icons";
+// import { CommunityTile } from "@/components/widgets/CommunityTile";
 const { Client: HiveClient } = require("@hiveio/dhive");
 
 type FilePreview = {
@@ -63,6 +79,11 @@ const base_mentions = [
   { id: "2", display: "Jane" },
   { id: "3", display: "Doe" },
 ];
+
+// interface CommunityType {
+//   name: string;
+//   sum_pending: number;
+// }
 
 const CreatePost: React.FC = () => {
   //setting a global for the hashtags
@@ -85,7 +106,7 @@ const CreatePost: React.FC = () => {
   const [uploadingProgress, setUploadingProgress] = useState<number>(0);
   const [uploadStatus, setUploadStatus] = useState<Boolean | null>(null);
   const [uploading, setUploading] = useState<Boolean>(false);
-  const [steps, setSteps] = useState<number>(3);
+  const [steps, setSteps] = useState<number>(2);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
     useState<String>("Uploading Video...");
@@ -172,7 +193,6 @@ const CreatePost: React.FC = () => {
     upload.start();
     console.log("upload", upload);
   };
- 
 
   const handleEncode = (): void => {
     // set encoding video
@@ -214,6 +234,11 @@ const CreatePost: React.FC = () => {
     // get thumbnail
     console.log("videotitle", videoTitle);
     console.log("videoDescription", videoDescription);
+
+    const isSave = document.querySelector<HTMLElement>("#btn_details");
+    if (isSave?.innerText === "Next Step") {
+      setSteps(2);
+    }
     const params = {
       title: videoTitle,
       description: videoDescription,
@@ -432,9 +457,8 @@ const CreatePost: React.FC = () => {
     setHashTagData(newValue);
   };
 
-
   /**
-   * api import 
+   * api import
    */
   const client = new HiveClient("https://api.openhive.network");
   /**
@@ -446,27 +470,24 @@ const CreatePost: React.FC = () => {
    * HiveClient api is needed to integrate here
    * query here
    */
-  const fetchData = async () : void[] => {
-   try{
-     const result = await client.call("bridge", "list_communities", {
-       last: "",
-      limit: 100
-     });
-     setCommunityData(result)
-     console.log(result);    
-   }catch(err){
-    console.log(err)
-   }
-  }
-  
+  const fetchData = async () => {
+    try {
+      const result = await client.call("bridge", "list_communities", {
+        last: "",
+        limit: 100,
+      });
+      setCommunityData(result);
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     fetchData();
-  }, [])
-  
+  }, []);
 
-
-  
-   return (
+  return (
     <Box maxH="100vh">
       {/* add the toggle button to the sidebar for opening and close */}
       {/* for mobile view is already there  */}
@@ -513,13 +534,13 @@ const CreatePost: React.FC = () => {
             width="100%"
             height={"90vh"}
           >
-          <Spinner
+            <Spinner
               size="xl"
               thickness="4px"
               speed="0.65s"
               emptyColor="gray.200"
               color="black.500"
-           />
+            />
             <Text color={"white"}>{uploadingVideoLabel}</Text>
           </Flex>
         )}
@@ -1049,6 +1070,7 @@ const CreatePost: React.FC = () => {
                           Go Back
                         </Button>
                         <Button
+                          id="btn_details"
                           disabled={savingDetails == true ? true : false}
                           onClick={handleCreatePost}
                           size={"lg"}
@@ -1064,33 +1086,60 @@ const CreatePost: React.FC = () => {
                 </CardBody>
               )}
               {/* From here the new component will start */}
-              {steps == 3 && (
+              {steps == 2 && (
                 <CardBody minH={"75vh"}>
                   <Box
                     borderWidth="1px"
                     borderRadius="lg"
                     overflow="hidden"
                     p={4}
+                    height={{ base: "auto", md: "auto", lg: "70vh" }}
+                    width={"100%"}
                   >
-                    <FormControl id="community-select" p={2}>
-                      <FormLabel>Select Communities</FormLabel>
-                      <Select placeholder="Select a community">
-                        {/* <option value="community1">Community 1</option>
-                        <option value="community2">Community 2</option>
-                        <option value="community3">Community 3</option> */}
-                        {communityData.map((item, index) => (
-                          <option value={item} key={index}>{item.title}</option>
-                        ))}
-                      </Select>
-                    </FormControl>
-                    <VStack align="stretch" p={4}>
-                      {/* <Button colorScheme="blue">Dropdown Button</Button> */}
-                      {/*<Button colorScheme="green">Select Button</Button>*/}
-                    </VStack>
+                    <Flex w={"full"}>
+                      <Flex w={"50%"}></Flex>
+                      <Flex w={"50%"} flexDirection={"column"}>
+                        <Flex>
+                        <InputGroup>
+                          <InputLeftElement pointerEvents="none">
+                            <SearchIcon color="gray.300" />
+                          </InputLeftElement>
+                          <Input type="tel" placeholder="Search" />
+                        </InputGroup>
+                        </Flex>
+                        {/* the result card will go here  */}
+                        <Flex>
+                         <Card w={712} h={612}></Card>
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                    <Flex
+                      mt={460}
+                      justifyContent={"space-between"}
+                      alignItems="center"
+                    >
+                      <Button
+                        disabled={savingDetails == true ? true : false}
+                        onClick={() => setSteps(0)}
+                        size={"lg"}
+                        colorScheme="blue"
+                        color={"black"}
+                      >
+                        Go Back
+                      </Button>
+                      <Button
+                        disabled={savingDetails == true ? true : false}
+                        onClick={handleCreatePost}
+                        size={"lg"}
+                        colorScheme="blue"
+                      >
+                        {savingDetails == true ? "Saving Details" : "Next Step"}
+                      </Button>
+                    </Flex>
                   </Box>
                 </CardBody>
               )}
-              {steps == 2 && (
+              {steps == 3 && (
                 <CardBody backgroundColor={bgColor} minH={"75vh"}>
                   <Box
                     height={{ base: "auto", md: "auto", lg: "65vh" }}
@@ -1337,6 +1386,7 @@ const CreatePost: React.FC = () => {
                 changeCurrentStep={changeCurrentStep}
                 steps={steps}
                 bgColor={bgColor}
+                colorMode={colorMode}
                 // toggleDetais={toggleDetails}
               />
             </Card>

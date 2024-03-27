@@ -2,7 +2,15 @@ import { Typography } from "@/components";
 import MainLayout from "@/components/Layouts/main_layout";
 import OBWizardSteps from "@/components/onboarding/OBWizardSteps";
 import { useAppStore } from "@/lib/store";
-import { Box, Button, Card, CardBody, Flex, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Flex,
+  Text,
+  useColorMode,
+} from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
@@ -17,6 +25,15 @@ type FilePreview = {
 const OnBoarding = () => {
   // const { getUserHiveDetails, userhiveDetails, userName, userDetails } = useAppStore();
   const router = useRouter();
+  const { colorMode, setColorMode } = useColorMode();
+
+  /**
+   * for the system mode
+   */
+  useEffect(() => {
+    const light = window.matchMedia("(prefers-color-scheme: light)").matches;
+    setColorMode(light ? "light" : "dark");
+  }, [setColorMode]);
 
   const {
     getUserHiveDetails,
@@ -85,7 +102,12 @@ const OnBoarding = () => {
     return <Box>Loading...</Box>;
   }
   return (
-    <Box maxH={"50vh"} className={styles.my_class_name}>
+    <Box
+      maxH={"50vh"}
+      className={
+        colorMode === "dark" ? styles.my_class_name : styles.my_class_name_light
+      }
+    >
       <Flex
         flexDirection={"column"}
         padding={"20px"}
@@ -94,7 +116,7 @@ const OnBoarding = () => {
         justifyContent={"center"}
         alignItems="center"
       >
-        <Card height={"100%"} width="100%" >
+        <Card height={"100%"} width="100%">
           <CardBody>
             <Box
               border={"1px solid"}
@@ -129,16 +151,27 @@ const OnBoarding = () => {
               >
                 <Text as="h6">This will be your username</Text>
               </Flex>
-              <Box className={styles.username} mb="1.5rem" mt="1.5rem" width="100%" >
+              <Box
+                className={styles.username}
+                mb="1.5rem"
+                mt="1.5rem"
+                width="100%"
+              >
                 <fieldset className="Fieldset">
-                  <label
-                    className="LabelOnboarding"
-                    htmlFor="currentPassword"
-                    color=""
-                  >
+                  <label color={colorMode === "dark" ? "white" : "black"}>
                     Username
                   </label>
-                  <input onChange={onchangeName} value={name} type="text" />
+                  <input
+                    onChange={onchangeName}
+                    value={name}
+                    type="text"
+                    onFocus={(e) => {
+                      e.target.style.border =
+                        colorMode === "dark"
+                          ? "2px solid white"
+                          : "2px solid black";
+                    }}
+                  />
                 </fieldset>
               </Box>
               <Flex
