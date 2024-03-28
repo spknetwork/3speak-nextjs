@@ -10,7 +10,7 @@ import { Sidebar } from "src/components";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "bootstrap/dist/css/bootstrap.css";
-
+import { MagicLinkPopupProvider } from "magic-link-popup-react";
 import { useAppStore } from "../lib/store";
 import * as Tabs from "@radix-ui/react-tabs";
 import {
@@ -63,13 +63,13 @@ const initOptions = {
 if (typeof window !== "undefined") {
   import("magic-link-popup-react").then(
     ({ useMagicLinkPopup, MagicLinkPopupActions }) => {
-        if(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY === undefined){
-          throw new Error("the apikey is undefined")
-        }
-        MagicLinkPopupActions.init(
-          process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY,
-          "/auth/loader"
-          );
+      if (process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY === undefined) {
+        throw new Error("the apikey is undefined");
+      }
+      MagicLinkPopupActions.init(
+        process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY,
+        "/auth/loader"
+      );
     }
   );
 }
@@ -128,19 +128,21 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [checkAuth, setAccounts]);
 
   return (
-    <Provider store={store}>
-      <ChakraProvider theme={theme}>
-        <AccountsList
-          isOpenModal1={isOpenModal1}
-          onCloseModal1={onCloseModal1}
-          listAccounts={listAccounts}
-          addAccounts={addAccounts}
-        />
-        <ApolloProvider client={client}>
-          <Component {...pageProps} />
-        </ApolloProvider>
-      </ChakraProvider>
-    </Provider>
+    <MagicLinkPopupProvider>
+      <Provider store={store}>
+        <ChakraProvider theme={theme}>
+          <AccountsList
+            isOpenModal1={isOpenModal1}
+            onCloseModal1={onCloseModal1}
+            listAccounts={listAccounts}
+            addAccounts={addAccounts}
+          />
+          <ApolloProvider client={client}>
+            <Component {...pageProps} />
+          </ApolloProvider>
+        </ChakraProvider>
+      </Provider>
+    </MagicLinkPopupProvider>
     //     {/* {isOtp && (
     //         <>
     //           <Flex

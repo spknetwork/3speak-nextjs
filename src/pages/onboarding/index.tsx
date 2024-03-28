@@ -176,14 +176,13 @@ const OnBoarding = () => {
               </Box>
               <Flex
                 cursor={"pointer"}
-                onClick={() => router.push("/onboarding/profile")}
                 justifyContent={"center"}
                 alignItems="center"
                 padding={"0"}
                 marginTop={"10px"}
                 width="100%"
               >
-                <Button width={"xl"} colorScheme="blue">
+                <Button width={"xl"} colorScheme="blue" onClick={() => router.push("/onboarding/profile")}>
                   Next
                 </Button>
               </Flex>

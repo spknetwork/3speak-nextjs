@@ -67,16 +67,17 @@ const OnBoarding = () => {
   const router = useRouter();
 
   return (
-    <Box minHeight={"100vh"}>
+    <Box h={"96vh"}>
       <Flex
         flexDirection={"column"}
+        mt={9}
         padding={"20px"}
         height={"100%"}
         width="100%"
         justifyContent={"center"}
         alignItems="center"
       >
-        <Card paddingBottom={'100px'} height={"100%"} width="100%">
+        <Card height={"100%"} width="100%">
           <CardBody>
             <Box
               cursor={"pointer"}
@@ -94,14 +95,14 @@ const OnBoarding = () => {
               borderRadius="10px"
               width={{ base: "100%", md: "100%", lg: "60%" }}
               padding="10px"
-              paddingTop={"20px"}
+              paddingTop={"10px"}
               margin="auto"
-              height={"80vh"}
+              height={"70vh"}
             >
               <Flex
                 position={"relative"}
                 justifyContent={"start"}
-                height={{ base: "300px", md: "400px" }}
+                height={{ base: "200px", md: "400px" }}
                 width="100%"
               >
                 <Flex

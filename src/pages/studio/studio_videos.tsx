@@ -33,6 +33,8 @@ import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useAppStore } from "@/lib/store";
 import { FaRegEdit } from "react-icons/fa";
+//hooks
+import { useAuth } from "@/hooks/auth";
 
 export default function StudioVideos({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -44,26 +46,10 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
 
   const router = useRouter();
 
-  const { allowAccess } = useAppStore();
+  // const { allowAccess } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
-  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    if (allowAccess == true) {
-      setAuthenticated(allowAccess);
-      return
-    } 
-    if (allowAccess == false) {
-      setAuthenticated(false);
-      return
-    }
-  }, [allowAccess]);
-
-  useEffect(() => {
-    if (authenticated == false && authenticated != null) {
-      // router.push("/auth/login");
-    }
-  }, [authenticated, router]);
+  const {authenticated} = useAuth();
+ 
   
   const colorModeValue = useColorModeValue(
     authenticated ? "gray.100" : "gray.100",
