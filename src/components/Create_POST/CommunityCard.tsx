@@ -9,12 +9,22 @@ import {
   CardBody,
   Box,
 } from "@chakra-ui/react";
+ import {CommunityResult} from "../../pages/studio/create_post"
 
-interface CommunityCardProps {
-  info: any;
-}
+// type Concrete = {someKey: string}
+// type Loose = Partial<Concrete>
+// type AnotherLoose = {someKey?: string | undefined}
 
-const CommunityCard: React.FC<CommunityCardProps> = ({ info }) => {
+// const c: Concrete = {someKey: 'hi'}
+// const a: Loose = c
+// const b: Loose = {}
+// const c1: AnotherLoose = a
+// const d: AnotherLoose = b
+// if (b.someKey !== undefined) {
+// const e: Concrete = b
+// }
+
+const CommunityCard: React.FC<Partial<CommunityResult>> = (info) => {
   return (
     <Card w={["full", "base"]} h={"93%"} top={12}  mx={4} overflowWrap="break-word">
       <Flex p={4} direction={["column", "row"]} align="center">
@@ -36,38 +46,38 @@ const CommunityCard: React.FC<CommunityCardProps> = ({ info }) => {
         </Box>
       </Flex>
       <Flex>
-        <Card px={4} py={2} mx={4}>
+        <Flex px={4} py={2} mx={4}>
           <Flex>
             <Text mx={1}>Admins:</Text>
             <Text fontWeight={"bold"}>{info.admins}</Text>
           </Flex>
-        </Card>
-        <Card px={4} py={2} mx={4}>
+        </Flex>
+        <Flex px={4} py={2} mx={4}>
           <Flex>
             <Text mx={1}>Subscribers:</Text>
             <Text fontWeight={"bold"}>{info.subscribers}</Text>
           </Flex>
-        </Card>
-        <Card px={4} py={2} mx={4}>
+        </Flex>
+        <Flex px={4} py={2} mx={4}>
           <Flex>
             <Text mx={1}>Sum Pending:</Text>
             <Text fontWeight={"bold"}>{info.sum_pending}</Text>
           </Flex>
-        </Card>
+        </Flex>
       </Flex>
       <Flex m={5}>
-        <Card px={4} py={2}>
+        <Flex px={4} py={2}>
           <Flex>
             <Text mx={1}>Num Pending:</Text>
             <Text fontWeight={"bold"}>{info.num_pending}</Text>
           </Flex>
-        </Card>
-        <Card px={4} py={2}>
+        </Flex>
+        <Flex px={4} py={2} mx={4}>
           <Flex>
             <Text mx={1}>Num Authors:</Text>
             <Text fontWeight={"bold"}>{info.num_authors}</Text>
           </Flex>
-        </Card>
+        </Flex>
       </Flex>
     </Card>
   );

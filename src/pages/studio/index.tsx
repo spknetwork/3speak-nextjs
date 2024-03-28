@@ -48,7 +48,7 @@ export default function StudioPage({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (authenticated == false && authenticated != null) {
-      router.push("/auth/login");
+      router.push("/auth/modals");
     }
   }, [authenticated, router]);
 

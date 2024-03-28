@@ -64,14 +64,14 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
       // router.push("/auth/login");
     }
   }, [authenticated, router]);
-
+  
   const colorModeValue = useColorModeValue(
     authenticated ? "gray.100" : "gray.100",
     authenticated ? "gray.900" : "gray.900"
   );
-  // if (authenticated === null) {
-  //   return <Box>Loading...</Box>;
-  // }
+  if (authenticated === null) {
+    return <Box>Loading...</Box>;
+  }
 
   if (authenticated === false) {
     return <Box>Unauthorized access, please login first</Box>;
@@ -152,11 +152,11 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
                         </AlertDescription>
                       </Alert>
 
-                      <Box marginY={"20px"} width={"100%"}>
+                      {/* <Box marginY={"20px"} width={"100%"}>
                         <Button width={"98%"} colorScheme="blue">
                           Manage Video Boost
                         </Button>
-                      </Box>
+                      </Box> */}
                       <TableContainer width={"100%"}>
                         <Table variant="striped" colorScheme="gray">
                           {/* <TableCaption>

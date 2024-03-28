@@ -63,7 +63,20 @@ import {
 import { SearchIcon } from "@chakra-ui/icons";
 import CommunityCard from "../../components/Create_POST/CommunityCard"
 import { backgroundColor } from "styled-system";
+import { Numbers } from "web3";
 const { Client: HiveClient } = require("@hiveio/dhive");
+
+  // TODO put the type in plz
+  export type CommunityResult = {
+    name: string;
+    title: string;
+    about: string;
+    admins: string;
+    sum_pending: number;
+    num_pending: number;
+    subscribers: number;
+    num_authors: number;
+  }
 
 type FilePreview = {
   file: File;
@@ -101,7 +114,7 @@ const CreatePost: React.FC = () => {
    * for the filteration of the results
    */
   const [search, setSearch] = useState<string>("");
-  const [cardData, setCardData] = useState<any[]>([]);
+  const [cardData, setCardData] = useState<CommunityResult>();
 
   // video title
   const [videoTitle, setVideoTitle] = useState<string>("");
@@ -473,7 +486,7 @@ const CreatePost: React.FC = () => {
   /**
    * useState for setting the community data
    */
-  const [communityData, setCommunityData] = useState([]);
+  const [communityData, setCommunityData] = useState<CommunityResult[]>([]);
 
   /**
    * HiveClient api is needed to integrate here
@@ -481,10 +494,29 @@ const CreatePost: React.FC = () => {
    */
   const fetchData = async () => {
     try {
-      const result = await client.call("bridge", "list_communities", {
+      // TODO put the type in plz
+      const result: CommunityResult[] = await client.call("bridge", "list_communities", {
         last: "",
         limit: 100,
       });
+      const titles = result.map(info => info.title);
+      const leoIndex = titles.indexOf('LeoFinance');
+      const speakIndex = titles.indexOf('Threespeak');
+
+      // TODO put the type in plz
+      let speakValue: CommunityResult, leoValue: CommunityResult
+      if (speakIndex > leoIndex) {
+        [speakValue] = result.splice(speakIndex, 1);
+        [leoValue] = result.splice(leoIndex, 1);
+      } else {
+        [leoValue] = result.splice(leoIndex, 1);
+        [speakValue] = result.splice(speakIndex, 1);
+      }
+
+      result.unshift(leoValue)
+      result.unshift(speakValue)
+
+      setCardData(speakValue);
       setCommunityData(result);
       console.log(result);
     } catch (err) {
@@ -1109,7 +1141,7 @@ const CreatePost: React.FC = () => {
                     <Flex w={"full"}>
                       <Flex w={"50%"}>
                         <CommunityCard
-                          info={cardData}
+                          {...cardData}
                         />
                       </Flex>
                       <Flex w={"50%"} flexDirection={"column"}>
