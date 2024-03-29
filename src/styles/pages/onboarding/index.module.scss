@@ -1,16 +1,23 @@
+.my_class_name {
+  background-color: #1a202c;
+}
 
-@media (prefers-color-scheme : dark){
+.my_card_name {
+  border-radius: 5px;
+  background-color: #1a202c;
+}
 
-    .my_class_name {
-        background-color: #1a202c;
-    }
-    
-    .my_child_name {
-        background-color: #1a202c
-    }
-    
-    .username {
-        color: whitesmoke;
-      }
-      
+.my_card_name_light {
+  border-radius: 5px;
+  box-shadow: 0px 0px 2px 2px #e6e6e6;
+}
+
+.username {
+  color: whitesmoke;
+}
+
+.username_input {
+  border-radius: 5px;
+  height: 36px;
+  width: 512px;
 }

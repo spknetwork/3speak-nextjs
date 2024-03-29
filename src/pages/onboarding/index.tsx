@@ -8,9 +8,11 @@ import {
   Card,
   CardBody,
   Flex,
+  Input,
   Text,
   useColorMode,
 } from "@chakra-ui/react";
+import { Form } from "react-bootstrap";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
@@ -101,23 +103,33 @@ const OnBoarding = () => {
   if (checkDone == null) {
     return <Box>Loading...</Box>;
   }
+
+  const handleName = (e) => {
+     e.preventDefault();
+     if(!name){
+      alert("Please enter your name")
+      return
+     }
+     router.push("/onboarding/profile")
+  }
   return (
     <Box
-      maxH={"50vh"}
+      maxH={"70vh"}
       className={
         colorMode === "dark" ? styles.my_class_name : styles.my_class_name_light
       }
+      position={"relative"} 
     >
       <Flex
         flexDirection={"column"}
         padding={"20px"}
-        height={"100%"}
+        height="auto"
         width="100%"
         justifyContent={"center"}
         alignItems="center"
       >
         <Card height={"100%"} width="100%">
-          <CardBody>
+          <CardBody className={ colorMode === "dark" ? styles.my_card_name : styles.my_card_name_light}>
             <Box
               border={"1px solid"}
               borderRadius="10px"
@@ -126,7 +138,7 @@ const OnBoarding = () => {
               paddingX={"50px"}
               paddingTop={"20px"}
               margin="auto"
-              height={"80vh"}
+              height={"70vh"}
               className={styles.my_child_name}
             >
               {/* <Flex justifyContent={'center'} height={'200px'} width='100%' >
@@ -157,81 +169,36 @@ const OnBoarding = () => {
                 mt="1.5rem"
                 width="100%"
               >
-                <fieldset className="Fieldset">
-                  <label color={colorMode === "dark" ? "white" : "black"}>
+                  <Flex color={colorMode === "dark" ? "white" : "black"}>
                     Username
-                  </label>
-                  <input
+                  </Flex>
+                  <Flex>
+                  <Input
+                    required
+                    className={styles.username_input}
                     onChange={onchangeName}
                     value={name}
                     type="text"
-                    onFocus={(e) => {
-                      e.target.style.border =
-                        colorMode === "dark"
-                          ? "2px solid white"
-                          : "2px solid black";
-                    }}
-                  />
-                </fieldset>
+                    />
+                    </Flex>
               </Box>
               <Flex
                 cursor={"pointer"}
                 justifyContent={"center"}
                 alignItems="center"
                 padding={"0"}
-                marginTop={"10px"}
+                marginTop={24}
                 width="100%"
-              >
-                <Button width={"xl"} colorScheme="blue" onClick={() => router.push("/onboarding/profile")}>
+                >
+                <Button width={"sm"} colorScheme="blue" onClick={handleName}>
                   Next
                 </Button>
               </Flex>
-              {/* <Box
-                  width="100%"
-                  borderRadius="0.25rem"
-                  mt="1.5rem"
-                  py="0.75rem"
-                  px="1.25rem"
-                  backgroundColor="#f8d7da"
-                  border="1px solid #f5c6cb"
-                  >
-                  <Typography textAlign="center" color="#721c24">
-                    Some email services will wrongly sort our emails,
-                    remember to check your junk/spam folder!
-                    </Typography>
-                </Box> */}
-              {/* <Box
-                  width="100%"
-                  borderRadius="0.25rem"
-                  mt="1.5rem"
-                  py="0.75rem"
-                  px="1.25rem"
-                  backgroundColor="#f8d7da"
-                  border="1px solid #f5c6cb"
-                >
-                  <Typography textAlign="center" color="#721c24">
-                  In order to claim the keys for the Hive account associated
-                  with your 3speak account you must post at least one video.
-                  </Typography>
-                </Box>  */}
-              {/* <Flex cursor={'pointer'} onClick={() => router.push('/onboarding/profile')} justifyContent={'center'} alignItems='center' padding={'10px'} marginTop={'10px'} width='100%' >
-                                <Button width={'lg'} colorScheme='blue'>Add display name</Button>
-                              </Flex> */}
-              {/* <Flex
-                cursor={"pointer"}
-                onClick={() => router.push("/onboarding/profile")}
-                justifyContent={"center"}
-                alignItems="center"
-                marginTop={"10px"}
-                width="100%"
-              >
-                <Text as="span">Skip</Text>
-              </Flex> */}
             </Box>
           </CardBody>
         </Card>
-        <OBWizardSteps changeCurrentStep={changeCurrentStep} steps={0} />
       </Flex>
+      <OBWizardSteps changeCurrentStep={changeCurrentStep} steps={0} />
     </Box>
   );
 };

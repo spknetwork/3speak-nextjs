@@ -1,11 +1,13 @@
 import OBWizardSteps from "@/components/onboarding/OBWizardSteps";
 import { useAppStore } from "@/lib/store";
-import { Box, Button, Card, CardBody, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, Flex, Text, useColorMode } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 import { FaLongArrowAltLeft, FaUpload } from "react-icons/fa";
+import styles from "../../styles/pages/onboarding/profile.module.scss";
+
 type FilePreview = {
   file: File;
   previewUrl: string;
@@ -14,6 +16,15 @@ const OnBoarding = () => {
   const { getUserHiveDetails, userhiveDetails,userDetails } = useAppStore();
   const [coverImage, setcoverImage] = useState<string>("");
   const [profileImage, setprofileImage] = useState<string>("");
+  const {colorMode, setColorMode } = useColorMode();
+  
+
+  useEffect(() => {
+    const light = window.matchMedia("(prefers-color-scheme: light)").matches;
+    setColorMode(light ? "light" : "dark");
+  }, [setColorMode]);
+
+
   useEffect(() => {
     if (userDetails?.username) {
       getUserHiveDetails(`${userDetails?.username}`);
@@ -67,18 +78,16 @@ const OnBoarding = () => {
   const router = useRouter();
 
   return (
-    <Box h={"96vh"}>
+    <Box h={"80vh"}>
       <Flex
         flexDirection={"column"}
-        mt={9}
-        padding={"20px"}
         height={"100%"}
         width="100%"
         justifyContent={"center"}
         alignItems="center"
       >
         <Card height={"100%"} width="100%">
-          <CardBody>
+          <CardBody className={colorMode === "dark" ? styles.my_card : styles.my_card_light}>
             <Box
               cursor={"pointer"}
               onClick={() => router.push("/onboarding/")}
@@ -123,7 +132,7 @@ const OnBoarding = () => {
                       lg: "100px",
                     }}
                     borderRadius={"10px"}
-                    height={{ base: "200px", md: "300px" }}
+                    height={{ base: "100px", md: "200px" }}
                     width="100%"
                     border={"1px solid"}
                   >
@@ -131,44 +140,13 @@ const OnBoarding = () => {
 
                     {/* {selectedFile} */}
                     <input {...getInputProps()} />
-                    {/* {(coverImage && !selectedFile) && (
-                      <Image
-                        className="coverImage"
-                        layout="fill"
-                        alt="cover image"
-                        src={coverImage}
-                        style={{
-                          margin: "0",
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                      />
-                    )}
 
-                    {(!coverImage && selectedFile) && (
-                      <Image
-                        className="selectedFile coverimage"
-                        layout="fill"
-                        alt="cover image"
-                        // width={'300'}
-                        // height='300'
-                        src={selectedFile?.previewUrl}
-                        style={{
-                          margin: "0",
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                      />
-                    )} */}
-                    {/* {!selectedFile && !coverImage && <FaUpload color="grey" />} */}
                     <FaUpload color="grey" />
                   </Flex>
                 </Flex>
                 <Box
-                  left={{ base: "38%", md: "38%", lg: "38%" }}
-                  top={{ base: "148px", md: "205px" }}
+                  left={{ base: "40%", md: "40%", lg: "40%" }}
+                  top={{ base: "120px", md: "180px" }}
                   position={"absolute"}
                   background={"white"}
                   {...getRootPropsProfile()}
@@ -181,74 +159,14 @@ const OnBoarding = () => {
                   <input {...getInputPropsProfile()} />
                   <input type="hidden" value={profileImage} />
                   <input type="hidden" value={coverImage} />
-                  {/* {profileImage && !selectedFileProfile && (
-                    <Image
-                      // className="profileImage"
-                      className="selectedFile coverimage profileImage"
-                      layout="fill"
-                      alt="avatar"
-                      //  width='100%'
-                      //  height={'100%'}
-                      //  loader={() => {
-                      //    return profileImage
-                      //  }}
-                      src={
-                        profileImage
-                      }
-                      style={{
-                        margin: "0",
-                        width: "100%",
-                        borderRadius: "100px",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
-                  )}
-
-                  {!profileImage && selectedFileProfile && (
-                    <Image
-                      // className="profileImage"
-                      className="selectedFile coverimage profileImage"
-                      layout="fill"
-                      alt="avatar"
-                      //  width='100'
-                      //  height={'100'}
-                      //  loader={() => {
-                      //    return selectedFileProfile.previewUrl
-                      //  }}
-                      src={
-                        selectedFileProfile.previewUrl
-                      }
-                      style={{
-                        margin: "0",
-                        width: "100%",
-                        borderRadius: "100px",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
-                  )} */}
-
-                  {/* {!profileImage && !selectedFileProfile && ( */}
                   {!selectedFileProfile && (
                     <Image
-                      // className="profileImage"
-                      className="selectedFile coverimage"
+                     className={styles.my_Image}
                       layout="fill"
                       alt="avatar"
-                      //  width='100'
-                      //  height={'100'}
-
                       src={
                         '/images/avatar3.png'
                       }
-                      style={{
-                        margin: "0",
-                        width: "100%",
-                        borderRadius: "100px",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
                     />
                   )}
 
@@ -257,7 +175,6 @@ const OnBoarding = () => {
               <Flex
                 justifyContent={"center"}
                 alignItems="center"
-                marginTop={"10px"}
                 width="100%"
               >
                 <Text as="h2">Add profile and banner</Text>
@@ -265,7 +182,6 @@ const OnBoarding = () => {
               <Flex
                 justifyContent={"center"}
                 alignItems="center"
-                marginTop={"1px"}
                 width="100%"
               >
                 <Text as="h6">
@@ -278,7 +194,6 @@ const OnBoarding = () => {
                 justifyContent={"center"}
                 alignItems="center"
                 padding={"10px"}
-                marginTop={"10px"}
                 width="100%"
               >
                 <Button width={"lg"} colorScheme="blue">
@@ -290,7 +205,6 @@ const OnBoarding = () => {
                 onClick={() => router.push("/onboarding/details")}
                 justifyContent={"center"}
                 alignItems="center"
-                marginTop={"10px"}
                 width="100%"
               >
                 <Text as="span">Skip</Text>
@@ -298,8 +212,8 @@ const OnBoarding = () => {
             </Box>
           </CardBody>
         </Card>
-        <OBWizardSteps changeCurrentStep={changeCurrentStep} steps={1} />
       </Flex>
+        <OBWizardSteps changeCurrentStep={changeCurrentStep} steps={1} />
     </Box>
   );
 };

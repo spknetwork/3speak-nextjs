@@ -1,15 +1,24 @@
-import { Box, Button, Card, CardBody, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, Flex, Input, Text, Textarea, useColorMode } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import OBWizardSteps from "@/components/onboarding/OBWizardSteps";
 import { useRouter } from "next/router";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { useAppStore } from "@/lib/store";
 import { Name } from "@/lib/slices/createUserStore";
+import styles  from "../../styles/pages/onboarding/details.module.scss";
 
 const OnBoarding = () => {
   const { getUserHiveDetails, userhiveDetails, userName, userDetails } = useAppStore();
   const [coverImage, setcoverImage] = useState<string| null>("");
   const [profileImage, setprofileImage] = useState<string| null>("");
+  const { colorMode, setColorMode } = useColorMode(); 
+
+  useEffect(() => {
+    const light = window.matchMedia("(prefers-color-scheme: light)").matches;
+    setColorMode(light ? "light" : "dark");
+  }, [setColorMode]);
+
+
   useEffect(() => {
     console.log("userDetails?.username",userDetails?.username)
     const ls_coverImage = localStorage.getItem("coverImage")
@@ -98,17 +107,16 @@ const OnBoarding = () => {
   }, [userhiveDetails]);
 
   return (
-    <Box minHeight={"100vh"}>
+    <Box>
       <Flex
         flexDirection={"column"}
-        padding={"20px"}
-        height={"100%"}
+        height={"auto"}
         width="100%"
         justifyContent={"center"}
         alignItems="center"
       >
         <Card height={"100%"} width="100%">
-          <CardBody>
+          <CardBody className={colorMode === "dark"? styles.my_card : styles.my_card_light}>
             <Box
               cursor={"pointer"}
               onClick={() => router.push("/onboarding/profile")}
@@ -126,35 +134,21 @@ const OnBoarding = () => {
               width={{base:"100%", md: "100%", lg:"40%"}}
               padding="10px"
               paddingX={"50px"}
-              paddingTop={"20px"} 
               margin="auto"
-              minHeight={"80vh"}
+              maxHeight={"90vh"}
             >
               <Flex
                 justifyContent={"start"}
                 alignItems="center"
-                marginTop={"10px"}
                 width="100%"
               >
                 <Text as="h2">Add profile details</Text>
               </Flex>
-              <Flex
-                justifyContent={"start"}
-                alignItems="center"
-                marginTop={"1px"}
-                width="100%"
-              >
-                {/* <Text as="h6">
-                  This will give you a place to store workouts and help your
-                  friends find you.
-                </Text> */}
-              </Flex>
               <Box mb="1.5rem" mt="1.5rem" width="100%">
-                <fieldset className="Fieldset">
-                  <label className="LabelOnboarding" htmlFor="currentPassword">
+                  <Text>
                     Display Name
-                  </label>
-                  <input
+                  </Text>
+                  <Input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="Input3"
@@ -162,14 +156,12 @@ const OnBoarding = () => {
                     type="text"
                     name="name"
                   />
-                </fieldset>
               </Box>
               <Box mb="1.5rem" mt="1.5rem" width="100%">
-                <fieldset className="Fieldset">
-                  <label className="LabelOnboarding" htmlFor="currentPassword">
+                  <Text>
                     Location
-                  </label>
-                  <input
+                  </Text>
+                  <Input
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     className="Input3"
@@ -177,34 +169,30 @@ const OnBoarding = () => {
                     type="text"
                     name="text"
                   />
-                </fieldset>
               </Box>
               <Box mb="1.5rem" mt="1.5rem" width="100%">
-                <fieldset className="Fieldset">
-                  <label className="LabelOnboarding" htmlFor="currentPassword">
+                  <Text>
                     Website
-                  </label>
-                  <input
+                  </Text>
+                  <Input
                     value={website}
                     onChange={(e) => setWebsite(e.target.value)}
                     className="Input3"
                     type="text"
                   />
-                </fieldset>
               </Box>
-              <Box mb="1.5rem" mt="1.5rem" width="100%">
-                <fieldset className="Fieldset">
-                  <label className="LabelOnboarding" htmlFor="currentPassword">
+              <Box my={12} width="100%">
+                  <Text>
                     About
-                  </label>
-                  <textarea
+                  </Text>
+                  <Textarea
+                    height={12}
                     value={about}
                     onChange={(e) => setAbout(e.target.value)}
                     className="Input3Area"
-                    rows={4}
+                    rows={12}
                     cols={50}
-                  ></textarea>
-                </fieldset>
+                  ></Textarea>
               </Box>
               <Flex
                 cursor={"pointer"}
@@ -212,7 +200,6 @@ const OnBoarding = () => {
                 justifyContent={"center"}
                 alignItems="center"
                 padding={"0"}
-                marginTop={"10px"}
                 width="100%"
               >
                 <Button width={"xl"} colorScheme="blue">
@@ -222,8 +209,8 @@ const OnBoarding = () => {
             </Box>
           </CardBody>
         </Card>
-        <OBWizardSteps changeCurrentStep={null} steps={2} />
       </Flex>
+        <OBWizardSteps changeCurrentStep={null} steps={2} />
     </Box>
   );
 };

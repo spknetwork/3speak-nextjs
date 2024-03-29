@@ -1,20 +1,29 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Flex, Text, useColorMode } from '@chakra-ui/react'
+import React, { useEffect } from 'react'
 import styles from "../../styles/pages/onboarding/wizard.module.scss"
 
 
+
+
 const WizardSteps = ({changeCurrentStep, steps }:any) => {
+
+ const { colorMode, setColorMode } = useColorMode();
+
+useEffect(() => {
+  const light = window.matchMedia("(prefers-color-scheme: light)").matches;
+  setColorMode(light ? "light" : "dark");
+}, [setColorMode]);
+
+
   return (
     <Box
-    className={styles.parent_container}
     borderRadius={"10px"}
-    background="white"
     marginTop={"10px"}
-    height={"15vh"}
+    height={"5vh"}
     width={"100%"}
-    // backgroundColor={"green"}
   >
     <Flex
+      className={colorMode === "dark" ? styles.parent_container : styles.parent_container_light}
       height={"119px"}
       justifyContent={"center"}
       alignItems="center"
@@ -34,7 +43,7 @@ const WizardSteps = ({changeCurrentStep, steps }:any) => {
         width={"60px"}
         height="60px"
       >
-        {/* for upload */}
+        {/* for name */}
         <Text margin='0px' fontWeight={"bold"}>Name</Text>
       </Flex>
 
@@ -88,7 +97,6 @@ const WizardSteps = ({changeCurrentStep, steps }:any) => {
         border={
           steps >= 2 ? "1px solid #3182ce" : "1px solid black"
         }
-        color={steps>= 2 ? "#fff" : "#000"}
         background={steps >= 2 ? "#3182ce" : "white"}
         borderColor={steps >= 2 ? "#3182ce" : "#000"}
         justifyContent={"center"}
