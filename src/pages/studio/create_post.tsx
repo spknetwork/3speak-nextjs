@@ -1,7 +1,6 @@
 //TODO: accessible only after login
-//TODO: make a detail card for the community
-//TODO: make appear top 3 default communities at the top of the search bar
-//
+//TODO: create hashtags chips
+
 import React, {
   ComponentProps,
   ReactNode,
@@ -9,6 +8,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
+
 import {
   Button,
   FormControl,
@@ -61,22 +61,24 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-import CommunityCard from "../../components/Create_POST/CommunityCard"
+import CommunityCard from "../../components/Create_POST/CommunityCard";
 import { backgroundColor } from "styled-system";
 import { Numbers } from "web3";
+import Chips from "@/components/Create_POST/Chips";
 const { Client: HiveClient } = require("@hiveio/dhive");
+import { TiPlus } from "react-icons/ti";
 
-  // TODO put the type in plz
-  export type CommunityResult = {
-    name: string;
-    title: string;
-    about: string;
-    admins: string;
-    sum_pending: number;
-    num_pending: number;
-    subscribers: number;
-    num_authors: number;
-  }
+// TODO put the type in plz
+export type CommunityResult = {
+  name: string;
+  title: string;
+  about: string;
+  admins: string;
+  sum_pending: number;
+  num_pending: number;
+  subscribers: number;
+  num_authors: number;
+};
 
 type FilePreview = {
   file: File;
@@ -111,6 +113,12 @@ const CreatePost: React.FC = () => {
   const mentionStyle = getMentionStyle(colorMode);
 
   /**
+   * For rendering the chips and edited chips
+   */
+  const [chipData, setChipData] = useState<{ label: string }[]>([]);
+  const [chipInput, setChipInput] = useState<string>("");
+
+  /**
    * for the filteration of the results
    */
   const [search, setSearch] = useState<string>("");
@@ -128,7 +136,7 @@ const CreatePost: React.FC = () => {
   const [uploadingProgress, setUploadingProgress] = useState<number>(0);
   const [uploadStatus, setUploadStatus] = useState<Boolean | null>(null);
   const [uploading, setUploading] = useState<Boolean>(false);
-  const [steps, setSteps] = useState<number>(2);
+  const [steps, setSteps] = useState<number>(1);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
     useState<String>("Uploading Video...");
@@ -357,6 +365,7 @@ const CreatePost: React.FC = () => {
   };
 
   const { getRootProps, getInputProps } = useDropzone(dropzoneOptions);
+
   const {
     getRootProps: getRootPropsThumbnail,
     getInputProps: getInputPropsThumbnail,
@@ -380,6 +389,11 @@ const CreatePost: React.FC = () => {
       return;
     }
   };
+
+  /**
+   * check for the access token (for the testing purpose)
+   * /api/v1/upload/update_post
+   */
 
   const [publishValue, setPublishValue] = useState<string>("1");
 
@@ -405,29 +419,52 @@ const CreatePost: React.FC = () => {
     authenticated ? "gray.900" : "gray.900"
   );
 
+  function handleAddChipData(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      //to checked the entered value is not empty or not aleready present in the chipData
+      const trimmedValue = chipInput.trim();
+      if (
+        trimmedValue &&
+        !chipData.some((chip) => chip.label === trimmedValue)
+      ) {
+        setChipData((prevState) => [...prevState, { label: trimmedValue }]);
+        //making input field empty again
+        setChipInput("");
+      }
+    }
+  }
+
+  /**
+   * Deleting the chip data
+   * @param label
+   */
+  function chipDataDelete(label: string) {
+    setChipData(chipData.filter((chip) => chip.label !== label));
+  }
+
   //function for hashtag validator
   // function hashtagValidator(text, mentions, typekey) {
 
   // }
   //logic for the hashtag data
-  const [transformedMentions, setTransformedMentions] = useState(base_mentions);
+  // const [transformedMentions, setTransformedMentions] = useState(base_mentions);
 
   // useEffect(() => {
   //   console.log("transforms", transformedMentions);
   //   console.log("hash tags", hashtagData);
   // }, [transformedMentions, hashtagData]);
 
-  const generateHashtags = useMemo(() => {
-    console.log(transformedMentions);
-    const hashtags = Array.from(
-      hashtagData.matchAll(hashRegex),
-      (match) => match[0]
-    );
-    return hashtags.map((hash) => ({
-      id: hash.replace("#", ""),
-      display: hash.replace("#", ""),
-    }));
-  }, [hashtagData]);
+  // const generateHashtags = useMemo(() => {
+  //   console.log(transformedMentions);
+  //   const hashtags = Array.from(
+  //     hashtagData.matchAll(hashRegex),
+  //     (match) => match[0]
+  //   );
+  //   return hashtags.map((hash) => ({
+  //     id: hash.replace("#", ""),
+  //     display: hash.replace("#", ""),
+  //   }));
+  // }, [hashtagData]);
 
   //   export type OnChangeHandlerFunc = (
   //     event: { target: { value: string } },
@@ -436,48 +473,48 @@ const CreatePost: React.FC = () => {
   //     mentions: MentionItem[],
   // ) => void;
 
-  const [showHashtagLimitError, setShowHashtagLimitError] = useState(false);
-  const mentionInputStyle = getMentionInputStyle(
-    colorMode,
-    showHashtagLimitError
-  );
+  // const [showHashtagLimitError, setShowHashtagLimitError] = useState(false);
+  // const mentionInputStyle = getMentionInputStyle(
+  //   colorMode,
+  //   showHashtagLimitError
+  // );
 
-  const onChange: ComponentProps<typeof MentionsInput>["onChange"] = (
-    event,
-    newValue,
-    newPlainTextValue,
-    mentions
-  ) => {
-    console.log("mentions", mentions);
-    console.log("value", event.target.value);
-    // @[processed_hashtag](processed_hashtag)#typing_hashtag
+  // const onChange: ComponentProps<typeof MentionsInput>["onChange"] = (
+  //   event,
+  //   newValue,
+  //   newPlainTextValue,
+  //   mentions
+  // ) => {
+  //   console.log("mentions", mentions);
+  //   console.log("value", event.target.value);
+  //   // @[processed_hashtag](processed_hashtag)#typing_hashtag
 
-    // const lastMention = mentions[mentions.length -1];
-    if (mentions.length > HASHTAG_LIMIT) {
-      setShowHashtagLimitError(true);
-      setTimeout(
-        () => setShowHashtagLimitError(false),
-        SHOW_HASHTAG_LIMIT_ERROR_TIME_MS
-      );
-      // const lastMentionRaw = `@[${lastMention.id}](${lastMention.id})`;
-      // event.target.value = event.target.value.slice(0, event.target.value.indexOf(lastMentionRaw) + lastMentionRaw.length)
-      return;
-    }
+  //   // const lastMention = mentions[mentions.length -1];
+  //   if (mentions.length > HASHTAG_LIMIT) {
+  //     setShowHashtagLimitError(true);
+  //     setTimeout(
+  //       () => setShowHashtagLimitError(false),
+  //       SHOW_HASHTAG_LIMIT_ERROR_TIME_MS
+  //     );
+  //     // const lastMentionRaw = `@[${lastMention.id}](${lastMention.id})`;
+  //     // event.target.value = event.target.value.slice(0, event.target.value.indexOf(lastMentionRaw) + lastMentionRaw.length)
+  //     return;
+  //   }
 
-    const hashtags = Array.from(
-      newValue.matchAll(hashRegex),
-      (match) => match[0]
-    );
+  //   const hashtags = Array.from(
+  //     newValue.matchAll(hashRegex),
+  //     (match) => match[0]
+  //   );
 
-    console.log(hashtags);
+  //   console.log(hashtags);
 
-    const generated = hashtags.map((hash) => ({
-      id: hash.replace("#", ""),
-      display: hash.replace("#", ""),
-    }));
-    setTransformedMentions([...base_mentions, ...generated]);
-    setHashTagData(newValue);
-  };
+  //   const generated = hashtags.map((hash) => ({
+  //     id: hash.replace("#", ""),
+  //     display: hash.replace("#", ""),
+  //   }));
+  //   setTransformedMentions([...base_mentions, ...generated]);
+  //   setHashTagData(newValue);
+  // };
 
   /**
    * api import
@@ -494,17 +531,19 @@ const CreatePost: React.FC = () => {
    */
   const fetchData = async () => {
     try {
-      // TODO put the type in plz
-      const result: CommunityResult[] = await client.call("bridge", "list_communities", {
-        last: "",
-        limit: 100,
-      });
-      const titles = result.map(info => info.title);
-      const leoIndex = titles.indexOf('LeoFinance');
-      const speakIndex = titles.indexOf('Threespeak');
+      const result: CommunityResult[] = await client.call(
+        "bridge",
+        "list_communities",
+        {
+          last: "",
+          limit: 100,
+        }
+      );
+      const titles = result.map((info) => info.title);
+      const leoIndex = titles.indexOf("LeoFinance");
+      const speakIndex = titles.indexOf("Threespeak");
 
-      // TODO put the type in plz
-      let speakValue: CommunityResult, leoValue: CommunityResult
+      let speakValue: CommunityResult, leoValue: CommunityResult;
       if (speakIndex > leoIndex) {
         [speakValue] = result.splice(speakIndex, 1);
         [leoValue] = result.splice(leoIndex, 1);
@@ -513,8 +552,8 @@ const CreatePost: React.FC = () => {
         [speakValue] = result.splice(speakIndex, 1);
       }
 
-      result.unshift(leoValue)
-      result.unshift(speakValue)
+      result.unshift(leoValue);
+      result.unshift(speakValue);
 
       setCardData(speakValue);
       setCommunityData(result);
@@ -523,7 +562,6 @@ const CreatePost: React.FC = () => {
       console.log(err);
     }
   };
-
 
   useEffect(() => {
     fetchData();
@@ -752,24 +790,26 @@ const CreatePost: React.FC = () => {
                         w={"full"}
                       >
                         {/* <Button
-                          onClick={() => router.push("/studio/upload")}
-                          size={"lg"}
-                          colorScheme="gray"
-                          color={"white"}
-                        >
-                          Go Back
-                        </Button> */}
+            onClick={() => router.push("/studio/upload")}
+            size={"lg"}
+            colorScheme="gray"
+            color={"white"}
+            >
+            Go Back
+            </Button> */}
                         {/* {selectedFile && uploadStatus == true && ( */}
-                        <Button
-                          position={"absolute"}
-                          right={5}
-                          bottom={180}
-                          onClick={() => setSteps(1)}
-                          size={"lg"}
-                          colorScheme="blue"
-                        >
-                          Next Step
-                        </Button>
+                        {uploading && (
+                          <Button
+                            position={"absolute"}
+                            right={5}
+                            bottom={180}
+                            onClick={() => setSteps(1)}
+                            size={"lg"}
+                            colorScheme="blue"
+                          >
+                            Next Step
+                          </Button>
+                        )}
                         {/* )} */}
                       </Flex>
                     </Flex>
@@ -973,29 +1013,54 @@ const CreatePost: React.FC = () => {
                                 Hashtags
                               </Text>
 
-                              <MentionsInput
-                                value={hashtagData}
-                                disabled={savingDetails == true ? true : false}
-                                style={{
-                                  ...mentionInputStyle,
-                                  border: !showHashtagLimitError
-                                    ? "2px solid red"
-                                    : "2px solid green",
-                                }}
-                                onChange={onChange}
-                                placeholder="Put all the hashtags here!"
-                              >
-                                <Mention
-                                  trigger="#"
-                                  data={transformedMentions}
-                                  appendSpaceOnAdd={true}
-                                  style={mentionStyle}
-                                  displayTransform={(_id, value) => `#${value}`}
-                                />
-                              </MentionsInput>
-                              {showHashtagLimitError && (
-                                <Text color={"red"}>Limit exceeded!</Text>
-                              )}
+                              {/* <MentionsInput
+                    value={hashtagData}
+                    disabled={savingDetails == true ? true : false}
+                    style={{
+                    ...mentionInputStyle,
+                    }}
+                    onChange={onChange}
+                    placeholder="Put all the hashtags here!"
+                >
+                    <Mention
+                    trigger="#"
+                    data={transformedMentions}
+                    appendSpaceOnAdd={true}
+                    style={mentionStyle}
+                    displayTransform={(_id, value) => `#${value}`}
+                    />
+                </MentionsInput>
+                {showHashtagLimitError && (
+                    <Text color={"red"}>Limit exceeded!</Text>
+                )} */}
+                              <Flex alignItems={"center"}>
+                                {chipData.map((chip, index) => (
+                                  <Chips
+                                    key={index}
+                                    label={chip.label}
+                                    onDelete={() => chipDataDelete(chip.label)}
+                                  />
+                                ))}
+                                <Flex
+                                  fontSize={"xl"}
+                                  mx={2}
+                                  cursor={"pointer"}
+                                  alignItems={"center"}
+                                  position={"relative"}
+                                >
+                                  <Input
+                                    placeholder={"Add a hashtag"}
+                                    value={chipInput}
+                                    onChange={(e) =>
+                                      setChipInput(e.target.value)
+                                    }
+                                    onKeyDown={handleAddChipData}
+                                  />
+                                  <Text position={"absolute"} top={3} right={2}>
+                                    <TiPlus />
+                                  </Text>
+                                </Flex>
+                              </Flex>
                             </fieldset>
                             <fieldset className="w-100 mb-3">
                               <Text
@@ -1140,26 +1205,24 @@ const CreatePost: React.FC = () => {
                   >
                     <Flex w={"full"}>
                       <Flex w={"50%"}>
-                        <CommunityCard
-                          {...cardData}
-                        />
+                        <CommunityCard {...cardData} />
                       </Flex>
                       <Flex w={"50%"} flexDirection={"column"}>
-                        <Flex>
-                          <InputGroup>
-                            <InputLeftElement pointerEvents="none">
-                              <SearchIcon color="gray.300" />
-                            </InputLeftElement>
-                            <Input
-                              type="tel"
-                              placeholder="Search"
-                              onChange={(e) => setSearch(e.target.value)}
-                            />
-                          </InputGroup>
-                        </Flex>
                         {/* the result card will go here  */}
                         <Flex>
                           <Card w={712} h={522} mt={2}>
+                            <Flex p={2}>
+                              <InputGroup>
+                                <InputLeftElement pointerEvents="none">
+                                  <SearchIcon color="gray.300" />
+                                </InputLeftElement>
+                                <Input
+                                  type="tel"
+                                  placeholder="Search"
+                                  onChange={(e) => setSearch(e.target.value)}
+                                />
+                              </InputGroup>
+                            </Flex>
                             <VStack
                               spacing={1}
                               overflowY={"auto"}

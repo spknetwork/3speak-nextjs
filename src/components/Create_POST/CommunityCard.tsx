@@ -26,7 +26,7 @@ import {
 
 const CommunityCard: React.FC<Partial<CommunityResult>> = (info) => {
   return (
-    <Card w={["full", "base"]} h={"93%"} top={12}  mx={4} overflowWrap="break-word">
+    <Card w={["full", "base"]} h={"99%"} top={2}  mx={4} overflowWrap="break-word">
       <Flex p={4} direction={["column", "row"]} align="center">
         <Image
           borderRadius={"10px"}
