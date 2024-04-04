@@ -3,7 +3,6 @@ import React from 'react';
 
 type Props = {
   bgColor: string;
-  toggleDetails: () => void;
   currentStep: number;
   changeCurrentStep: (step: number) => void;
   colorMode: string
@@ -15,7 +14,6 @@ const WizardSteps = ({
   changeCurrentStep,
   currentStep,
   bgColor,
-  toggleDetails,
   colorMode
 }: Props) => {
   const steps = ['Upload', 'Details', 'Community', 'Visibility'];
@@ -61,7 +59,7 @@ const WizardSteps = ({
                 border={currentStep > index ? '1px solid #1DA1F2' : '1px solid black'}
                 borderRight="none"
                 borderLeft="none"
-                background={currentStep > index ? '#1DA1F2' : '#000'}
+                background={currentStep > index ? '#1DA1F2' : 'white'}
                 width="25%"
                 height="3px"
                 />

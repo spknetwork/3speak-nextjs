@@ -1,206 +1,63 @@
-import { Typography } from "@/components";
-import MainLayout from "@/components/Layouts/main_layout";
-import OBWizardSteps from "@/components/onboarding/OBWizardSteps";
-import { useAppStore } from "@/lib/store";
-import {
-  Box,
-  Button,
-  Card,
-  CardBody,
-  Flex,
-  Input,
-  Text,
-  useColorMode,
-} from "@chakra-ui/react";
-import { Form } from "react-bootstrap";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useState } from "react";
-import { DropzoneOptions, useDropzone } from "react-dropzone";
-import styles from "../../styles/pages/onboarding/index.module.scss";
+import React from "react";
+import { Box, Button, Flex } from "@chakra-ui/react";
+import { useState } from "react";
+import OBWizardSteps from "../../components/onboarding/OBWizardSteps";
+import Username from "../../components/onboarding/username";
+import Profile from "../../components/onboarding/profile";
+import Details from "../../components/onboarding/details";
 
-type FilePreview = {
-  file: File;
-  previewUrl: string;
-};
+type Props = {};
 
-const OnBoarding = () => {
-  // const { getUserHiveDetails, userhiveDetails, userName, userDetails } = useAppStore();
-  const router = useRouter();
-  const { colorMode, setColorMode } = useColorMode();
-
+const Index = (props: Props) => {
+  const [currentStep, setCurrentStep] = useState<number>(0);
+  const [alert, showAlert] = useState(false)
   /**
-   * for the system mode
+   * function for handling the previous step
    */
-  useEffect(() => {
-    const light = window.matchMedia("(prefers-color-scheme: light)").matches;
-    setColorMode(light ? "light" : "dark");
-  }, [setColorMode]);
-
-  const {
-    getUserHiveDetails,
-    userDetails,
-    userhiveDetails,
-    setUserHiveDetails,
-  } = useAppStore();
-  const [name, setName] = useState<string>("");
-  const [checkDone, setcheckDone] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    if (userDetails?.username) {
-      getUserHiveDetails(`${userDetails?.username}`);
+  const handlePrevious = () => {
+    if(currentStep > 0){
+        setCurrentStep(currentStep - 1)
     }
-  }, [getUserHiveDetails, userDetails?.username]);
-
-  useEffect(() => {
-    if (userDetails) {
-      const name = `${userDetails.username}`;
-      console.log("userDetails", userDetails);
-      setName(name);
-    }
-  }, [userDetails]);
-
-  useEffect(() => {
-    // console.log("userhiveDetails",userhiveDetails)
-    if (userhiveDetails) {
-      const from_login = localStorage.getItem("from_login");
-      if (
-        (userhiveDetails?.name || userhiveDetails?.name != "") &&
-        from_login == "true"
-      ) {
-        setcheckDone(true);
-        localStorage.setItem("from_login", "false");
-        router.push("/");
-      } else {
-        localStorage.setItem("from_login", "false");
-        setcheckDone(true);
-      }
-    } else {
-      setcheckDone(true);
-    }
-  }, [userhiveDetails, router]);
-
-  //function for changing the name
-  const onchangeName = (e: any) => {
-    setName(e.target.value);
-    setUserHiveDetails(e.target.value);
-    console.log("onchangeName", name);
   };
 
-  const changeCurrentStep = (step: number) => {};
-  const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
+  /**
+   * function for handling the next step
+   */
+  const handleNext = () => {
+    if(currentStep === 0){
+        
+    }
+    if (currentStep < 2) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    const file = acceptedFiles[0];
-    const previewUrl = URL.createObjectURL(file);
-    setSelectedFile({ file, previewUrl });
-  }, []);
+  /**
+   * hook state for empty user validation   
+   */
+  const [name, setName] = useState<string>("");
 
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-  });
-  // const router = useRouter();
-  if (checkDone == null) {
-    return <Box>Loading...</Box>;
-  }
-
-  const handleName = (e) => {
-     e.preventDefault();
-     if(!name){
-      alert("Please enter your name")
-      return
-     }
-     router.push("/onboarding/profile")
-  }
   return (
-    <Box
-      maxH={"70vh"}
-      className={
-        colorMode === "dark" ? styles.my_class_name : styles.my_class_name_light
-      }
-      position={"relative"} 
-    >
-      <Flex
-        flexDirection={"column"}
-        padding={"20px"}
-        height="auto"
-        width="100%"
-        justifyContent={"center"}
-        alignItems="center"
-      >
-        <Card height={"100%"} width="100%">
-          <CardBody className={ colorMode === "dark" ? styles.my_card_name : styles.my_card_name_light}>
-            <Box
-              border={"1px solid"}
-              borderRadius="10px"
-              width={{ base: "100%", md: "100%", lg: "40%" }}
-              padding="10px"
-              paddingX={"50px"}
-              paddingTop={"20px"}
-              margin="auto"
-              height={"70vh"}
-              className={styles.my_child_name}
-            >
-              {/* <Flex justifyContent={'center'} height={'200px'} width='100%' >
-                <Box  {...getRootProps()} cursor={'pointer'} borderRadius={'50%'} height={'200px'} width='200px' border={'1px solid'}>
-                <input {...getInputProps()} />
-                  <img src={selectedFile?selectedFile.previewUrl:'/images/avatar3.png'} style={{margin:'0', width:'100%', borderRadius:'100px', height:'100%', objectFit:'cover'}} />
-                  </Box>
-              </Flex> */}
-              <Flex
-                justifyContent={"center"}
-                alignItems="center"
-                marginTop={"10px"}
-                width="100%"
-              >
-                <Text as="h2">Let's start with reviewing of username</Text>
-              </Flex>
-              <Flex
-                justifyContent={"center"}
-                alignItems="center"
-                marginTop={"1px"}
-                width="100%"
-              >
-                <Text as="h6">This will be your username</Text>
-              </Flex>
-              <Box
-                className={styles.username}
-                mb="1.5rem"
-                mt="1.5rem"
-                width="100%"
-              >
-                  <Flex color={colorMode === "dark" ? "white" : "black"}>
-                    Username
-                  </Flex>
-                  <Flex>
-                  <Input
-                    required
-                    className={styles.username_input}
-                    onChange={onchangeName}
-                    value={name}
-                    type="text"
-                    />
-                    </Flex>
-              </Box>
-              <Flex
-                cursor={"pointer"}
-                justifyContent={"center"}
-                alignItems="center"
-                padding={"0"}
-                marginTop={24}
-                width="100%"
-                >
-                <Button width={"sm"} colorScheme="blue" onClick={handleName}>
-                  Next
-                </Button>
-              </Flex>
-            </Box>
-          </CardBody>
-        </Card>
+    <Box position={"relative"}>
+      <Box maxH={"70vh"}>
+        {currentStep === 0 && <Username currentStep={currentStep} setCurrentStep={setCurrentStep} name={name} setName={setName} />}
+        {currentStep === 1 && <Profile currentStep={currentStep} setCurrentStep={setCurrentStep}/>}
+        {currentStep === 2 && <Details currentStep={currentStep} setCurrentStep={setCurrentStep}/>}
+      </Box>
+      <Flex mx={8} justifyContent={"space-between"}>
+        <Button size={"lg"} colorScheme="blue" onClick={handlePrevious}>
+          Go Back
+        </Button>
+        <Button size={"lg"} colorScheme="blue" onClick={handleNext} isDisabled={!name}>
+          Next
+        </Button>
       </Flex>
-      <OBWizardSteps changeCurrentStep={changeCurrentStep} steps={0} />
+      <OBWizardSteps
+        setCurrentStep={setCurrentStep}
+        currentStep={currentStep}
+      />
     </Box>
   );
 };
 
-export default OnBoarding;
+export default Index;

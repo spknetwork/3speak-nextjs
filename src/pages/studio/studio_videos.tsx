@@ -48,8 +48,8 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
 
   // const { allowAccess } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
-  const {authenticated} = useAuth();
- 
+  const { authenticated } = useAuth() ?? {};
+
   
   const colorModeValue = useColorModeValue(
     authenticated ? "gray.100" : "gray.100",

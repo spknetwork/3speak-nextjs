@@ -1,5 +1,4 @@
 //TODO: accessible only after login
-//TODO: create hashtags chips
 
 import React, {
   ComponentProps,
@@ -67,6 +66,7 @@ import { Numbers } from "web3";
 import Chips from "@/components/Create_POST/Chips";
 const { Client: HiveClient } = require("@hiveio/dhive");
 import { TiPlus } from "react-icons/ti";
+import { useAuth } from "@/hooks/auth";
 
 // TODO put the type in plz
 export type CommunityResult = {
@@ -136,7 +136,7 @@ const CreatePost: React.FC = () => {
   const [uploadingProgress, setUploadingProgress] = useState<number>(0);
   const [uploadStatus, setUploadStatus] = useState<Boolean | null>(null);
   const [uploading, setUploading] = useState<Boolean>(false);
-  const [steps, setSteps] = useState<number>(1);
+  const [steps, setSteps] = useState<number>(0);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
     useState<String>("Uploading Video...");
@@ -266,7 +266,7 @@ const CreatePost: React.FC = () => {
     console.log("videoDescription", videoDescription);
 
     const isSave = document.querySelector<HTMLElement>("#btn_details");
-    if (isSave?.innerText === "Next Step") {
+    if (isSave?.innerText === "Next") {
       setSteps(2);
     }
     const params = {
@@ -374,9 +374,13 @@ const CreatePost: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
+  /**
+   * Import the useAuth hook
+   */
+  const { authenticated } = useAuth() ?? {};
+
   const { allowAccess } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
-  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
   const changeCurrentStep = (step: number) => {
     if (step > 0 && selectedFile) {
@@ -397,27 +401,10 @@ const CreatePost: React.FC = () => {
 
   const [publishValue, setPublishValue] = useState<string>("1");
 
-  useEffect(() => {
-    if (allowAccess == true) {
-      setAuthenticated(allowAccess);
-      return;
-    }
-    if (allowAccess == false) {
-      setAuthenticated(false);
-      return;
-    }
-  }, [allowAccess]);
-
-  useEffect(() => {
-    if (authenticated == false && authenticated != null) {
-      // router.push("/auth/modals");
-    }
-  }, [authenticated, router]);
-
-  const colorModeValue = useColorModeValue(
-    authenticated ? "gray.100" : "gray.100",
-    authenticated ? "gray.900" : "gray.900"
-  );
+  //   const colorModeValue = useColorModeValue(
+  //     authenticated ? "gray.100" : "gray.100",
+  //     authenticated ? "gray.900" : "gray.900"
+  //   );
 
   function handleAddChipData(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") {
@@ -442,79 +429,7 @@ const CreatePost: React.FC = () => {
     setChipData(chipData.filter((chip) => chip.label !== label));
   }
 
-  //function for hashtag validator
-  // function hashtagValidator(text, mentions, typekey) {
-
-  // }
-  //logic for the hashtag data
-  // const [transformedMentions, setTransformedMentions] = useState(base_mentions);
-
-  // useEffect(() => {
-  //   console.log("transforms", transformedMentions);
-  //   console.log("hash tags", hashtagData);
-  // }, [transformedMentions, hashtagData]);
-
-  // const generateHashtags = useMemo(() => {
-  //   console.log(transformedMentions);
-  //   const hashtags = Array.from(
-  //     hashtagData.matchAll(hashRegex),
-  //     (match) => match[0]
-  //   );
-  //   return hashtags.map((hash) => ({
-  //     id: hash.replace("#", ""),
-  //     display: hash.replace("#", ""),
-  //   }));
-  // }, [hashtagData]);
-
-  //   export type OnChangeHandlerFunc = (
-  //     event: { target: { value: string } },
-  //     newValue: string,
-  //     newPlainTextValue: string,
-  //     mentions: MentionItem[],
-  // ) => void;
-
-  // const [showHashtagLimitError, setShowHashtagLimitError] = useState(false);
-  // const mentionInputStyle = getMentionInputStyle(
-  //   colorMode,
-  //   showHashtagLimitError
-  // );
-
-  // const onChange: ComponentProps<typeof MentionsInput>["onChange"] = (
-  //   event,
-  //   newValue,
-  //   newPlainTextValue,
-  //   mentions
-  // ) => {
-  //   console.log("mentions", mentions);
-  //   console.log("value", event.target.value);
-  //   // @[processed_hashtag](processed_hashtag)#typing_hashtag
-
-  //   // const lastMention = mentions[mentions.length -1];
-  //   if (mentions.length > HASHTAG_LIMIT) {
-  //     setShowHashtagLimitError(true);
-  //     setTimeout(
-  //       () => setShowHashtagLimitError(false),
-  //       SHOW_HASHTAG_LIMIT_ERROR_TIME_MS
-  //     );
-  //     // const lastMentionRaw = `@[${lastMention.id}](${lastMention.id})`;
-  //     // event.target.value = event.target.value.slice(0, event.target.value.indexOf(lastMentionRaw) + lastMentionRaw.length)
-  //     return;
-  //   }
-
-  //   const hashtags = Array.from(
-  //     newValue.matchAll(hashRegex),
-  //     (match) => match[0]
-  //   );
-
-  //   console.log(hashtags);
-
-  //   const generated = hashtags.map((hash) => ({
-  //     id: hash.replace("#", ""),
-  //     display: hash.replace("#", ""),
-  //   }));
-  //   setTransformedMentions([...base_mentions, ...generated]);
-  //   setHashTagData(newValue);
-  // };
+ 
 
   /**
    * api import
@@ -566,6 +481,18 @@ const CreatePost: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  /**
+   * for the authentication purposes
+   */
+  if (authenticated === null) {
+    return <Box>Loading...</Box>;
+  }
+
+  if (authenticated === false) {
+    return <Box>Unauthorized access, please login first</Box>;
+    //TODO: redirecting to auth components
+  }
 
   return (
     <Box maxH="100vh">
@@ -707,8 +634,7 @@ const CreatePost: React.FC = () => {
                               {...getRootProps()}
                               className="dropzone"
                               borderRadius={"5px"}
-                              width={"100%"}
-                              height="90%"
+                              style = {selectedFile === null ? {minHeight: "30vh", minWidth:"30vh"}: {maxHeight: "50vh", maxWidth:"50vh"}}
                               justifyContent="center"
                               alignItems={"center"}
                               border={"1px dotted grey"}
@@ -789,14 +715,6 @@ const CreatePost: React.FC = () => {
                         alignItems="center"
                         w={"full"}
                       >
-                        {/* <Button
-            onClick={() => router.push("/studio/upload")}
-            size={"lg"}
-            colorScheme="gray"
-            color={"white"}
-            >
-            Go Back
-            </Button> */}
                         {/* {selectedFile && uploadStatus == true && ( */}
                         {uploading && (
                           <Button
@@ -807,7 +725,7 @@ const CreatePost: React.FC = () => {
                             size={"lg"}
                             colorScheme="blue"
                           >
-                            Next Step
+                            Next
                           </Button>
                         )}
                         {/* )} */}
@@ -864,6 +782,8 @@ const CreatePost: React.FC = () => {
                                 ) : (
                                   <Box position={"absolute"}>
                                     <video
+                                      height={100}
+                                      width={112}
                                       src={selectedFile.previewUrl}
                                       className="preview"
                                       controls
@@ -880,9 +800,9 @@ const CreatePost: React.FC = () => {
                             )}
                           </Flex>
                           <Flex
-                            background={"grey"}
+                            background={colorMode === "dark" ? "grey" : "grey"}
                             width={"100%"}
-                            height="90px"
+                            height="100px"
                             justifyContent="start"
                             alignItems={"start"}
                             flexDirection="column"
@@ -1010,35 +930,15 @@ const CreatePost: React.FC = () => {
                                 fontSize="15px"
                                 className="fw-bold"
                               >
-                                Hashtags
+                                Tags
                               </Text>
-
-                              {/* <MentionsInput
-                    value={hashtagData}
-                    disabled={savingDetails == true ? true : false}
-                    style={{
-                    ...mentionInputStyle,
-                    }}
-                    onChange={onChange}
-                    placeholder="Put all the hashtags here!"
-                >
-                    <Mention
-                    trigger="#"
-                    data={transformedMentions}
-                    appendSpaceOnAdd={true}
-                    style={mentionStyle}
-                    displayTransform={(_id, value) => `#${value}`}
-                    />
-                </MentionsInput>
-                {showHashtagLimitError && (
-                    <Text color={"red"}>Limit exceeded!</Text>
-                )} */}
                               <Flex alignItems={"center"}>
                                 {chipData.map((chip, index) => (
                                   <Chips
                                     key={index}
                                     label={chip.label}
                                     onDelete={() => chipDataDelete(chip.label)}
+                                    colorMode={colorMode}
                                   />
                                 ))}
                                 <Flex
@@ -1049,7 +949,8 @@ const CreatePost: React.FC = () => {
                                   position={"relative"}
                                 >
                                   <Input
-                                    placeholder={"Add a hashtag"}
+                                    border={ colorMode === "dark" ? "1px solid white" : "1px solid black"}
+                                    placeholder={"Add tags"}
                                     value={chipInput}
                                     onChange={(e) =>
                                       setChipInput(e.target.value)
@@ -1172,7 +1073,6 @@ const CreatePost: React.FC = () => {
                           onClick={() => setSteps(0)}
                           size={"lg"}
                           colorScheme="blue"
-                          color={"black"}
                         >
                           Go Back
                         </Button>
@@ -1183,9 +1083,7 @@ const CreatePost: React.FC = () => {
                           size={"lg"}
                           colorScheme="blue"
                         >
-                          {savingDetails == true
-                            ? "Saving Details"
-                            : "Next Step"}
+                          {savingDetails == true ? "Saving Details" : "Next"}
                         </Button>
                       </Flex>
                     </Flex>
@@ -1196,10 +1094,7 @@ const CreatePost: React.FC = () => {
               {steps == 2 && (
                 <CardBody minH={"75vh"}>
                   <Box
-                    borderWidth="1px"
-                    borderRadius="lg"
                     overflow="hidden"
-                    p={4}
                     height={{ base: "auto", md: "auto", lg: "70vh" }}
                     width={"100%"}
                   >
@@ -1210,7 +1105,7 @@ const CreatePost: React.FC = () => {
                       <Flex w={"50%"} flexDirection={"column"}>
                         {/* the result card will go here  */}
                         <Flex>
-                          <Card w={712} h={522} mt={2}>
+                          <Card w="full" m={2}>
                             <Flex p={2}>
                               <InputGroup>
                                 <InputLeftElement pointerEvents="none">
@@ -1285,26 +1180,25 @@ const CreatePost: React.FC = () => {
                       </Flex>
                     </Flex>
                     <Flex
-                      mt={460}
+                      mt={25}
                       justifyContent={"space-between"}
                       alignItems="center"
                     >
                       <Button
                         disabled={savingDetails == true ? true : false}
-                        onClick={() => setSteps(0)}
+                        onClick={() => setSteps(1)}
                         size={"lg"}
                         colorScheme="blue"
-                        color={"black"}
                       >
                         Go Back
                       </Button>
                       <Button
                         disabled={savingDetails == true ? true : false}
-                        onClick={handleCreatePost}
+                        onClick={() => setSteps(3)}
                         size={"lg"}
                         colorScheme="blue"
                       >
-                        {savingDetails == true ? "Saving Details" : "Next Step"}
+                        Next
                       </Button>
                     </Flex>
                   </Box>
@@ -1536,8 +1430,7 @@ const CreatePost: React.FC = () => {
                         <Button
                           onClick={() => setSteps(1)}
                           size={"lg"}
-                          colorScheme="gray"
-                          color={"black"}
+                          colorScheme="blue"
                         >
                           Go Back
                         </Button>
@@ -1554,11 +1447,10 @@ const CreatePost: React.FC = () => {
                 </CardBody>
               )}
               <WizardSteps
+                currentStep={steps}
                 changeCurrentStep={changeCurrentStep}
-                steps={steps}
                 bgColor={bgColor}
                 colorMode={colorMode}
-                // toggleDetais={toggleDetails}
               />
             </Card>
           </Box>

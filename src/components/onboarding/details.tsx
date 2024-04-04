@@ -1,43 +1,61 @@
-import { Box, Button, Card, CardBody, Flex, Input, Text, Textarea, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Flex,
+  Input,
+  Text,
+  Textarea,
+  useColorMode,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import OBWizardSteps from "@/components/onboarding/OBWizardSteps";
 import { useRouter } from "next/router";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { useAppStore } from "@/lib/store";
 import { Name } from "@/lib/slices/createUserStore";
-import styles  from "../../styles/pages/onboarding/details.module.scss";
+import styles from "../../styles/pages/onboarding/details.module.scss";
 
-const OnBoarding = () => {
-  const { getUserHiveDetails, userhiveDetails, userName, userDetails } = useAppStore();
-  const [coverImage, setcoverImage] = useState<string| null>("");
-  const [profileImage, setprofileImage] = useState<string| null>("");
-  const { colorMode, setColorMode } = useColorMode(); 
+type Props = {
+  currentStep: number;
+  setCurrentStep: (step: number) => void;
+};
+
+const Details = ({ currentStep, setCurrentStep }: Props) => {
+  const { getUserHiveDetails, userhiveDetails, userName, userDetails } =
+    useAppStore();
+  const [coverImage, setcoverImage] = useState<string | null>("");
+  const [profileImage, setprofileImage] = useState<string | null>("");
+  const { colorMode, setColorMode } = useColorMode();
 
   useEffect(() => {
     const light = window.matchMedia("(prefers-color-scheme: light)").matches;
     setColorMode(light ? "light" : "dark");
   }, [setColorMode]);
 
-
   useEffect(() => {
-    console.log("userDetails?.username",userDetails?.username)
-    const ls_coverImage = localStorage.getItem("coverImage")
-    const ls_profileImage = localStorage.getItem("profileImage")
-    setcoverImage(ls_profileImage)
-    setprofileImage(ls_coverImage)
-  },[userDetails?.username])
+    console.log("userDetails?.username", userDetails?.username);
+    const ls_coverImage = localStorage.getItem("coverImage");
+    const ls_profileImage = localStorage.getItem("profileImage");
+    setcoverImage(ls_profileImage);
+    setprofileImage(ls_coverImage);
+  }, [userDetails?.username]);
 
   useEffect(() => {
     if (profileImage) {
-      localStorage.setItem("profileImage",profileImage)
+      localStorage.setItem("profileImage", profileImage);
     }
-  },[profileImage])
+  }, [profileImage]);
   useEffect(() => {
     if (coverImage) {
-      localStorage.setItem("coverImage",coverImage)
+      localStorage.setItem("coverImage", coverImage);
     }
-  },[coverImage])
-  
+  }, [coverImage]);
+
   const router = useRouter();
   const [datawindow] = useState<any>("");
   const [name, setName] = useState<string>("");
@@ -76,25 +94,24 @@ const OnBoarding = () => {
         "Posting",
         (response: any) => {
           console.log("response", response);
-          router.push("/")
+          router.push("/");
         }
       );
     } catch (error) {
       console.log({ error });
-      router.push("/")
+      router.push("/");
     }
-    
   };
 
   useEffect(() => {
     if (userDetails?.username) {
       getUserHiveDetails(`${userDetails?.username}`);
     }
-   
+
     if (userName) {
       setName(`${userName}`);
     }
-  }, [getUserHiveDetails,userName,userDetails?.username]);
+  }, [getUserHiveDetails, userName, userDetails?.username]);
 
   useEffect(() => {
     if (userhiveDetails) {
@@ -116,84 +133,45 @@ const OnBoarding = () => {
         alignItems="center"
       >
         <Card height={"100%"} width="100%">
-          <CardBody className={colorMode === "dark"? styles.my_card : styles.my_card_light}>
+          <CardBody
+            className={
+              colorMode === "dark" ? styles.my_card : styles.my_card_light
+            }
+          >
             <Box
               cursor={"pointer"}
-              onClick={() => router.push("/onboarding/profile")}
               fontSize={{
                 base: "30px",
                 md: "30px",
                 lg: "30px",
               }}
+              onClick={() => setCurrentStep(0)}
             >
               <FaLongArrowAltLeft color="gray" />
             </Box>
             <Box
               border={"1px solid"}
               borderRadius="10px"
-              width={{base:"100%", md: "100%", lg:"40%"}}
+              width={{ base: "100%", md: "100%", lg: "40%" }}
               padding="10px"
               paddingX={"50px"}
               margin="auto"
               maxHeight={"90vh"}
             >
-              <Flex
-                justifyContent={"start"}
-                alignItems="center"
-                width="100%"
-              >
+              {/* <Form></Form> */}
+              <Flex justifyContent={"start"} alignItems="center" width="100%">
                 <Text as="h2">Add profile details</Text>
               </Flex>
-              <Box mb="1.5rem" mt="1.5rem" width="100%">
-                  <Text>
-                    Display Name
-                  </Text>
-                  <Input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="Input3"
-                    id="name"
-                    type="text"
-                    name="name"
-                  />
-              </Box>
-              <Box mb="1.5rem" mt="1.5rem" width="100%">
-                  <Text>
-                    Location
-                  </Text>
-                  <Input
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    className="Input3"
-                    id="text"
-                    type="text"
-                    name="text"
-                  />
-              </Box>
-              <Box mb="1.5rem" mt="1.5rem" width="100%">
-                  <Text>
-                    Website
-                  </Text>
-                  <Input
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                    className="Input3"
-                    type="text"
-                  />
-              </Box>
-              <Box my={12} width="100%">
-                  <Text>
-                    About
-                  </Text>
-                  <Textarea
-                    height={12}
-                    value={about}
-                    onChange={(e) => setAbout(e.target.value)}
-                    className="Input3Area"
-                    rows={12}
-                    cols={50}
-                  ></Textarea>
-              </Box>
+              <FormControl py={8}>
+                <FormLabel pt={2}>Display Name</FormLabel>
+                <Input type="text" />
+                <FormLabel pt={2}>Location</FormLabel>
+                <Input type="text" />
+                <FormLabel pt={2}>Website</FormLabel>
+                <Input type="text" />
+                <FormLabel pt={2}>About</FormLabel>
+                <Textarea placeholder="Tell us about your interests" size={"lg"} height={"200px"} />
+              </FormControl>
               <Flex
                 cursor={"pointer"}
                 onClick={() => requestBroadcast()}
@@ -210,9 +188,8 @@ const OnBoarding = () => {
           </CardBody>
         </Card>
       </Flex>
-        <OBWizardSteps changeCurrentStep={null} steps={2} />
     </Box>
   );
 };
 
-export default OnBoarding;
+export default Details;
