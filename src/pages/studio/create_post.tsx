@@ -231,11 +231,15 @@ const CreatePost: React.FC = () => {
     };
     const token = localStorage.getItem("access_token");
     axios
-      .post("https://acela.us-02.infra.3speak.tv/api/v1/start_encode", params, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .post(
+        "https://staging.3speak.tv/api/v1/upload/start_encode",
+        params,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => {
         toast({
           position: "top-right",
@@ -280,7 +284,7 @@ const CreatePost: React.FC = () => {
     const token = localStorage.getItem("access_token");
     axios
       .post(
-        "https://acela.us-02.infra.3speak.tv/api/v1/create_upload",
+        "https://staging.3speak.tv/api/v1/upload/create_upload",
         params,
         {
           headers: {
@@ -334,7 +338,7 @@ const CreatePost: React.FC = () => {
     setVideoUploadId(response.data.upload_id);
     axios
       .post(
-        "https://acela.us-02.infra.3speak.tv/api/v1/upload_thumbnail",
+        "https://staging.3speak.tv/api/v1/upload/thumbnail",
         formData,
         {
           headers: {

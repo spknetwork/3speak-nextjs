@@ -20,15 +20,17 @@ export function CommunityTile(props: any) {
           >
             <Image
               alt="hive blog"
-              width={"40px"}
-              height={"40px"}
+              width="40px"
+              height="40px"
               style={{
                 width: "40px",
                 height: "40px",
                 borderRadius: "50%",
                 verticalAlign: "middle",
               }}
-              loader={() => "https://images.hive.blog/u/" + props.name + "/avatar?size=icon"}
+              loader={() =>
+                "https://images.hive.blog/u/" + props.name + "/avatar?size=icon"
+              }
               src={
                 "https://images.hive.blog/u/" + props.name + "/avatar?size=icon"
               }

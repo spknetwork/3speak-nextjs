@@ -12,7 +12,7 @@ export default function CommunitiesView() {
       last: "",
       limit: 100,
     });
-    console.log(res)
+    // console.log("res", res)
     setData(res);
   };
   useEffect(() => {

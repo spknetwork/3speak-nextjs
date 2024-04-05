@@ -163,7 +163,7 @@
 
         getUserHiveDetails(`${userDetails?.username}`);
       }
-    }, [getUserHiveDetails, userDetails?.username]);
+    }, [getUserHiveDetails, userDetails]);
     const addAccountsNow = () => {
       console.log("addAccountsNow", addAccountsNow);
     };

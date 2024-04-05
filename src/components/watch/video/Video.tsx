@@ -2,15 +2,28 @@ import { Box, Flex, Image, Link, Text } from "@chakra-ui/react";
 import React from "react";
 import { MdPlayArrow } from "react-icons/md";
 import { BsDot } from "react-icons/bs";
+import { useRouter } from "next/router";
 import { BiDollar } from "react-icons/bi";
+import { useAppStore } from "@/lib/store";
 
-const Video = ({ videoSrc, number_views, bgColor, colorMode }: any) => {
+const Video = ({ video, videoSrc, number_views, bgColor, colorMode }: any) => {
+
+    const router = useRouter();
+    const { setVideo, video: videoSelected } = useAppStore();
+  
+    const setVideoDetails = (video:any) => {
+      console.log("video",video)
+      setVideo(video)
+      router.push("/watch?username="+video.author.username+"&v="+video.permlink)
+    }
+
   return (
     <Box
       w="100%"
       bgColor={bgColor}
       color={colorMode === "dark" ? "white" : "black"}
       marginBottom="3rem"
+      onClick={() => setVideoDetails(video)}
     >
       {/* cursor={'pointer'} */}
       <Box

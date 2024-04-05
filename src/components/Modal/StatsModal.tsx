@@ -19,7 +19,7 @@ const StatsModal = ({ directDelegations,setDirectDelegations, list_rc_direct_del
             .catch((error:any) => {
                 console.error('Error fetching direct delegations:', error);
             });
-    }, [list_rc_direct_delegations]);
+    }, [list_rc_direct_delegations, setDirectDelegations, userDetails]);
     useEffect(() => {
         console.log("directDelegations", directDelegations?.rc_direct_delegations)
     }, [directDelegations])

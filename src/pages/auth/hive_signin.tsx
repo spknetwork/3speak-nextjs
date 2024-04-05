@@ -20,7 +20,7 @@ const HiveSignIn = ({ tab }: any) => {
     if (colorMode == 'dark') {
       toggleColorMode()
     }
-  },[])
+  },[colorMode,toggleColorMode ])
 
   const router = useRouter();
   const { allowAccess, checkAuth, login_with_hive } = useAppStore();
