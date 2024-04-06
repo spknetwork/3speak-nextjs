@@ -5,38 +5,45 @@ import {
   CardHeader,
   Text,
   Heading,
-  Image,
   CardBody,
   Box,
 } from "@chakra-ui/react";
- import {CommunityResult} from "../../pages/studio/create_post"
+import Image, { ImageLoader } from "next/image";
+import { CommunityResult } from "../../pages/studio/create_post";
+import { width } from "styled-system";
 
-// type Concrete = {someKey: string}
-// type Loose = Partial<Concrete>
-// type AnotherLoose = {someKey?: string | undefined}
-
-// const c: Concrete = {someKey: 'hi'}
-// const a: Loose = c
-// const b: Loose = {}
-// const c1: AnotherLoose = a
-// const d: AnotherLoose = b
-// if (b.someKey !== undefined) {
-// const e: Concrete = b
-// }
 
 const CommunityCard: React.FC<Partial<CommunityResult>> = (info) => {
+
+const myLoader: ImageLoader = ({width, quality}) => {
+    return `https://images.hive.blog/u/${
+      info.name
+    }/avatar?size=icon&w=${width}&q=${quality || 75}`;
+  };
+
   return (
-    <Card w={["full", "base"]} h={"99%"} top={2}  mx={4} overflowWrap="break-word">
-      <Flex p={4} direction={["column", "row"]} align="center">
+    <Card
+      w={["full", "base"]}
+      h={"99%"}
+      top={2}
+      mx={4}
+      overflowWrap="break-word"
+    >
+      <Flex
+        p={4}
+        direction={["column", "row"]}
+        align="center"
+        borderRadius={"10px"}
+      >
         <Image
-          borderRadius={"10px"}
           alt="hive blog"
-          width={["40px", "60px", "90px", "120px"]}
-          height={["40px", "60px", "90px", "120px"]}
-          loader={() =>
-            "https://images.hive.blog/u/" + info.name + "/avatar?size=icon"
-          }
-          src={"https://images.hive.blog/u/" + info.name + "/avatar?size=icon"}
+          width="120px"
+          height="120px"
+          loader={myLoader}
+          src={myLoader({
+              width: 120, quality: 75,
+              src: ""
+          })}
         />
         <Box mx={[0, 4]} mt={[2, 0]}>
           <Heading size="md">

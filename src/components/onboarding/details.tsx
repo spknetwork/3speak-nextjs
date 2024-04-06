@@ -170,7 +170,11 @@ const Details = ({ currentStep, setCurrentStep }: Props) => {
                 <FormLabel pt={2}>Website</FormLabel>
                 <Input type="text" />
                 <FormLabel pt={2}>About</FormLabel>
-                <Textarea placeholder="Tell us about your interests" size={"lg"} height={"200px"} />
+                <Textarea
+                  placeholder="Tell us about your interests"
+                  size={"lg"}
+                  height={"200px"}
+                />
               </FormControl>
               <Flex
                 cursor={"pointer"}
