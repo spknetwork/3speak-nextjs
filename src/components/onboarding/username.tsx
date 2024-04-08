@@ -167,7 +167,7 @@ const Username = (props: Props) => {
                 marginTop={"10px"}
                 width="100%"
               >
-                <Text as="h2">Let's start with reviewing of username</Text>
+                <Text as="h2">Let&apos;s start with reviewing of username</Text>
               </Flex>
               <Flex
                 justifyContent={"center"}
