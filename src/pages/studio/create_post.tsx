@@ -9,6 +9,25 @@ import React, {
 } from "react";
 
 import {
+  Box,
+  Flex,
+  useColorModeValue,
+  Drawer,
+  DrawerContent,
+  Text,
+  useDisclosure,
+  Image,
+  Card,
+  CardBody,
+  Stack,
+  Textarea,
+  Input,
+  Spinner,
+  RadioGroup,
+  Radio,
+  useToast,
+  Switch,
+  useColorMode,
   Button,
   FormControl,
   FormLabel,
@@ -38,27 +57,7 @@ import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 import { api } from "@/utils/api";
 import { useAppStore } from "@/lib/store";
 import WizardSteps from "@/components/studio/WizardSteps";
-import {
-  Box,
-  Flex,
-  useColorModeValue,
-  Drawer,
-  DrawerContent,
-  Text,
-  useDisclosure,
-  Image,
-  Card,
-  CardBody,
-  Stack,
-  Textarea,
-  Input,
-  Spinner,
-  RadioGroup,
-  Radio,
-  useToast,
-  Switch,
-  useColorMode,
-} from "@chakra-ui/react";
+import {} from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import CommunityCard from "../../components/Create_POST/CommunityCard";
 import { backgroundColor } from "styled-system";
@@ -67,6 +66,7 @@ import Chips from "@/components/Create_POST/Chips";
 const { Client: HiveClient } = require("@hiveio/dhive");
 import { TiPlus } from "react-icons/ti";
 import { useAuth } from "@/hooks/auth";
+import CommunityChip from "@/components/Create_POST/CommunityChip";
 
 // TODO put the type in plz
 export type CommunityResult = {
@@ -98,10 +98,6 @@ const base_mentions = [
   { id: "3", display: "Doe" },
 ];
 
-// interface CommunityType {
-//   name: string;
-//   sum_pending: number;
-// }
 
 const CreatePost: React.FC = () => {
   //setting a global for the hashtags
@@ -231,15 +227,11 @@ const CreatePost: React.FC = () => {
     };
     const token = localStorage.getItem("access_token");
     axios
-      .post(
-        "https://staging.3speak.tv/api/v1/upload/start_encode",
-        params,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post("https://staging.3speak.tv/api/v1/upload/start_encode", params, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         toast({
           position: "top-right",
@@ -283,15 +275,11 @@ const CreatePost: React.FC = () => {
     setSavingDetails(true);
     const token = localStorage.getItem("access_token");
     axios
-      .post(
-        "https://staging.3speak.tv/api/v1/upload/create_upload",
-        params,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post("https://staging.3speak.tv/api/v1/upload/create_upload", params, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         // Handle successful upload
         console.log("successful", response);
@@ -337,16 +325,12 @@ const CreatePost: React.FC = () => {
     // get upload_id
     setVideoUploadId(response.data.upload_id);
     axios
-      .post(
-        "https://staging.3speak.tv/api/v1/upload/thumbnail",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post("https://staging.3speak.tv/api/v1/upload/thumbnail", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         // Handle successful upload
         console.log("successful thumbnail", response);
@@ -432,8 +416,6 @@ const CreatePost: React.FC = () => {
   function chipDataDelete(label: string) {
     setChipData(chipData.filter((chip) => chip.label !== label));
   }
-
- 
 
   /**
    * api import
@@ -638,7 +620,11 @@ const CreatePost: React.FC = () => {
                               {...getRootProps()}
                               className="dropzone"
                               borderRadius={"5px"}
-                              style = {selectedFile === null ? {minHeight: "30vh", minWidth:"30vh"}: {maxHeight: "50vh", maxWidth:"50vh"}}
+                              style={
+                                selectedFile === null
+                                  ? { minHeight: "30vh", minWidth: "30vh" }
+                                  : { maxHeight: "50vh", maxWidth: "50vh" }
+                              }
                               justifyContent="center"
                               alignItems={"center"}
                               border={"1px dotted grey"}
@@ -953,7 +939,11 @@ const CreatePost: React.FC = () => {
                                   position={"relative"}
                                 >
                                   <Input
-                                    border={ colorMode === "dark" ? "1px solid white" : "1px solid black"}
+                                    border={
+                                      colorMode === "dark"
+                                        ? "1px solid white"
+                                        : "1px solid black"
+                                    }
                                     placeholder={"Add tags"}
                                     value={chipInput}
                                     onChange={(e) =>
@@ -1136,47 +1126,12 @@ const CreatePost: React.FC = () => {
                                         .includes(search.toLowerCase());
                                 })
                                 .map((item: any, index) => (
-                                  <Flex
-                                    key={index}
-                                    w={"full"}
-                                    p={2}
-                                    boxShadow={`0.5px 0.5px 0.5px 0.5px ${
-                                      colorMode === "dark" ? "#3f444e" : "black"
-                                    }`}
-                                    _hover={{ backgroundColor: "#1a202c" }}
-                                    _active={{ backgroundColor: "#1a202c" }}
-                                    cursor="pointer"
-                                    onClick={() => setCardData(item)}
-                                  >
-                                    <Image
-                                      alt="hive blog"
-                                      width={"22px"}
-                                      height={"22px"}
-                                      loader={() =>
-                                        "https://images.hive.blog/u/" +
-                                        item.name +
-                                        "/avatar?size=icon"
-                                      }
-                                      src={
-                                        "https://images.hive.blog/u/" +
-                                        item.name +
-                                        "/avatar?size=icon"
-                                      }
-                                    />
-                                    <Flex
-                                      px={8}
-                                      w={"full"}
-                                      justifyContent="space-between"
-                                      alignItems={"center"}
-                                    >
-                                      <Flex>
-                                        <Text>{item.title}</Text>
-                                      </Flex>
-                                      <Flex>
-                                        <Text>{`id: ${item.id}`}</Text>
-                                      </Flex>
-                                    </Flex>
-                                  </Flex>
+                                  <CommunityChip 
+                                   key={index}
+                                   item={item}
+                                   colorMode={colorMode}
+                                   setCardData={setCardData}
+                                  />
                                 ))}
                             </VStack>
                           </Card>
