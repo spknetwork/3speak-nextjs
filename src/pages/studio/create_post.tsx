@@ -48,7 +48,9 @@ import axios from "axios";
 import { generateVideoThumbnails } from "@rajesh896/video-thumbnails-generator";
 import tus, { Upload, UploadOptions } from "tus-js-client";
 import styles from "../../components/ProgressBar.module.css";
+
 import { getMentionInputStyle, getMentionStyle } from "./defaultStyle";
+
 import { FaUpload } from "react-icons/fa";
 import { SlCheck, SlPicture } from "react-icons/sl";
 import { useRouter } from "next/router";

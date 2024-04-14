@@ -69,7 +69,6 @@ function getMentionInputStyle(
         "&focused": {
           backgroundColor: "#cee4e5",
         },
-        // borderColor: isError ? 'red' : undefined,
       },
     },
   };
