@@ -11,7 +11,7 @@ module.exports = withTM({
   reactStrictMode: true,
   images: {
     // domains: ['*'],
-    domains: [ "bworldonline.com", "www.bworldonline.com", "images.hive.blog","s3.eu-central-1.wasabisys.com", "files.peakd.com"],
+    domains: [ "bworldonline.com", "www.bworldonline.com", "images.hive.blog","s3.eu-central-1.wasabisys.com", "files.peakd.com", "https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"],
     // remotePatterns: [
     //   {
     //     protocol: "https",

@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react";
-
+import { FaUpload } from "react-icons/fa6";
 import {
   Box,
   Flex,
@@ -28,7 +28,6 @@ export default function StudioUploadPage({
   const { allowAccess } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
-
   useEffect(() => {
     if (allowAccess == true) {
       setAuthenticated(allowAccess);
@@ -50,9 +49,9 @@ export default function StudioUploadPage({
     authenticated ? "gray.100" : "gray.100",
     authenticated ? "gray.900" : "gray.900"
   );
-  // if (authenticated === null) {
-  //   return <Box>Loading...</Box>;
-  // }
+  if (authenticated === null) {
+    return <Box>Loading...</Box>;
+  }
 
   if (authenticated === false) {
     return <Box>Unauthorized access, please login first</Box>;
@@ -185,7 +184,7 @@ export default function StudioUploadPage({
                         <Text
                           fontSize={{ base: "50px", md: "50px", lg: "70px" }}
                         >
-                          <SlPicture width={"100px"} color="black" />
+                          <FaUpload width={"100px"} color={"black"} />
                         </Text>
 
                         <Text

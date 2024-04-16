@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -10,75 +10,71 @@ import { Typography, Box, Flex } from "src/components";
 // import ReCAPTCHA from "react-google-recaptcha";
 import SignUp from "@/components/signup/SignUp";
 import Link from "next/link";
-import { API_URL_FROM_WEST } from "../../utils/config";
-import axios from "axios";
-import { api } from "@/utils/api";
+
 import { useAppStore } from "@/lib/store";
 import { Button, Text } from "@chakra-ui/react";
-// import { Magic } from "magic-sdk";
-import { FcGoogle } from "react-icons/fc";
-import { BsDiscord, BsGithub } from "react-icons/bs";
-import { Magic } from 'magic-sdk';
-import { OAuthExtension } from '@magic-ext/oauth';
+import { ethers } from "ethers";
+
 import GoogleAuth from "../SocialAuth/GoogleAuth";
 import GithubAuth from "../SocialAuth/GithubAuth";
 import DiscordAuth from "../SocialAuth/DiscordAuth";
 import Image from "next/image";
-// const magic = new Magic("pk_live_7645A843999E2369");
+import {
+  useMagicLinkPopup,
+  MagicLinkPopupActions,
+  State,
+} from "magic-link-popup-react";
 
+import { getMagic } from "magic-link-popup";
+import * as uint8arrays from 'uint8arrays'
+import {DID} from 'dids'
+import * as KeyDidResolver from 'key-did-resolver'
+import {Ed25519Provider} from 'key-did-provider-ed25519'
 
 const SignIn = () => {
-  let magic: any
-  if (typeof window !== "undefined") {
-    magic = new Magic('pk_live_773A61B5424F8C7D', {
-      extensions: [new OAuthExtension()],
-    });
-    // console.log('herererererere')
-  }
-  const googlelogin = async () => {
-    // const data = await magic.oauth.loginWithRedirect({
-    //   provider: 'google' /* 'google', 'facebook', 'apple', or 'github' */,
-    //   redirectURI: 'http://localhost:3050/login',
-    // });
+  //making an instance for the useMagicApiKey()
 
-    // console.log('data', data)
+  console.log("this is the return hook", useMagicLinkPopup);
+  const googlelogin = () => {
     try {
-      await magic.oauth.loginWithRedirect({
+      MagicLinkPopupActions.login({
+        type: "oauth",
         provider: "google",
-        redirectURI: new URL("/login", window.location.origin).href,
       });
     } catch (err) {
       console.error(err);
     }
-  }
-
+  };
 
   const githublogin = async () => {
-    const data = await magic.oauth.loginWithRedirect({
-      provider: 'github' /* 'google', 'facebook', 'apple', or 'github' */,
-      redirectURI: new URL("/login", window.location.origin).href,
-    });
+    try {
+      MagicLinkPopupActions.login({
+        type: "oauth",
+        provider: "github",
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    console.log('data', data)
-  }
-
-  const discordlogin = async () => {
-    const data = await magic.oauth.loginWithRedirect({
-      provider: 'discord' /* 'google', 'facebook', 'apple', or 'github' */,
-      redirectURI: new URL("/login", window.location.origin).href,
-    });
-
-    console.log('data', data)
-  }
-
+  const discordLogin = async () => {
+    try {
+      MagicLinkPopupActions.login({
+        type: "oauth",
+        provider: "discord",
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const [onboarding, setOnboarding] = useState<any>(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const recaptchaRefSignIn: any = useRef();
   const redirectToForgotPasswordPage = () => {
-    window.location.href = "/auth/forgot_password"
-  }
+    window.location.href = "/auth/forgot_password";
+  };
 
   const { allowAccess, login, checkAuth } = useAppStore();
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
@@ -91,6 +87,43 @@ const SignIn = () => {
     }
   }, [allowAccess]);
 
+  //function for login redirection
+  const magic: State = useMagicLinkPopup();
+
+  const generateDID = async () => {
+    const m = getMagic();
+    const provider = new ethers.BrowserProvider(m.rpcProvider);
+
+    const signer = await provider.getSigner();
+    const encoder = new TextEncoder();
+    const msg = encoder.encode('Allow this account to control your identity')
+    const sig = await signer.signMessage(msg);
+
+    window.localStorage.setItem('auth-entropy', sig) 
+
+
+    const sigBytes = uint8arrays.fromString(sig.slice(2), 'hex')
+    const entropyBytes = new Uint8Array(sigBytes.slice(0,32));
+
+    const did = new DID({provider: new Ed25519Provider(entropyBytes), resolver: KeyDidResolver.getResolver()})
+    await did.authenticate();
+
+    const didId = did.id
+    window.localStorage.setItem('auth-public-key', didId)
+  };
+
+  useEffect(() => {
+    if (magic.initialized) {
+      if (magic.loggedIn === true) {
+        generateDID().then(() =>
+        router.push("/"));
+        
+        // setAuthenticated(true);
+      }
+    }
+    console.log(magic);
+  }, [magic, router]);
+
   useEffect(() => {
     if (authenticated) {
       if (onboarding) {
@@ -98,12 +131,11 @@ const SignIn = () => {
       } else {
         router.push("/");
       }
-
     }
   }, [authenticated, router, onboarding]);
 
   const handleSubmit = async (values: any) => {
-    setOnboarding(true)
+    setOnboarding(true);
     await login(values);
     checkAuth();
   };
@@ -112,21 +144,19 @@ const SignIn = () => {
     // call the magic link function here
     console.log("call the magic link function here");
   };
-  const loadImage=()=>{
+  const loadImage = () => {
     return "https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png";
-  }
+  };
+
   return (
     <Box width="100%">
       <Box mx="auto" maxWidth="9rem">
         <Image
-        alt="logo player"
-        loader={loadImage}
-         src={`https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png`} width={'100'}
-        height={'100'}
-          // src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
-          // alt="Logo"
-          // width={100}
-          // height={50}
+          alt="logo player"
+          loader={loadImage}
+          src={`https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png`}
+          width={"100"}
+          height={"100"}
         />
       </Box>
 
@@ -205,19 +235,49 @@ const SignIn = () => {
             <Flex width="100%" justifyContent="center" mt="1rem">
               <StyledButton type="submit">Log in</StyledButton>
             </Flex>
-            <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-              <GoogleAuth googlelogin={googlelogin} label='Sign in with Google'/>
+            <Flex
+              width="100%"
+              border={"1px solid"}
+              borderRadius="6px"
+              justifyContent="center"
+              mt="1rem"
+            >
+              <GoogleAuth
+                googlelogin={googlelogin}
+                label="Sign in with Google"
+              />
             </Flex>
-            <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-              <GithubAuth githublogin={githublogin} label='Sign in with Github'/>
+            <Flex
+              width="100%"
+              border={"1px solid"}
+              borderRadius="6px"
+              justifyContent="center"
+              mt="1rem"
+            >
+              <GithubAuth
+                githublogin={githublogin}
+                label="Sign in with Github"
+              />
             </Flex>
-            <Flex width="100%" border={'1px solid'} borderRadius='6px' justifyContent="center" mt="1rem">
-              <DiscordAuth discordlogin={discordlogin} label='Sign in with Discord' />
+            <Flex
+              width="100%"
+              border={"1px solid"}
+              borderRadius="6px"
+              justifyContent="center"
+              mt="1rem"
+            >
+              <DiscordAuth
+                discordLogin={discordLogin}
+                label="Sign in with Discord"
+              />
             </Flex>
 
             <Flex width="100%" justifyContent="center" mt="0.5rem">
               {/* <Link href="/auth/forgot_password"> */}
-              <Box onClick={() => redirectToForgotPasswordPage()} width={'100%'}>
+              <Box
+                onClick={() => redirectToForgotPasswordPage()}
+                width={"100%"}
+              >
                 <StyledButton
                   className="text-dark"
                   colors={{
@@ -277,3 +337,6 @@ const StyledButton = styled.button<{
   }
 `;
 export default SignIn;
+function useEffectLayout(arg0: () => void) {
+  throw new Error("Function not implemented.");
+}

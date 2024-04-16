@@ -1,10 +1,14 @@
 import { Avatar, Box, Flex, Link, Text } from "@chakra-ui/react";
 import React from "react";
 
-const Community = () => {
+type Props = {
+  bgColor: string,
+  colorMode: string 
+}
+const Community = (props: Props) => {
   return (
     <Flex justifyContent={"start"}>
-      <Box bg="white" p={4} color="black">
+      <Box bg={props.bgColor} color={props.colorMode==="dark" ? "white" : "black"}>
         <Text marginBottom={"10px"} fontSize={"11px"}>
           Community
         </Text>

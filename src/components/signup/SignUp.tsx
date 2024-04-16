@@ -92,7 +92,6 @@ const SignUp = () => {
     }
   };
   return (
-    <div>
       <Box width="100%">
         <Box mx="auto" maxWidth="9rem">
           <Image
@@ -187,7 +186,6 @@ const SignUp = () => {
           <DiscordAuth discordlogin={discordlogin} label='Sign Up with Discord'/>
         </Flex>
       </Box>
-    </div>
   );
 };
 

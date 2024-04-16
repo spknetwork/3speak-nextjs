@@ -20,13 +20,13 @@ const ForgotPassword = () => {
   const { t } = useTranslation();
   const recaptchaRef: any = useRef();
   const { colorMode, toggleColorMode } = useColorMode();
+
   useEffect(() => {
     if (colorMode == 'dark') {
-      toggleColorMode()
+      toggleColorMode();
     }
-  }, [toggleColorMode, colorMode])
+  },[colorMode])
   const onSubmitWithReCAPTCHA = async () => {
-
     const token = await recaptchaRef.current.executeAsync();
     console.log(token);
     // apply to form data

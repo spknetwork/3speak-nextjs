@@ -4,10 +4,7 @@ import React from "react";
 
 const Views = () => {
   return (
-    <Text marginBottom={'0px !important'}>
-      <ViewIcon fontSize={"20px"} />
-      <span className="ms-1">38</span>
-    </Text>
+    <h1>Hey there!</h1>
   );
 };
 

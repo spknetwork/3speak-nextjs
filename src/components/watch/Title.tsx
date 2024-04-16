@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
-const Title = ({getVideo}:any) => {
+const Title = ({getVideo, ...props}:any) => {
   const [videoUrl, setvideoUrl] = useState<any>(null)
   const [videoUrlSelected, setvideoUrlSelected] = useState<any>(null)
   useEffect(() => {
@@ -41,7 +41,7 @@ const Title = ({getVideo}:any) => {
   return (
     <Text
       fontSize={"20px"}
-      color="#333"
+      color={props.colorMode==="dark"? "white": "dark"}
       fontWeight={"500"}
       textTransform="initial"
       marginTop={"0.5rem"}

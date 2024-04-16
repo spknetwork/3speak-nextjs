@@ -1,6 +1,7 @@
 
   import Image from "next/image";
   import Link from "next/link";
+  import {Icon} from "@chakra-ui/react";
   import React, { useEffect, useRef, useState } from "react";
   import styled from "styled-components";
   import { Box as BoxContainer } from "./Box";
@@ -51,6 +52,7 @@
     DrawerCloseButton,
     useDisclosure,
   } from "@chakra-ui/react";
+  import{ NAVIGATION } from "../components/data/NavigationData";
   import { useMediaQuery } from "react-responsive";
   import { css } from "@emotion/react";
   import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
@@ -75,56 +77,7 @@
   const navblog_light = {
     filter: "brightness(0.50)",
   };
-  const NAVIGATION = [
-    {
-      img: "nav/home.svg",
-      img_light: "nav/home_light.svg",
-      title: "nav.home",
-      route: "/",
-    },
-    {
-      img: "nav/smile.svg",
-      img_light: "nav/smile_light.svg",
-      title: "nav.first",
-      route: "/first_upload",
-    },
-    {
-      img: "nav/fire.svg",
-      img_light: "nav/fire_light.svg",
-      title: "nav.trending",
-      route: "/trends",
-    },
-    {
-      img: "nav/play.svg",
-      img_light: "nav/play_light.svg",
-      title: "nav.new",
-      route: "/new",
-    },
-
-    {
-      img: "nav/communities.svg",
-      img_light: "nav/communities_light.svg",
-      title: "nav.communities",
-      route: "communities",
-    },
-    {
-      img: "nav/leaderboard.svg",
-      img_light: "nav/leaderboard_light.svg",
-      title: "nav.leaderboard",
-      route: "/leaderboard",
-    },
-    {
-      img: "nav/download.svg",
-      img_light: "nav/download_light.svg",
-      title: "download_apps",
-    },
-    {
-      img: "nav/spk_network.png",
-      img_light: "nav/home_light.svg",
-      title: "about_3speak",
-    },
-  ];
-
+ 
   const faAndroidIcon = faAndroid as IconProp;
   const faAppStoreIosIcon = faAppStoreIos as IconProp;
   const faDiscordIcon = faDiscord as IconProp;
@@ -226,7 +179,7 @@
 
     return (
       <Box>
-        <Button ref={btnRef} colorScheme="grey.100" textColor={"black"} onClick={onOpen} fontSize={"4xl"}>
+        <Button ref={btnRef} colorScheme="grey.100" textColor={colorMode === "dark" ? "white" : "black"} onClick={onOpen} fontSize={"3xl"}>
         <TbLayoutSidebarRightCollapseFilled />
         </Button>
 
@@ -289,7 +242,7 @@
                   <ChakraBox>
                     <ChakraBox mb="1rem" width="100%">
                       {!authenticated && (
-                        <Link href="/auth/login">
+                        <Link href="/auth/modals">
                           <Button
                             bg={bgColor}
                             marginBottom={"10px"}
@@ -418,7 +371,7 @@
                       </Flex>
                     </ChakraBox>
                     <ChakraBox>
-                      {NAVIGATION.map(({ img, img_light, title, route }) => (
+                      {NAVIGATION.map(({ icon, title, route }) => (
                         <StyledNav
                           onClick={() =>
                             route ? router.push(route) : setCommunitiesPopup(true)
@@ -463,13 +416,18 @@
 
                             {title != "download_apps" &&
                               title != "about_3speak" && (
-                                <Image
-                                  src={`/${
-                                    colorMode == "dark" ? img_light : img
-                                  }`}
-                                  alt={title}
-                                  width={30}
-                                  height={30}
+                                // <Image
+                                //   src={`/${
+                                //     colorMode == "dark" ? img_light : img
+                                //   }`}
+                                //   alt={title}
+                                //   width={30}
+                                //   height={30}
+                                // />
+                                <Icon
+                                as={icon}
+                                width={30}
+                                height={30}
                                 />
                               )}
                           </ChakraBox>

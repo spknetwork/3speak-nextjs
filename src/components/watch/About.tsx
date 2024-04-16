@@ -1,7 +1,15 @@
 import { Box, Link, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import Community from "@/components/watch/Community";
 
-const About = ({ getVideo }: any) => {
+type Props = {
+  bgColor: string;
+  colorMode: string;
+  //TODO: fix type
+  getVideo: any;
+};
+const About = ({getVideo, ...props}: Props) => {
+
   const [showLess, setShowLess] = useState(true);
   const showLessFunction = () => {
     setShowLess(!showLess);
@@ -9,7 +17,6 @@ const About = ({ getVideo }: any) => {
   const [videoUrl, setvideoUrl] = useState<any>(null)
   const [videoUrlSelected, setvideoUrlSelected] = useState<any>(null)
   // let remaningTags:any = [];
-
 
   useEffect(() => {
     if (videoUrl) {
@@ -51,13 +58,15 @@ const About = ({ getVideo }: any) => {
       marginBottom={"30px"}
       padding="15px"
       borderRadius={"2px"}
-      boxShadow="0 0 11px #ececec;"
+      boxShadow={
+        props.colorMode === "dark" ? "0 0 11px black" : "0 0 11px #ececec;"
+      }
       transitionDuration={"0.4s"}
-      background="#fff none repeat scroll 0 0"
+      background={props.bgColor}
     >
       <Text
         marginBottom={"5px"}
-        color={"black"}
+        color={props.colorMode === "dark" ? "white" : "black"}
         fontSize={"15px"}
         fontWeight="600"
       >
@@ -70,7 +79,7 @@ const About = ({ getVideo }: any) => {
         paddingBottom={"10px"}
       >
         <span className="description">
-          <Text color={"black"}>
+          <Text color={props.colorMode === "dark" ? "white" : "black"}>
             <div>
               {/* Use dangerouslySetInnerHTML to insert the HTML */}
               <div dangerouslySetInnerHTML={{ __html: videoUrl.body /* or sanitizedHtml if you sanitized it */ }} />
@@ -196,7 +205,7 @@ const About = ({ getVideo }: any) => {
         </span>
         <Text
           marginTop={"18px"}
-          color={"black"}
+          color={props.colorMode === "dark" ? "white" : "black"}
           fontSize="15px"
           fontWeight={"600"}
         >
@@ -216,6 +225,16 @@ const About = ({ getVideo }: any) => {
           }
 
         </Box>
+        <Box
+          marginBottom={"30px"}
+          borderRadius={4}
+          // boxShadow="base"
+          mr={2}
+          flex="1"
+          bg={props.bgColor}
+        >
+          <Community bgColor={props.bgColor} colorMode={props.colorMode} />
+        </Box>
       </Box>
 
       <Box
@@ -223,7 +242,11 @@ const About = ({ getVideo }: any) => {
         borderTop={"1px solid rgba(0,0,0,0.2)"}
         cursor="pointer"
       >
-        <Text className="text-dark" textAlign={"center"}>
+        <Text
+          className="text-dark"
+          textAlign={"center"}
+          color={"white"}
+        >
           {showLess ? "Show more" : "Show less"}
         </Text>
       </Box>

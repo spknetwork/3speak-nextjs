@@ -130,3 +130,37 @@ h1 {
 * {
   box-sizing: border-box;
 }
+
+#parent:hover > #timestamp {
+  display: none;;
+}
+#parent:hover > #widget {
+  display: none;;
+}
+
+
+@media  (prefers-color-scheme : dark){
+  #parent_auth_modal {
+    background-color: #1a202c;
+  }
+
+  #auth_btn{
+   color: whitesmoke;
+  }
+
+  #auth_btn:hover{
+    color: black;
+  }
+}
+
+.preview {
+  width: 100%;
+  height: auto; 
+  border-radius: 5px 5px 0px 0px;
+}
+
+.preview_visibility {
+  width: 400px;
+  height: auto;
+  border-radius: 5px 5px 0px 0px;
+}

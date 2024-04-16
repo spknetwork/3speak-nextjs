@@ -1,6 +1,6 @@
 // store.ts
 
-import create from 'zustand'
+import {create} from 'zustand'
 import { createStudioSlice, StudioSlice } from './slices/createStudioSlice'
 import { createAuthUserSlice, AuthUserSlice } from './slices/createAuthStore'
 import { createUserDetailsSlice, UserSlice } from './slices/createUserStore'

@@ -14,23 +14,23 @@ export function CommunityTile(props: any) {
     <Col className="col-md-3 col-sm-3 mb-3" md={3} sm={3}>
       <a href={`/community/${props.reflink}`} className="font-weight-bold">
         <div className="community-card channels-card shadow-sm">
-        
           <div
             className="text-left text-dark d-flex justify-content-center align-items-center"
             style={{ display: "inline-block", float: "left" }}
           >
-            
             <Image
               alt="hive blog"
-                width="40px"
-                height="40px"
+              width="40px"
+              height="40px"
               style={{
                 width: "40px",
                 height: "40px",
                 borderRadius: "50%",
                 verticalAlign: "middle",
               }}
-              loader={() => "https://images.hive.blog/u/" + props.name + "/avatar?size=icon"}
+              loader={() =>
+                "https://images.hive.blog/u/" + props.name + "/avatar?size=icon"
+              }
               src={
                 "https://images.hive.blog/u/" + props.name + "/avatar?size=icon"
               }

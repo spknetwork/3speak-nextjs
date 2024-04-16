@@ -1,155 +1,253 @@
-// pages/login.js or any other component
+import React from 'react'
 
-// import GoogleLoginButton from "@/components/login/GoogleLoginButton";
-import { useAppStore } from "@/lib/store";
-import { OAuthExtension } from "@magic-ext/oauth";
-import { Magic } from "magic-sdk";
-import { useCallback, useEffect, useState } from "react";
-import { ethers } from 'ethers';
+type Props = {}
 
-// import { magic as magin2, provider } from '../utils/magic'
-import Web3 from "web3";
-import { recoverPersonalSignature } from "@metamask/eth-sig-util";
+const login = (props: Props) => {
+  return (
+    <div></div>
+  )
+}
 
-// import GoogleLoginButton from 'components/GoogleLoginButton';
+export default login
+// // pages/login.js or any other component
 
-const LoginPage = () => {
-  const { checkAuth , allowAccess} = useAppStore();
+// // import GoogleLoginButton from "@/components/login/GoogleLoginButton";
+// import { useAppStore } from "@/lib/store";
+// import { OAuthExtension } from "@magic-ext/oauth";
+// import { Magic } from "magic-sdk";
+// import { useCallback, useEffect, useState } from "react";
+// import { ethers } from 'ethers';
 
-    const [user, setUser] = useState();
-    let magic: any
-    let provider: any
-    if (typeof window !== "undefined") {
-        // magic = new Magic('pk_live_773A61B5424F8C7D', {
-        //     extensions: [new OAuthExtension()],
-        // });
+// // import { magic as magin2, provider } from '../utils/magic'
+// import Web3 from "web3";
+// import { recoverPersonalSignature } from "@metamask/eth-sig-util";
 
-        // Initialize Magic with your Magic publishable key
-   magic = new Magic('pk_live_773A61B5424F8C7D', {
-    extensions: [new OAuthExtension()],
-    network: 'mainnet',
-  });
-  
-  // Create a Web3 provider using Magic's Ethereum provider
-   provider = new ethers.providers.Web3Provider(magic.rpcProvider);
-        
+// // import GoogleLoginButton from 'components/GoogleLoginButton';
 
+// const LoginPage = () => {
+//   const { checkAuth, allowAccess } = useAppStore();
+
+//   const [user, setUser] = useState();
+//   let magic: any;
+//   let provider: any;
+//   if (typeof window !== "undefined") {
+//     // magic = new Magic('pk_live_773A61B5424F8C7D', {
+//     //     extensions: [new OAuthExtension()],
+//     // });
+
+//     // Initialize Magic with your Magic publishable key
+//     magic = new Magic("pk_live_773A61B5424F8C7D", {
+//       extensions: [new OAuthExtension()],
+//       network: "mainnet",
+//     });
+
+//     // Create a Web3 provider using Magic's Ethereum provider
+//     provider = new ethers.providers.Web3Provider(magic.rpcProvider);
+//   }
+//   useEffect(() => {
+//     finishSocialLogin();
+//   }, []);
+//   const finishSocialLogin = async () => {
+//     try {
+//       const result = await magic.oauth.getRedirectResult();
+//       setUser(result);
+//       // console.log("result", result)
+//       // console.log("result", result.oauth.accessToken)
+//       // localStorage.setItem("access_token", result.oauth.accessToken);
+//       createPersonalSign();
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   };
+
+//   const createPersonalSign = async (message = "Login to your account") => {
+//     try {
+//       // Ensure the user is logged in with Magic
+//       await magic.auth.loginWithMagicLink({ email: "eroyjune@gmail.com" });
+
+//       // Get the signer from the provider
+//       const signer = provider.getSigner();
+
+//       // Sign the message
+//       const signature = await signer.signMessage(message);
+
+//       // return signature;
+//       console.log("signature", signature);
+//     } catch (error) {
+//       console.error("Error signing message:", error);
+//       throw error; // Propagate error for further handling
+//     }
        
-    }
-    const createPersonalSign= useCallback( async (message= "Login to your account") => {
-                try {
-                    // Ensure the user is logged in with Magic
-                    // await magic.auth.loginWithMagicLink({ email: "eroyjune@gmail.com" });
+//     }
+//     const createPersonalSign= useCallback( async (message= "Login to your account") => {
+//                 try {
+//                     // Ensure the user is logged in with Magic
+//                     // await magic.auth.loginWithMagicLink({ email: "eroyjune@gmail.com" });
             
-                    // Get the signer from the provider
-                    const signer = provider.getSigner();
+//                     // Get the signer from the provider
+//                     const signer = provider.getSigner();
             
-                    // Sign the message
-                    const signature = await signer.signMessage(message);
+//                     // Sign the message
+//                     const signature = await signer.signMessage(message);
             
-                    // return signature;
-                    console.log("signature",signature)
-                } catch (error) {
-                    console.error('Error signing message:', error);
-                    throw error; // Propagate error for further handling
-                }
+//                     // return signature;
+//                     console.log("signature",signature)
+//                 } catch (error) {
+//                     console.error('Error signing message:', error);
+//                     throw error; // Propagate error for further handling
+//                 }
         
         
         
-            },[provider]);
+//             },[provider]);
    
-    useEffect(() => {
-        if (typeof window !== "undefined") {
+//     useEffect(() => {
+//         if (typeof window !== "undefined") {
             
-            const finishSocialLogin = async () => {
-                try {
+//             const finishSocialLogin = async () => {
+//                 try {
         
-                    const result = await magic.oauth.getRedirectResult();
-                    setUser(result);
-                    // console.log("result", result)
-                    // console.log("result", result.oauth.accessToken)
-                    // localStorage.setItem("access_token", result.oauth.accessToken);
-                    createPersonalSign()
+//                     const result = await magic.oauth.getRedirectResult();
+//                     setUser(result);
+//                     // console.log("result", result)
+//                     // console.log("result", result.oauth.accessToken)
+//                     // localStorage.setItem("access_token", result.oauth.accessToken);
+//                     createPersonalSign()
         
-                } catch (err) {
-                    console.error(err);
-                }
-            };
-            finishSocialLogin();
+//                 } catch (err) {
+//                     console.error(err);
+//                 }
+//             };
+//             finishSocialLogin();
 
-        }
+//         }
         
        
        
-    }, [magic , createPersonalSign]);
+//     }, [magic , createPersonalSign]);
    
 
    
 
-    const logout = async () => {
-        try {
-            await magic.user.logout();
-        } catch (err) {
-            console.error(err);
-        }
-    };
+//     // try {
+//     //     const email = 'eroyjune@gmail.com'; // The email address of the user
+//     //     const response = await fetch('/api/signMessage', {
+//     //       method: 'POST',
+//     //       headers: {
+//     //         'Content-Type': 'application/json',
+//     //       },
+//     //       body: JSON.stringify({ email, message }),
+//     //     });
 
-    const checkauth = async () => {
-        try {
-           await checkAuth()
-           console.log("allowAccess",allowAccess)
-        } catch (error) {
-            console.error(error); 
-        }
-    }
+//     //     const data = await response.json();
+//     //     if (data.signature) {
+//     //       console.log('Signature:', data.signature);
+//     //       // Handle the signed message (e.g., display it, send it to a server)
+//     //     } else {
+//     //       console.error('Failed to sign the message.');
+//     //     }
+//     //   } catch (error) {
+//     //     console.error('Error signing message:', error);
+//     //   }
 
+//     //   1
+//     // const magic = new Magic("pk_live_773A61B5424F8C7D", {
+//     //     network: `mainnet`,
+//     //   });
+//     // const web3 = new Web3(magic.rpcProvider);
+//     // const signedMessage = await web3.eth.personal.sign(
+//     //     "Login to your account",
+//     //     "juneroy1",
+//     //     ""
+//     //   );
+//     //   console.log("signedMessage:", signedMessage);
+//     //   // recover the public address of the signer to verify
+//     //   const recoveredAddress = recoverPersonalSignature({
+//     //     data: "Login to your account",
+//     //     signature: signedMessage,
+//     //   });
+//     //   console.log(
+//     //     recoveredAddress.toLocaleLowerCase() === "juneroy1"
+//     //       ? "Signing success!"
+//     //       : "Signing failed!"
+//     //   );
+//   };
 
-    // Result has the following interface
+//   const logout = async () => {
+//     try {
+//       await magic.user.logout();
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   };
 
-    // interface OAuthRedirectResult {
+//   const checkauth = async () => {
+//     try {
+//       await checkAuth();
+//       console.log("allowAccess", allowAccess);
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
 
-    //   magic: {
+//   // Result has the following interface
 
-    //     idToken: string;
+//   // interface OAuthRedirectResult {
 
-    //     userMetadata: MagicUserMetadata;
+//   //   magic: {
 
-    //   },
+//   //     idToken: string;
 
-    //   oauth: {
+//   //     userMetadata: MagicUserMetadata;
 
-    //     provider: string;
+//   //   },
 
-    //     scope: string[];
+//   //   oauth: {
 
-    //     accessToken: string;
+//   //     provider: string;
 
-    //     userHandle: string;
+//   //     scope: string[];
 
-    //     userInfo: ...;
+//   //     accessToken: string;
 
-    //   }
+//   //     userHandle: string;
 
-    // };
-    return (
-        <div className="container">
-            {!user && <div className="loading">Loading...</div>}
+//   //     userInfo: ...;
 
-            {user && (
-                <div>
-                    <h1>Data returned:</h1>
-                    <pre className="user-info">{JSON.stringify(user, null, 3)}</pre>
-                    <button className="logout-button" onClick={checkauth}>
-                        Check Auth now
-                        {/* {user?.oauth?.userInfo?.email} */}
-                    </button>
-                </div>
-            )}
-            <button className="logout-button" onClick={logout}>
-                Logout
-            </button>
-        </div>
-    );
-};
+//   //   }
 
-export default LoginPage;
+//   // };
+//   return (
+//     <div className="container">
+//       {!user && <div className="loading">Loading...</div>}
+
+//       {user && (
+//         <div>
+//           <h1>Data returned:</h1>
+//           <pre className="user-info">{JSON.stringify(user, null, 3)}</pre>
+//           <button className="logout-button" onClick={checkauth}>
+//             Check Auth now
+//           </button>
+//             {user && (
+//                 <div>
+//                     <h1>Data returned:</h1>
+//                     <pre className="user-info">{JSON.stringify(user, null, 3)}</pre>
+//                     <button className="logout-button" onClick={checkauth}>
+//                         Check Auth now
+//                         {/* {user?.oauth?.userInfo?.email} */}
+//                     </button>
+//                 </div>
+//             )}
+//             <button className="logout-button" onClick={logout}>
+//                 Logout
+//             </button>
+//         </div>
+//       )}
+//       <button className="logout-button" onClick={logout}>
+//         Logout
+//       </button>
+//     </div>
+//   );
+// };
+
+// export default LoginPage;

@@ -1,3 +1,4 @@
+import { ViewIcon } from "@chakra-ui/icons";
 import { Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
@@ -19,15 +20,26 @@ const Reactions = ({ getVideo }: any) => {
       </Flex>
       <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
         <FaRegThumbsDown />
-        <Text marginBottom={'0px !important'} fontWeight={"bolder"} marginLeft={"10px"}>
+        <Text
+          marginBottom={"0px !important"}
+          fontWeight={"bolder"}
+          marginLeft={"10px"}
+        >
           10
         </Text>
       </Flex>
       <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
         {/* views */}
-        <Views />
+        <ViewIcon fontSize={"20px"} />
+        <Text
+          marginBottom={"0px !important"}
+          fontWeight={"bolder"}
+          marginLeft={"10px"}
+        >
+          38
+        </Text>
       </Flex>
-      <Flex justifyContent={"center"} alignItems="center" marginLeft={"5px"}>
+      <Flex justifyContent={"center"} alignItems="center" marginLeft={"15px"}>
         {/* views */}
         <MenuButtons />
       </Flex>

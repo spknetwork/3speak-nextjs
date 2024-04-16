@@ -1,10 +1,13 @@
-import React, { ReactNode, useEffect, useState } from "react";
-import styled from "styled-components";
-import { DropzoneOptions, useDropzone } from "react-dropzone";
-import axios from "axios";
-import { generateVideoThumbnails } from "@rajesh896/video-thumbnails-generator";
-import tus, { Upload, UploadOptions } from "tus-js-client";
-import styles from "../../components/ProgressBar.module.css";
+//TODO: accessible only after login
+
+import React, {
+  ComponentProps,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
 import {
   Box,
   Flex,
@@ -17,14 +20,36 @@ import {
   Card,
   CardBody,
   Stack,
-  Button,
   Textarea,
   Input,
   Spinner,
   RadioGroup,
   Radio,
   useToast,
+  Switch,
+  useColorMode,
+  Button,
+  FormControl,
+  FormLabel,
+  HStack,
+  InputGroup,
+  InputLeftElement,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Select,
+  VStack,
 } from "@chakra-ui/react";
+import styled from "styled-components";
+import { DropzoneOptions, useDropzone } from "react-dropzone";
+import { MentionsInput, Mention } from "react-mentions";
+import axios from "axios";
+import { generateVideoThumbnails } from "@rajesh896/video-thumbnails-generator";
+import tus, { Upload, UploadOptions } from "tus-js-client";
+import styles from "../../components/ProgressBar.module.css";
+
+import { getMentionInputStyle, getMentionStyle } from "../../styles/pages/studio/defaultStyle";
 
 import { FaUpload } from "react-icons/fa";
 import { SlCheck, SlPicture } from "react-icons/sl";
@@ -34,16 +59,73 @@ import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 import { api } from "@/utils/api";
 import { useAppStore } from "@/lib/store";
 import WizardSteps from "@/components/studio/WizardSteps";
+import {} from "@chakra-ui/react";
+import { SearchIcon } from "@chakra-ui/icons";
+import CommunityCard from "../../components/Create_POST/CommunityCard";
+import { backgroundColor } from "styled-system";
+import { Numbers } from "web3";
+import Chips from "@/components/Create_POST/Chips";
+const { Client: HiveClient } = require("@hiveio/dhive");
+import { TiPlus } from "react-icons/ti";
+import { useAuth } from "@/hooks/auth";
+import CommunityChip from "@/components/Create_POST/CommunityChip";
+
+// TODO put the type in plz
+export type CommunityResult = {
+  name: string;
+  title: string;
+  about: string;
+  admins: string;
+  sum_pending: number;
+  num_pending: number;
+  subscribers: number;
+  num_authors: number;
+};
 
 type FilePreview = {
   file: File;
   previewUrl: string;
 };
 
+const hashRegex = /#\w+(-?\w+)*/gm;
+
+const HASHTAG_LIMIT = 2;
+
+const SHOW_HASHTAG_LIMIT_ERROR_TIME_MS = 3000;
+
+//data for the hashtags
+const base_mentions = [
+  { id: "1", display: "John" },
+  { id: "2", display: "Jane" },
+  { id: "3", display: "Doe" },
+];
+
+
 const CreatePost: React.FC = () => {
+  //setting a global for the hashtags
+  const limitHashtags = 150;
+
+  //for the dark mode
+  const { colorMode } = useColorMode();
+  const bgColor = useColorModeValue("white", "gray.800");
+  const mentionStyle = getMentionStyle(colorMode);
+
+  /**
+   * For rendering the chips and edited chips
+   */
+  const [chipData, setChipData] = useState<{ label: string }[]>([]);
+  const [chipInput, setChipInput] = useState<string>("");
+
+  /**
+   * for the filteration of the results
+   */
+  const [search, setSearch] = useState<string>("");
+  const [cardData, setCardData] = useState<CommunityResult>();
+
   // video title
   const [videoTitle, setVideoTitle] = useState<string>("");
   const [videoDescription, setVideoDesription] = useState<string>("");
+  const [hashtagData, setHashTagData] = useState<string>("");
   const [video_upload_id, setVideoUploadId] = useState<string>("");
   const [savingDetails, setSavingDetails] = useState<Boolean | null>(null);
 
@@ -85,6 +167,7 @@ const CreatePost: React.FC = () => {
     files.push(previewUrl);
     setPreviewManualThumbnails(files);
   };
+
   const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
     const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
@@ -138,6 +221,7 @@ const CreatePost: React.FC = () => {
     upload.start();
     console.log("upload", upload);
   };
+
   const handleEncode = (): void => {
     // set encoding video
     const params = {
@@ -145,15 +229,11 @@ const CreatePost: React.FC = () => {
     };
     const token = localStorage.getItem("access_token");
     axios
-      .post(
-        "https://staging.3speak.tv/api/v1/upload/start_encode",
-        params,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post("https://staging.3speak.tv/api/v1/upload/start_encode", params, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         toast({
           position: "top-right",
@@ -175,13 +255,18 @@ const CreatePost: React.FC = () => {
           isClosable: true,
         });
       });
-  }
+  };
   const handleCreatePost = (): void => {
     // get video title
     // get video description
     // get thumbnail
     console.log("videotitle", videoTitle);
     console.log("videoDescription", videoDescription);
+
+    const isSave = document.querySelector<HTMLElement>("#btn_details");
+    if (isSave?.innerText === "Next") {
+      setSteps(2);
+    }
     const params = {
       title: videoTitle,
       description: videoDescription,
@@ -192,15 +277,11 @@ const CreatePost: React.FC = () => {
     setSavingDetails(true);
     const token = localStorage.getItem("access_token");
     axios
-      .post(
-        "https://staging.3speak.tv/api/v1/upload/create_upload",
-        params,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post("https://staging.3speak.tv/api/v1/upload/create_upload", params, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         // Handle successful upload
         console.log("successful", response);
@@ -233,7 +314,6 @@ const CreatePost: React.FC = () => {
     let thumbnail = [];
     if (previewManualThumbnails.length > 0) {
       thumbnail.push(previewManualThumbnails[0]);
-
     } else {
       thumbnail.push(previewThumbnails[0]);
     }
@@ -242,21 +322,17 @@ const CreatePost: React.FC = () => {
 
     const token = localStorage.getItem("access_token");
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_id', response.data.upload_id);
+    formData.append("file", file);
+    formData.append("upload_id", response.data.upload_id);
     // get upload_id
-    setVideoUploadId(response.data.upload_id)
+    setVideoUploadId(response.data.upload_id);
     axios
-      .post(
-        "https://staging.3speak.tv/api/v1/upload/thumbnail",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post("https://staging.3speak.tv/api/v1/upload/thumbnail", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         // Handle successful upload
         console.log("successful thumbnail", response);
@@ -279,6 +355,7 @@ const CreatePost: React.FC = () => {
   };
 
   const { getRootProps, getInputProps } = useDropzone(dropzoneOptions);
+
   const {
     getRootProps: getRootPropsThumbnail,
     getInputProps: getInputPropsThumbnail,
@@ -287,9 +364,13 @@ const CreatePost: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
+  /**
+   * Import the useAuth hook
+   */
+  const { authenticated } = useAuth() ?? {};
+
   const { allowAccess } = useAppStore();
   // const isMedium = useBreakpointValue({ base: false, md: true });
-  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
   const changeCurrentStep = (step: number) => {
     if (step > 0 && selectedFile) {
@@ -303,39 +384,109 @@ const CreatePost: React.FC = () => {
     }
   };
 
+  /**
+   * check for the access token (for the testing purpose)
+   * /api/v1/upload/update_post
+   */
+
   const [publishValue, setPublishValue] = useState<string>("1");
 
-  useEffect(() => {
-    if (allowAccess == true) {
-      setAuthenticated(allowAccess);
-      return;
+  //   const colorModeValue = useColorModeValue(
+  //     authenticated ? "gray.100" : "gray.100",
+  //     authenticated ? "gray.900" : "gray.900"
+  //   );
+
+  function handleAddChipData(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      //to checked the entered value is not empty or not aleready present in the chipData
+      const trimmedValue = chipInput.trim();
+      if (
+        trimmedValue &&
+        !chipData.some((chip) => chip.label === trimmedValue)
+      ) {
+        setChipData((prevState) => [...prevState, { label: trimmedValue }]);
+        //making input field empty again
+        setChipInput("");
+      }
     }
-    if (allowAccess == false) {
-      setAuthenticated(false);
-      return;
+  }
+
+  /**
+   * Deleting the chip data
+   * @param label
+   */
+  function chipDataDelete(label: string) {
+    setChipData(chipData.filter((chip) => chip.label !== label));
+  }
+
+  /**
+   * api import
+   */
+  const client = new HiveClient("https://api.openhive.network");
+  /**
+   * useState for setting the community data
+   */
+  const [communityData, setCommunityData] = useState<CommunityResult[]>([]);
+
+  /**
+   * HiveClient api is needed to integrate here
+   * query here
+   */
+  const fetchData = async () => {
+    try {
+      const result: CommunityResult[] = await client.call(
+        "bridge",
+        "list_communities",
+        {
+          last: "",
+          limit: 100,
+        }
+      );
+      const titles = result.map((info) => info.title);
+      const leoIndex = titles.indexOf("LeoFinance");
+      const speakIndex = titles.indexOf("Threespeak");
+
+      let speakValue: CommunityResult, leoValue: CommunityResult;
+      if (speakIndex > leoIndex) {
+        [speakValue] = result.splice(speakIndex, 1);
+        [leoValue] = result.splice(leoIndex, 1);
+      } else {
+        [leoValue] = result.splice(leoIndex, 1);
+        [speakValue] = result.splice(speakIndex, 1);
+      }
+
+      result.unshift(leoValue);
+      result.unshift(speakValue);
+
+      setCardData(speakValue);
+      setCommunityData(result);
+      console.log(result);
+    } catch (err) {
+      console.log(err);
     }
-  }, [allowAccess]);
+  };
 
   useEffect(() => {
-    if (authenticated == false && authenticated != null) {
-      // router.push("/auth/login");
-    }
-  }, [authenticated, router]);
+    fetchData();
+  }, []);
 
-  const colorModeValue = useColorModeValue(
-    authenticated ? "gray.100" : "gray.100",
-    authenticated ? "gray.900" : "gray.900"
-  );
-  // if (authenticated === null) {
-  //   return <Box>Loading...</Box>;
-  // }
+  /**
+   * for the authentication purposes
+   */
+  if (authenticated === null) {
+    return <Box>Loading...</Box>;
+  }
 
   if (authenticated === false) {
     return <Box>Unauthorized access, please login first</Box>;
+    //TODO: redirecting to auth components
   }
 
   return (
-    <Box minH="100vh" bg={colorModeValue}>
+    <Box maxH="100vh">
+      {/* add the toggle button to the sidebar for opening and close */}
+      {/* for mobile view is already there  */}
+
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -355,12 +506,12 @@ const CreatePost: React.FC = () => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
-
       <Box
         position={"relative"}
         className="hellotesting"
         ml={{ base: 0, md: 60 }}
         p="4"
+        maxH={"50vh"}
       >
         {uploadingVideo && (
           <Flex
@@ -392,10 +543,49 @@ const CreatePost: React.FC = () => {
         {/* {children} */}
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">
           <Box>
-            <Card background={"#ededed"}>
+            <Card backgroundColor={bgColor}>
               {steps == 0 && (
-                <CardBody borderRadius="10px" background={"white"}>
+                <CardBody
+                  borderRadius="10px"
+                  backgroundColor={bgColor}
+                  minH={"75vh"}
+                >
                   <Box height={"60vh"} width={"100%"}>
+                    {uploading && (
+                      <div className={styles.progressContainer}>
+                        <div
+                          className={styles.progressBar}
+                          style={{ width: `${uploadingProgress}%` }}
+                        >
+                          {uploadStatus == true && (
+                            <>
+                              <Text
+                                display="flex"
+                                justifyContent="center"
+                                alignItems="center"
+                                color="white"
+                              >
+                                Upload Complete!
+                              </Text>
+                            </>
+                          )}
+
+                          {uploadStatus == false && (
+                            <>
+                              <Text
+                                position={"absolute"}
+                                display="flex"
+                                justifyContent="center"
+                                alignItems="center"
+                                color="white"
+                              >
+                                Error in uploading!
+                              </Text>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    )}
                     <Flex
                       height={"100%"}
                       width={"100%"}
@@ -424,6 +614,7 @@ const CreatePost: React.FC = () => {
                             border={"1px solid black"}
                             padding="20px"
                             paddingY={"40px"}
+                            backgroundColor={bgColor}
                             borderRadius={"5px"}
                           >
                             {/* <div {...getRootProps()} className="dropzone"> */}
@@ -431,8 +622,11 @@ const CreatePost: React.FC = () => {
                               {...getRootProps()}
                               className="dropzone"
                               borderRadius={"5px"}
-                              width={"100%"}
-                              height="100%"
+                              style={
+                                selectedFile === null
+                                  ? { minHeight: "30vh", minWidth: "30vh" }
+                                  : { maxHeight: "50vh", maxWidth: "50vh" }
+                              }
                               justifyContent="center"
                               alignItems={"center"}
                               border={"1px dotted grey"}
@@ -508,66 +702,32 @@ const CreatePost: React.FC = () => {
                           </Flex>
                         </Box>
                       </Flex>
-                      {uploading && (
-                        <div className={styles.progressContainer}>
-                          <div
-                            className={styles.progressBar}
-                            style={{ width: `${uploadingProgress}%` }}
-                          >
-                            {uploadStatus == true && (
-                              <>
-                                <Text
-                                  display="flex"
-                                  justifyContent="center"
-                                  alignItems="center"
-                                  color="white"
-                                >
-                                  Upload Complete!
-                                </Text>
-                              </>
-                            )}
-
-                            {uploadStatus == false && (
-                              <>
-                                <Text
-                                  display="flex"
-                                  justifyContent="center"
-                                  alignItems="center"
-                                  color="white"
-                                >
-                                  Error in uploading!
-                                </Text>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                      <Flex justifyContent={"end"} alignItems="center">
-                        {/* <Button
-                          onClick={() => router.push("/studio/upload")}
-                          size={"lg"}
-                          colorScheme="gray"
-                          color={"black"}
-                        >
-                          Go Back
-                        </Button> */}
-                        {selectedFile && uploadStatus == true && (
+                      <Flex
+                        justifyContent={"space-between"}
+                        alignItems="center"
+                        w={"full"}
+                      >
+                        {/* {selectedFile && uploadStatus == true && ( */}
+                        {uploading && (
                           <Button
+                            position={"absolute"}
+                            right={5}
+                            bottom={180}
                             onClick={() => setSteps(1)}
                             size={"lg"}
                             colorScheme="blue"
                           >
-                            Next Step
+                            Next
                           </Button>
                         )}
+                        {/* )} */}
                       </Flex>
                     </Flex>
                   </Box>
                 </CardBody>
               )}
-
               {steps == 1 && (
-                <CardBody borderRadius="10px" background={"white"}>
+                <CardBody backgroundColor={bgColor} minH={"75vh"}>
                   <Box
                     height={{ base: "auto", md: "auto", lg: "65vh" }}
                     width={"100%"}
@@ -594,12 +754,13 @@ const CreatePost: React.FC = () => {
                         >
                           <Flex
                             width={"100%"}
-                            height="200px"
+                            height="250px"
                             border={"1px solid"}
                             justifyContent="center"
                             background={"black"}
                             alignItems={"center"}
                             borderRadius="10px 10px 0px 0px"
+                            position={"relative"}
                           >
                             {/* juneroy */}
                             {selectedFile ? (
@@ -608,14 +769,18 @@ const CreatePost: React.FC = () => {
                                   <Image
                                     src={selectedFile.previewUrl}
                                     alt="Preview"
-                                    className="preview"
+                                    // className="preview"
                                   />
                                 ) : (
-                                  <video
-                                    src={selectedFile.previewUrl}
-                                    className="preview"
-                                    controls
-                                  />
+                                  <Box position={"absolute"}>
+                                    <video
+                                      height={100}
+                                      width={112}
+                                      src={selectedFile.previewUrl}
+                                      className="preview"
+                                      controls
+                                    />
+                                  </Box>
                                 )}
                               </>
                             ) : (
@@ -627,7 +792,7 @@ const CreatePost: React.FC = () => {
                             )}
                           </Flex>
                           <Flex
-                            background={"grey"}
+                            background={colorMode === "dark" ? "grey" : "grey"}
                             width={"100%"}
                             height="100px"
                             justifyContent="start"
@@ -682,6 +847,7 @@ const CreatePost: React.FC = () => {
                             >
                               <SlCheck fontSize={"20px"} color="white" />
                               <Text
+                                mt={2}
                                 fontSize={{
                                   base: "12px",
                                   md: "12px",
@@ -740,6 +906,7 @@ const CreatePost: React.FC = () => {
                               >
                                 Video Description
                               </Text>
+
                               <Textarea
                                 disabled={savingDetails == true ? true : false}
                                 value={videoDescription}
@@ -748,6 +915,49 @@ const CreatePost: React.FC = () => {
                                 }
                                 placeholder="Here is a sample placeholder"
                               />
+                            </fieldset>
+                            <fieldset className="w-100 mb-4 ">
+                              <Text
+                                as={"legend"}
+                                fontSize="15px"
+                                className="fw-bold"
+                              >
+                                Tags
+                              </Text>
+                              <Flex alignItems={"center"}>
+                                {chipData.map((chip, index) => (
+                                  <Chips
+                                    key={index}
+                                    label={chip.label}
+                                    onDelete={() => chipDataDelete(chip.label)}
+                                    colorMode={colorMode}
+                                  />
+                                ))}
+                                <Flex
+                                  fontSize={"xl"}
+                                  mx={2}
+                                  cursor={"pointer"}
+                                  alignItems={"center"}
+                                  position={"relative"}
+                                >
+                                  <Input
+                                    border={
+                                      colorMode === "dark"
+                                        ? "1px solid white"
+                                        : "1px solid black"
+                                    }
+                                    placeholder={"Add tags"}
+                                    value={chipInput}
+                                    onChange={(e) =>
+                                      setChipInput(e.target.value)
+                                    }
+                                    onKeyDown={handleAddChipData}
+                                  />
+                                  <Text position={"absolute"} top={3} right={2}>
+                                    <TiPlus />
+                                  </Text>
+                                </Flex>
+                              </Flex>
                             </fieldset>
                             <fieldset className="w-100 mb-3">
                               <Text
@@ -819,7 +1029,7 @@ const CreatePost: React.FC = () => {
                                 </Flex>
                               )}
 
-                              {previewThumbnails.map((e) => (
+                              {previewThumbnails.map((e, index) => (
                                 <Flex
                                   key={e}
                                   width={"250px"}
@@ -834,6 +1044,9 @@ const CreatePost: React.FC = () => {
                                     md: "5px",
                                     lg: "0px",
                                   }}
+                                  border={
+                                    index === 0 ? "2px solid red" : undefined
+                                  }
                                 >
                                   <Image
                                     objectFit={"cover"}
@@ -843,7 +1056,6 @@ const CreatePost: React.FC = () => {
                                   />
                                 </Flex>
                               ))}
-
                             </Flex>
                           </Flex>
                         </Box>
@@ -856,29 +1068,105 @@ const CreatePost: React.FC = () => {
                           disabled={savingDetails == true ? true : false}
                           onClick={() => setSteps(0)}
                           size={"lg"}
-                          colorScheme="gray"
-                          color={"black"}
+                          colorScheme="blue"
                         >
                           Go Back
                         </Button>
                         <Button
+                          id="btn_details"
                           disabled={savingDetails == true ? true : false}
                           onClick={handleCreatePost}
                           size={"lg"}
                           colorScheme="blue"
                         >
-                          {savingDetails == true
-                            ? "Saving Details"
-                            : "Next Step"}
+                          {savingDetails == true ? "Saving Details" : "Next"}
                         </Button>
                       </Flex>
                     </Flex>
                   </Box>
                 </CardBody>
               )}
-
+              {/* From here the new component will start */}
               {steps == 2 && (
-                <CardBody borderRadius="10px" background={"white"}>
+                <CardBody minH={"75vh"}>
+                  <Box
+                    overflow="hidden"
+                    height={{ base: "auto", md: "auto", lg: "70vh" }}
+                    width={"100%"}
+                  >
+                    <Flex w={"full"}>
+                      <Flex w={"50%"}>
+                        <CommunityCard {...cardData} />
+                      </Flex>
+                      <Flex w={"50%"} flexDirection={"column"}>
+                        {/* the result card will go here  */}
+                        <Flex>
+                          <Card w="full" m={2}>
+                            <Flex p={2}>
+                              <InputGroup>
+                                <InputLeftElement pointerEvents="none">
+                                  <SearchIcon color="gray.300" />
+                                </InputLeftElement>
+                                <Input
+                                  type="tel"
+                                  placeholder="Search"
+                                  onChange={(e) => setSearch(e.target.value)}
+                                />
+                              </InputGroup>
+                            </Flex>
+                            <VStack
+                              spacing={1}
+                              overflowY={"auto"}
+                              maxHeight="522px"
+                            >
+                              {communityData
+                                .filter((item: any) => {
+                                  return search.toLowerCase() === ""
+                                    ? item
+                                    : item.title
+                                        .toLowerCase()
+                                        .includes(search.toLowerCase());
+                                })
+                                .map((item: any, index) => (
+                                  <CommunityChip 
+                                   key={index}
+                                   item={item}
+                                   colorMode={colorMode}
+                                   setCardData={setCardData}
+                                  />
+                                ))}
+                            </VStack>
+                          </Card>
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                    <Flex
+                      mt={25}
+                      justifyContent={"space-between"}
+                      alignItems="center"
+                    >
+                      <Button
+                        disabled={savingDetails == true ? true : false}
+                        onClick={() => setSteps(1)}
+                        size={"lg"}
+                        colorScheme="blue"
+                      >
+                        Go Back
+                      </Button>
+                      <Button
+                        disabled={savingDetails == true ? true : false}
+                        onClick={() => setSteps(3)}
+                        size={"lg"}
+                        colorScheme="blue"
+                      >
+                        Next
+                      </Button>
+                    </Flex>
+                  </Box>
+                </CardBody>
+              )}
+              {steps == 3 && (
+                <CardBody backgroundColor={bgColor} minH={"75vh"}>
                   <Box
                     height={{ base: "auto", md: "auto", lg: "65vh" }}
                     width={"100%"}
@@ -886,7 +1174,7 @@ const CreatePost: React.FC = () => {
                     <Flex
                       margin={"auto"}
                       height={"100%"}
-                      width={"70%"}
+                      width={"100%"}
                       flexDirection="column"
                       justifyContent={"center"}
                     >
@@ -947,7 +1235,8 @@ const CreatePost: React.FC = () => {
                                     </Stack>
 
                                     <Text as="label">
-                                      Publish after encoding and everyone can watch the video
+                                      Publish after encoding and everyone can
+                                      watch the video
                                     </Text>
                                   </Box>
                                   <Box
@@ -965,7 +1254,7 @@ const CreatePost: React.FC = () => {
 
                                     {publishValue == "2" && (
                                       <Input
-                                        alignItems={'center'}
+                                        alignItems={"center"}
                                         width={"50%"}
                                         type="datetime-local"
                                         placeholder="select date"
@@ -984,8 +1273,8 @@ const CreatePost: React.FC = () => {
                           paddingBottom={"10px"}
                         >
                           <Flex
-                            width={"100%"}
-                            height="200px"
+                            width={"83%"}
+                            height="260px"
                             border={"1px solid"}
                             justifyContent="center"
                             background={"black"}
@@ -999,13 +1288,16 @@ const CreatePost: React.FC = () => {
                                     src={selectedFile.previewUrl}
                                     alt="Preview"
                                     className="preview"
+                                    position={"relative"}
                                   />
                                 ) : (
-                                  <video
-                                    src={selectedFile.previewUrl}
-                                    className="preview"
-                                    controls
-                                  />
+                                  <Box position={"absolute"}>
+                                    <video
+                                      src={selectedFile.previewUrl}
+                                      className="preview_visibility"
+                                      controls
+                                    />
+                                  </Box>
                                 )}
                               </>
                             ) : (
@@ -1018,8 +1310,8 @@ const CreatePost: React.FC = () => {
                           </Flex>
                           <Flex
                             background={"grey"}
-                            width={"100%"}
-                            height="100px"
+                            width={"83%"}
+                            height="70px"
                             justifyContent="start"
                             alignItems={"start"}
                             flexDirection="column"
@@ -1048,11 +1340,11 @@ const CreatePost: React.FC = () => {
                                   md: "0px",
                                   lg: "10px",
                                 }}
-                                padding={{
-                                  base: "0px 10px",
-                                  md: "0px 10px",
-                                  lg: "10px",
-                                }}
+                                // padding={{
+                                //   base: "0px 10px",
+                                //   md: "0px 10px",
+                                //   lg:"10px",
+                                // }}
                                 width={{ base: "100%", md: "100%", lg: "100%" }}
                               >
                                 {selectedFile?.file?.name
@@ -1079,6 +1371,7 @@ const CreatePost: React.FC = () => {
                                 }}
                                 fontWeight="bold"
                                 color={"whiteAlpha.900"}
+                                mt={2}
                                 marginLeft={{
                                   base: "5px",
                                   md: "5px",
@@ -1098,14 +1391,15 @@ const CreatePost: React.FC = () => {
                         <Button
                           onClick={() => setSteps(1)}
                           size={"lg"}
-                          colorScheme="gray"
-                          color={"black"}
+                          colorScheme="blue"
                         >
                           Go Back
                         </Button>
                         <Button
                           onClick={() => handleEncode()}
-                          size={"lg"} colorScheme="blue">
+                          size={"lg"}
+                          colorScheme="blue"
+                        >
                           Save
                         </Button>
                       </Flex>
@@ -1113,10 +1407,11 @@ const CreatePost: React.FC = () => {
                   </Box>
                 </CardBody>
               )}
-
               <WizardSteps
+                currentStep={steps}
                 changeCurrentStep={changeCurrentStep}
-                steps={steps}
+                bgColor={bgColor}
+                colorMode={colorMode}
               />
             </Card>
           </Box>

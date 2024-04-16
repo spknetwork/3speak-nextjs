@@ -1,5 +1,6 @@
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
+import { useMemo } from "react";
 import {
   Box,
   Flex,
@@ -15,20 +16,20 @@ import React, { useState } from "react";
 import { VideoInterface } from "types";
 import { MdPlayArrow } from "react-icons/md";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { css } from "@emotion/react";
-import { Sidebar } from "@/components";
 import MainLayout from "@/components/Layouts/main_layout";
-import { videoData } from "../data/constData"
+import { videoData } from "../components/data/constData";
 import { BiDollar } from "react-icons/bi";
+import { BsDot } from "react-icons/bs";
+
+
 const NewIndex = () => {
+  const {colorMode} = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
-  const textColor = useColorModeValue("black", "white");
-  const { colorMode, toggleColorMode } = useColorMode();
-  const [videos, setVideos] = useState<VideoInterface[]>(videoData);
+  // const [videos, setVideos] = useState<VideoInterface[]>(videoData);
+  const videos = useMemo(() => videoData, []);
   return (
     <MainLayout>
       <Box bg={bgColor}>
-
         <Flex
           marginRight={"30px"}
           justifyContent={"space-between"}
@@ -39,14 +40,6 @@ const NewIndex = () => {
               &nbsp;
             </Text>
           </Box>
-          <Text>
-            <Switch
-              isChecked={colorMode === "dark"}
-              onChange={toggleColorMode}
-            />{" "}
-            {colorMode === "dark" && <MoonIcon />}{" "}
-            {colorMode !== "dark" && <SunIcon />}
-          </Text>
         </Flex>
         <Grid
           padding={"20px"}
@@ -61,25 +54,9 @@ const NewIndex = () => {
           {/* {videos.length} */}
           {videos.map((video: VideoInterface, index: number) => (
             <GridItem w="100%" h="100%" key={index}>
-              <Box cursor={"pointer"} position="relative">
+              <Box id="parent" cursor={"pointer"} position="relative">
                 <Box
-                  display={"flex"}
-                  justifyContent="center"
-                  alignItems={"center"}
-                  position={"absolute"}
-                  bottom="5px"
-                  color={"#000"}
-                  fontSize="11px"
-                  fontWeight={"500"}
-                  left="5px"
-                  background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
-                  borderRadius="2px"
-                  paddingLeft={"4px"}
-                  paddingRight={"8px"}
-                >
-
-                </Box>
-                <Box
+                  id={"views"}
                   display={"flex"}
                   justifyContent="center"
                   alignItems={"center"}
@@ -95,16 +72,13 @@ const NewIndex = () => {
                   paddingRight={"4px"}
                 >
                   <MdPlayArrow size="15px" color="grey" />
-                  <Text
-                    as="span"
-                    fontSize="11px"
-                    fontWeight={"bold"}
-                  >
+                  <Text as="span" fontSize="11px" fontWeight={"bold"}>
                     {video.number_views}
                   </Text>
                 </Box>
                 {/* Integrating the dollar sign  */}
                 <Box
+                  id="dollar_sign"
                   display={"flex"}
                   justifyContent="center"
                   alignItems={"center"}
@@ -130,6 +104,7 @@ const NewIndex = () => {
                   </Text>
                 </Box>
                 <Box
+                  id="timestamp"
                   position={"absolute"}
                   bottom="5px"
                   color={"#000"}
@@ -154,10 +129,15 @@ const NewIndex = () => {
                 </Box>
               </Box>
               <VideosTitle title={`${video.title}`} />
-              <Name username={`${video.username}`} />
-              <Text as="p" margin={"1px"}>
-                a day ago
-              </Text>
+              <Flex>
+                <Name username={`${video.username}`} />
+                <Text mt={2}>
+                  <BsDot />
+                </Text>
+                <Text fontSize={"sm"} mt={1}>
+                  a day ago
+                </Text>
+              </Flex>
               {/* <Text fontWeight={"bold"} as="p">
                 $ 10.10
               </Text> */}
