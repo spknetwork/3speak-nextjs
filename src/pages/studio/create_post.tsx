@@ -1,13 +1,9 @@
-//TODO: accessible only after login
+import React, { useEffect, useState } from "react";
 
-import React, {
-  ComponentProps,
-  ReactNode,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-
+//TODO: make work fs and readFileSync() and CreatereadStream()
+import fs from "fs";
+//temp import
+// import ExamComp from "./examComp";
 import {
   Box,
   Flex,
@@ -26,30 +22,23 @@ import {
   RadioGroup,
   Radio,
   useToast,
-  Switch,
   useColorMode,
   Button,
-  FormControl,
-  FormLabel,
-  HStack,
   InputGroup,
   InputLeftElement,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-  Select,
   VStack,
 } from "@chakra-ui/react";
 import styled from "styled-components";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
-import { MentionsInput, Mention } from "react-mentions";
 import axios from "axios";
 import { generateVideoThumbnails } from "@rajesh896/video-thumbnails-generator";
-import tus, { Upload, UploadOptions } from "tus-js-client";
+import tus from "tus-js-client";
 import styles from "../../components/ProgressBar.module.css";
 
-import { getMentionInputStyle, getMentionStyle } from "../../styles/pages/studio/defaultStyle";
+import {
+  getMentionInputStyle,
+  getMentionStyle,
+} from "../../styles/pages/studio/defaultStyle";
 
 import { FaUpload } from "react-icons/fa";
 import { SlCheck, SlPicture } from "react-icons/sl";
@@ -62,8 +51,6 @@ import WizardSteps from "@/components/studio/WizardSteps";
 import {} from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import CommunityCard from "../../components/Create_POST/CommunityCard";
-import { backgroundColor } from "styled-system";
-import { Numbers } from "web3";
 import Chips from "@/components/Create_POST/Chips";
 const { Client: HiveClient } = require("@hiveio/dhive");
 import { TiPlus } from "react-icons/ti";
@@ -100,8 +87,11 @@ const base_mentions = [
   { id: "3", display: "Doe" },
 ];
 
-
 const CreatePost: React.FC = () => {
+  // const BASE_URL = "https://staging.3speak.tv";
+  const UPLOAD_URL = "http://127.0.0.1:1080/files";
+  const BASE_URL = "http://localhost:4569";
+
   //setting a global for the hashtags
   const limitHashtags = 150;
 
@@ -124,12 +114,17 @@ const CreatePost: React.FC = () => {
 
   // video title
   const [videoTitle, setVideoTitle] = useState<string>("");
-  const [videoDescription, setVideoDesription] = useState<string>("");
+  const [videoDescription, setVideoDescription] = useState<string>("");
   const [hashtagData, setHashTagData] = useState<string>("");
-  const [video_upload_id, setVideoUploadId] = useState<string>("");
+
+  const [video_id, setvideoId] = useState("");
+  const [upload_id, setUploadId] = useState("");
+  const [getpermLink, setPermLink] = useState("");
+
   const [savingDetails, setSavingDetails] = useState<Boolean | null>(null);
 
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
+  const [fileIdentifier, setFileIdentifier] = useState("");
 
   const [uploadingProgress, setUploadingProgress] = useState<number>(0);
   const [uploadStatus, setUploadStatus] = useState<Boolean | null>(null);
@@ -145,6 +140,128 @@ const CreatePost: React.FC = () => {
   >([]);
   const toast = useToast();
 
+  /**
+   *
+   * @param acceptedFiles
+   * @returns
+   */
+  //TODO: need params to pass {file, video_id  and uplaod_id}
+  const handleFileDrop = async (acceptedFiles: File[]) => {
+    return await new Promise(async (resolve, reject) => {
+      const file = acceptedFiles[0];
+      const previewUrl = URL.createObjectURL(file);
+
+      if (!file?.type?.startsWith("video/")) {
+        console.log("Cant upload file, Select a video type only");
+        toast({
+          position: "top-right",
+          title: "Cant Upload.",
+          description: "select a video type only",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+        reject("Invalid file type");
+        return;
+      }
+
+      const thumbs = await generateVideoThumbnails(file, 3, "url");
+      console.log("thumbs", thumbs);
+
+      setPreviewThumbnails(thumbs.slice(1));
+
+      console.log("dropped file check", file);
+      setSelectedFile({ file, previewUrl });
+      //set uploading state to true
+      setUploading(true);
+    });
+  };
+
+  /**
+   * HandleCreate function api used : "/upload/create_upload"
+   * @param {void}
+   * @returns {status code 201}
+   */
+  const handleCreatePost = async () => {
+    const token = localStorage.getItem("access_token");
+    const { data: data2 } = await axios.get(
+      `${BASE_URL}/api/v1/upload/create_upload`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    // Assuming selectedFile has the state variable where the file and previewUrl are stored
+    if (!selectedFile || !selectedFile.file) {
+      console.error("No file selected");
+      return;
+    }
+    console.log("hey",data2);
+
+    //TODO: I have to pass the file, video_id and upload_id
+    const uploadedUrl = await startUpload(
+      selectedFile.file,
+      data2.upload_id,
+      data2.video_id
+    );
+    console.log(`uploaded url is - ${uploadedUrl}`);
+    if (uploadedUrl) {
+      const uploadedUrlArray = uploadedUrl.split("/");
+      setFileIdentifier(uploadedUrlArray[uploadedUrlArray.length - 1]);
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    } else {
+      console.log("uploaded url is null");
+    }
+  };
+  /**
+   * function for the uploading process
+   * @param {video_id, upload_id}
+   * changes made: async & await removed
+   */
+  const startUpload = (
+    file: File,
+    upload_id: string,
+    video_id: string
+  ): Promise<string | null> => {
+    return  new Promise((resolve, reject) => {
+      if (!file) return;
+      const token = localStorage.getItem("access_token");
+      console.log("token", token);
+      const upload = new tus.Upload(file, {
+        endpoint: "http://127.0.0.1:1080/files",
+        retryDelays: [0, 1000, 3000, 5000],
+        metadata: {
+          video_id: video_id,
+          upload_id: upload_id,
+          //TODO: add the dynamic name here
+          filename: "test.mp4",
+          filetype: "video/mp4",
+        },
+        onError: (error) => {
+          console.error("Upload error:", error);
+          setUploadStatus(false);
+          reject(error);
+        },
+        onSuccess: () => {
+          console.log("Upload complete");
+          setUploadStatus(true);
+          resolve(upload.url);
+        },
+        onProgress: (bytesUploaded, bytesTotal) => {
+          const progress = (bytesUploaded / bytesTotal) * 100;
+          setUploadingProgress(progress);
+          console.log(`Upload progress: ${progress}%`);
+        },
+      });
+      upload.start();
+      console.log("upload", upload);
+    });
+  };
+
+  /**
+   * TODO: iss function ko baad mei dekhenge
+   */
   const handleFileDropThumbnail = async (
     acceptedFiles: File[]
   ): Promise<void> => {
@@ -168,148 +285,12 @@ const CreatePost: React.FC = () => {
     setPreviewManualThumbnails(files);
   };
 
-  const handleFileDrop = async (acceptedFiles: File[]): Promise<void> => {
-    const file = acceptedFiles[0];
-    const previewUrl = URL.createObjectURL(file);
-
-    if (!file?.type?.startsWith("video/")) {
-      console.log("Cant upload file, Select a video type only");
-      toast({
-        position: "top-right",
-        title: "Cant Upload.",
-        description: "select a video type only",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-      return;
-    }
-
-    const thumbs = await generateVideoThumbnails(file, 3, "url");
-    console.log("thumbs", thumbs);
-
-    setPreviewThumbnails(thumbs.slice(1));
-
-    console.log("dropped file check", file);
-    setSelectedFile({ file, previewUrl });
-
-    // upload process
-    if (!file) return;
-    const token = localStorage.getItem("access_token");
-    console.log("token", token);
-    setUploading(true);
-    const options: UploadOptions = {
-      endpoint: "http://144.48.107.2:1080/files/",
-      retryDelays: [0, 1000, 3000, 5000],
-      onError: (error) => {
-        console.error("Upload error:", error);
-        setUploadStatus(false);
-      },
-      onProgress: (bytesUploaded, bytesTotal) => {
-        const progress = (bytesUploaded / bytesTotal) * 100;
-        // create a loading progress
-        setUploadingProgress(progress);
-        console.log(`Upload progress: ${progress}%`);
-      },
-      onSuccess: () => {
-        console.log("Upload complete");
-        setUploadStatus(true);
-      },
-    };
-
-    const upload = new Upload(file, options);
-    upload.start();
-    console.log("upload", upload);
-  };
-
-  const handleEncode = (): void => {
-    // set encoding video
-    const params = {
-      upload_id: video_upload_id,
-    };
-    const token = localStorage.getItem("access_token");
-    axios
-      .post("https://staging.3speak.tv/api/v1/upload/start_encode", params, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        toast({
-          position: "top-right",
-          title: "Success!",
-          description: "Encoding video, please wait",
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
-        router.push("/studio/studio_videos");
-      })
-      .catch((error) => {
-        toast({
-          position: "top-right",
-          title: "Error!",
-          description: "Something went wrong",
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-      });
-  };
-  const handleCreatePost = (): void => {
-    // get video title
-    // get video description
-    // get thumbnail
-    console.log("videotitle", videoTitle);
-    console.log("videoDescription", videoDescription);
-
-    const isSave = document.querySelector<HTMLElement>("#btn_details");
-    if (isSave?.innerText === "Next") {
-      setSteps(2);
-    }
-    const params = {
-      title: videoTitle,
-      description: videoDescription,
-      tags: ["threespeak2", "acela-core2"],
-      community: "hive-101",
-      language: "en",
-    };
-    setSavingDetails(true);
-    const token = localStorage.getItem("access_token");
-    axios
-      .post("https://staging.3speak.tv/api/v1/upload/create_upload", params, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        // Handle successful upload
-        console.log("successful", response);
-        saveThumbnail(response);
-        toast({
-          position: "top-right",
-          title: "Success!",
-          description: "Successfully created video details",
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
-      })
-      .catch((error) => {
-        // Handle upload error
-        setSavingDetails(false);
-        console.error("error", error);
-        toast({
-          position: "top-right",
-          title: "Success!",
-          description: "Successfully created video details",
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
-      });
-  };
-
+  /**
+   * Function for uploading the thumbnail
+   * Its should be on the second step
+   * @param  {}
+   * @return {}
+   */
   const saveThumbnail = (response: any) => {
     let thumbnail = [];
     if (previewManualThumbnails.length > 0) {
@@ -323,11 +304,11 @@ const CreatePost: React.FC = () => {
     const token = localStorage.getItem("access_token");
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_id", response.data.upload_id);
+    formData.append("video_id", response.data.video_id);
     // get upload_id
-    setVideoUploadId(response.data.upload_id);
+    setUploadId(response.data.upload_id);
     axios
-      .post("https://staging.3speak.tv/api/v1/upload/thumbnail", formData, {
+      .post(`${BASE_URL}/api/v1/upload/thumbnail`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -442,6 +423,7 @@ const CreatePost: React.FC = () => {
           limit: 100,
         }
       );
+
       const titles = result.map((info) => info.title);
       const leoIndex = titles.indexOf("LeoFinance");
       const speakIndex = titles.indexOf("Threespeak");
@@ -481,6 +463,11 @@ const CreatePost: React.FC = () => {
     return <Box>Unauthorized access, please login first</Box>;
     //TODO: redirecting to auth components
   }
+
+  /**
+   * function for login and caching the data to the localstorage
+   * @header {authorization}
+   */
 
   return (
     <Box maxH="100vh">
@@ -541,6 +528,10 @@ const CreatePost: React.FC = () => {
         )}
 
         {/* {children} */}
+        {/**
+         * /upload/create_upload api
+         * @params account, userKey
+         */}
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">
           <Box>
             <Card backgroundColor={bgColor}>
@@ -550,6 +541,7 @@ const CreatePost: React.FC = () => {
                   backgroundColor={bgColor}
                   minH={"75vh"}
                 >
+                  {/* <ExamComp /> */}
                   <Box height={"60vh"} width={"100%"}>
                     {uploading && (
                       <div className={styles.progressContainer}>
@@ -708,12 +700,20 @@ const CreatePost: React.FC = () => {
                         w={"full"}
                       >
                         {/* {selectedFile && uploadStatus == true && ( */}
+                        {/* Note: Only here use create_upload apis and rest all other places update_post api  */}
                         {uploading && (
                           <Button
                             position={"absolute"}
                             right={5}
                             bottom={180}
-                            onClick={() => setSteps(1)}
+                            onClick={async () => {
+                              try {
+                                await handleCreatePost();
+                                setSteps(1);
+                              } catch (err) {
+                                console.log(err);
+                              }
+                            }}
                             size={"lg"}
                             colorScheme="blue"
                           >
@@ -762,7 +762,6 @@ const CreatePost: React.FC = () => {
                             borderRadius="10px 10px 0px 0px"
                             position={"relative"}
                           >
-                            {/* juneroy */}
                             {selectedFile ? (
                               <>
                                 {selectedFile.file.type.startsWith("image/") ? (
@@ -911,7 +910,7 @@ const CreatePost: React.FC = () => {
                                 disabled={savingDetails == true ? true : false}
                                 value={videoDescription}
                                 onChange={(e) =>
-                                  setVideoDesription(e.target.value)
+                                  setVideoDescription(e.target.value)
                                 }
                                 placeholder="Here is a sample placeholder"
                               />
@@ -1075,7 +1074,10 @@ const CreatePost: React.FC = () => {
                         <Button
                           id="btn_details"
                           disabled={savingDetails == true ? true : false}
-                          onClick={handleCreatePost}
+                          onClick={() => {
+                            // handleUpdate();
+                            setSteps(2);
+                          }}
                           size={"lg"}
                           colorScheme="blue"
                         >
@@ -1128,11 +1130,11 @@ const CreatePost: React.FC = () => {
                                         .includes(search.toLowerCase());
                                 })
                                 .map((item: any, index) => (
-                                  <CommunityChip 
-                                   key={index}
-                                   item={item}
-                                   colorMode={colorMode}
-                                   setCardData={setCardData}
+                                  <CommunityChip
+                                    key={index}
+                                    item={item}
+                                    colorMode={colorMode}
+                                    setCardData={setCardData}
                                   />
                                 ))}
                             </VStack>
@@ -1420,5 +1422,7 @@ const CreatePost: React.FC = () => {
     </Box>
   );
 };
-
 export default CreatePost;
+function setVideoUploadId(upload_id: any) {
+  throw new Error("Function not implemented.");
+}

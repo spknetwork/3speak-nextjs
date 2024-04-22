@@ -9103,10 +9103,10 @@ tsutils@^3.21.0:
   dependencies:
     tslib "^1.8.1"
 
-tus-js-client@^3.1.1:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/tus-js-client/-/tus-js-client-3.1.2.tgz#842ef6e1c47553283030054d5385d36748f916fc"
-  integrity sha512-UMaZDA3yaSL9QdY1CAuz8y0uW5ZI8sFkywKKViKJcHN1oLtG4fDeeY1qvug1dtieOcHZQlXlhlSG895Kjkv8dQ==
+tus-js-client@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/tus-js-client/-/tus-js-client-4.1.0.tgz#f57864fa00cf92ac779187da1a0c1775ccf011ca"
+  integrity sha512-e/nC/kJahvNYBcnwcqzuhFIvVELMMpbVXIoOOKdUn74SdQCvJd2JjqV2jZLv2EFOVbV4qLiO0lV7BxBXF21b6Q==
   dependencies:
     buffer-from "^1.1.2"
     combine-errors "^3.0.3"

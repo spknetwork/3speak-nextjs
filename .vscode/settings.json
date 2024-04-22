@@ -1,4 +1,8 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+"typescript.enablePromptUseWorkspaceTsdk": true,
+"editor.fontWeight": "normal",
+"terminal.integrated.fontWeight": "normal",
+"CodeGPT.apiKey": "CodeGPT Plus Beta",
+"CodeGPT.Autocomplete.suggestionDelay": 980
 }
