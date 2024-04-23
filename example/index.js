@@ -47,7 +47,7 @@ function generateProofOfPayload() {
     ts: parseInt(Date.now()),
   };
   const proof_payload = JSON.stringify(payload);
-  const proof = hive.auth.signMessage(proof_payload, process.env.POSTING_KEY);
+  const proof = hive.auth.signMessage(proof_payload, "5Htp89ot14gtNraRPNjZAMx5X4dpYff8gUbveLKJ8wPHEqDe5ek");
   console.log(`Signed Proof:\n${proof}, Proof: ${proof_payload}`);
   return [proof, proof_payload];
 }
@@ -86,7 +86,7 @@ async function start() {
   const pop = generateProofOfPayload();
   // Step 2. Log in
   const { data: dataLogin } = await axios.post(
-    `${API_URL}/api/v1/auth/login_singleton`,
+    `http://localhost:4569/api/v1/auth/login_singleton`,
     {
       username: "piyushjha",
       network: "hive",
@@ -98,7 +98,7 @@ async function start() {
   console.log(dataLogin);
 
   // Step 3. Create Upload
-  const { data: data2 } = await axios.get(`${API_URL}/api/v1/upload/create_upload`,  {
+  const { data: data2 } = await axios.get(`http://localhost:4569/api/v1/upload/create_upload`,  {
       headers: {
         Authorization: `Bearer ${dataLogin.access_token}`,
       }

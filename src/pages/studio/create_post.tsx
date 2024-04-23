@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 //TODO: make work fs and readFileSync() and CreatereadStream()
 import fs from "fs";
@@ -31,8 +31,8 @@ import {
 import styled from "styled-components";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 import axios from "axios";
-import { generateVideoThumbnails } from "@rajesh896/video-thumbnails-generator";
-import tus from "tus-js-client";
+import { generateVideoThumbnails, getVideoDurationFromVideoFile } from "@rajesh896/video-thumbnails-generator";
+import { useTus } from "use-tus";
 import styles from "../../components/ProgressBar.module.css";
 
 import {
@@ -56,6 +56,27 @@ const { Client: HiveClient } = require("@hiveio/dhive");
 import { TiPlus } from "react-icons/ti";
 import { useAuth } from "@/hooks/auth";
 import CommunityChip from "@/components/Create_POST/CommunityChip";
+
+import {Upload} from 'tus-js-client'
+import {useQuery, QueryClient} from '@tanstack/react-query'
+import { SelectorImage } from "@/components/studio/SelectorImage";
+import { log } from "console";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+      refetchIntervalInBackground: false,
+    }
+  }
+})
+
+const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
+
+const getAccessToken = () => {
+  return localStorage.getItem('access_token')
+}
 
 // TODO put the type in plz
 export type CommunityResult = {
@@ -89,7 +110,7 @@ const base_mentions = [
 
 const CreatePost: React.FC = () => {
   // const BASE_URL = "https://staging.3speak.tv";
-  const UPLOAD_URL = "http://127.0.0.1:1080/files";
+  const UPLOAD_URL = "http://127.0.0.1:1080";
   const BASE_URL = "http://localhost:4569";
 
   //setting a global for the hashtags
@@ -133,19 +154,22 @@ const CreatePost: React.FC = () => {
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
     useState<String>("Uploading Video...");
-
+ 
   const [previewThumbnails, setPreviewThumbnails] = useState<string[]>([]);
   const [previewManualThumbnails, setPreviewManualThumbnails] = useState<
-    string[]
+    { file: File; previewUrl: string }[]
   >([]);
-  const toast = useToast();
+  const [selectedThumbnail, setSelectedThumbnail] = useState<{type: 'generated' | 'uploaded'; index: number}>({type: 'generated', index: 0})
 
+  const toast = useToast();
+  //tus use for upload
+  const { upload, setUpload, isSuccess, error, remove } = useTus({
+    autoStart: true,
+  });
   /**
-   *
    * @param acceptedFiles
    * @returns
    */
-  //TODO: need params to pass {file, video_id  and uplaod_id}
   const handleFileDrop = async (acceptedFiles: File[]) => {
     return await new Promise(async (resolve, reject) => {
       const file = acceptedFiles[0];
@@ -165,6 +189,7 @@ const CreatePost: React.FC = () => {
         return;
       }
 
+      //TODO: check the file type 
       const thumbs = await generateVideoThumbnails(file, 3, "url");
       console.log("thumbs", thumbs);
 
@@ -177,87 +202,121 @@ const CreatePost: React.FC = () => {
     });
   };
 
+  const { data: createUploadInfo, error: createUploadError } = useQuery(
+    {
+      queryKey: ["create_upload"],
+      async queryFn() {
+        const token = getAccessToken();
+        if (!token) {
+          console.error("no token found");
+          throw new Error("not logged in");
+        }
+        const { data } = await axios.get(
+          `${BASE_URL}/api/v1/upload/create_upload`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log("upload info created");
+
+        return data as {
+          upload_id: string;
+          video_id: string;
+          permlink: string;
+        };
+      },
+    },
+    queryClient
+  );
+
+  const handleCreatePostRef = useRef<() => Promise<void>>();
+
   /**
    * HandleCreate function api used : "/upload/create_upload"
    * @param {void}
    * @returns {status code 201}
    */
   const handleCreatePost = async () => {
-    const token = localStorage.getItem("access_token");
-    const { data: data2 } = await axios.get(
-      `${BASE_URL}/api/v1/upload/create_upload`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    if (!createUploadInfo) {
+      if (createUploadError) {
+        console.error("can not upload", createUploadError);
+      } else {
+        await sleep(100);
+        handleCreatePostRef.current?.();
       }
-    );
+      return;
+    }
     // Assuming selectedFile has the state variable where the file and previewUrl are stored
     if (!selectedFile || !selectedFile.file) {
       console.error("No file selected");
       return;
     }
-    console.log("hey",data2);
 
-    //TODO: I have to pass the file, video_id and upload_id
+    //debug
+    console.log("hey", createUploadInfo);
+
     const uploadedUrl = await startUpload(
       selectedFile.file,
-      data2.upload_id,
-      data2.video_id
+      createUploadInfo.upload_id,
+      createUploadInfo.video_id
     );
     console.log(`uploaded url is - ${uploadedUrl}`);
     if (uploadedUrl) {
       const uploadedUrlArray = uploadedUrl.split("/");
       setFileIdentifier(uploadedUrlArray[uploadedUrlArray.length - 1]);
-      await new Promise((resolve) => setTimeout(resolve, 3000));
     } else {
       console.log("uploaded url is null");
     }
   };
+
+  handleCreatePostRef.current = handleCreatePost;
+  
   /**
    * function for the uploading process
    * @param {video_id, upload_id}
    * changes made: async & await removed
    */
-  const startUpload = (
-    file: File,
-    upload_id: string,
-    video_id: string
-  ): Promise<string | null> => {
-    return  new Promise((resolve, reject) => {
-      if (!file) return;
-      const token = localStorage.getItem("access_token");
-      console.log("token", token);
-      const upload = new tus.Upload(file, {
-        endpoint: "http://127.0.0.1:1080/files",
-        retryDelays: [0, 1000, 3000, 5000],
-        metadata: {
-          video_id: video_id,
-          upload_id: upload_id,
-          //TODO: add the dynamic name here
-          filename: "test.mp4",
-          filetype: "video/mp4",
-        },
-        onError: (error) => {
-          console.error("Upload error:", error);
-          setUploadStatus(false);
-          reject(error);
-        },
-        onSuccess: () => {
-          console.log("Upload complete");
-          setUploadStatus(true);
-          resolve(upload.url);
-        },
-        onProgress: (bytesUploaded, bytesTotal) => {
-          const progress = (bytesUploaded / bytesTotal) * 100;
-          setUploadingProgress(progress);
-          console.log(`Upload progress: ${progress}%`);
-        },
+  const startUpload = useCallback(
+    (
+      file: File,
+      upload_id: string,
+      video_id: string
+    ): Promise<string | null> => {
+      return new Promise((resolve, reject) => {
+        if (!file) return;
+        const token = getAccessToken();
+        console.log("token", token);
+        setUpload(file, {
+          endpoint: `${UPLOAD_URL}/files`,
+          metadata: {
+            video_id: video_id,
+            upload_id: upload_id,
+            filename: file.name,
+            filetype: file.type,
+          },
+          onError: (error) => {
+            console.error("Upload error:", error);
+            setUploadStatus(false);
+            reject(error);
+          },
+          onSuccess: (upload) => {
+            console.log("Upload complete");
+            setUploadStatus(true);
+            resolve(upload.url);
+          },
+          onProgress: (bytesUploaded, bytesTotal) => {
+            const progress = (bytesUploaded / bytesTotal) * 100;
+            console.log(`Upload progress: ${progress}%`);
+            setUploadingProgress(progress);
+          },
+        });
       });
-      upload.start();
-      console.log("upload", upload);
-    });
-  };
+    },
+    [setUpload]
+  );
 
   /**
    * TODO: iss function ko baad mei dekhenge
@@ -280,9 +339,11 @@ const CreatePost: React.FC = () => {
       });
       return;
     }
-    const files = [];
-    files.push(previewUrl);
-    setPreviewManualThumbnails(files);
+    setPreviewManualThumbnails((previewManualThumbnails) => [
+      { file, previewUrl },
+      ...previewManualThumbnails,
+    ]);
+    setSelectedThumbnail({type: 'uploaded', index: 0})
   };
 
   /**
@@ -291,42 +352,123 @@ const CreatePost: React.FC = () => {
    * @param  {}
    * @return {}
    */
-  const saveThumbnail = (response: any) => {
-    let thumbnail = [];
-    if (previewManualThumbnails.length > 0) {
-      thumbnail.push(previewManualThumbnails[0]);
-    } else {
-      thumbnail.push(previewThumbnails[0]);
+  const saveThumbnail = async () => {
+    if (!createUploadInfo) {
+      console.error("create upload info not defined");
+      return;
     }
-    const blobData = new Blob([thumbnail[0]], { type: "image/jpeg" });
-    const file = new File([blobData], "image.jpg", { type: "image/jpeg" });
 
-    const token = localStorage.getItem("access_token");
+    const file = await (async () => {
+      if (selectedThumbnail.type === 'generated') {
+        const url = previewThumbnails[selectedThumbnail.index]
+        const res = await fetch(url)
+        return res.blob()
+      } else {
+        return previewManualThumbnails[selectedThumbnail.index].file
+      }
+    })()
+
+    const token = getAccessToken();
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("video_id", response.data.video_id);
+    formData.append("video_id", createUploadInfo.video_id);
     // get upload_id
-    setUploadId(response.data.upload_id);
-    axios
+
+    await axios
       .post(`${BASE_URL}/api/v1/upload/thumbnail`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => {
-        // Handle successful upload
-        console.log("successful thumbnail", response);
-        setSavingDetails(false);
-        setSteps(2);
-      })
-      .catch((error) => {
-        // Handle upload error
-        setSavingDetails(false);
-        setSteps(2);
-        console.error("error thumbnail", error);
-      });
   };
+
+  const handleStep1Complete = async () => {
+    setSavingDetails(true);
+    await saveThumbnail();
+    setSavingDetails(false);
+    setSteps(2);
+  }
+
+  const uploadPostInfo = async () => {
+    if (!createUploadInfo) {
+      console.error('missing upload info in uploadPostInfo()')
+      throw new Error('this should not happen')
+    }
+
+    if (!cardData) {
+      console.error('missing community info in uploadPostInfo()')
+      throw new Error('oops')
+    }
+
+    if (!selectedFile) {
+            console.error('missing selected file in uploadPostInfo()')
+      throw new Error('oops')
+    }
+
+    const token = getAccessToken();
+
+  await axios.post(
+    `${BASE_URL}/api/v1/upload/update_post`,
+    {
+      video_id: createUploadInfo.video_id,
+      permlink: createUploadInfo.permlink,
+      title: videoTitle,
+      body: videoDescription,
+      tags: chipData.map(({label}) => label),
+      community: cardData.name,
+      beneficiaries: "[]", // TODO give user the option to select this
+      language: navigator.language.split('-').shift(), // TODO allow user to choose other language in UI
+      originalFilename: selectedFile.file.name,
+      filename: fileIdentifier,
+      size: selectedFile.file.size,
+      duration: await getVideoDurationFromVideoFile(selectedFile.file),
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  }
+
+  const handleStep2Complete = async () => {
+    setSavingDetails(true)
+    await uploadPostInfo()
+    setSavingDetails(false)
+    setSteps(3);
+  }
+
+  const publishVideo = async () => {
+    if (!createUploadInfo) {
+        console.error('missing upload info in uploadPostInfo()')
+        throw new Error('this should not happen')
+    }
+    const token = getAccessToken();
+    // backend initiates hive tx
+   await axios.post(
+      `${BASE_URL}/api/v1/upload/start_encode`,
+      {
+        video_id: createUploadInfo.video_id, 
+        upload_id: createUploadInfo.upload_id,
+        permlink: createUploadInfo.permlink,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log("Video Uploaded");
+    
+  }
+
+  const handleStep3Complete = async () => {
+    setSavingDetails(true)
+    await publishVideo()
+    setSavingDetails(false)
+    // TODO take user somewhere when done
+  }
 
   const dropzoneOptions: DropzoneOptions = {
     onDrop: handleFileDrop,
@@ -452,6 +594,8 @@ const CreatePost: React.FC = () => {
     fetchData();
   }, []);
 
+
+
   /**
    * for the authentication purposes
    */
@@ -541,9 +685,8 @@ const CreatePost: React.FC = () => {
                   backgroundColor={bgColor}
                   minH={"75vh"}
                 >
-                  {/* <ExamComp /> */}
                   <Box height={"60vh"} width={"100%"}>
-                    {uploading && (
+                    {uploading && (// TODO show in all steps
                       <div className={styles.progressContainer}>
                         <div
                           className={styles.progressBar}
@@ -974,86 +1117,58 @@ const CreatePost: React.FC = () => {
                               </Text>
                             </fieldset>
                             <Flex
+                              overflowX="auto"
                               flexDirection={{
                                 base: "column",
                                 md: "column",
                                 lg: "row",
                               }}
+                              
                               width={"100%"}
                               height={{ base: "100%", md: "100%", lg: "150px" }}
                             >
                               <input {...getInputPropsThumbnail()} />
-                              {previewManualThumbnails.map((e) => (
-                                <Flex
-                                  key={e}
-                                  width={"250px"}
-                                  marginX={{
-                                    base: "0px",
-                                    md: "0px",
-                                    lg: "10px",
-                                  }}
-                                  height="100%"
-                                  paddingY={{
-                                    base: "5px",
-                                    md: "5px",
-                                    lg: "0px",
-                                  }}
-                                >
-                                  <Image
-                                    objectFit={"cover"}
-                                    borderRadius={"10px"}
-                                    src={e}
-                                    alt="Thumbnail preview"
-                                  />
-                                </Flex>
+
+                              <Flex
+                                {...getRootPropsThumbnail()}
+                                minWidth={"200px"}
+                                height="100%"
+                                border={"2px dotted"}
+                                justifyContent="center"
+                                alignItems={"center"}
+                                flexDirection="column"
+                                borderRadius={"10px"}
+                              >
+                                <SlPicture
+                                  width={"100px"}
+                                  color="black"
+                                  fontSize="70px"
+                                />
+                                <Text>Upload Thumbnail</Text>
+                              </Flex>
+
+                              {previewManualThumbnails.map((e, index) => (
+                                <SelectorImage
+                                  key={e.previewUrl}
+                                  src={e.previewUrl}
+                                  selected={
+                                    selectedThumbnail?.type === "uploaded" &&
+                                    selectedThumbnail.index === index
+                                  }
+                                  select={() => setSelectedThumbnail({type: 'uploaded', index})}
+                                />
                               ))}
 
-                              {previewManualThumbnails.length <= 0 && (
-                                <Flex
-                                  {...getRootPropsThumbnail()}
-                                  width={"250px"}
-                                  height="100%"
-                                  border={"2px dotted"}
-                                  justifyContent="center"
-                                  alignItems={"center"}
-                                  flexDirection="column"
-                                  borderRadius={"10px"}
-                                >
-                                  <SlPicture
-                                    width={"100px"}
-                                    color="black"
-                                    fontSize="70px"
-                                  />
-                                  <Text>Upload Thumbnail</Text>
-                                </Flex>
-                              )}
-
                               {previewThumbnails.map((e, index) => (
-                                <Flex
+                                <SelectorImage
                                   key={e}
-                                  width={"250px"}
-                                  marginX={{
-                                    base: "0px",
-                                    md: "0px",
-                                    lg: "10px",
-                                  }}
-                                  height="100%"
-                                  paddingY={{
-                                    base: "5px",
-                                    md: "5px",
-                                    lg: "0px",
-                                  }}
-                                  border={
-                                    index === 0 ? "2px solid red" : undefined
+                                  src={e}
+                                  selected={
+                                    selectedThumbnail?.type === "generated" &&
+                                    selectedThumbnail.index === index
                                   }
-                                >
-                                  <Image
-                                    objectFit={"cover"}
-                                    borderRadius={"10px"}
-                                    src={e}
-                                    alt="Thumbnail preview"
-                                  />
-                                </Flex>
+                                  select={() => setSelectedThumbnail({type: 'generated', index})}
+                                />
                               ))}
                             </Flex>
                           </Flex>
@@ -1074,10 +1189,7 @@ const CreatePost: React.FC = () => {
                         <Button
                           id="btn_details"
                           disabled={savingDetails == true ? true : false}
-                          onClick={() => {
-                            // handleUpdate();
-                            setSteps(2);
-                          }}
+                          onClick={handleStep1Complete}
                           size={"lg"}
                           colorScheme="blue"
                         >
@@ -1157,7 +1269,7 @@ const CreatePost: React.FC = () => {
                       </Button>
                       <Button
                         disabled={savingDetails == true ? true : false}
-                        onClick={() => setSteps(3)}
+                        onClick={handleStep2Complete}
                         size={"lg"}
                         colorScheme="blue"
                       >
@@ -1391,14 +1503,16 @@ const CreatePost: React.FC = () => {
                         alignItems="center"
                       >
                         <Button
-                          onClick={() => setSteps(1)}
+                          disabled={!!savingDetails}
+                          onClick={() => setSteps(step => step - 1)}
                           size={"lg"}
                           colorScheme="blue"
                         >
                           Go Back
                         </Button>
                         <Button
-                          onClick={() => handleEncode()}
+                          disabled={!!savingDetails}
+                          onClick={handleStep3Complete}
                           size={"lg"}
                           colorScheme="blue"
                         >

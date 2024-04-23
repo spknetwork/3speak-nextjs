@@ -3626,6 +3626,18 @@
   dependencies:
     tslib "^2.4.0"
 
+"@tanstack/query-core@5.31.0":
+  version "5.31.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.31.0.tgz#b11372dedbf307bc8b2c25397c7107205bf50dfa"
+  integrity sha512-r1V6RXB1LUGoEp7HGHVK4Tl59kOvAfwI9/kNNwPsb6cR5oHgfn1683sQnoH/3xEDUKOen3fEO90EnGE+OjRw5A==
+
+"@tanstack/react-query@^5.31.0":
+  version "5.31.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.31.0.tgz#ead732a5323c6c2c95da3115542cabc0920e4748"
+  integrity sha512-/GUUDFA8yNIYZaSyImkecVfN9mAVw1Y+9LpHkOQ1DdWaKnbLtwfjelh6OF+6EtwQCycH50EjTL68UK3YTMxwvg==
+  dependencies:
+    "@tanstack/query-core" "5.31.0"
+
 "@types/babel__core@^7.1.12":
   version "7.20.5"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.20.5.tgz#3df15f27ba85319caa07ba08d0721889bb39c017"
@@ -9356,6 +9368,11 @@ use-sync-external-store@1.2.0, use-sync-external-store@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
+
+use-tus@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/use-tus/-/use-tus-0.8.1.tgz#86aaf01b8b774cdcb2d26a0fb9ccc70f66971d31"
+  integrity sha512-K6rgo2N66tNWR/lWDqQgs52IeY9tzu4oPQkSR3xsq5luL+egmlLW3mJcrTVv8h2Pn7erGCQbdOuFVdZC2814PQ==
 
 utf-8-validate@^5.0.2:
   version "5.0.10"
