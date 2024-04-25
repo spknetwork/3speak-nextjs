@@ -1,5 +1,6 @@
+//TODO: to integrate the pop modal for video edit
 import React, { ReactNode, useEffect, useState } from "react";
-
+import { UploadedVideoData } from "@/data/UploadedVideoData";
 import {
   Box,
   Flex,
@@ -33,11 +34,42 @@ import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useAppStore } from "@/lib/store";
 import { FaRegEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 //hooks
 import { useAuth } from "@/hooks/auth";
+import EditModal from "@/components/Studio_Videos/EditModal";
+//importing the essentials for modal
+
+export interface VideoData {
+  id: number;
+  title: string;
+  thumbnail: string;
+  status: string;
+  Date: string;
+  description: string;
+  views: number;
+}
 
 export default function StudioVideos({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // TODO make this work without it
+  const [showPopup, setShowPopup] = useState(false);
+
+  //useStates for handling the updated data
+  const [uploadedVideoData, setUploadedVideoData] =
+    useState<VideoData[]>(UploadedVideoData);
+
+  const [index, setIndex] = useState<number | null>(null);
+
+  //function for updating the state of the data
+  const handleUpdateData = (id: number, newData: VideoData) => {
+    setUploadedVideoData((prevData) =>
+      prevData.map((item) => (item.id === id ? newData : item))
+    );
+  };
+
+
   const current = new Date();
   const date = `${current.getDate()}/${
     current.getMonth() + 1
@@ -50,7 +82,6 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
   // const isMedium = useBreakpointValue({ base: false, md: true });
   const { authenticated } = useAuth() ?? {};
 
-  
   const colorModeValue = useColorModeValue(
     authenticated ? "gray.100" : "gray.100",
     authenticated ? "gray.900" : "gray.900"
@@ -156,61 +187,53 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
                               <Th>Date</Th>
                               <Th>Views</Th>
                               <Th>Edit</Th>
+                              <Th>Delete</Th>
                             </Tr>
                           </Thead>
                           <Tbody>
-                            <Tr>
-                              <Td>
-                                <Image
-                                  src="https://ipfs-3speak.b-cdn.net/ipfs/bafybeibqxbf652lmfbdf7zoht3pbhkx4m76agdwn5mnw33vjhlxrzvccoe/"
-                                  alt="test"
-                                  width={"100px"}
-                                />
-                              </Td>
-                              <Td>First Video</Td>
-                              <Td>
-                                <Badge colorScheme="red">Deleted</Badge>
-                              </Td>
-                              <Td>{date}</Td>
-                              <Td>100</Td>
-                              <Td><Button colorScheme='blue'><FaRegEdit /></Button></Td>
-                            </Tr>
-                            <Tr>
-                              <Td>
-                                <Image
-                                  src="https://ipfs-3speak.b-cdn.net/ipfs/bafybeibqxbf652lmfbdf7zoht3pbhkx4m76agdwn5mnw33vjhlxrzvccoe/"
-                                  alt="test"
-                                  width={"100px"}
-                                />
-                              </Td>
-                              <Td>Secod Video</Td>
-                              <Td>
-                                <Badge colorScheme="green">Active</Badge>
-                              </Td>
-                              <Td>{date}</Td>
-                              <Td>200</Td>
-                              <Td><Button colorScheme='blue'><FaRegEdit /></Button></Td>
-
-
-                            </Tr>
-                            <Tr>
-                              <Td>
-                                <Image
-                                  src="https://ipfs-3speak.b-cdn.net/ipfs/bafybeibqxbf652lmfbdf7zoht3pbhkx4m76agdwn5mnw33vjhlxrzvccoe/"
-                                  alt="test"
-                                  width={"100px"}
-                                />
-                              </Td>
-                              <Td>Third Video</Td>
-                              <Td>
-                                <Badge colorScheme="purple">New</Badge>
-                              </Td>
-                              <Td>{date}</Td>
-                              <Td>1M</Td>
-                              <Td><Button colorScheme='blue'><FaRegEdit /></Button></Td>
-
-
-                            </Tr>
+                            {uploadedVideoData.map((item, index) => (
+                              <Tr key={index}>
+                                <Td>
+                                  <Image
+                                    src={item.thumbnail}
+                                    alt="test"
+                                    width={"100px"}
+                                  />
+                                </Td>
+                                <Td>{item.title}</Td>
+                                <Td>
+                                  <Badge
+                                    colorScheme={
+                                      item.status === "Deleted"
+                                        ? "red"
+                                        : item.status === "Active"
+                                        ? "green"
+                                        : "yellow"
+                                    }
+                                  >
+                                    {item.status}
+                                  </Badge>
+                                </Td>
+                                <Td>{item.Date}</Td>
+                                <Td>{item.views}</Td>
+                                <Td>
+                                  <Button
+                                    colorScheme="blue"
+                                    onClick={() => {
+                                      setShowPopup(true);
+                                      setIndex(index);
+                                    }}
+                                  >
+                                    <FaRegEdit size={"20px"} />
+                                  </Button>
+                                </Td>
+                                <Td>
+                                  <Button colorScheme="red">
+                                    <MdDelete size={"22px"} />
+                                  </Button>
+                                </Td>
+                              </Tr>
+                            ))}
                           </Tbody>
                         </Table>
                       </TableContainer>
@@ -222,6 +245,15 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
           </Box>
         </Box>
       </Box>
+      {index !== null  && <EditModal
+        isOpen={true}
+        uploadedVideoData={uploadedVideoData}
+        videoData={uploadedVideoData[index]}
+        setUploadedVideoData={setUploadedVideoData}
+        onClose={() => setIndex(null)}
+        index={index}
+      />
+}
     </Box>
   );
 }
