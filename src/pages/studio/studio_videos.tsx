@@ -1,3 +1,4 @@
+//TODO: make the delete button work
 import React, { ReactNode, useEffect, useState } from "react";
 import { UploadedVideoData } from "@/data/UploadedVideoData";
 import {
@@ -26,7 +27,15 @@ import {
   Td,
   Badge,
 } from "@chakra-ui/react";
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+} from "@chakra-ui/react";
 
 import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
@@ -53,9 +62,9 @@ export interface VideoData {
 export default function StudioVideos({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  //useState for confirming the delete
+  //useState for confirming the delete and the index of the video to be deleted
   const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
-  
+  const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
 
   //useStates for handling the updated data
   const [uploadedVideoData, setUploadedVideoData] =
@@ -67,6 +76,16 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
   const handleUpdateData = (id: number, newData: VideoData) => {
     setUploadedVideoData((prevData) =>
       prevData.map((item) => (item.id === id ? newData : item))
+    );
+  };
+
+  /**
+   * function for deleting the data
+   * @param id
+   */
+  const handleDeleteData = (id: number) => {
+    setUploadedVideoData((prevData) =>
+      prevData.filter((item) => item.id !== id)
     );
   };
 
@@ -227,8 +246,14 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
                                   </Button>
                                 </Td>
                                 <Td>
-                                    {/* TODO: hook up the delete modal confirmation here */}
-                                  <Button colorScheme="red" onClick={() => setShowConfirmation(true)}>
+                                  {/* TODO: hook up the delete modal confirmation here */}
+                                  <Button
+                                    colorScheme="red"
+                                    onClick={() => {
+                                      setShowConfirmation(true);
+                                      setDeleteIndex(item.id);
+                                    }}
+                                  >
                                     <MdDelete size={"22px"} />
                                   </Button>
                                 </Td>
@@ -245,22 +270,30 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
           </Box>
         </Box>
       </Box>
-      {showConfirmation && (
-        <Modal isOpen={showConfirmation} onClose={() => setShowConfirmation(false)}>
-            <ModalOverlay />
-            <ModalContent>
-                <ModalHeader>Delete Video</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                Are you sure you want to delete this video?
-                </ModalBody>
-    
-                <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={() => setShowConfirmation(false)}>
-                    Confirm
-                </Button>
-                </ModalFooter>
-            </ModalContent>
+      {showConfirmation && deleteIndex && (
+        <Modal
+          isOpen={showConfirmation}
+          onClose={() => setShowConfirmation(false)}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Delete Video</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>Are you sure you want to delete this video?</ModalBody>
+
+            <ModalFooter>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                onClick={() => {
+                  setShowConfirmation(false);
+                  handleDeleteData(deleteIndex);
+                }}
+              >
+                Confirm
+              </Button>
+            </ModalFooter>
+          </ModalContent>
         </Modal>
       )}
       {index !== null && (

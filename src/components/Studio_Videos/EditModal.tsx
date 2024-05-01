@@ -19,12 +19,6 @@ import {
 } from "@chakra-ui/react";
 
 type Props = {
-  // TODO make EditModal work with only these props
-  //   uploadedVideoData: VideoData[];
-  //   setUploadedVideoData: React.Dispatch<React.SetStateAction<VideoData[]>>;
-  //   index: number;
-  // onClose: (videoData: VideoData) => void;
-
   onClose: (videoData: VideoData) => void;
   videoData: VideoData;
 };
