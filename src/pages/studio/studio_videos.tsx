@@ -1,4 +1,3 @@
-//TODO: to integrate the pop modal for video edit
 import React, { ReactNode, useEffect, useState } from "react";
 import { UploadedVideoData } from "@/data/UploadedVideoData";
 import {
@@ -27,6 +26,7 @@ import {
   Td,
   Badge,
 } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
 
 import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
@@ -53,8 +53,9 @@ export interface VideoData {
 export default function StudioVideos({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // TODO make this work without it
-  const [showPopup, setShowPopup] = useState(false);
+  //useState for confirming the delete
+  const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
+  
 
   //useStates for handling the updated data
   const [uploadedVideoData, setUploadedVideoData] =
@@ -68,7 +69,6 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
       prevData.map((item) => (item.id === id ? newData : item))
     );
   };
-
 
   const current = new Date();
   const date = `${current.getDate()}/${
@@ -220,7 +220,6 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
                                   <Button
                                     colorScheme="blue"
                                     onClick={() => {
-                                      setShowPopup(true);
                                       setIndex(index);
                                     }}
                                   >
@@ -228,7 +227,8 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
                                   </Button>
                                 </Td>
                                 <Td>
-                                  <Button colorScheme="red">
+                                    {/* TODO: hook up the delete modal confirmation here */}
+                                  <Button colorScheme="red" onClick={() => setShowConfirmation(true)}>
                                     <MdDelete size={"22px"} />
                                   </Button>
                                 </Td>
@@ -245,15 +245,35 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
           </Box>
         </Box>
       </Box>
-      {index !== null  && <EditModal
-        isOpen={true}
-        uploadedVideoData={uploadedVideoData}
-        videoData={uploadedVideoData[index]}
-        setUploadedVideoData={setUploadedVideoData}
-        onClose={() => setIndex(null)}
-        index={index}
-      />
-}
+      {showConfirmation && (
+        <Modal isOpen={showConfirmation} onClose={() => setShowConfirmation(false)}>
+            <ModalOverlay />
+            <ModalContent>
+                <ModalHeader>Delete Video</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                Are you sure you want to delete this video?
+                </ModalBody>
+    
+                <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={() => setShowConfirmation(false)}>
+                    Confirm
+                </Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
+      )}
+      {index !== null && (
+        <EditModal
+          // uploadedVideoData={uploadedVideoData}
+          // setUploadedVideoData={setUploadedVideoData}
+          videoData={uploadedVideoData[index]}
+          onClose={(newData) => {
+            handleUpdateData(newData.id, newData);
+            setIndex(null);
+          }}
+        />
+      )}
     </Box>
   );
 }

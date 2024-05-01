@@ -18,17 +18,14 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 
-
 type Props = {
-// TODO make EditModal work with only these props
-  isOpen: boolean;
-  uploadedVideoData: VideoData[];
-  setUploadedVideoData: React.Dispatch<React.SetStateAction<VideoData[]>>;
-  index: number; 
+  // TODO make EditModal work with only these props
+  //   uploadedVideoData: VideoData[];
+  //   setUploadedVideoData: React.Dispatch<React.SetStateAction<VideoData[]>>;
+  //   index: number;
   // onClose: (videoData: VideoData) => void;
 
-
-  onClose: () => void;
+  onClose: (videoData: VideoData) => void;
   videoData: VideoData;
 };
 
@@ -41,29 +38,33 @@ type Props = {
  *    b) all default values are ignored (no useState nor defaultValue input prop)
  */
 const EditModal = (props: Props) => {
-    const [title, setTitle] = useState<string>(props.videoData?.title || "");
-    const [thumbnail, setThumbnail] = useState<[previewUrl: string, file: File | null]>([props.videoData?.thumbnail, null]);
-    const [description, setDescription] = useState<string>(props.videoData?.description || "");
-  
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [title, setTitle] = useState<string>(props.videoData?.title || "");
+  const [thumbnail, setThumbnail] = useState<
+    [previewUrl: string, file: File | null]
+  >([props.videoData?.thumbnail, null]);
+  const [description, setDescription] = useState<string>(
+    props.videoData?.description || ""
+  );
 
   const handleUpdateData = () => {
-    if (props.index !== null) {
-      const newData: VideoData = {
-        ...props.uploadedVideoData[props.index],
-        title,
-        thumbnail: thumbnail[0],
-        description,
-      };
-      const updatedData = [...props.uploadedVideoData];
-      updatedData[props.index] = newData;
-      props.setUploadedVideoData(updatedData);
-    }
-    props.onClose();
+    const newData: VideoData = {
+      // ...props.uploadedVideoData[props.index],
+      ...props.videoData,
+      title,
+      thumbnail: thumbnail[0],
+      description,
+    };
+    //   const updatedData = [...props.uploadedVideoData];
+    // let updatedData = props.videoData;
+    // updatedData = newData;
+    props.onClose(newData);
+    setIsOpen(false);
   };
 
   return (
     <Flex className={style.modal}>
-      <Modal isOpen={props.isOpen} onClose={props.onClose} size="2xl">
+      <Modal isOpen={isOpen} onClose={() => props.onClose(props.videoData)} size="2xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Edit content of your uploaded video!</ModalHeader>
@@ -79,11 +80,7 @@ const EditModal = (props: Props) => {
             </FormControl>
             {/* thumbnail */}
             <FormControl w={"90%"} mt={4}>
-              <Image
-                src={thumbnail[0]}
-                alt="test"
-                width={"100px"}
-              />
+              <Image src={thumbnail[0]} alt="test" width={"100px"} />
               <FormLabel>Edit Thumbnail</FormLabel>
               <Input
                 pt={2}
@@ -91,7 +88,10 @@ const EditModal = (props: Props) => {
                 accept="image/*"
                 onChange={(e) => {
                   if (e.target.files && e.target.files[0]) {
-                    setThumbnail([URL.createObjectURL(e.target.files[0]), e.target.files[0]]);
+                    setThumbnail([
+                      URL.createObjectURL(e.target.files[0]),
+                      e.target.files[0],
+                    ]);
                   }
                 }}
               />
@@ -109,7 +109,7 @@ const EditModal = (props: Props) => {
             <Button colorScheme="blue" mr={3} onClick={handleUpdateData}>
               Save
             </Button>
-            <Button onClick={props.onClose}>Cancel</Button>
+            <Button onClick={() => props.onClose(props.videoData)}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
