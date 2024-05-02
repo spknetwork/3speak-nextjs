@@ -292,9 +292,6 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
               >
                 Confirm
               </Button>
-              <Button onClick={() => setShowConfirmation(false)}>
-                Cancel
-              </Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
