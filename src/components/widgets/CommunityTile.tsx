@@ -1,9 +1,19 @@
+import { Box } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 import { Col } from "react-bootstrap";
 import { background } from "styled-system";
 
-export function CommunityTile(props: any) {
+type Props = {
+  reflink: string;
+  name: string;
+  info: any;
+  sum_pending: number;
+  bgColor: string;
+  colorMode: string;
+};
+
+export function CommunityTile(props: Props) {
   const [communityPicture, setCommunityPicture] = useState("");
   useEffect(() => {
     const load = async () => {};
@@ -11,11 +21,21 @@ export function CommunityTile(props: any) {
   }, []);
 
   return (
-    <Col className="col-md-3 col-sm-3 mb-3" md={3} sm={3}>
+    <Box w={300}>
       <a href={`/community/${props.reflink}`} className="font-weight-bold">
-        <div className="community-card channels-card shadow-sm">
+        <div
+          className={`community-card channels-card shadow-sm ${
+            props.colorMode === "dark"
+              ? "bg-dark text-white"
+              : "bg-light text-dark"
+          }`}
+        >
           <div
-            className="text-left text-dark d-flex justify-content-center align-items-center"
+            className={`text-left text-dark d-flex justify-content-center align-items-center ${
+              props.colorMode === "dark"
+                ? "bg-dark text-white"
+                : "bg-light text-dark"
+            }`}
             style={{ display: "inline-block", float: "left" }}
           >
             <Image
@@ -36,8 +56,8 @@ export function CommunityTile(props: any) {
               }
             />
             <span className="ps-1 fw-bold">
-              {props.info.title.length > 16
-                ? props.info.title.substr(0, 16) + "..."
+              {props.info.title.length > 10
+                ? props.info.title.substr(0, 10) + "..."
                 : props.info.title}
             </span>
           </div>
@@ -49,7 +69,11 @@ export function CommunityTile(props: any) {
               float: "right",
             }}
           >
-            <div className="text-dark fw-bold font-smaller">
+            <div
+              className={`text-dark fw-bold font-smaller ${
+                props.colorMode === "dark" ? "text-white" : "text-dark"
+              }`}
+            >
               Pending payouts
             </div>
             <div className="text-end d-flex justify-content-center align-items-center">
@@ -61,7 +85,13 @@ export function CommunityTile(props: any) {
                   width: "20px",
                 }}
               >
-                <span className="text-dark fw-bold d-flex justify-content-center align-items-center">
+                <span
+                  className={`text-dark fw-bold d-flex justify-content-center align-items-center ${
+                    props.colorMode === "dark"
+                      ? "bg-dark text-white"
+                      : "bg-light text-dark"
+                  }`}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -85,6 +115,6 @@ export function CommunityTile(props: any) {
           <div style={{ clear: "both" }}></div>
         </div>
       </a>
-    </Col>
+    </Box>
   );
 }

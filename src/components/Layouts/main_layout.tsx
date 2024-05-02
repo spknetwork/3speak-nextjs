@@ -20,15 +20,6 @@ const MainLayout = ({ children }: any) => {
 
   return (
     <Flex
-      css={css`
-        @media (max-width: 768px) {
-          flex-direction: column;
-        }
-
-        @media (min-width: 769px) {
-          flex-direction: row;
-        }
-      `}
       justifyContent={"flex-end"}
     >
       <nav>

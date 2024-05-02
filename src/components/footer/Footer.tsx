@@ -4,7 +4,6 @@ import Image from "next/image";
 import { css } from "@emotion/react";
 import React from "react";
 import { BiEnvelope, BiGlobe } from "react-icons/bi";
-// import { css } from 'styled-components'
 const FOOTER_TITLE = [{ name: "About us" }, { name: "FAQ" }, { name: "Terms" }];
 const Footer = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -118,15 +117,6 @@ const Footer = () => {
                 }
               `}
             >
-              <Text fontWeight={"bold"} margin={"0px"} marginBottom="20px">
-                Accepted Payment Methods
-              </Text>
-              {/* <Image
-                                src="/images/hive-blockchain-hive-logo.svg"
-                                alt="3speak logo"
-                                width={200}
-                                height={100}
-                            /> */}
               <Image
                 loader={() =>
                   `${
