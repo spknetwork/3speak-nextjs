@@ -77,13 +77,13 @@ export default function StudioPage({ children }: { children: ReactNode }) {
     authenticated ? "gray.100" : "gray.100",
     authenticated ? "gray.900" : "gray.900"
   );
-  if (authenticated === null) {
-    return <Box>Loading...</Box>;
-  }
+//   if (authenticated === null) {
+//     return <Box>Loading...</Box>;
+//   }
 
-  if (authenticated === false) {
-    return <Box>Unauthorized access, please login first</Box>;
-  }
+//   if (authenticated === false) {
+//     return <Box>Unauthorized access, please login first</Box>;
+//   }
 
   return (
     <Box minH="100vh" bg={colorModeValue}>
