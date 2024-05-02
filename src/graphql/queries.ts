@@ -190,13 +190,33 @@ export const GET_SYNC_STATE = gql`
 `;
 
 export const GET_SOCIAL_POST = gql`
-  query MyQuery {
-    socialPost(author: "", permlink: "") {
+  query MyQuery($author: String, $permlink: String) {
+    socialPost(author: $author, permlink: $permlink) {
       ... on HivePost {
         parent_author
         parent_permlink
+        author {
+          username
+        }
+        json_metadata {
+          raw
+        }
+        stats {
+          num_comments
+          num_votes
+          total_hive_reward
+        }
         app_metadata
+        spkvideo
+        refs
+        post_type
+        permlink
+        title
+        tags
+        updated_at
         body
+        community
+        created_at
       }
     }
   }

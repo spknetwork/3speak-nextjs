@@ -1,3 +1,4 @@
+//TODO: integrate dark mode here
 import React from "react";
 import { Box, GridItem, Image, Text } from "@chakra-ui/react";
 import { MdOutlineThumbUp } from "react-icons/md";
@@ -22,6 +23,9 @@ var toHHMMSS = (secs: number) => {
 }
 
 const FeedGridItem = ({video}: any) => {
+  if (!video) {
+    return <div>Loading...</div> // TODO make pretty
+  }
   return (
     <GridItem w="100%" h="100%">
       <Box cursor={"pointer"} position="relative">

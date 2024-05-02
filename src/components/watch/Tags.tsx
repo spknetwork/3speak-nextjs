@@ -4,11 +4,11 @@ import React from "react";
 type Props = {
   bgColor: string;
   colorMode: string;
-  getVideo: any;
+  tags: string[] | null;
 };
-const Tags = ({ getVideo, ...props }: Props) => {
+const Tags = ({ tags, ...props }: Props) => {
   // console.log("getVideo TAGS", getVideo)
-  const firstFive = getVideo?.tags.slice(0, 5);
+  const firstFive = tags?.slice(0, 5);
   return (
     <Box
       display={"flex"}
@@ -16,7 +16,7 @@ const Tags = ({ getVideo, ...props }: Props) => {
       flexDirection={"row"}
       marginBottom={"0.5rem"}
     >
-      {firstFive.map((tag: any, index: number) => {
+      {firstFive?.map((tag: any, index: number) => {
         return (
           <Box key={index}>
             <Link

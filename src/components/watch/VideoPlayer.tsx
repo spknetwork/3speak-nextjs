@@ -2,9 +2,23 @@ import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ReactJWPlayer from "react-jw-player";
 
-const VideoPlayer = ({getVideo}:any) => {
-  const [videoUrl, setvideoUrl] = useState<any>(null)
-  const [videoUrlSelected, setvideoUrlSelected] = useState<any>(null)
+type Props = {
+    // author: string;
+    // permlink: string;
+    getVideo: {
+        spkvideo: {
+            play_url: string;
+            thumbnail_url: string;
+        }
+    }
+}
+
+const VideoPlayer = ({getVideo}: Props) => {
+
+  const [videoUrl, setvideoUrl] = useState<Props["getVideo"]["spkvideo"] | null>(null)
+  const [videoUrlSelected, setvideoUrlSelected] = useState<string | null>(null)
+
+
   useEffect(() => {
     if (videoUrl) {
       // console.log("setvideoUrl4 final step",videoUrl)
@@ -14,7 +28,7 @@ const VideoPlayer = ({getVideo}:any) => {
 
   useEffect(() => {
     if (getVideo) {
-    // console.log("getVideo in player 3", getVideo.spkvideo.play_url)
+    // console.log("getVideo in player 3", getVideo)
     if (getVideo.spkvideo.play_url) {
       const url = getVideo.spkvideo.play_url
       // Splitting the string by "ipfs://" and getting the first result
@@ -39,6 +53,8 @@ const VideoPlayer = ({getVideo}:any) => {
   if (!videoUrl) {
     return <Box>getting video details</Box>;
   }
+
+
   return (
     <ReactJWPlayer
       licenseKey="64HPbvSQorQcd52B8XFuhMtEoitbvY/EXJmMBfKcXZQU2Rnn"

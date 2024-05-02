@@ -24,7 +24,7 @@ import { css } from "@emotion/react";
 import { useState, useEffect } from "react";
 import MainLayout from "@/components/Layouts/main_layout";
 import { useQuery } from "@apollo/client";
-import { GET_PROFILE, GET_RELATED } from "@/graphql/queries";
+import { GET_PROFILE, GET_RELATED, GET_SOCIAL_POST } from "@/graphql/queries";
 import { VideoInterface } from "types";
 import { useRouter } from "next/router";
 import { useAppStore } from "@/lib/store";
@@ -38,39 +38,26 @@ export default function Watch() {
   const router = useRouter();
   const [profile, setProfile] = useState<any>(null);
   console.log("router", router.query.v);
-  const username = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
+
+  const author = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
     "/"
   )[0];
   const permlink = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
     "/"
   )[1];
   const getSuggestionFeed = useQuery(GET_RELATED, {
-    variables: { author: username, permlink: permlink },
+    variables: { author: author, permlink: permlink },
   });
 
   const getUserProfile = useQuery(GET_PROFILE, {
-    variables: { id: username },
+    variables: { id: author },
   });
 
-  useEffect(() => {
-    console.log("profile get", profile);
-  }, [profile]);
+   const getSocialPost = useQuery(GET_SOCIAL_POST, {
+    variables: { author, permlink },
+  });
 
-  const [count, setCount] = useState<number>(0);
-  const [getVideo, setVideoSelected] = useState<any>(null);
-  console.log(count);
-
-  const { video: videoSelected, setVideo } = useAppStore();
-  useEffect(() => {
-    setVideoSelected(videoSelected);
-  }, [videoSelected]);
-
-  useEffect(() => {
-    if (getVideo) {
-      console.log("getVideo 2", getVideo);
-      // setVideo(null)
-    }
-  }, [getVideo])
+  const getVideo = getSocialPost?.data?.socialPost;
 
   return (
     <MainLayout>
@@ -103,10 +90,8 @@ export default function Watch() {
                 <Box>
                   <Flex flexDirection={"column"} bgColor={bgColor}>
                     <Box bgColor={bgColor}>
-                    <Title getVideo={getVideo} bgColor={bgColor} colorMode={colorMode} />
-                      {videoSelected && (
-                        <Tags getVideo={videoSelected} bgColor={bgColor} colorMode={colorMode}/>
-                      )}
+                      <Title getVideo={getVideo} bgColor={bgColor} colorMode={colorMode} />
+                      <Tags tags={getVideo?.tags} bgColor={bgColor} colorMode={colorMode}/>
                     </Box>
                     <Flex
                       justifyContent={"space-between"}
