@@ -153,30 +153,26 @@ export const GET_TRENDING_TAGS = gql`
 
 export const GET_TRENDING_FEED = gql`
   query MyQuery {
-    trendingFeed(
-      apps: {
-        _eq: ""
-        _gt: 10
-        _gte: 10
-        _in: ""
-        _lt: 10
-        _lte: 10
-        _ne: ""
-        _nin: ""
-        _regex: ""
-      }
-      feedOptions: {
-        byFollower: ""
-        includeCeramic: false
-        includeComments: false
-      }
-    ) {
+    trendingFeed(spkvideo: { only: true }) {
       items {
-        body
-        author {
-          id
-          profile
-          username
+        ... on HivePost {
+          permlink
+          spkvideo
+          author {
+            username
+          }
+          body
+          title
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          tags
+          lang
+          hive_rewards
+          created_at
+          community
         }
       }
     }
@@ -257,6 +253,7 @@ export const GET_PROFILE = gql`
 //     }
 //   }
 // }
+
 export const GET_COMMUNITIES = gql`
   query MyQuery($id: String) {
     community(id: $id) {
@@ -438,130 +435,87 @@ export const TRENDING_FEED = gql`
     }
   }
 `;
-// query FIRST_UPLOAD_FEED {
-//   feed: trendingFeed {
-//     items {
-//       created_at
-//       parent_author
-//       parent_permlink
-//       permlink
-//       title
-//       updated_at
-//       ... on HivePost {
-//         parent_author
-//         parent_permlink
-//         author {
-//           username
-//         }
-//         stats {
-//           num_comments
-//           num_votes
-//           total_hive_reward
-//         }
-//         hive_rewards
-//         app_metadata
-//         spkvideo
-//         refs
-//         post_type
-//         permlink
-//         title
-//         tags
-//         updated_at
-//         created_at
-//       }
-//     }
-//   }
-// }
-export const FIRST_UPLOAD_FEED = gql`
-query MyTrendingFeed {
-  trendingFeed(
-    spkvideo: {only: true, firstUpload: true}
-    feedOptions: {}
-    pagination: {limit: 10, skip: 0}
-  ) {
+
+export const GET_RELATED=gql`
+query MyQuery($author: String, $permlink: String) {
+  relatedFeed(author: $author, permlink: $permlink, spkvideo: { only: true}) {
     items {
-      created_at
-      title
       ... on HivePost {
-        parent_author
-        parent_permlink
-        lang
+        permlink
         spkvideo
+        author {
+          username
+        }
+        body
+        title
         stats {
           num_comments
           num_votes
           total_hive_reward
         }
-        author {
-          id
-          username
-        }
-        community
-        json_metadata {
-          app
-          image
-          raw
-        }
         tags
-        title
-        permlink
-        post_type
-        refs
-        body
+        lang
+        hive_rewards
+        created_at
+        community
       }
-      permlink
-      parent_permlink
-      parent_author
-      body
     }
   }
 }
- 
+`;
+
+export const FIRST_UPLOAD_FEED = gql`
+  query MyQuery {
+    trendingFeed(spkvideo: { only: true, firstUpload: true }) {
+      items {
+        ... on HivePost {
+          permlink
+          spkvideo
+          author {
+            username
+          }
+          body
+          title
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          tags
+          lang
+          hive_rewards
+          created_at
+          community
+        }
+      }
+    }
+  }
 `;
 
 export const NEW_CONTENT = gql`
-query NewUploadsFeed  {
-  socialFeed(
-    spkvideo: {only: true}
-    feedOptions: {}
-    pagination: {limit: 50, skip: 0}
-  ) {
-    items {
-      created_at
-      title
-      ... on HivePost {
-        parent_author
-        parent_permlink
-        lang
-        spkvideo
-        stats {
-          num_comments
-          num_votes
-          total_hive_reward
+  query MyQuery {
+    socialFeed(spkvideo: { only: true, firstUpload: true }) {
+      items {
+        ... on HivePost {
+          permlink
+          spkvideo
+          author {
+            username
+          }
+          body
+          title
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          tags
+          lang
+          hive_rewards
+          created_at
+          community
         }
-        author {
-          id
-          username
-        }
-        community
-        json_metadata {
-          app
-          image
-          raw
-        }
-        tags
-        title
-        permlink
-        post_type
-        refs
-        body
       }
-      permlink
-      parent_permlink
-      parent_author
-      body
     }
   }
-}
- 
 `;

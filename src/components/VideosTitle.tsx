@@ -3,10 +3,10 @@ import { css } from "@emotion/react";
 import { useRouter } from "next/router";
 import React from "react";
 
-const VideosTitle = (props: { title: string }) => {
+const VideosTitle = (props: { title: string, author: string, permlink: string }) => {
   const router = useRouter();
   const redirectWatchPage = () => {
-    router.push("/watch")
+    router.push(`/watch?v=${props.author}/${props.permlink}`)
   }
   return (
     <div>

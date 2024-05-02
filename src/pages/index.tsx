@@ -1,21 +1,20 @@
+<<<<<<< HEAD
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
 import { useMemo } from "react";
+=======
+>>>>>>> origin/feature/gql-implementation
 import {
   Box,
   Flex,
-  Grid,
-  GridItem,
-  Image,
   Switch,
   Text,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { VideoInterface } from "types";
-import { MdPlayArrow } from "react-icons/md";
+import React from "react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+<<<<<<< HEAD
 import MainLayout from "@/components/Layouts/main_layout";
 import { videoData } from "../components/data/constData";
 import { BiDollar } from "react-icons/bi";
@@ -27,6 +26,22 @@ const NewIndex = () => {
   const bgColor = useColorModeValue("white", "gray.800");
   // const [videos, setVideos] = useState<VideoInterface[]>(videoData);
   const videos = useMemo(() => videoData, []);
+=======
+import { InfinitySpin } from "react-loader-spinner";
+import MainLayout from "@/components/Layouts/main_layout";
+
+import { useQuery } from "@apollo/react-hooks";
+import { GET_TRENDING_FEED } from "../graphql/queries";
+
+import FeedGrid from "../components/feedgrid/FeedGrid";
+
+const IndexPage = () => {
+  const bgColor = useColorModeValue("white", "gray.800");
+  const textColor = useColorModeValue("black", "white");
+  const { colorMode, toggleColorMode } = useColorMode();
+  const getTrendingFeed = useQuery(GET_TRENDING_FEED);
+
+>>>>>>> origin/feature/gql-implementation
   return (
     <MainLayout>
       <Box bg={bgColor}>
@@ -41,6 +56,7 @@ const NewIndex = () => {
             </Text>
           </Box>
         </Flex>
+<<<<<<< HEAD
         <Grid
           padding={"20px"}
           templateColumns={{
@@ -144,9 +160,16 @@ const NewIndex = () => {
             </GridItem>
           ))}
         </Grid>
+=======
+        {getTrendingFeed.loading ? (
+          <InfinitySpin width="200" color="#6DC5D7" />
+        ) : (
+          <FeedGrid videos={getTrendingFeed.data.trendingFeed.items} />
+        )}
+>>>>>>> origin/feature/gql-implementation
       </Box>
     </MainLayout>
   );
 };
 
-export default NewIndex;
+export default IndexPage;

@@ -24,93 +24,61 @@ import { css } from "@emotion/react";
 import { useState, useEffect } from "react";
 import MainLayout from "@/components/Layouts/main_layout";
 import { useQuery } from "@apollo/client";
-import { GET_PROFILE, TRENDING_FEED } from "@/graphql/queries";
+import { GET_PROFILE, GET_RELATED } from "@/graphql/queries";
 import { VideoInterface } from "types";
 import { useRouter } from "next/router";
+<<<<<<< HEAD
 import { useAppStore } from "@/lib/store";
+=======
+import Suggestions from "@/components/suggestions/Suggestions";
+import { InfinitySpin } from "react-loader-spinner";
+>>>>>>> origin/feature/gql-implementation
 
 export default function Watch() {
   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
 
   const router = useRouter();
-
-  const { loading, error, data } = useQuery(TRENDING_FEED);
-  const [videos, setVideos] = useState<VideoInterface[]>([]);
   const [profile, setProfile] = useState<any>(null);
-  console.log("router", router.query.username)
-
-  const { loading: loadingforProfile, error: errorforProfile, data: dataorProfile } = useQuery(GET_PROFILE, {
-    variables: { id: router.query.username },
+  console.log("router", router.query.v);
+  const username = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
+    "/"
+  )[0];
+  const permlink = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
+    "/"
+  )[1];
+  const getSuggestionFeed = useQuery(GET_RELATED, {
+    variables: { author: username, permlink: permlink },
   });
-  useEffect(() => {
-    console.log("profile get", profile)
-  }, [profile])
-  useEffect(() => {
-    if (!loadingforProfile && !errorforProfile && dataorProfile) {
-      console.log("setVideos data PROFILE", dataorProfile);
-      if (dataorProfile) {
-        setProfile(dataorProfile.profile)
-      }
-      // setVideos(
-      //   data.trendingFeed.items
-      //     .filter((e: any) => !!e.spkvideo)
-      //     .map((e: any) => {
-      //       console.log(e);
-      //       return {
-      //         title: e.title,
-      //         username: e.author.username,
-      //         thumbnail: e.spkvideo.thumbnail_url,
-      //         spkvideo: e.spkvideo,
-      //         author: e.author,
-      //         permlink: e.permlink,
-      //         tags: e.tags,
-      //       };
-      //     })
-      // );
-    }
-  }, [loadingforProfile, dataorProfile, errorforProfile]);
+
+  const getUserProfile = useQuery(GET_PROFILE, {
+    variables: { id: username },
+  });
 
   useEffect(() => {
-    if (!loading && !error && data) {
-      console.log("setVideos data TRENDING_FEED", data);
+    console.log("profile get", profile);
+  }, [profile]);
 
-      setVideos(
-        data.trendingFeed.items
-          .filter((e: any) => !!e.spkvideo)
-          .map((e: any) => {
-            console.log(e);
-            return {
-              title: e.title,
-              username: e.author.username,
-              thumbnail: e.spkvideo.thumbnail_url,
-              spkvideo: e.spkvideo,
-              author: e.author,
-              permlink: e.permlink,
-              tags: e.tags,
-            };
-          })
-      );
-    }
-  }, [loading, data, error]);
   const [count, setCount] = useState<number>(0);
-  const [getVideo, setVideoSelected] = useState<any>(null)
-  console.log(count)
+  const [getVideo, setVideoSelected] = useState<any>(null);
+  console.log(count);
 
   const { video: videoSelected, setVideo } = useAppStore();
   useEffect(() => {
-    setVideoSelected(videoSelected)
-
-  }, [videoSelected])
-
+    setVideoSelected(videoSelected);
+  }, [videoSelected]);
 
   useEffect(() => {
     if (getVideo) {
-      console.log("getVideo 2", getVideo)
+      console.log("getVideo 2", getVideo);
       // setVideo(null)
     }
+<<<<<<< HEAD
   }, [getVideo])
 
+=======
+  }, [getVideo]);
+>>>>>>> origin/feature/gql-implementation
   return (
     <MainLayout>
       <Flex justifyContent={"right"} background={bgColor}>
@@ -125,7 +93,11 @@ export default function Watch() {
               flex-direction: row;
             }
           `}
+<<<<<<< HEAD
           color={colorMode === "dark" ? "white" : "dark"}
+=======
+          color="white"
+>>>>>>> origin/feature/gql-implementation
           padding={"10px"}
         >
           <Box flex="1">
@@ -138,6 +110,7 @@ export default function Watch() {
                 paddingRight={"0px"}
                 color={colorMode === "dark" ? "white" : "dark"}
               >
+<<<<<<< HEAD
                 <VideoPlayer />
                 <Box>
                   <Flex flexDirection={"column"} bgColor={bgColor}>
@@ -146,6 +119,15 @@ export default function Watch() {
                       {videoSelected && (
                         <Tags getVideo={videoSelected} bgColor={bgColor} colorMode={colorMode}/>
                       )}
+=======
+                {getVideo && <VideoPlayer getVideo={getVideo} />}
+
+                <Box>
+                  <Flex flexDirection={"column"}>
+                    <Box>
+                      <Title getVideo={getVideo} />
+                      {videoSelected && <Tags getVideo={videoSelected} />}
+>>>>>>> origin/feature/gql-implementation
                     </Box>
                     <Flex
                       justifyContent={"space-between"}
@@ -180,6 +162,7 @@ export default function Watch() {
               <Community bgColor={bgColor} colorMode={colorMode} />
             </Box>
 
+<<<<<<< HEAD
             <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg={bgColor}>
               {/* published or about components */}
               <About  getVideo={getVideo} bgColor={bgColor} colorMode={colorMode} />
@@ -290,6 +273,21 @@ export default function Watch() {
               </Text>
             </Box>
           </Box>
+=======
+            <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg="white">
+              <About getVideo={getVideo} />
+            </Box>
+            <Box>
+              <Comment />
+            </Box>
+          </Box>
+
+          {getSuggestionFeed.loading ? (
+            <InfinitySpin width="200" color="#6DC5D7" />
+          ) : (
+            <Suggestions videos={getSuggestionFeed.data.relatedFeed.items} />
+          )}
+>>>>>>> origin/feature/gql-implementation
         </Flex>
       </Flex>
     </MainLayout>
