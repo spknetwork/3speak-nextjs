@@ -33,7 +33,8 @@ export interface VideoInterface {
   number_views?: number;
   spkvideo?: any;
   thumbnail: any;
-  author?: any;
+  author: string;
+  permlink: string;
   index?: number;
   tags?: any;
   stats?: any;

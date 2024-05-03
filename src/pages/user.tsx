@@ -1,5 +1,5 @@
 
-//TODO: fix the dark mode here
+//TODO: fetch the data from the graphql api 
 import MainLayout from "@/components/Layouts/main_layout";
 import About from "@/components/user/About";
 import Achievements from "@/components/user/Achievements";
@@ -25,7 +25,15 @@ import { BiDollar } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import { useMediaQuery } from "react-responsive";
 import { VideoInterface } from "types";
+import {useQuery} from "@apollo/client";
+
+
 const UserPage = () => {
+    
+    //get the user videos 
+    const getMyVideos = useQuery()
+
+
   const [showFeed, setShowFeed] = useState<number>(1);
   const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
   const [showNav, setShowNav] = useState(true);

@@ -47,6 +47,7 @@ const VideoTags = () => {
       );
     }
   }, [loading, data, error]);
+
   const setVideoDetails = (video:any) => {
     console.log("video",video)
     setVideo(video)
@@ -99,7 +100,7 @@ const VideoTags = () => {
                   />
                 </Box>
 
-                <VideosTitle title={`${video.title}`} />
+                <VideosTitle title={`${video.title}`} author={video?.username} permlink={video?.permlink} />
                 <Name username={`${video.username}`} />
                 <Text as="p" margin={"1px"}>
                   a day ago

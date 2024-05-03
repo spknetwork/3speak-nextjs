@@ -62,6 +62,7 @@ query ProfileVideoData($id: String) {
   }
 }
 `
+
 export const GET_SOCIAL_FEED = gql`
   query MyQuery {
     socialFeed(
