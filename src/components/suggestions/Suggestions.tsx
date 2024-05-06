@@ -2,12 +2,12 @@ import React from "react";
 import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import FeedGridItem from "../feedgrid/FeedGridItem";
 
-const Suggestions = ({ videos }: any) => {
+const Suggestions = ({ videos, bgColor, colorMode}: any) => {
   return (
     <Box
       w={{ base: "100%", md: "25%", lg: "33%" }}
-      bg="white"
-      color={"black"}
+      backgroundColor={bgColor}
+      color={colorMode === "dark" ? "white" : "black"}
       marginTop="15px"
       borderRadius={4}
       boxShadow="base"
@@ -34,7 +34,7 @@ const Suggestions = ({ videos }: any) => {
           lg: "inline-table",
         }}
         templateColumns="repeat(1, 1fr)"
-        gap={2}
+        gap={4}
       >
         {videos.map((video: any, index: number) => (
           <FeedGridItem video={video} key={index} />

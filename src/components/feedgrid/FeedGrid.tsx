@@ -10,6 +10,7 @@ import Name from "@/components/user/Name";
 import moment from "moment";
 import FeedGridItem from "./FeedGridItem";
 
+
 export interface Video {
     permlink: string;
     spkvideo: {
@@ -36,9 +37,12 @@ export interface Video {
 
 interface FeedGridProps {
  videos: Video[];
+ bgColor: string;
+ colorMode: string;
 }
 
-const FeedGrid = ({ videos }: FeedGridProps) => {
+
+const FeedGrid = ({ videos, bgColor, colorMode }: FeedGridProps) => {
   return (
     <Grid
       padding={"20px"}
@@ -49,9 +53,10 @@ const FeedGrid = ({ videos }: FeedGridProps) => {
         xl: "repeat(5, 1fr)",
       }}
       gap={10}
+      backgroundColor={"gray.700"}
     >
       {videos.map((video: Video, index: number) => (
-        <FeedGridItem video={video} key={index} />
+        <FeedGridItem video={video} key={index}  />
       ))}
     </Grid>
   );

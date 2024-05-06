@@ -137,7 +137,7 @@ export default function Watch() {
           {getSuggestionFeed.loading ? (
             <InfinitySpin width="200" color="#6DC5D7" />
           ) : (
-            <Suggestions videos={getSuggestionFeed.data.relatedFeed.items} />
+            <Suggestions videos={getSuggestionFeed.data.relatedFeed.items} bgColor={bgColor} colorMode={colorMode}/>
           )}
         </Flex>
       </Flex>

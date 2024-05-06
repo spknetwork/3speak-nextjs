@@ -1,4 +1,4 @@
-//TODO: integrate dark mode here
+//TODO: duration doesnt exists in type video
 import React from "react";
 import { Box, GridItem, Image, Link, Text } from "@chakra-ui/react";
 import { MdOutlineThumbUp } from "react-icons/md";
@@ -36,7 +36,7 @@ const FeedGridItem = ({ video }: Props) => {
     return <div>Loading...</div>; // TODO make pretty
   }
   return (
-    <GridItem w="100%" h="100%">
+    <GridItem w="100%" h="100%" >
       <Box cursor={"pointer"} position="relative">
         <Box
           display={"flex"}
