@@ -10,7 +10,35 @@ import Name from "@/components/user/Name";
 import moment from "moment";
 import FeedGridItem from "./FeedGridItem";
 
-const FeedGrid = ({ videos }: any) => {
+export interface Video {
+    permlink: string;
+    spkvideo: {
+        duration: number;
+        play_url: string;
+        thumbnail_url: string;
+    };
+    author: {
+        username: string;
+    };
+    body: string;
+    title: string;
+    stats: {
+        num_comments: number;
+        num_votes: number;
+        total_hive_reward: number;
+    };
+    tags: string[];
+    lang: string;
+    hive_rewards: number;
+    created_at: string;
+    community: string;
+}
+
+interface FeedGridProps {
+ videos: Video[];
+}
+
+const FeedGrid = ({ videos }: FeedGridProps) => {
   return (
     <Grid
       padding={"20px"}
@@ -22,7 +50,7 @@ const FeedGrid = ({ videos }: any) => {
       }}
       gap={10}
     >
-      {videos.map((video: any, index: number) => (
+      {videos.map((video: Video, index: number) => (
         <FeedGridItem video={video} key={index} />
       ))}
     </Grid>

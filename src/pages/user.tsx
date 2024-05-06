@@ -1,5 +1,4 @@
-
-//TODO: fetch the data from the graphql api 
+//TODO: fetch the data from the graphql api
 import MainLayout from "@/components/Layouts/main_layout";
 import About from "@/components/user/About";
 import Achievements from "@/components/user/Achievements";
@@ -25,14 +24,25 @@ import { BiDollar } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import { useMediaQuery } from "react-responsive";
 import { VideoInterface } from "types";
-import {useQuery} from "@apollo/client";
-
+import { useQuery } from "@apollo/client";
+import {
+  GET_PROFILE,
+  GET_RELATED,
+  GET_SOCIAL_POST,
+  GET_SOCIAL_FEED_BY_CREATOR,
+} from "@/graphql/queries";
 
 const UserPage = () => {
-    
-    //get the user videos 
-    const getMyVideos = useQuery()
+  //get the user videos
+  const getMyDetails = useQuery(GET_PROFILE, {
+    variables: { id: "thestrollingmind" },
+  });
 
+  const getVideoData = useQuery(GET_SOCIAL_FEED_BY_CREATOR, {
+    variables: { id: "thestrollingmind" },
+  });
+
+  const getMyVideos = getVideoData?.data?.socialFeed?.items;
 
   const [showFeed, setShowFeed] = useState<number>(1);
   const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
@@ -52,39 +62,39 @@ const UserPage = () => {
     }
   }, [isMobile, showNav]);
 
-  const [videos] = useState<VideoInterface[]>([
-    {
-      thumbnail:
-        "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVijsuv81Cu6QUxATfwLCchp7dhexyXdq6vj7hSxy7PKLRNLf5CYPBTwYKRDj6dR95KAhZkjwL?format=jpeg&mode=cover&width=340&height=191",
-      title:
-        "The Adventure trail of Mount Naupa and Mind2Mind Talk with Lakwatserong Engineer",
-      username: "thetrollingmind",
-    },
-    {
-      thumbnail:
-        "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVhbe9xjZvwDJDwq34KonBAhp6aDi5QWVMa8GKtBZHpfb4pz88JsvtNudXgZBf9vd4ahzvcP1p?format=jpeg&mode=cover&width=340&height=191",
-      title: "Refreshing Communal Ranch in Bukidnon Philippines",
-      username: "thetrollingmind",
-    },
-    {
-      thumbnail:
-        "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVb4cnggfP19UUoMFibN8JndfBo44LsTNKVZ5tXRYFs7vB9bWocqyN3CFG7xfRFuKAomRBmvQ6?format=jpeg&mode=cover&width=340&height=191",
-      title: "Via Crucis at Camari Hill | Lenten Tradition",
-      username: "thetrollingmind",
-    },
-    {
-      thumbnail:
-        "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbFQdnkVpujsZq5ivaUS3RobVsvgoUMDXSTgZCHfbwNsgBSuTKvqmnzt9EUtxERKUQ5963fSE?format=jpeg&mode=cover&width=340&height=191",
-      title: "Weekend Adventure- to the Mountain of Kan-irag",
-      username: "thetrollingmind",
-    },
-    {
-      thumbnail:
-        "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbFQdnkVpujsZq5ivaUS3RobVsvgoUMDXSTgZCHfbwNsgBSuTKvqmnzt9EUtxERKUQ5963fSE?format=jpeg&mode=cover&width=340&height=191",
-      title: "Weekend Adventure- to the Mountain of Kan-irag",
-      username: "thetrollingmind",
-    },
-  ]);
+  //   const [videos] = useState<VideoInterface[]>([
+  //     {
+  //       thumbnail:
+  //         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVijsuv81Cu6QUxATfwLCchp7dhexyXdq6vj7hSxy7PKLRNLf5CYPBTwYKRDj6dR95KAhZkjwL?format=jpeg&mode=cover&width=340&height=191",
+  //       title:
+  //         "The Adventure trail of Mount Naupa and Mind2Mind Talk with Lakwatserong Engineer",
+  //       username: "thetrollingmind",
+  //     },
+  //     {
+  //       thumbnail:
+  //         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVhbe9xjZvwDJDwq34KonBAhp6aDi5QWVMa8GKtBZHpfb4pz88JsvtNudXgZBf9vd4ahzvcP1p?format=jpeg&mode=cover&width=340&height=191",
+  //       title: "Refreshing Communal Ranch in Bukidnon Philippines",
+  //       username: "thetrollingmind",
+  //     },
+  //     {
+  //       thumbnail:
+  //         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVb4cnggfP19UUoMFibN8JndfBo44LsTNKVZ5tXRYFs7vB9bWocqyN3CFG7xfRFuKAomRBmvQ6?format=jpeg&mode=cover&width=340&height=191",
+  //       title: "Via Crucis at Camari Hill | Lenten Tradition",
+  //       username: "thetrollingmind",
+  //     },
+  //     {
+  //       thumbnail:
+  //         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbFQdnkVpujsZq5ivaUS3RobVsvgoUMDXSTgZCHfbwNsgBSuTKvqmnzt9EUtxERKUQ5963fSE?format=jpeg&mode=cover&width=340&height=191",
+  //       title: "Weekend Adventure- to the Mountain of Kan-irag",
+  //       username: "thetrollingmind",
+  //     },
+  //     {
+  //       thumbnail:
+  //         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbFQdnkVpujsZq5ivaUS3RobVsvgoUMDXSTgZCHfbwNsgBSuTKvqmnzt9EUtxERKUQ5963fSE?format=jpeg&mode=cover&width=340&height=191",
+  //       title: "Weekend Adventure- to the Mountain of Kan-irag",
+  //       username: "thetrollingmind",
+  //     },
+  //   ]);
 
   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
@@ -93,15 +103,6 @@ const UserPage = () => {
     <MainLayout>
       <Box backgroundColor={bgColor}>
         <Box minHeight={"280px"} position={"relative"} bgColor={bgColor}>
-          {/* <Image
-            alt="image"
-            src={"https://media.3speak.tv/user/thestrollingmind/cover.png"}
-            objectFit="cover"
-            objectPosition={"center"}
-            maxHeight="500px"
-            maxWidth={"100%"}
-            height="auto"
-          /> */}
           <Flex
             w={"full"}
             h={"32vh"}
@@ -151,7 +152,9 @@ const UserPage = () => {
         </Box>
         <Box
           padding={"0 0px "}
-          boxShadow= {colorMode === "dark" ?  "0 0 11px black": "0 0 11px #ececec"}
+          boxShadow={
+            colorMode === "dark" ? "0 0 11px black" : "0 0 11px #ececec"
+          }
           background={"#fff none repeat scroll 0 0!important"}
         >
           {/* nav */}
@@ -220,14 +223,13 @@ const UserPage = () => {
                   >
                     <ListItem>
                       <Link
-                       
                         href="#"
                         _hover={{
                           // borderBottom: "2px solid red",npm i react-go   s
                           color: `${
                             colorMode === "dark" ? "whitesmoke" : "black"
                           }`,
-                          backgroundColor: "#4a5568"
+                          backgroundColor: "#4a5568",
                         }}
                         _focus={{
                           // borderBottom: "2px solid red",
@@ -276,7 +278,7 @@ const UserPage = () => {
                           color: `${
                             colorMode === "dark" ? "whitesmoke" : "black"
                           }`,
-                          backgroundColor: "#4a5568"
+                          backgroundColor: "#4a5568",
                         }}
                         _focus={{
                           // borderBottom: "2px solid red",
@@ -472,7 +474,11 @@ const UserPage = () => {
                     textTransform={"uppercase"}
                     border="none"
                     backgroundColor={"#4a5568"}
-                    boxShadow={ colorMode === "dark" ? "0  1px 4px black": "0 1px 4px white"}
+                    boxShadow={
+                      colorMode === "dark"
+                        ? "0  1px 4px black"
+                        : "0 1px 4px white"
+                    }
                     transition="all 0.4s"
                     variant={"outline"}
                     colorScheme="white"
@@ -502,7 +508,7 @@ const UserPage = () => {
               {showFeed == 5 && <Achievements />}
 
               {showFeed == 1 &&
-                videos.map((item: VideoInterface, index: number) => (
+                getMyVideos.map((item: VideoInterface, index: number) => (
                   <Flex
                     direction={"column"}
                     key={index}

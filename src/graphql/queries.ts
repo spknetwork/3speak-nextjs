@@ -39,29 +39,29 @@ export const GET_RELATED_FEED = gql`
     }
   }
 `;
-export const GET_SOCIAL_FEED_BY_CREATOR = gql `
-query ProfileVideoData($id: String) {
-  socialFeed(feedOptions: {byCreator: {_eq: $id}}) {
-    items {
-      ... on HivePost {
-        spkvideo
-        body
-        title
-        stats {
-          num_votes
-        }
-        created_at
-        refs
-        author {
-          username
+export const GET_SOCIAL_FEED_BY_CREATOR = gql`
+  query ProfileVideoData($id: String) {
+    socialFeed(feedOptions: { byCreator: { _eq: $id } }) {
+      items {
+        ... on HivePost {
+          spkvideo
+          body
+          title
+          stats {
+            num_votes
+          }
+          created_at
+          refs
+          author {
+            username
+          }
+          permlink
         }
         permlink
       }
-      permlink
     }
   }
-}
-`
+`;
 
 export const GET_SOCIAL_FEED = gql`
   query MyQuery {
@@ -112,20 +112,17 @@ export const GET_TOTAL_COUNT_OF_FOLLOWING = gql`
       followers_count
     }
   }
-
-`
+`;
 
 export const GET_TRENDING_TAGS = gql`
   query TrendingTagFeed($tag: String) {
     trendingFeed(
-  spkvideo: {only: true, firstUpload: true}
+      spkvideo: { only: true, firstUpload: true }
 
-  feedOptions: { byTag: {_eq: $tag} 
-    }
+      feedOptions: { byTag: { _eq: $tag } }
 
-  pagination: { limit: 50, skip: 0 }
-  )
-  {
+      pagination: { limit: 50, skip: 0 }
+    ) {
       items {
         created_at
         title
@@ -143,7 +140,7 @@ export const GET_TRENDING_TAGS = gql`
           author {
             username
           }
-  json_metadata {
+          json_metadata {
             raw
           }
         }
@@ -414,9 +411,9 @@ export const LATEST_FEED = gql`
 export const TRENDING_FEED = gql`
   query TrendingFeed {
     trendingFeed(
-      spkvideo: {only: true}
+      spkvideo: { only: true }
       feedOptions: {}
-      pagination: {limit: 50, skip: 0}
+      pagination: { limit: 50, skip: 0 }
     ) {
       items {
         created_at
@@ -457,32 +454,36 @@ export const TRENDING_FEED = gql`
   }
 `;
 
-export const GET_RELATED=gql`
-query MyQuery($author: String, $permlink: String) {
-  relatedFeed(author: $author, permlink: $permlink, spkvideo: { only: true}) {
-    items {
-      ... on HivePost {
-        permlink
-        spkvideo
-        author {
-          username
+export const GET_RELATED = gql`
+  query MyQuery($author: String, $permlink: String) {
+    relatedFeed(
+      author: $author
+      permlink: $permlink
+      spkvideo: { only: true }
+    ) {
+      items {
+        ... on HivePost {
+          permlink
+          spkvideo
+          author {
+            username
+          }
+          body
+          title
+          stats {
+            num_comments
+            num_votes
+            total_hive_reward
+          }
+          tags
+          lang
+          hive_rewards
+          created_at
+          community
         }
-        body
-        title
-        stats {
-          num_comments
-          num_votes
-          total_hive_reward
-        }
-        tags
-        lang
-        hive_rewards
-        created_at
-        community
       }
     }
   }
-}
 `;
 
 export const FIRST_UPLOAD_FEED = gql`
