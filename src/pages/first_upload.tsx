@@ -45,7 +45,7 @@ const FirstUploads = () => {
         {getFeed.loading ? (
           <InfinitySpin width="200" color="#6DC5D7" />
         ) : (
-          <FeedGrid videos={getFeed.data.trendingFeed.items} />
+          <FeedGrid videos={getFeed.data.trendingFeed.items} bgColor={bgColor} colorMode={colorMode} />
         )}
       </Box>
     </MainLayout>
