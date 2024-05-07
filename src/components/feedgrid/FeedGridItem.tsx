@@ -113,7 +113,7 @@ const FeedGridItem = ({ video }: Props) => {
       </Box>
       <VideosTitle
         title={`${video.title}`}
-        author={`${video.author.username}`}
+        author={video.author}
         permlink={`${video.permlink}`}
       />
       <Name username={`${video.author.username}`} />
