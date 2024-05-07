@@ -45,7 +45,7 @@ const NewContentPage = () => {
         {getFeed.loading ? (
           <InfinitySpin width="200" color="#6DC5D7" />
         ) : (
-          <FeedGrid videos={(getFeed.data.socialFeed).items} />
+          <FeedGrid videos={(getFeed.data.socialFeed).items} colorMode={colorMode} bgColor={bgColor} />
         )}
       </Box>
     </MainLayout>

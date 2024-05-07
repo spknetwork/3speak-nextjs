@@ -47,7 +47,7 @@ const TrendingPage = () => {
         {getTrendingFeed.loading ? (
           <InfinitySpin width="200" color="#6DC5D7" />
         ) : (
-          <FeedGrid videos={getTrendingFeed.data.trendingFeed.items} />
+          <FeedGrid videos={getTrendingFeed.data.trendingFeed.items} bgColor={bgColor} colorMode={colorMode}/>
         )}
       </Box>
     </MainLayout>
