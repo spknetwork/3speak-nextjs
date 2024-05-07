@@ -1,9 +1,10 @@
 import { Box, Image, Link, Text } from '@chakra-ui/react'
 import React from 'react'
 import { VideoInterface } from 'types'
-const VideoComponent: React.FC<VideoInterface> = ({ title, thumbnail, username, number_views, index, author }) => {
+
+const VideoComponent: React.FC<VideoInterface> = (props: VideoInterface) => {
     return (
-        <Box key={index} className="col-xl-2 col-lg-3  col-6 p-2 mb-3">
+        <Box key={props.index} className="col-xl-2 col-lg-3  col-6 p-2 mb-3">
             <Box
                 opacity={"1"}
                 position="relative"
@@ -56,7 +57,7 @@ const VideoComponent: React.FC<VideoInterface> = ({ title, thumbnail, username, 
                         maxHeight={"200px"}
                         height="auto"
                         objectFit="cover"
-                        src={`${thumbnail}`}
+                        src={props.spkvideo?.thumbnail_url ?? "https://3speak.tv/img/default.jpg"}
                         alt="Dan Abramov"
                     />
                 </Link>
@@ -64,7 +65,7 @@ const VideoComponent: React.FC<VideoInterface> = ({ title, thumbnail, username, 
             <Box minHeight={"65px"}>
                 <Link
                     textDecoration={"none"}
-                    href={`/watch?v=${username}`}
+                    href={`/watch?v=${props.author?.username}/${props.permlink}`}
                 >
                     <Text
                         textDecoration={"none"}
@@ -79,7 +80,7 @@ const VideoComponent: React.FC<VideoInterface> = ({ title, thumbnail, username, 
                         marginBottom="0.5rem !important"
                         fontWeight={"500"}
                     >
-                        {title}
+                        {props.title}
                     </Text>
                 </Link>
                 <Box
@@ -96,7 +97,7 @@ const VideoComponent: React.FC<VideoInterface> = ({ title, thumbnail, username, 
                             <b>
                                 <Link href="/user/cttpodcast">
                                     <i className="fa fa-user"></i>
-                                    {author}
+                                    {props.author?.username}
                                 </Link>
                             </b>
                         </p>

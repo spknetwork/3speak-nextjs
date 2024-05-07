@@ -393,8 +393,8 @@ const UserPage: React.FC = () => {
                         />
                       </Box>
 
-                      <VideosTitle title={`${item.title}`} />
-                      <Name username={`${item.username}`} />
+                      <VideosTitle title={item.title} author={item?.author} permlink={item?.permlink} />
+                      <Name username={`${item.author?.username}`} />
                       <Text as="p" margin={"1px"}>
                         a day ago
                       </Text>
