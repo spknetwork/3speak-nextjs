@@ -96,12 +96,12 @@ const VideoTags = () => {
                     borderRadius={'10px'}
                     objectFit="cover"
                     alt="test"
-                    src={`${video.thumbnail}`}
+                    src={video.spkvideo?.thumbnail_url}
                   />
                 </Box>
 
-                <VideosTitle title={`${video.title}`} author={video?.username} permlink={video?.permlink} />
-                <Name username={`${video.username}`} />
+                <VideosTitle title={`${video.title}`} author={video?.author} permlink={video?.permlink} />
+                <Name username={video.author?.username || ''} />
                 <Text as="p" margin={"1px"}>
                   a day ago
                 </Text>

@@ -2,7 +2,10 @@ import { Box, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 
-const Name = (props: {username:string}) => {
+type Props = {
+    username: string;
+}
+const Name = (props: Props) => {
   const router = useRouter();
   const redirectUserPage = () => {
     router.push("/user")
