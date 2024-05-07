@@ -33,6 +33,7 @@ import {
 } from "@/graphql/queries";
 
 const UserPage = () => {
+    //TODO: how we will be getting the user id dynamically
   //get the user videos
   const getMyDetails = useQuery(GET_PROFILE, {
     variables: { id: "thestrollingmind" },
@@ -42,7 +43,10 @@ const UserPage = () => {
     variables: { id: "thestrollingmind" },
   });
 
-  const getMyVideos = getVideoData?.data?.socialFeed?.items;
+
+  const getUserVideos = getVideoData?.data?.socialFeed?.items;
+
+  console.log("get my videos", getUserVideos);
 
   const [showFeed, setShowFeed] = useState<number>(1);
   const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
@@ -51,7 +55,7 @@ const UserPage = () => {
     setShowFeed(number);
   };
 
-  useEffect(() => {
+  useEffect(() => {``
     console.log("isMobile", isMobile);
     if (isMobile) {
       setShowNav(true);
@@ -62,40 +66,7 @@ const UserPage = () => {
     }
   }, [isMobile, showNav]);
 
-  //   const [videos] = useState<VideoInterface[]>([
-  //     {
-  //       thumbnail:
-  //         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVijsuv81Cu6QUxATfwLCchp7dhexyXdq6vj7hSxy7PKLRNLf5CYPBTwYKRDj6dR95KAhZkjwL?format=jpeg&mode=cover&width=340&height=191",
-  //       title:
-  //         "The Adventure trail of Mount Naupa and Mind2Mind Talk with Lakwatserong Engineer",
-  //       username: "thetrollingmind",
-  //     },
-  //     {
-  //       thumbnail:
-  //         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVhbe9xjZvwDJDwq34KonBAhp6aDi5QWVMa8GKtBZHpfb4pz88JsvtNudXgZBf9vd4ahzvcP1p?format=jpeg&mode=cover&width=340&height=191",
-  //       title: "Refreshing Communal Ranch in Bukidnon Philippines",
-  //       username: "thetrollingmind",
-  //     },
-  //     {
-  //       thumbnail:
-  //         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVb4cnggfP19UUoMFibN8JndfBo44LsTNKVZ5tXRYFs7vB9bWocqyN3CFG7xfRFuKAomRBmvQ6?format=jpeg&mode=cover&width=340&height=191",
-  //       title: "Via Crucis at Camari Hill | Lenten Tradition",
-  //       username: "thetrollingmind",
-  //     },
-  //     {
-  //       thumbnail:
-  //         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbFQdnkVpujsZq5ivaUS3RobVsvgoUMDXSTgZCHfbwNsgBSuTKvqmnzt9EUtxERKUQ5963fSE?format=jpeg&mode=cover&width=340&height=191",
-  //       title: "Weekend Adventure- to the Mountain of Kan-irag",
-  //       username: "thetrollingmind",
-  //     },
-  //     {
-  //       thumbnail:
-  //         "https://images.hive.blog/p/99pyU5Ga1kwr5bsMXthzYLbcngN4W2P8NtU9TWTdHC3HaQbjuuRfKKVdjVbFQdnkVpujsZq5ivaUS3RobVsvgoUMDXSTgZCHfbwNsgBSuTKvqmnzt9EUtxERKUQ5963fSE?format=jpeg&mode=cover&width=340&height=191",
-  //       title: "Weekend Adventure- to the Mountain of Kan-irag",
-  //       username: "thetrollingmind",
-  //     },
-  //   ]);
-
+ 
   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
 
@@ -507,8 +478,8 @@ const UserPage = () => {
 
               {showFeed == 5 && <Achievements />}
 
-              {showFeed == 1 &&
-                getMyVideos.map((item: VideoInterface, index: number) => (
+              {showFeed == 1 && getUserVideos &&
+                getUserVideos.map((item: VideoInterface, index: number) => (
                   <Flex
                     direction={"column"}
                     key={index}
@@ -543,7 +514,7 @@ const UserPage = () => {
                             src="https://3speak.tv/img/play.svg"
                             alt="play"
                           ></Image>
-                          <Text as={"span"}>20</Text>
+                          <Text as={"span"}>{}</Text>
                         </Box>
                         <Box
                           width="35px"
@@ -577,7 +548,7 @@ const UserPage = () => {
                         display="flex"
                         justifyContent={"space-between"}
                       >
-                        <Text as={"span"}>12:48</Text>
+                        <Text as={"span"}>{item.spkvideo?.duration}</Text>
                       </Box>
                       <Link href="https://3speak.tv/watch?v=cttpodcast/zjvcobqa">
                         <Image
@@ -589,15 +560,15 @@ const UserPage = () => {
                           maxHeight={"200px"}
                           height="auto"
                           objectFit="cover"
-                          src={`${item.thumbnail}`}
-                          alt="Dan Abramov"
+                          src={item?.spkvideo?.thumbnail_url}
+                          alt="thumbnail url"
                         />
                       </Link>
                     </Box>
                     <Box minHeight={"60px"}>
                       <Link
                         textDecoration={"none"}
-                        href={`/watch?v=${item.username}`}
+                        href={`/watch?v=${item.author?.username}`}
                       >
                         <Text
                           textDecoration={"none"}
@@ -626,13 +597,13 @@ const UserPage = () => {
                           <Flex className="black_col mb-0">
                             <Link href="/user/cttpodcast">
                               <i className="fa fa-user"></i>
-                              {item.username}
+                              {item.author?.username}
                             </Link>
                             <Text mt={1}>
                               <BsDot />
                             </Text>
                             <Flex className="mb-0">
-                              <Text>a day ago</Text>
+                              <Text> a day ago</Text>
                             </Flex>
                           </Flex>
                         </Flex>

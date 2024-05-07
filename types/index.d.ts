@@ -28,16 +28,22 @@ export interface UserDetails {
 
 
 export interface VideoInterface {
-  title: string;
-  username: string;
-  number_views?: number;
-  spkvideo?: any;
-  thumbnail: any;
-  author: string;
+  author?: {
+    username: string;
+  };
+  body: string;
+  created_at: string;
   permlink: string;
+  //TODO: what is this ref 
+  refs: [item: string];
+  spkvideo?: SpkVideoInterface;
+  stats?: {
+    num_votes: number;
+  }
+  title: string;
+  //TODO: Idk if they exists on the api or not 
   index?: number;
   tags?: any;
-  stats?: any;
   price?: number
 }
 
