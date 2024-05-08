@@ -45,6 +45,7 @@ export default function Watch() {
   const permlink = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
     "/"
   )[1];
+  
   const getSuggestionFeed = useQuery(GET_RELATED, {
     variables: { author: author, permlink: permlink },
   });
@@ -133,9 +134,10 @@ export default function Watch() {
               <Comment bgColor={bgColor} colorMode={colorMode} />
             </Box>
           </Box>
-
           {getSuggestionFeed.loading ? (
+            <Flex justifyContent={"center"} alignItems={"center"} h="70vh" w={452}>
             <InfinitySpin width="200" color="#6DC5D7" />
+          </Flex>
           ) : (
             <Suggestions videos={getSuggestionFeed.data.relatedFeed.items} bgColor={bgColor} colorMode={colorMode}/>
           )}

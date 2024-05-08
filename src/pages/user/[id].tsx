@@ -1,145 +1,54 @@
+//TODO: make the video constant size and remove the border color and curve it
+import MainLayout from "@/components/Layouts/main_layout";
 import About from "@/components/user/About";
 import Achievements from "@/components/user/Achievements";
 import Earnings from "@/components/user/Earnings";
 import Livestream from "@/components/user/Livestream";
 import { HamburgerIcon } from "@chakra-ui/icons";
-
 import {
-  Alert,
-  AlertIcon,
   Box,
   Button,
   Flex,
-  Grid,
-  GridItem,
   Image,
   Link,
   ListItem,
   Text,
   UnorderedList,
-  useDisclosure,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 
 import React, { useEffect, useState } from "react";
+import { BiDollar } from "react-icons/bi";
+import { BsDot } from "react-icons/bs";
 import { useMediaQuery } from "react-responsive";
-import { SocialFeedInterface, VideoInterface } from "types";
-import { useRouter } from "next/router";
+import { VideoInterface } from "types";
 import { useQuery } from "@apollo/client";
-import { GET_PROFILE, GET_SOCIAL_FEED_BY_CREATOR } from "@/graphql/queries";
-import { UserInterface } from "types";
-import VideoComponent from "@/components/VideoComponent";
-import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
-import MobileTabs from "@/components/user/MobileTabs";
-import DesktopTabs from "@/components/user/DesktopTabs";
-import { useAppStore } from "@/lib/store";
-import StatsModal from "@/components/Modal/StatsModal";
-import DelegateRCModal from "@/components/Modal/DelegateRCModal";
-import axios from "axios";
-import VideosTitle from "@/components/VideosTitle";
-import Name from "@/components/user/Name";
-import MainLayout from "@/components/Layouts/main_layout";
+import { useRouter } from "next/router";
+import {
+  GET_PROFILE,
+  GET_RELATED,
+  GET_SOCIAL_POST,
+  GET_SOCIAL_FEED_BY_CREATOR,
+} from "@/graphql/queries";
 
-const UserPage: React.FC = () => {
-  const [urlInfo, seturlInfo] = useState<any>(null);
-
-  useEffect(() => {
-    console.log("urlInfo", urlInfo);
-  }, [urlInfo]);
-  const { userDetails } = useAppStore();
-  const [currentUser, setcurrentUser] = useState<any>(null);
-  const {
-    isOpen: isOpenModalStats,
-    onOpen: onOpenModalStats,
-    onClose: onCloseModalStats,
-  } = useDisclosure();
-  const {
-    isOpen: isOpenModalEditDelegate,
-    onOpen: onOpenModalEditDelegate,
-    onClose: onCloseModalEditDelegate,
-  } = useDisclosure();
-
-  useEffect(() => {
-    if (userDetails?.username) {
-      console.log("userDetails?.username?", userDetails?.username);
-      setcurrentUser(userDetails);
-    }
-  }, [userDetails]);
-
-  useEffect(() => {
-    if (currentUser) {
-      console.log("currentUser", currentUser);
-    }
-  }, [currentUser]);
-
+const UserPage = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const author = router.query.id as string
 
-  // Initialize other properties as needed
-  const [userProfile, setuserProfile] = useState<UserInterface>({
-    profile: {
-      about: "",
-      name: "",
-      username: "",
-    },
+  //get the user videos
+  const getMyDetails = useQuery(GET_PROFILE, {
+    variables: { id: author },
   });
 
-  const [videoList, setvideoList] = useState<any>([]);
-
-  // call user graphql here
-  const { loading, error, data } = useQuery(GET_PROFILE, {
-    variables: { id: id },
+  const getVideoData = useQuery(GET_SOCIAL_FEED_BY_CREATOR, {
+    variables: { id: author },
   });
 
-  const {
-    loading: loadingList,
-    error: errorList,
-    data: dataList,
-  } = useQuery(GET_SOCIAL_FEED_BY_CREATOR, {
-    variables: { id: id },
-  });
+  const getUserVideos = getVideoData?.data?.socialFeed?.items;
 
-  const [isCreate, setisCreate] = useState<any>(false);
-
-  const seturlInfoFun = (data: any) => {
-    seturlInfo(data);
-    if (data && data.create) {
-      setisCreate(true);
-    }
-    onOpenModalEditDelegate();
-  };
-  useEffect(() => {
-    if (!loadingList && !errorList && dataList) {
-      console.log("data list", dataList.socialFeed);
-      setvideoList([...dataList.socialFeed.items]);
-      // console.log("videoList",videoList)
-      // setuserProfile(data)
-    }
-    if (errorList) {
-      console.log("error list", errorList);
-    }
-  }, [loadingList, errorList, dataList]);
-
-  useEffect(() => {
-    if (!loading && !error && data) {
-      console.log("data", data);
-      setuserProfile(data);
-    }
-    if (error) {
-      console.log("error", error);
-    }
-  }, [loading, data, error]);
-
-  useEffect(() => {
-    if (videoList) {
-      console.log("videoList", videoList);
-    }
-  }, [videoList]);
-  useEffect(() => {
-    if (userProfile) {
-      console.log("userProfile", userProfile);
-    }
-  }, [userProfile]);
+  console.log("get my videos", getUserVideos);
 
   const [showFeed, setShowFeed] = useState<number>(1);
   const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
@@ -149,6 +58,7 @@ const UserPage: React.FC = () => {
   };
 
   useEffect(() => {
+    ``;
     console.log("isMobile", isMobile);
     if (isMobile) {
       setShowNav(true);
@@ -159,57 +69,22 @@ const UserPage: React.FC = () => {
     }
   }, [isMobile, showNav]);
 
-  const [directDelegations, setDirectDelegations] = useState<any>(null);
-  const list_rc_direct_delegations = async (from: any, to: any, limit: any) => {
-    try {
-      const response = await axios.post("https://api.hive.blog", {
-        jsonrpc: "2.0",
-        id: 1,
-        method: "rc_api.list_rc_direct_delegations",
-        params: {
-          start: [`${userDetails?.username}`, ""],
-          limit: 100,
-        },
-      });
-      return response.data.result;
-    } catch (error) {
-      console.error("Error fetching direct delegations:", error);
-      throw error;
-    }
-  };
-  const rerenderList = () => {
-    const from = userDetails?.username; // Replace with the 'from' account
-    const to = ""; // Replace with the 'to' account
-    const limit = 50;
-    list_rc_direct_delegations(from, to, limit)
-      .then((result: any) => {
-        setDirectDelegations(result);
-      })
-      .catch((error: any) => {
-        console.error("Error fetching direct delegations:", error);
-      });
-  };
+  const { colorMode } = useColorMode();
+  const bgColor = useColorModeValue("white", "gray.800");
+
   return (
     <MainLayout>
-      <div>
-        <Box
-          minHeight={"280px"}
-          position={"relative"}
-          display="flex"
-          justifyContent={"center"}
-        >
-          {userProfile.profile?.images?.cover && (
-            <Image
-              alt="image"
-              src={userProfile.profile.images?.cover}
-              objectFit="cover"
-              objectPosition={"center"}
-              maxHeight="500px"
-              maxWidth={"100%"}
-              height="auto"
-            />
-          )}
-
+      <Box backgroundColor={bgColor}>
+        <Box minHeight={"280px"} position={"relative"} bgColor={bgColor}>
+          <Flex
+            w={"full"}
+            h={"32vh"}
+            backgroundColor={"red"}
+            backgroundImage="url('https://marketplace.canva.com/EAFEUwUPzkY/1/0/1600w/canva-black-modern-vlogger-youtube-banner-voJxGX5HW3Q.jpg')"
+            backgroundSize={"cover"}
+            backgroundPosition="center"
+            backgroundRepeat="no-repeat"
+          ></Flex>
           <Flex
             bottom={"0"}
             left="0"
@@ -219,17 +94,15 @@ const UserPage: React.FC = () => {
             padding="1rem 30px"
             justifyContent={{ base: "center", md: "center", lg: "start" }}
           >
-            {userProfile.profile?.images?.avatar && (
-              <Image
-                alt="image"
-                background={"#fff none repeat scroll 0 0"}
-                src={userProfile.profile.images?.avatar}
-                border={"2px solid #fff"}
-                borderRadius="50px"
-                height={"90px"}
-                width="90px"
-              />
-            )}
+            <Image
+              alt="image"
+              background={"#fff none repeat scroll 0 0"}
+              src="https://images.hive.blog/u/thestrollingmind/avatar"
+              border={"2px solid #fff"}
+              borderRadius="50px"
+              height={"90px"}
+              width="90px"
+            />
             <Link
               textDecoration={"none"}
               backgroundColor="transparent"
@@ -252,9 +125,12 @@ const UserPage: React.FC = () => {
         </Box>
         <Box
           padding={"0 0px "}
-          boxShadow="0 0 11px #ececec"
+          boxShadow={
+            colorMode === "dark" ? "0 0 11px black" : "0 0 11px #ececec"
+          }
           background={"#fff none repeat scroll 0 0!important"}
         >
+          {/* nav */}
           <Box
             padding={"10px"}
             paddingRight="0px"
@@ -266,7 +142,10 @@ const UserPage: React.FC = () => {
             position={"relative"}
             flexFlow="row nowrap"
             flexDirection={{ base: "column", md: "column", lg: "row" }}
+            bgColor={bgColor}
+            color={colorMode === "dark" ? "whitesmoke" : "black"}
           >
+            {/* flexDirection={{base:"column", md: "column", lg:"row"}} */}
             <Flex
               css={css`
                 @media (max-width: 1023px) {
@@ -291,15 +170,7 @@ const UserPage: React.FC = () => {
                 backgroundColor="transparent"
                 textDecoration={"none !important"}
               >
-                {userProfile?.profile?.username &&
-                  userProfile?.profile?.name && (
-                    <label htmlFor="username">
-                      <b>
-                        {userProfile.profile.name} (
-                        {userProfile.profile.username})
-                      </b>
-                    </label>
-                  )}
+                thestrollingmind
               </Link>
               {isMobile && (
                 <Button
@@ -310,105 +181,446 @@ const UserPage: React.FC = () => {
                   <HamburgerIcon boxSize={"3rem"} />
                 </Button>
               )}
-              {currentUser?.username.toLowerCase() ==
-                userProfile?.profile?.username.toLowerCase() && (
-                <Box>
-                  <Alert
-                    onClick={() => onOpenModalStats()}
-                    cursor={"pointer"}
-                    fontSize={"12px"}
-                    marginLeft={"5px"}
-                    width={"80px"}
-                    borderRadius={"10px"}
-                    status="info"
+              {!isMobile && (
+                <Box marginLeft={"10px"}>
+                  {/* marginRight="auto !important" */}
+                  <UnorderedList
+                    width={"100%"}
+                    listStyleType={"none"}
+                    paddingLeft="0"
+                    display={"flex"}
+                    justifyContent={{ base: "start", md: "start", lg: "start" }}
+                    marginBottom={"0px"}
+                    marginLeft={{ base: "0px", md: "0px" }}
+                    flexDirection={{ base: "column", md: "column", lg: "row" }}
                   >
-                    <AlertIcon />
-                    Stats
-                  </Alert>
-                  <StatsModal
-                    list_rc_direct_delegations={list_rc_direct_delegations}
-                    directDelegations={directDelegations}
-                    setDirectDelegations={setDirectDelegations}
-                    seturlInfo={seturlInfoFun}
-                    userDetails={userDetails}
-                    isOpenModalStats={isOpenModalStats}
-                    onCloseModalStats={onCloseModalStats}
-                  />
-                  <DelegateRCModal
-                    rerenderList={rerenderList}
-                    isCreate={isCreate}
-                    selectedUser={urlInfo}
-                    isOpenModalEditDelegate={isOpenModalEditDelegate}
-                    onCloseModalEditDelegate={onCloseModalEditDelegate}
-                  />
+                    <ListItem>
+                      <Link
+                        href="#"
+                        _hover={{
+                          // borderBottom: "2px solid red",npm i react-go   s
+                          color: `${
+                            colorMode === "dark" ? "whitesmoke" : "black"
+                          }`,
+                          backgroundColor: "#4a5568",
+                        }}
+                        _focus={{
+                          // borderBottom: "2px solid red",
+                          color: `${"white"} `,
+                        }}
+                        color={colorMode === "dark" ? "whitesmoke" : "black"}
+                        borderColor={"red"}
+                        textDecoration="none"
+                        borderBottom={showFeed == 1 ? "2px solid red" : ""}
+                        display={"block"}
+                        margin="0 7px"
+                        padding={"14px 7px"}
+                        borderRadius={"10px 10px 0px 0px"}
+                        onClick={() => updateShowFeed(1)}
+                      >
+                        Videos
+                      </Link>
+                    </ListItem>
+                    {/* <ListItem>
+                      <Link
+                        href="#"
+                        _hover={{
+                          borderBottom: "2px solid red",
+                          color: `${"black"} `,
+                        }}
+                        _focus={{
+                          color: `${"black"} `,
+                        }}
+                        color={showFeed == 2 ? "black" : "rgba(0,0,0,0.7)"}
+                        borderColor={"red"}
+                        textDecoration="none"
+                        borderBottom={showFeed == 2 ? "2px solid red" : ""}
+                        display={"block"}
+                        margin="0 7px"
+                        padding={"14px 0 !important"}
+                        onClick={() => updateShowFeed(2)}
+                      >
+                        Earnings
+                      </Link>
+                    </ListItem> */}
+                    <ListItem>
+                      <Link
+                        href="#"
+                        _hover={{
+                          // borderBottom: "2px solid red",npm i react-mentions
+                          color: `${
+                            colorMode === "dark" ? "whitesmoke" : "black"
+                          }`,
+                          backgroundColor: "#4a5568",
+                        }}
+                        _focus={{
+                          // borderBottom: "2px solid red",
+                          color: `${"white"} `,
+                        }}
+                        color={colorMode === "dark" ? "whitesmoke" : "black"}
+                        borderColor={"red"}
+                        textDecoration="none"
+                        borderBottom={showFeed == 1 ? "2px solid red" : ""}
+                        display={"block"}
+                        margin="0 7px"
+                        padding={"14px 7px"}
+                        borderRadius={"10px 10px 0px 0px"}
+                        onClick={() => updateShowFeed(3)}
+                      >
+                        About
+                      </Link>
+                    </ListItem>
+
+                    {/* <ListItem>
+                      <Link
+                        href="#"
+                        _hover={{
+                          borderBottom: "2px solid red",
+                          color: `${"black"} `,
+                        }}
+                        _focus={{
+                          color: `${"black"} `,
+                        }}
+                        color={showFeed == 5 ? "black" : "rgba(0,0,0,0.7)"}
+                        borderColor={"red"}
+                        textDecoration="none"
+                        borderBottom={showFeed == 5 ? "2px solid red" : ""}
+                        display={"block"}
+                        margin="0 7px"
+                        padding={"14px 0 !important"}
+                        onClick={() => updateShowFeed(5)}
+                      >
+                        Achievements
+                      </Link>
+                    </ListItem> */}
+                  </UnorderedList>
                 </Box>
               )}
-              <DesktopTabs
-                isMobile={isMobile}
-                showFeed={showFeed}
-                updateShowFeed={updateShowFeed}
-              />
             </Flex>
-
+            {/* <Link
+            href="#"
+            fontSize={"16px"}
+            fontWeight="700"
+            transition={"all 0.2s"}
+            backgroundColor="transparent"
+            textDecoration={"none !important"}
+          >
+            thestrollingmind
+          </Link> */}
             {!showNav && (
-              <MobileTabs
-                isMobile={isMobile}
-                showFeed={showFeed}
-                updateShowFeed={updateShowFeed}
-              />
+              <Box
+                display={"flex"}
+                flexBasis="auto"
+                flexGrow={"1"}
+                alignItems="center"
+                width={{ base: "100%", md: "100%" }}
+                flexDirection={{ base: "column", md: "column", lg: "row" }}
+              >
+                {isMobile && (
+                  <Box
+                    width={"100%"}
+                    paddingLeft="0"
+                    display={"flex"}
+                    justifyContent={{ base: "start", md: "start", lg: "start" }}
+                    marginBottom={"0px"}
+                    marginLeft={{ base: "0px", md: "0px" }}
+                    flexDirection={{ base: "column", md: "column", lg: "row" }}
+                  >
+                    {/* marginRight="auto !important" */}
+                    <UnorderedList
+                      width={"100%"}
+                      listStyleType={"none"}
+                      paddingLeft="0"
+                      display={"flex"}
+                      justifyContent={{
+                        base: "start",
+                        md: "start",
+                        lg: "start",
+                      }}
+                      marginBottom={"0px"}
+                      marginLeft={{ base: "0px", md: "0px" }}
+                      flexDirection={{
+                        base: "column",
+                        md: "column",
+                        lg: "row",
+                      }}
+                    >
+                      <ListItem>
+                        <Link
+                          href="#"
+                          _hover={{
+                            borderBottom: "2px solid red",
+                            color: `${"black"} `,
+                          }}
+                          _focus={{
+                            color: `${"black"} `,
+                          }}
+                          color={showFeed == 1 ? "black" : "rgba(0,0,0,0.7)"}
+                          borderColor={"red"}
+                          textDecoration="none"
+                          borderBottom={showFeed == 1 ? "2px solid red" : ""}
+                          display={"block"}
+                          margin="0 7px"
+                          padding={"14px 0 !important"}
+                          onClick={() => updateShowFeed(1)}
+                        >
+                          Videos
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link
+                          href="#"
+                          _hover={{
+                            borderBottom: "2px solid red",
+                            color: `${"black"} `,
+                          }}
+                          _focus={{
+                            color: `${"black"} `,
+                          }}
+                          color={showFeed == 2 ? "black" : "rgba(0,0,0,0.7)"}
+                          borderColor={"red"}
+                          textDecoration="none"
+                          borderBottom={showFeed == 2 ? "2px solid red" : ""}
+                          display={"block"}
+                          margin="0 7px"
+                          padding={"14px 0 !important"}
+                          onClick={() => updateShowFeed(2)}
+                        >
+                          Earnings
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link
+                          href="#"
+                          _hover={{
+                            borderBottom: "2px solid red",
+                            color: `${"black"} `,
+                          }}
+                          _focus={{
+                            color: `${"black"} `,
+                          }}
+                          color={showFeed == 3 ? "black" : "rgba(0,0,0,0.7)"}
+                          borderColor={"red"}
+                          textDecoration="none"
+                          borderBottom={showFeed == 3 ? "2px solid red" : ""}
+                          display={"block"}
+                          margin="0 7px"
+                          padding={"14px 0 !important"}
+                          onClick={() => updateShowFeed(3)}
+                        >
+                          About
+                        </Link>
+                      </ListItem>
+
+                      <ListItem>
+                        <Link
+                          href="#"
+                          _hover={{
+                            borderBottom: "2px solid red",
+                            color: `${"black"} `,
+                          }}
+                          _focus={{
+                            color: `${"black"} `,
+                          }}
+                          color={showFeed == 5 ? "black" : "rgba(0,0,0,0.7)"}
+                          borderColor={"red"}
+                          textDecoration="none"
+                          borderBottom={showFeed == 5 ? "2px solid red" : ""}
+                          display={"block"}
+                          margin="0 7px"
+                          padding={"14px 0 !important"}
+                          onClick={() => updateShowFeed(5)}
+                        >
+                          Achievements
+                        </Link>
+                      </ListItem>
+                    </UnorderedList>
+                  </Box>
+                )}
+                <Box
+                  marginRight={{ base: "0px", md: "0px", lg: "10px" }}
+                  display={"flex"}
+                  justifyContent={{ base: "start", md: "start", lg: "end" }}
+                  width={{ base: "100%", md: "100%" }}
+                >
+                  <Button
+                    textTransform={"uppercase"}
+                    border="none"
+                    backgroundColor={
+                      colorMode === "dark" ? "#4a5568" : "#D3D3D3"
+                    }
+                    color={colorMode === "dark" ? "white" : "black"}
+                    boxShadow={
+                      colorMode === "dark"
+                        ? "0  1px 4px black"
+                        : "0 1px 4px white"
+                    }
+                    transition="all 0.4s"
+                    variant={"outline"}
+                    colorScheme="white"
+                    fontWeight={"100"}
+                  >
+                    Follow{" "}
+                    <Text margin={"0px"} marginLeft="5px" fontWeight={"bold"}>
+                      66.5k
+                    </Text>
+                  </Button>
+                </Box>
+              </Box>
             )}
           </Box>
         </Box>
-        <Box padding={"15px"}>
-          <Box>
-            <Box className="row">
+        <Flex padding={"15px"} justifyContent={"center"}>
+          <Flex justifyContent="center">
+            <Flex className="row" justifyContent={"center"}>
               {showFeed == 2 && <Earnings />}
-              {showFeed == 3 && <About profile={userProfile.profile} />}
+              {showFeed == 3 && (
+                // <About profile={} />
+                <p>test</p>
+              )}
 
               {showFeed == 4 && <Livestream />}
 
               {showFeed == 5 && <Achievements />}
-              <Grid
-                padding={"20px"}
-                templateColumns={{
-                  base: "repeat(1, 1fr)",
-                  md: "repeat(2, 1fr)",
-                  lg: "repeat(2, 1fr)",
-                  xl: "repeat(5, 1fr)",
-                }}
-                gap={10}
-              >
-                {showFeed == 1 &&
-                  videoList.length > 0 &&
-                  videoList.map((item: VideoInterface, index: number) => (
-                    <GridItem w="100%" h="100%" key={index}>
-                      <Box height="13em !important" width="100% !important">
-                        <Image
-                          height="13em !important"
-                          width="100% !important"
-                          borderRadius={"10px"}
-                          objectFit="cover"
-                          alt="test"
-                          src={`${item.spkvideo?.thumbnail_url}`}
-                        />
-                      </Box>
 
-                      <VideosTitle title={item.title} author={item?.author} permlink={item?.permlink} />
-                      <Name username={`${item.author?.username}`} />
-                      <Text as="p" margin={"1px"}>
-                        a day ago
-                      </Text>
-                      <Text fontWeight={"bold"} as="p">
-                        $ 10.10
-                      </Text>
-                    </GridItem>
-                    // <VideoComponent  index={index} thumbnail={item.spkvideo?.thumbnail_url} title={item.title} username={item.username} number_views={item.number_views} key={index} author={item?.author?.username} />
-                  ))}
-              </Grid>
-            </Box>
-          </Box>
-        </Box>
-      </div>
+              {showFeed == 1 &&
+                getUserVideos &&
+                getUserVideos.map((item: VideoInterface, index: number) => (
+                  <Flex
+                    direction={"column"}
+                    key={index}
+                    className="col-xl-2 col-lg-3  col-6 p-2 mb-3"
+                  >
+                    <Box
+                      id="parent"
+                      opacity={"1"}
+                      position="relative"
+                      transition={"all .6s ease-in-out"}
+                      textAlign="center"
+                    >
+                      <Flex
+                        id="widget"
+                        position={"absolute"}
+                        left={"5px"}
+                        bottom={"5px"}
+                      >
+                        <Box
+                          width="35px"
+                          paddingX={1}
+                          background={"#e8e8e8 none repeat scroll 0 0"}
+                          borderRadius="2px"
+                          color="#000"
+                          fontSize={"11px"}
+                          fontWeight="500"
+                          marginX={1}
+                          display="flex"
+                          justifyContent={"space-between"}
+                        >
+                          <Image
+                            src="https://3speak.tv/img/play.svg"
+                            alt="play"
+                          ></Image>
+                          <Text as={"span"}>{}</Text>
+                        </Box>
+                        <Box
+                          width="35px"
+                          paddingX={1}
+                          background={"#e8e8e8 none repeat scroll 0 0"}
+                          borderRadius="2px"
+                          color="#000"
+                          marginX={1}
+                          fontSize={"11px"}
+                          fontWeight="500"
+                          display="flex"
+                          justifyContent={"space-between"}
+                          alignItems="center"
+                        >
+                          <BiDollar />
+                          <Text as={"span"}>10</Text>
+                        </Box>
+                      </Flex>
+                      <Box
+                        id="timestamp"
+                        right={"5px"}
+                        width="auto"
+                        background={"#e8e8e8 none repeat scroll 0 0"}
+                        borderRadius="2px"
+                        bottom={"5px"}
+                        color="#000"
+                        fontSize={"11px"}
+                        fontWeight="500"
+                        padding={"0 6px"}
+                        position="absolute"
+                        display="flex"
+                        justifyContent={"space-between"}
+                      >
+                        <Text as={"span"}>{item.spkvideo?.duration}</Text>
+                      </Box>
+                      <Link href="https://3speak.tv/watch?v=cttpodcast/zjvcobqa">
+                        <Image
+                          className="img-fluid"
+                          borderColor={"transparent!important"}
+                          background="linear-gradient(135deg,#171b20 1%,#343a40 100%)"
+                          width={"100% !important"}
+                          padding="5px"
+                          maxHeight={"200px"}
+                          height="auto"
+                          objectFit="cover"
+                          src={item?.spkvideo?.thumbnail_url}
+                          alt="thumbnail url"
+                        />
+                      </Link>
+                    </Box>
+                    <Box minHeight={"60px"}>
+                      <Link
+                        textDecoration={"none"}
+                        href={`/watch?v=${item.author?.username}`}
+                      >
+                        <Text
+                          textDecoration={"none"}
+                          fontSize={"13px"}
+                          overflowWrap="break-word"
+                          textOverflow={"ellipsis"}
+                          overflow="hidden"
+                          maxHeight={"2.8em"}
+                          lineHeight="1.4em"
+                          display={"block"}
+                          marginTop="0.5rem !important"
+                          fontWeight={"500"}
+                        >
+                          {item.title}
+                        </Text>
+                      </Link>
+                      <Box
+                        width={"calc( 100% - 1rem )"}
+                        display="block"
+                        position={"unset"}
+                      >
+                        <Flex
+                          justifyContent={"justify !important"}
+                          alignItems="center"
+                        >
+                          <Flex className="black_col mb-0">
+                            <Link href="/user/cttpodcast">
+                              <i className="fa fa-user"></i>
+                              {item.author?.username}
+                            </Link>
+                            <Text mt={1}>
+                              <BsDot />
+                            </Text>
+                            <Flex className="mb-0">
+                              <Text> a day ago</Text>
+                            </Flex>
+                          </Flex>
+                        </Flex>
+                      </Box>
+                    </Box>
+                  </Flex>
+                ))}
+            </Flex>
+          </Flex>
+        </Flex>
+      </Box>
     </MainLayout>
   );
 };

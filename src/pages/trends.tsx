@@ -35,17 +35,11 @@ const TrendingPage = () => {
               Trending Content
             </Text>
           </Box>
-          <Text>
-            <Switch
-              isChecked={colorMode === "dark"}
-              onChange={toggleColorMode}
-            />{" "}
-            {colorMode === "dark" && <MoonIcon />}{" "}
-            {colorMode !== "dark" && <SunIcon />}
-          </Text>
         </Flex>
         {getTrendingFeed.loading ? (
-          <InfinitySpin width="200" color="#6DC5D7" />
+         <Flex justifyContent={"center"} alignItems={"center"} h="70vh">
+         <InfinitySpin width="200" color="#6DC5D7" />
+       </Flex>
         ) : (
           <FeedGrid videos={getTrendingFeed.data.trendingFeed.items} bgColor={bgColor} colorMode={colorMode}/>
         )}

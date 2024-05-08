@@ -95,6 +95,9 @@ const FeedGridItem = ({ video }: Props) => {
           borderRadius="2px"
           padding={"0px 6px"}
         >
+        {/* if(!spkvideo){
+            return null
+        } */}
           {toHHMMSS(video.spkvideo.duration)}
         </Box>
         <Box height="13em !important" width="100% !important">

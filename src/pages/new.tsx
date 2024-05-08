@@ -43,7 +43,9 @@ const NewContentPage = () => {
           </Text>
         </Flex>
         {getFeed.loading ? (
+          <Flex justifyContent={"center"} alignItems={"center"} h="70vh">
           <InfinitySpin width="200" color="#6DC5D7" />
+        </Flex>
         ) : (
           <FeedGrid videos={(getFeed.data.socialFeed).items} colorMode={colorMode} bgColor={bgColor} />
         )}

@@ -111,6 +111,7 @@ const base_mentions = [
 const CreatePost: React.FC = () => {
   const BASE_URL = "https://staging.3speak.tv";
   const UPLOAD_URL = "http://127.0.0.1:1080";
+  
 
   //setting a global for the hashtags
   const limitHashtags = 150;
