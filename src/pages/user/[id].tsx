@@ -36,6 +36,9 @@ import {
 import FeedGridItem from "@/components/feedgrid/FeedGridItem";
 import Video from "@/components/feedgrid/FeedGrid";
 import FeedGrid from "@/components/feedgrid/FeedGrid";
+import { InfinitySpin } from "react-loader-spinner";
+
+//TODO: GET_SOCIAL_FEED_BY_CREATOR find the hive_rewards 
 
 const UserPage = () => {
   const router = useRouter();
@@ -427,18 +430,21 @@ const UserPage = () => {
                 // <About profile={} />
                 <p>test</p>
               )}
-
               {showFeed == 4 && <Livestream />}
-
               {showFeed == 5 && <Achievements />}
-
               {showFeed == 1 && (
+                getVideoData.loading ? (
+                    <Flex justifyContent={"center"} alignItems={"center"} h="70vh">
+                    <InfinitySpin width="200" color="#6DC5D7" />
+                  </Flex>
+                ) : (
                 <FeedGrid
                   videos={getUserVideos}
                   bgColor={bgColor}
                   colorMode={colorMode}
                 />
-              )}
+              ))}
+            
             </Flex>
           </Flex>
         </Flex>

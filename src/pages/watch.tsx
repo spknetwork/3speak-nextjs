@@ -1,3 +1,5 @@
+
+//TODO: To fix this page  
 import Video from "@/components/watch/video/Video";
 import {
   Box,
@@ -58,7 +60,7 @@ export default function Watch() {
     variables: { author, permlink },
   });
 
-  const getVideo = getSocialPost?.data?.socialPost;
+  const getVideo: VideoInterface = getSocialPost?.data?.socialPost;
 
   return (
     <MainLayout>
@@ -87,7 +89,7 @@ export default function Watch() {
                 paddingRight={"0px"}
                 color={colorMode === "dark" ? "white" : "dark"}
               >
-               {getVideo && <VideoPlayer getVideo={getVideo} />}
+                 <VideoPlayer getVideo={getVideo} />
                 <Box>
                   <Flex flexDirection={"column"} bgColor={bgColor}>
                     <Box bgColor={bgColor}>
@@ -106,27 +108,6 @@ export default function Watch() {
                 </Box>
               </Box>
             </Box>
-            {/* community and profile comps  */}
-            <Box
-              marginBottom={"30px"}
-              borderRadius={4}
-              boxShadow="base"
-              mr={2}
-              flex="1"
-            >
-              <Profile profile={profile} getVideo={getVideo} bgColor={bgColor} colorMode={colorMode} />
-            </Box>
-
-            <Box
-              marginBottom={"30px"}
-              borderRadius={4}
-              boxShadow="base"
-              mr={2}
-              flex="1"
-              >
-              <Community bgColor={bgColor} colorMode={colorMode} />
-            </Box>
-
             <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg={bgColor}>
             <About  getVideo={getVideo} bgColor={bgColor} colorMode={colorMode} />
             </Box>

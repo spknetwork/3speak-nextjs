@@ -1,7 +1,14 @@
 import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { VideoInterface } from "types";
 
-const Title = ({getVideo, ...props}:any) => {
+type Props = {
+    getVideo: VideoInterface;
+    bgColor: string;
+    colorMode: string;
+}
+
+const Title = ({getVideo, bgColor, colorMode}:Props) => {
   const [videoUrl, setvideoUrl] = useState<any>(null)
   const [videoUrlSelected, setvideoUrlSelected] = useState<any>(null)
   useEffect(() => {
@@ -14,8 +21,8 @@ const Title = ({getVideo, ...props}:any) => {
   useEffect(() => {
     if (getVideo) {
     // console.log("getVideo in player 3", getVideo.spkvideo.play_url)
-    if (getVideo.spkvideo.play_url) {
-      const url = getVideo.spkvideo.play_url
+    if (getVideo?.spkvideo?.play_url) {
+      const url = getVideo?.spkvideo?.play_url
       // Splitting the string by "ipfs://" and getting the first result
       const splitResult = url.split("ipfs://");
 
@@ -25,7 +32,7 @@ const Title = ({getVideo, ...props}:any) => {
       setvideoUrlSelected("https://ipfs-3speak.b-cdn.net/ipfs/"+result)
     }
     // console.log("ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8")
-    setvideoUrl(getVideo.spkvideo)
+    setvideoUrl(getVideo?.spkvideo)
     }
   },[getVideo])
 
@@ -35,19 +42,19 @@ const Title = ({getVideo, ...props}:any) => {
   // "https://ipfs-3speak.b-cdn.net/ipfs/QmWoqdoLtsF4obB5sfSUc3GEZGY87TmcJrt6JpH8bJqsuK/manifest.m3u8" thumbnail_url
   // "https://ipfs-3speak.b-cdn.net/ipfs/bafybeibqxbf652lmfbdf7zoht3pbhkx4m76agdwn5mnw33vjhlxrzvccoe/"
   // `${videoUrl.play_url}` ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8
-  if (!videoUrl) {
-    return <Box>getting video details</Box>;
-  }
+//   if (!videoUrl) {
+//     return <Box>getting video details</Box>;
+//   }
   return (
     <Text
       fontSize={"20px"}
-      color={props.colorMode==="dark"? "white": "dark"}
+      color={colorMode==="dark"? "white": "dark"}
       fontWeight={"500"}
       textTransform="initial"
       marginTop={"0.5rem"}
       lineHeight={"38px"}
     >
-      {getVideo.title}
+      {getVideo?.title}
     </Text>
   );
 };

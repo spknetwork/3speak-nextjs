@@ -36,7 +36,7 @@ const FeedGrid = ({ videos, bgColor, colorMode }: FeedGridProps) => {
       color={colorMode === "light" ? "black" : "white"}
     >
       {videos.map((video: Video, index: number) => (
-        <FeedGridItem video={video} key={index}  />
+        <FeedGridItem video={video} key={index} />
       ))}
     </Grid>
   );

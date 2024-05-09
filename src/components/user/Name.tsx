@@ -12,7 +12,7 @@ const Name = (props: Props) => {
   }
   return (
     <div>
-      <Text cursor={'pointer'} onClick={() => redirectUserPage()} margin={'1px'} fontWeight={"bold"} >
+      <Text cursor={'pointer'} onClick={() => redirectUserPage()} margin={'1px'} fontWeight={"bold"} mr={4} >
         {props.username}
       </Text>
     </div>

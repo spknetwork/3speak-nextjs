@@ -1,59 +1,58 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ReactJWPlayer from "react-jw-player";
+import { InfinitySpin } from "react-loader-spinner";
+import { VideoInterface } from "types";
+
 
 type Props = {
-    // author: string;
-    // permlink: string;
-    getVideo: {
-        spkvideo: {
-            play_url: string;
-            thumbnail_url: string;
-        }
-    }
-}
+  getVideo: VideoInterface;
+};
 
-const VideoPlayer = ({getVideo}: Props) => {
+const VideoPlayer = ({ getVideo }: Props) => {
+  const [videoUrl, setvideoUrl] = useState<
+    Props["getVideo"]["spkvideo"] | null
+  >(null);
+  const [videoUrlSelected, setvideoUrlSelected] = useState<string | null>(null);
 
-  const [videoUrl, setvideoUrl] = useState<Props["getVideo"]["spkvideo"] | null>(null)
-  const [videoUrlSelected, setvideoUrlSelected] = useState<string | null>(null)
-
+  //loading state:
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (videoUrl) {
-      // console.log("setvideoUrl4 final step",videoUrl)
+    if (!videoUrl) {
+      setLoading(true);
     }
-   
-  },[videoUrl])
+  }, [videoUrl]);
 
   useEffect(() => {
     if (getVideo) {
-    // console.log("getVideo in player 3", getVideo)
-    if (getVideo.spkvideo.play_url) {
-      const url = getVideo.spkvideo.play_url
-      // Splitting the string by "ipfs://" and getting the first result
-      const splitResult = url.split("ipfs://");
+      // console.log("getVideo in player 3", getVideo)
+      if (getVideo?.spkvideo?.play_url) {
+        const url = getVideo.spkvideo.play_url;
+        // Splitting the string by "ipfs://" and getting the first result
+        const splitResult = url.split("ipfs://");
 
-      // The first element after splitting might be an empty string if the string starts with "ipfs://"
-      // So, we check if the first element is empty and select the second element in that case
-      const result = splitResult[0] === "" ? splitResult[1] : splitResult[0];
-      setvideoUrlSelected("https://ipfs-3speak.b-cdn.net/ipfs/"+result)
+        // The first element after splitting might be an empty string if the string starts with "ipfs://"
+        // So, we check if the first element is empty and select the second element in that case
+        const result = splitResult[0] === "" ? splitResult[1] : splitResult[0];
+        setvideoUrlSelected("https://ipfs-3speak.b-cdn.net/ipfs/" + result);
+      }
+      // console.log("ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8")
+      setvideoUrl(getVideo?.spkvideo);
     }
-    // console.log("ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8")
-    setvideoUrl(getVideo.spkvideo)
-    }
-  },[getVideo])
+  }, [getVideo]);
 
   useEffect(() => {
-    console.log("videoUrlSelected", videoUrlSelected)
-  },[videoUrlSelected])
-  // "https://ipfs-3speak.b-cdn.net/ipfs/QmWoqdoLtsF4obB5sfSUc3GEZGY87TmcJrt6JpH8bJqsuK/manifest.m3u8" thumbnail_url
-  // "https://ipfs-3speak.b-cdn.net/ipfs/bafybeibqxbf652lmfbdf7zoht3pbhkx4m76agdwn5mnw33vjhlxrzvccoe/"
-  // `${videoUrl.play_url}` ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8
-  if (!videoUrl) {
-    return <Box>getting video details</Box>;
-  }
+    console.log("videoUrlSelected", videoUrlSelected);
+  }, [videoUrlSelected]);
 
+  if (!videoUrl) {
+    return (
+        <Flex justifyContent={"center"} alignItems={"center"} h={"70vh"} w={652} backgroundColor={"black"}>
+          <InfinitySpin width="200" color="#6DC5D7" />
+        </Flex>
+    );
+  }
 
   return (
     <ReactJWPlayer
@@ -62,12 +61,8 @@ const VideoPlayer = ({getVideo}: Props) => {
         playbackRateControls: true,
         autostart: false,
       }}
-      file={
-        `${videoUrlSelected}`
-      }
-      image={
-        `${videoUrl.thumbnail_url}`
-      }
+      file={`${videoUrlSelected}`}
+      image={`${videoUrl.thumbnail_url}`}
       id="botr_UVQWMA4o_kGWxh33Q_div"
       playerId={"1242424242"}
       playerScript="https://cdn.jwplayer.com/libraries/HT7Dts3H.js"

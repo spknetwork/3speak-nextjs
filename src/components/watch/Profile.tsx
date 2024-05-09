@@ -4,13 +4,14 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Button, Flex, Link, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { VideoInterface } from "types";
 
 
 type Props = {
   bgColor: string,
   colorMode: string,
   profile: any,
-  getVideo: any
+  getVideo: VideoInterface
 }
 
 const Profile = ({profile, getVideo, ...props}: Props) => {
@@ -42,7 +43,7 @@ const Profile = ({profile, getVideo, ...props}: Props) => {
     useEffect(() => {
       if (getVideo) {
         // console.log("getVideo in player 3", getVideo.spkvideo.play_url)
-        if (getVideo.spkvideo.play_url) {
+        if (getVideo?.spkvideo?.play_url) {
           const url = getVideo.spkvideo.play_url
           // Splitting the string by "ipfs://" and getting the first result
           const splitResult = url.split("ipfs://");
@@ -63,9 +64,9 @@ const Profile = ({profile, getVideo, ...props}: Props) => {
     // "https://ipfs-3speak.b-cdn.net/ipfs/QmWoqdoLtsF4obB5sfSUc3GEZGY87TmcJrt6JpH8bJqsuK/manifest.m3u8" thumbnail_url
     // "https://ipfs-3speak.b-cdn.net/ipfs/bafybeibqxbf652lmfbdf7zoht3pbhkx4m76agdwn5mnw33vjhlxrzvccoe/"
     // `${videoUrl.play_url}` ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8
-    if (!videoUrl) {
-      return <Box>getting video details</Box>;
-    }
+    // if (!videoUrl) {
+    //   return <Box>getting video details</Box>;
+    // }
   
     const gotoProfile = () => {
       router.push(`/user/${profile?.username}`)
@@ -81,30 +82,11 @@ const Profile = ({profile, getVideo, ...props}: Props) => {
             src={profile?.images?.avatar}
           />
           <Flex flexDirection={"column"} className="ms-2">
-            <Link fontSize={'15px'}  fontWeight={"bolder"}>{getVideo.author.username}</Link>
+            <Link fontSize={'15px'}  fontWeight={"bolder"}>{getVideo?.author?.username}</Link>
             <Box display={'flex'} >
               <Text color={'grey'} fontSize={'12px'} marginRight='10px'>followers {followers_count}</Text>
               <Text color={'grey'} fontSize={'12px'}>following {followings_count}</Text>
             </Box>
-            {/* <Flex justifyContent={"start"}>
-              <Box bg="white" p={4} paddingLeft="0px" color="black">
-                <Text marginBottom={"10px"} fontSize={"11px"}>
-                  Community
-                </Text>
-                <Flex alignItems={"center"}>
-                  <Avatar
-                    size={"sm"}
-                    name="Dan Abrahmov"
-                    src="https://bit.ly/tioluwani-kolawole"
-                  />
-                  <Flex flexDirection={"column"} className="ms-2">
-                    <Link fontWeight={"bolder"} fontSize={"11px"}>
-                      Humanitas
-                    </Link>
-                  </Flex>
-                </Flex>
-              </Box>
-            </Flex> */}
           </Flex>
         </Flex>
       </Box>
@@ -137,7 +119,6 @@ const Profile = ({profile, getVideo, ...props}: Props) => {
         >
           DONATE CRYPTO
         </Button>
-        {/* <Button colorScheme="red">Buzz</Button> */}
       </Flex>
     </Flex>
   );

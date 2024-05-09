@@ -1,7 +1,6 @@
 import { Box, Flex, Image, Link, Text } from "@chakra-ui/react";
 import React from "react";
 import { MdPlayArrow } from "react-icons/md";
-import { BsDot } from "react-icons/bs";
 import { useRouter } from "next/router";
 import { BiDollar } from "react-icons/bi";
 import { useAppStore } from "@/lib/store";

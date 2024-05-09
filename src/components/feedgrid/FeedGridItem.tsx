@@ -1,14 +1,15 @@
-//TODO: duration doesnt exists in type video
 import React from "react";
-import { Box, GridItem, Image, Link, Text } from "@chakra-ui/react";
+import { Box, GridItem, Image, Link, Text, Flex } from "@chakra-ui/react";
 import { MdOutlineThumbUp } from "react-icons/md";
 import { BiDollar } from "react-icons/bi";
-
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
 import { Video } from "./Video";
 import { VideoInterface } from "types";
 import moment from "moment";
+import { InfinitySpin } from "react-loader-spinner";
+import { useColorMode } from "@chakra-ui/react";
+import { BsDot } from "react-icons/bs";
 
 // https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript/34841026#34841026
 var toHHMMSS = (secs: number) => {
@@ -25,6 +26,7 @@ var toHHMMSS = (secs: number) => {
 
 type Props = {
   video: VideoInterface;
+  key: number;
 };
 
 //making a function for redirecting to the watch page once clicked on video thumbnail
@@ -32,15 +34,26 @@ const redirect = (permlink: string, username: string) => {
   window.location.href = `/watch?v=${username}/${permlink}`;
 };
 
-
-
 const FeedGridItem = ({ video }: Props) => {
+  const { colorMode, toggleColorMode } = useColorMode();
+
   if (!video) {
-    return <div>Loading...</div>; // TODO make pretty
+    return (
+      <Box justifyContent={"center"} alignItems={"center"} h="70vh" w={452}>
+        <InfinitySpin width="200" color="#6DC5D7" />
+      </Box>
+    );
   }
 
   return (
-    <GridItem w="100%" h="100%" >
+    <GridItem
+      w="100%"
+      h="100%"
+      p={1}
+      m={1}
+      backgroundColor={colorMode === "dark" ? "gray.900" : "white"}
+      borderRadius={"10px"}
+    >
       <Box cursor={"pointer"} position="relative">
         <Box
           display={"flex"}
@@ -59,7 +72,7 @@ const FeedGridItem = ({ video }: Props) => {
         >
           <MdOutlineThumbUp size="15px" color="grey" />
           <Text as="span" fontSize="11px" fontWeight={"bold"}>
-            {`${video?.stats?.num_votes}`}
+            {video?.stats?.num_votes}
           </Text>
         </Box>
 
@@ -99,23 +112,25 @@ const FeedGridItem = ({ video }: Props) => {
           borderRadius="2px"
           padding={"0px 6px"}
         >
-        {/* if(!spkvideo){
+          {/* if(!spkvideo){
             return null
         } */}
-        {toHHMMSS(video?.spkvideo?.duration ?? 0)}
+          {toHHMMSS(video?.spkvideo?.duration ?? 0)}
         </Box>
         <Box height="13em !important" width="100% !important">
-            <Image
-                height="13em !important"
-                width="100% !important"
-                borderRadius={"10px"}
-                objectFit="cover"
-                alt="test"
-                src={`https://images.hive.blog/320x0/${video.spkvideo?.thumbnail_url ?? ''}`}
-                onClick={() => {
-                    redirect(video.permlink, video?.author?.username ?? '');
-                }}
-            />
+          <Image
+            height="13em !important"
+            width="100% !important"
+            borderRadius={"10px"}
+            objectFit="cover"
+            alt="test"
+            src={`https://images.hive.blog/320x0/${
+              video.spkvideo?.thumbnail_url ?? ""
+            }`}
+            onClick={() => {
+              redirect(video.permlink, video?.author?.username ?? "");
+            }}
+          />
         </Box>
       </Box>
       <VideosTitle
@@ -123,10 +138,11 @@ const FeedGridItem = ({ video }: Props) => {
         author={video.author}
         permlink={`${video.permlink}`}
       />
-      <Name username={`${video?.author?.username ?? ''}`} />
-      <Text as="p" margin={"1px"}>
-        {moment(video.created_at).fromNow()}
-      </Text>
+      <Flex>
+      <Name username={`${video?.author?.username ?? ""}`} />
+       <BsDot />
+      <Text as="p">{moment(video.created_at).fromNow()}</Text>
+      </Flex>
     </GridItem>
   );
 };
