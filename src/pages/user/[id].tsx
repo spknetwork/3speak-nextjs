@@ -1,4 +1,6 @@
 //TODO: make the video constant size and remove the border color and curve it
+//TODO: fill the necessary details
+
 import MainLayout from "@/components/Layouts/main_layout";
 import About from "@/components/user/About";
 import Achievements from "@/components/user/Achievements";
@@ -18,7 +20,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
-
 import React, { useEffect, useState } from "react";
 import { BiDollar } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
@@ -32,10 +33,13 @@ import {
   GET_SOCIAL_POST,
   GET_SOCIAL_FEED_BY_CREATOR,
 } from "@/graphql/queries";
+import FeedGridItem from "@/components/feedgrid/FeedGridItem";
+import Video from "@/components/feedgrid/FeedGrid";
+import FeedGrid from "@/components/feedgrid/FeedGrid";
 
 const UserPage = () => {
   const router = useRouter();
-  const author = router.query.id as string
+  const author = router.query.id as string;
 
   //get the user videos
   const getMyDetails = useQuery(GET_PROFILE, {
@@ -46,7 +50,7 @@ const UserPage = () => {
     variables: { id: author },
   });
 
-  const getUserVideos = getVideoData?.data?.socialFeed?.items;
+  const getUserVideos: VideoInterface[] = getVideoData?.data?.socialFeed?.items;
 
   console.log("get my videos", getUserVideos);
 
@@ -126,7 +130,7 @@ const UserPage = () => {
         <Box
           padding={"0 0px "}
           boxShadow={
-            colorMode === "dark" ? "0 0 11px black" : "0 0 11px #ececec"
+            colorMode === "dark" ? "0 0 1px black" : "0 0 11px #ececec"
           }
           background={"#fff none repeat scroll 0 0!important"}
         >
@@ -221,28 +225,6 @@ const UserPage = () => {
                         Videos
                       </Link>
                     </ListItem>
-                    {/* <ListItem>
-                      <Link
-                        href="#"
-                        _hover={{
-                          borderBottom: "2px solid red",
-                          color: `${"black"} `,
-                        }}
-                        _focus={{
-                          color: `${"black"} `,
-                        }}
-                        color={showFeed == 2 ? "black" : "rgba(0,0,0,0.7)"}
-                        borderColor={"red"}
-                        textDecoration="none"
-                        borderBottom={showFeed == 2 ? "2px solid red" : ""}
-                        display={"block"}
-                        margin="0 7px"
-                        padding={"14px 0 !important"}
-                        onClick={() => updateShowFeed(2)}
-                      >
-                        Earnings
-                      </Link>
-                    </ListItem> */}
                     <ListItem>
                       <Link
                         href="#"
@@ -270,43 +252,10 @@ const UserPage = () => {
                         About
                       </Link>
                     </ListItem>
-
-                    {/* <ListItem>
-                      <Link
-                        href="#"
-                        _hover={{
-                          borderBottom: "2px solid red",
-                          color: `${"black"} `,
-                        }}
-                        _focus={{
-                          color: `${"black"} `,
-                        }}
-                        color={showFeed == 5 ? "black" : "rgba(0,0,0,0.7)"}
-                        borderColor={"red"}
-                        textDecoration="none"
-                        borderBottom={showFeed == 5 ? "2px solid red" : ""}
-                        display={"block"}
-                        margin="0 7px"
-                        padding={"14px 0 !important"}
-                        onClick={() => updateShowFeed(5)}
-                      >
-                        Achievements
-                      </Link>
-                    </ListItem> */}
                   </UnorderedList>
                 </Box>
               )}
             </Flex>
-            {/* <Link
-            href="#"
-            fontSize={"16px"}
-            fontWeight="700"
-            transition={"all 0.2s"}
-            backgroundColor="transparent"
-            textDecoration={"none !important"}
-          >
-            thestrollingmind
-          </Link> */}
             {!showNav && (
               <Box
                 display={"flex"}
@@ -483,140 +432,13 @@ const UserPage = () => {
 
               {showFeed == 5 && <Achievements />}
 
-              {showFeed == 1 &&
-                getUserVideos &&
-                getUserVideos.map((item: VideoInterface, index: number) => (
-                  <Flex
-                    direction={"column"}
-                    key={index}
-                    className="col-xl-2 col-lg-3  col-6 p-2 mb-3"
-                  >
-                    <Box
-                      id="parent"
-                      opacity={"1"}
-                      position="relative"
-                      transition={"all .6s ease-in-out"}
-                      textAlign="center"
-                    >
-                      <Flex
-                        id="widget"
-                        position={"absolute"}
-                        left={"5px"}
-                        bottom={"5px"}
-                      >
-                        <Box
-                          width="35px"
-                          paddingX={1}
-                          background={"#e8e8e8 none repeat scroll 0 0"}
-                          borderRadius="2px"
-                          color="#000"
-                          fontSize={"11px"}
-                          fontWeight="500"
-                          marginX={1}
-                          display="flex"
-                          justifyContent={"space-between"}
-                        >
-                          <Image
-                            src="https://3speak.tv/img/play.svg"
-                            alt="play"
-                          ></Image>
-                          <Text as={"span"}>{}</Text>
-                        </Box>
-                        <Box
-                          width="35px"
-                          paddingX={1}
-                          background={"#e8e8e8 none repeat scroll 0 0"}
-                          borderRadius="2px"
-                          color="#000"
-                          marginX={1}
-                          fontSize={"11px"}
-                          fontWeight="500"
-                          display="flex"
-                          justifyContent={"space-between"}
-                          alignItems="center"
-                        >
-                          <BiDollar />
-                          <Text as={"span"}>10</Text>
-                        </Box>
-                      </Flex>
-                      <Box
-                        id="timestamp"
-                        right={"5px"}
-                        width="auto"
-                        background={"#e8e8e8 none repeat scroll 0 0"}
-                        borderRadius="2px"
-                        bottom={"5px"}
-                        color="#000"
-                        fontSize={"11px"}
-                        fontWeight="500"
-                        padding={"0 6px"}
-                        position="absolute"
-                        display="flex"
-                        justifyContent={"space-between"}
-                      >
-                        <Text as={"span"}>{item.spkvideo?.duration}</Text>
-                      </Box>
-                      <Link href="https://3speak.tv/watch?v=cttpodcast/zjvcobqa">
-                        <Image
-                          className="img-fluid"
-                          borderColor={"transparent!important"}
-                          background="linear-gradient(135deg,#171b20 1%,#343a40 100%)"
-                          width={"100% !important"}
-                          padding="5px"
-                          maxHeight={"200px"}
-                          height="auto"
-                          objectFit="cover"
-                          src={item?.spkvideo?.thumbnail_url}
-                          alt="thumbnail url"
-                        />
-                      </Link>
-                    </Box>
-                    <Box minHeight={"60px"}>
-                      <Link
-                        textDecoration={"none"}
-                        href={`/watch?v=${item.author?.username}`}
-                      >
-                        <Text
-                          textDecoration={"none"}
-                          fontSize={"13px"}
-                          overflowWrap="break-word"
-                          textOverflow={"ellipsis"}
-                          overflow="hidden"
-                          maxHeight={"2.8em"}
-                          lineHeight="1.4em"
-                          display={"block"}
-                          marginTop="0.5rem !important"
-                          fontWeight={"500"}
-                        >
-                          {item.title}
-                        </Text>
-                      </Link>
-                      <Box
-                        width={"calc( 100% - 1rem )"}
-                        display="block"
-                        position={"unset"}
-                      >
-                        <Flex
-                          justifyContent={"justify !important"}
-                          alignItems="center"
-                        >
-                          <Flex className="black_col mb-0">
-                            <Link href="/user/cttpodcast">
-                              <i className="fa fa-user"></i>
-                              {item.author?.username}
-                            </Link>
-                            <Text mt={1}>
-                              <BsDot />
-                            </Text>
-                            <Flex className="mb-0">
-                              <Text> a day ago</Text>
-                            </Flex>
-                          </Flex>
-                        </Flex>
-                      </Box>
-                    </Box>
-                  </Flex>
-                ))}
+              {showFeed == 1 && (
+                <FeedGrid
+                  videos={getUserVideos}
+                  bgColor={bgColor}
+                  colorMode={colorMode}
+                />
+              )}
             </Flex>
           </Flex>
         </Flex>

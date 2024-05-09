@@ -9,40 +9,19 @@ import Name from "@/components/user/Name";
 
 import moment from "moment";
 import FeedGridItem from "./FeedGridItem";
+import { Video } from "./Video";
 
-
-export interface Video {
-    permlink: string;
-    spkvideo: {
-        duration: number;
-        play_url: string;
-        thumbnail_url: string;
-    };
-    author: {
-        username: string;
-    };
-    body: string;
-    title: string;
-    stats: {
-        num_comments: number;
-        num_votes: number;
-        total_hive_reward: number;
-    };
-    tags: string[];
-    lang: string;
-    hive_rewards: number;
-    created_at: string;
-    community: string;
-}
 
 interface FeedGridProps {
- videos: Video[];
+ videos: VideoInterface[];
  bgColor: string;
  colorMode: string;
 }
 
-
 const FeedGrid = ({ videos, bgColor, colorMode }: FeedGridProps) => {
+    if (videos === undefined){
+        return null
+    }
   return (
     <Grid
       padding={"20px"}
@@ -53,7 +32,8 @@ const FeedGrid = ({ videos, bgColor, colorMode }: FeedGridProps) => {
         xl: "repeat(5, 1fr)",
       }}
       gap={10}
-      backgroundColor={"gray.700"}
+      backgroundColor={bgColor}
+      color={colorMode === "light" ? "black" : "white"}
     >
       {videos.map((video: Video, index: number) => (
         <FeedGridItem video={video} key={index}  />

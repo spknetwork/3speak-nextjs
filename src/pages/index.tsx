@@ -1,3 +1,4 @@
+//TODO: Fix this homepage dark mode and the light mode
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
 import { useMemo } from "react";
@@ -16,8 +17,8 @@ import MainLayout from "@/components/Layouts/main_layout";
 
 import { useQuery } from "@apollo/react-hooks";
 import { GET_TRENDING_FEED } from "../graphql/queries";
-
 import FeedGrid from "../components/feedgrid/FeedGrid";
+
 
 const IndexPage = () => {
   const bgColor = useColorModeValue("white", "gray.800");

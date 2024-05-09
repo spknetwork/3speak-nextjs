@@ -6,7 +6,8 @@ import { BiDollar } from "react-icons/bi";
 
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
-import { Video } from "./FeedGrid";
+import { Video } from "./Video";
+import { VideoInterface } from "types";
 import moment from "moment";
 
 // https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript/34841026#34841026
@@ -23,7 +24,7 @@ var toHHMMSS = (secs: number) => {
 };
 
 type Props = {
-  video: Video;
+  video: VideoInterface;
 };
 
 //making a function for redirecting to the watch page once clicked on video thumbnail
@@ -31,10 +32,13 @@ const redirect = (permlink: string, username: string) => {
   window.location.href = `/watch?v=${username}/${permlink}`;
 };
 
+
+
 const FeedGridItem = ({ video }: Props) => {
   if (!video) {
     return <div>Loading...</div>; // TODO make pretty
   }
+
   return (
     <GridItem w="100%" h="100%" >
       <Box cursor={"pointer"} position="relative">
@@ -55,7 +59,7 @@ const FeedGridItem = ({ video }: Props) => {
         >
           <MdOutlineThumbUp size="15px" color="grey" />
           <Text as="span" fontSize="11px" fontWeight={"bold"}>
-            {`${video.stats.num_votes}`}
+            {`${video?.stats?.num_votes}`}
           </Text>
         </Box>
 
@@ -81,7 +85,7 @@ const FeedGridItem = ({ video }: Props) => {
             fontSize="11px"
             fontWeight={"bold"}
           >
-            {video.stats.total_hive_reward}
+            {video?.stats?.total_hive_reward}
           </Text>
         </Box>
         <Box
@@ -98,20 +102,20 @@ const FeedGridItem = ({ video }: Props) => {
         {/* if(!spkvideo){
             return null
         } */}
-          {toHHMMSS(video.spkvideo.duration)}
+        {toHHMMSS(video?.spkvideo?.duration ?? 0)}
         </Box>
         <Box height="13em !important" width="100% !important">
-          <Image
-            height="13em !important"
-            width="100% !important"
-            borderRadius={"10px"}
-            objectFit="cover"
-            alt="test"
-            src={`https://images.hive.blog/320x0/${video.spkvideo.thumbnail_url}`}
-            onClick={() => {
-              redirect(video.permlink, video.author.username);
-            }}
-          />
+            <Image
+                height="13em !important"
+                width="100% !important"
+                borderRadius={"10px"}
+                objectFit="cover"
+                alt="test"
+                src={`https://images.hive.blog/320x0/${video.spkvideo?.thumbnail_url ?? ''}`}
+                onClick={() => {
+                    redirect(video.permlink, video?.author?.username ?? '');
+                }}
+            />
         </Box>
       </Box>
       <VideosTitle
@@ -119,7 +123,7 @@ const FeedGridItem = ({ video }: Props) => {
         author={video.author}
         permlink={`${video.permlink}`}
       />
-      <Name username={`${video.author.username}`} />
+      <Name username={`${video?.author?.username ?? ''}`} />
       <Text as="p" margin={"1px"}>
         {moment(video.created_at).fromNow()}
       </Text>

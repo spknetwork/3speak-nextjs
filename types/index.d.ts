@@ -28,23 +28,26 @@ export interface UserDetails {
 
 
 export interface VideoInterface {
-  author?: {
-    username: string;
-  };
+  author?: Author
   body: string;
   created_at: string;
   permlink: string;
-  //TODO: what is this ref 
   refs: [item: string];
   spkvideo?: SpkVideoInterface;
-  stats?: {
-    num_votes: number;
-  }
+  stats?: Stats
   title: string;
-  //TODO: Idk if they exists on the api or not 
   index?: number;
   tags?: any;
   price?: number
+}
+
+export interface Author {
+    username: string;
+}
+export interface Stats {
+    num_comments: number;
+    num_votes: number;
+    total_hive_reward: number
 }
 
 export interface UsernameInterface {
