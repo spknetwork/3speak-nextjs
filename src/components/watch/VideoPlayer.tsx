@@ -4,7 +4,6 @@ import ReactJWPlayer from "react-jw-player";
 import { InfinitySpin } from "react-loader-spinner";
 import { VideoInterface } from "types";
 
-
 type Props = {
   getVideo: VideoInterface;
 };
@@ -48,25 +47,33 @@ const VideoPlayer = ({ getVideo }: Props) => {
 
   if (!videoUrl) {
     return (
-        <Flex justifyContent={"center"} alignItems={"center"} h={"70vh"} w={652} backgroundColor={"black"}>
-          <InfinitySpin width="200" color="#6DC5D7" />
-        </Flex>
+      <Flex
+        justifyContent={"center"}
+        alignItems={"center"}
+        h={"70vh"}
+        w={652}
+        backgroundColor={"black"}
+      >
+        <InfinitySpin width="200" color="#6DC5D7" />
+      </Flex>
     );
   }
 
   return (
-    <ReactJWPlayer
-      licenseKey="64HPbvSQorQcd52B8XFuhMtEoitbvY/EXJmMBfKcXZQU2Rnn"
-      customProps={{
-        playbackRateControls: true,
-        autostart: false,
-      }}
-      file={`${videoUrlSelected}`}
-      image={`${videoUrl.thumbnail_url}`}
-      id="botr_UVQWMA4o_kGWxh33Q_div"
-      playerId={"1242424242"}
-      playerScript="https://cdn.jwplayer.com/libraries/HT7Dts3H.js"
-    ></ReactJWPlayer>
+     
+      <ReactJWPlayer
+        licenseKey="64HPbvSQorQcd52B8XFuhMtEoitbvY/EXJmMBfKcXZQU2Rnn"
+        customProps={{
+          playbackRateControls: true,
+          autostart: false,
+        }}
+        file={`${videoUrlSelected}`}
+        image={`${videoUrl.thumbnail_url}`}
+        id="botr_UVQWMA4o_kGWxh33Q_div"
+        playerId={"1242424242"}
+        playerScript="https://cdn.jwplayer.com/libraries/HT7Dts3H.js"
+      ></ReactJWPlayer>
+
   );
 };
 // https://ipfs-3speak.b-cdn.net/ipfs/bafkreicg4s5rptacryg4w2mi6xxwcda5rfqr7nyxbbbf5ugrev6qmnodqe/

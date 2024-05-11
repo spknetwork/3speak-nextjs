@@ -1,5 +1,5 @@
+//TODO: To fix this page by react dev tools
 
-//TODO: To fix this page  
 import Video from "@/components/watch/video/Video";
 import {
   Box,
@@ -47,7 +47,7 @@ export default function Watch() {
   const permlink = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
     "/"
   )[1];
-  
+
   const getSuggestionFeed = useQuery(GET_RELATED, {
     variables: { author: author, permlink: permlink },
   });
@@ -56,7 +56,7 @@ export default function Watch() {
     variables: { id: author },
   });
 
-   const getSocialPost = useQuery(GET_SOCIAL_POST, {
+  const getSocialPost = useQuery(GET_SOCIAL_POST, {
     variables: { author, permlink },
   });
 
@@ -89,19 +89,32 @@ export default function Watch() {
                 paddingRight={"0px"}
                 color={colorMode === "dark" ? "white" : "dark"}
               >
-                 <VideoPlayer getVideo={getVideo} />
+                <VideoPlayer getVideo={getVideo} />
                 <Box>
                   <Flex flexDirection={"column"} bgColor={bgColor}>
                     <Box bgColor={bgColor}>
-                      <Title getVideo={getVideo} bgColor={bgColor} colorMode={colorMode} />
-                      <Tags tags={getVideo?.tags} bgColor={bgColor} colorMode={colorMode}/>
+                      <Title
+                        getVideo={getVideo}
+                        bgColor={bgColor}
+                        colorMode={colorMode}
+                      />
+                      <Tags
+                        tags={getVideo?.tags}
+                        bgColor={bgColor}
+                        colorMode={colorMode}
+                      />
                     </Box>
                     <Flex
                       justifyContent={"space-between"}
                       marginTop="1rem"
                       bgColor={bgColor}
                     >
-                      <Profile profile={profile} getVideo={getVideo} bgColor={bgColor} colorMode={colorMode} />
+                      <Profile
+                        profile={profile}
+                        getVideo={getVideo}
+                        bgColor={bgColor}
+                        colorMode={colorMode}
+                      />
                       <Reactions />
                     </Flex>
                   </Flex>
@@ -109,18 +122,31 @@ export default function Watch() {
               </Box>
             </Box>
             <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg={bgColor}>
-            <About  getVideo={getVideo} bgColor={bgColor} colorMode={colorMode} />
+              <About
+                getVideo={getVideo}
+                bgColor={bgColor}
+                colorMode={colorMode}
+              />
             </Box>
             <Box>
               <Comment bgColor={bgColor} colorMode={colorMode} />
             </Box>
           </Box>
           {getSuggestionFeed.loading ? (
-            <Flex justifyContent={"center"} alignItems={"center"} h="70vh" w={452}>
-            <InfinitySpin width="200" color="#6DC5D7" />
-          </Flex>
+            <Flex
+              justifyContent={"center"}
+              alignItems={"center"}
+              h="70vh"
+              w={452}
+            >
+              <InfinitySpin width="200" color="#6DC5D7" />
+            </Flex>
           ) : (
-            <Suggestions videos={getSuggestionFeed.data.relatedFeed.items} bgColor={bgColor} colorMode={colorMode}/>
+            <Suggestions
+              videos={getSuggestionFeed.data.relatedFeed.items}
+              bgColor={bgColor}
+              colorMode={colorMode}
+            />
           )}
         </Flex>
       </Flex>

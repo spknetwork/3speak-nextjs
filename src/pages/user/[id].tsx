@@ -1,5 +1,3 @@
-//TODO: make the video constant size and remove the border color and curve it
-//TODO: fill the necessary details
 
 import MainLayout from "@/components/Layouts/main_layout";
 import About from "@/components/user/About";
@@ -38,7 +36,6 @@ import Video from "@/components/feedgrid/FeedGrid";
 import FeedGrid from "@/components/feedgrid/FeedGrid";
 import { InfinitySpin } from "react-loader-spinner";
 
-//TODO: GET_SOCIAL_FEED_BY_CREATOR find the hive_rewards 
 
 const UserPage = () => {
   const router = useRouter();
@@ -53,7 +50,7 @@ const UserPage = () => {
     variables: { id: author },
   });
 
-  const getUserVideos: VideoInterface[] = getVideoData?.data?.socialFeed?.items;
+  const getUserVideos: VideoInterface[]  = getVideoData?.data?.socialFeed?.items;
 
   console.log("get my videos", getUserVideos);
 

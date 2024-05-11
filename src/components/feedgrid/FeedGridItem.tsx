@@ -138,10 +138,10 @@ const FeedGridItem = ({ video }: Props) => {
         author={video.author}
         permlink={`${video.permlink}`}
       />
-      <Flex>
-      <Name username={`${video?.author?.username ?? ""}`} />
-       <BsDot />
-      <Text as="p">{moment(video.created_at).fromNow()}</Text>
+      <Flex alignItems={"center"}>
+        <Name username={`${video?.author?.username ?? ""}`} />
+        <BsDot />
+        <Text as="p" mt={4}>{moment(video.created_at).fromNow()}</Text>
       </Flex>
     </GridItem>
   );

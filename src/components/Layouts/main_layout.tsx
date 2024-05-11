@@ -43,15 +43,7 @@ const MainLayout = ({ children }: any) => {
       </nav>
       <Flex
         width={"97%"}
-        css={css`
-          @media (max-width: 768px) {
-            flex-direction: column;
-          }
-
-          @media (min-width: 769px) {
-            flex-direction: column;
-          }
-        `}
+        flexDirection = {{ base: "column", md: "column", lg: "column"}}
       >
         <main>{children}</main>
         <Footer />

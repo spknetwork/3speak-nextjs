@@ -44,11 +44,13 @@ export const GET_SOCIAL_FEED_BY_CREATOR = gql`
     socialFeed(feedOptions: { byCreator: { _eq: $id } }) {
       items {
         ... on HivePost {
-          spkvideo
+          spkvideo 
           body
           title
           stats {
+            num_comments
             num_votes
+            total_hive_reward
           }
           created_at
           refs
