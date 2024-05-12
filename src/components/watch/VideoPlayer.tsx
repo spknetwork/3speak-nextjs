@@ -51,7 +51,7 @@ const VideoPlayer = ({ getVideo }: Props) => {
         justifyContent={"center"}
         alignItems={"center"}
         h={"70vh"}
-        w={652}
+        w={"full"}
         backgroundColor={"black"}
       >
         <InfinitySpin width="200" color="#6DC5D7" />
@@ -60,7 +60,11 @@ const VideoPlayer = ({ getVideo }: Props) => {
   }
 
   return (
-     
+    <Box
+      h={"70vh"}
+      w={"full"}
+      position="relative"
+    >
       <ReactJWPlayer
         licenseKey="64HPbvSQorQcd52B8XFuhMtEoitbvY/EXJmMBfKcXZQU2Rnn"
         customProps={{
@@ -73,7 +77,7 @@ const VideoPlayer = ({ getVideo }: Props) => {
         playerId={"1242424242"}
         playerScript="https://cdn.jwplayer.com/libraries/HT7Dts3H.js"
       ></ReactJWPlayer>
-
+    </Box>
   );
 };
 // https://ipfs-3speak.b-cdn.net/ipfs/bafkreicg4s5rptacryg4w2mi6xxwcda5rfqr7nyxbbbf5ugrev6qmnodqe/

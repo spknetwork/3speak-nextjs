@@ -67,15 +67,7 @@ export default function Watch() {
       <Flex justifyContent={"right"} background={bgColor}>
         <Flex
           width={"97%"}
-          css={css`
-            @media (max-width: 768px) {
-              flex-direction: column;
-            }
-
-            @media (min-width: 769px) {
-              flex-direction: row;
-            }
-          `}
+          flexDirection={["column", "row"]}
           color={colorMode === "dark" ? "white" : "dark"}
           padding={"10px"}
         >
@@ -89,6 +81,8 @@ export default function Watch() {
                 paddingRight={"0px"}
                 color={colorMode === "dark" ? "white" : "dark"}
               >
+                {/* iska kala color overlap kr rha hai   */}
+
                 <VideoPlayer getVideo={getVideo} />
                 <Box>
                   <Flex flexDirection={"column"} bgColor={bgColor}>
