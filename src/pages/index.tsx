@@ -15,10 +15,9 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { InfinitySpin } from "react-loader-spinner";
 import MainLayout from "@/components/Layouts/main_layout";
 
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_TRENDING_FEED } from "../graphql/queries";
 import FeedGrid from "../components/feedgrid/FeedGrid";
-
 
 const IndexPage = () => {
   const bgColor = useColorModeValue("white", "gray.800");
@@ -41,11 +40,15 @@ const IndexPage = () => {
           </Box>
         </Flex>
         {getTrendingFeed.loading ? (
-        <Flex justifyContent={"center"} alignItems={"center"} h="70vh">
-          <InfinitySpin width="200" color="#6DC5D7" />
-        </Flex>
+          <Flex justifyContent={"center"} alignItems={"center"} h="70vh">
+            <InfinitySpin width="200" color="#6DC5D7" />
+          </Flex>
         ) : (
-          <FeedGrid videos={getTrendingFeed.data.trendingFeed.items} bgColor={bgColor} colorMode={colorMode} />
+          <FeedGrid
+            videos={getTrendingFeed.data.trendingFeed.items}
+            bgColor={bgColor}
+            colorMode={colorMode}
+          />
         )}
       </Box>
     </MainLayout>
