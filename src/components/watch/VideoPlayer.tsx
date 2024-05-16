@@ -61,7 +61,7 @@ const VideoPlayer = ({ getVideo }: Props) => {
 
   return (
     <Box
-      h={"70vh"}
+      h={["40vh", "60vh", "60vh", "80vh"]}
       w={"full"}
       position="relative"
     >

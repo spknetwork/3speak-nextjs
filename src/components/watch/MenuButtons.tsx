@@ -11,77 +11,45 @@ import {
 import React from "react";
 import { FaEllipsisV } from "react-icons/fa";
 
-const MenuButtons = () => {
+type Props = {
+  colorMode: string;
+  bgColor: string;
+};
+const MenuButtons = (props: Props) => {
   return (
-    <Flex justifyContent={"center"}>
-      <Menu>
-        <MenuButton
-          textTransform="uppercase"
-          border={"none"}
-          transition={"all 0.4s"}
-          fontSize="0.7109375rem"
-          lineHeight={"1.5"}
-          background="#fff"
-          fontWeight={"400"}
-          color={"#212121"}
-          as={Button}
+    <Menu>
+      <MenuButton
+        textTransform="uppercase"
+        border={"none"}
+        transition={"all 0.4s"}
+        fontSize="0.7109375rem"
+        lineHeight={"1.5"}
+        background={props.bgColor}
+        fontWeight={"400"}
+        color={props.colorMode === "light" ? "#212121" : "#fff"}
+        as={Button}
+      >
+        <Text
+          fontSize={"12px"}
+          display="flex"
+          justifyContent={"center"}
+          alignItems="center"
+          marginBottom={"0px !important"}
+          color={props.colorMode === "light" ? "#212121" : "#fff"}
         >
-          <Text
-            fontSize={"12px"}
-            display="flex"
-            justifyContent={"center"}
-            alignItems="center"
-            marginBottom={'0px !important'}
-          >
-            <FaEllipsisV />
-          </Text>
-        </MenuButton>
-        <MenuList>
-          <MenuItem
-            marginRight={"10px"}
-            textTransform="uppercase"
-            border={"none"}
-            boxShadow="0 1px 4px rgb(0 0 0 / 40%)"
-            transition={"all 0.4s"}
-            fontSize="0.7109375rem"
-            lineHeight={"1.5"}
-            background="#fff linear-gradient(180deg, white, #fff) repeat-x"
-            fontWeight={"400"}
-            color={"#212121"}
-          >
-            <AddIcon marginRight={"10px"} /> ADD TO PLAYLIST
-          </MenuItem>
-          <MenuItem
-            marginRight={"10px"}
-            textTransform="uppercase"
-            border={"none"}
-            boxShadow="0 1px 4px rgb(0 0 0 / 40%)"
-            transition={"all 0.4s"}
-            fontSize="0.7109375rem"
-            lineHeight={"1.5"}
-            background="#fff linear-gradient(180deg, white, #fff) repeat-x"
-            fontWeight={"400"}
-            color={"#212121"}
-          >
-            OPEN IN THE DESKTOP APP
-          </MenuItem>
-          <MenuItem
-            marginRight={"10px"}
-            textTransform="uppercase"
-            border={"none"}
-            boxShadow="0 1px 4px rgb(0 0 0 / 40%)"
-            transition={"all 0.4s"}
-            fontSize="0.7109375rem"
-            lineHeight={"1.5"}
-            background="#fff linear-gradient(180deg, white, #fff) repeat-x"
-            fontWeight={"400"}
-            color={"#212121"}
-          >
-            <WarningTwoIcon marginRight={"10px"} /> REPORT
-          </MenuItem>
-        </MenuList>
-      </Menu>
-    </Flex>
+          <FaEllipsisV />
+        </Text>
+      </MenuButton>
+      <MenuList w={"full"}>
+        <MenuItem w={"auto"}>
+          <AddIcon marginRight={"10px"} /> ADD TO PLAYLIST
+        </MenuItem>
+        <MenuItem w={"auto"}>OPEN IN THE DESKTOP APP</MenuItem>
+        <MenuItem w={"auto"}>
+          <WarningTwoIcon marginRight={"10px"} /> REPORT
+        </MenuItem>
+      </MenuList>
+    </Menu>
   );
 };
 

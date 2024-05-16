@@ -11,12 +11,8 @@ type Props = {
 const Title = ({getVideo, bgColor, colorMode}:Props) => {
   const [videoUrl, setvideoUrl] = useState<any>(null)
   const [videoUrlSelected, setvideoUrlSelected] = useState<any>(null)
-  useEffect(() => {
-    if (videoUrl) {
-      // console.log("setvideoUrl4 final step",videoUrl)
-    }
-   
-  },[videoUrl])
+
+
 
   useEffect(() => {
     if (getVideo) {
@@ -31,7 +27,6 @@ const Title = ({getVideo, bgColor, colorMode}:Props) => {
       const result = splitResult[0] === "" ? splitResult[1] : splitResult[0];
       setvideoUrlSelected("https://ipfs-3speak.b-cdn.net/ipfs/"+result)
     }
-    // console.log("ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8")
     setvideoUrl(getVideo?.spkvideo)
     }
   },[getVideo])
@@ -39,12 +34,7 @@ const Title = ({getVideo, bgColor, colorMode}:Props) => {
   useEffect(() => {
     console.log("videoUrlSelected", videoUrlSelected)
   },[videoUrlSelected])
-  // "https://ipfs-3speak.b-cdn.net/ipfs/QmWoqdoLtsF4obB5sfSUc3GEZGY87TmcJrt6JpH8bJqsuK/manifest.m3u8" thumbnail_url
-  // "https://ipfs-3speak.b-cdn.net/ipfs/bafybeibqxbf652lmfbdf7zoht3pbhkx4m76agdwn5mnw33vjhlxrzvccoe/"
-  // `${videoUrl.play_url}` ipfs://QmPX8YosD35YphprEi5apHzbCcXXzq1xZbDdFiv7qJVFXv/manifest.m3u8
-//   if (!videoUrl) {
-//     return <Box>getting video details</Box>;
-//   }
+
   return (
     <Text
       fontSize={"20px"}

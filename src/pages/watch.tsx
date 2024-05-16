@@ -1,4 +1,6 @@
-//TODO: To fix this page by react dev tools
+//TODO: fetch comments and limit them to 2
+//TODO: fetch body as description
+//TODO: limit the total hive_rewards to 3 decimal zeroes
 
 import Video from "@/components/watch/video/Video";
 import {
@@ -40,28 +42,30 @@ export default function Watch() {
   const router = useRouter();
   const [profile, setProfile] = useState<any>(null);
   console.log("router", router.query.v);
-
+  
   const author = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
-    "/"
-  )[0];
-  const permlink = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
-    "/"
-  )[1];
-
+      "/"
+    )[0];
+    const permlink = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
+        "/"
+    )[1];
+    
   const getSuggestionFeed = useQuery(GET_RELATED, {
     variables: { author: author, permlink: permlink },
   });
-
+  
   const getUserProfile = useQuery(GET_PROFILE, {
-    variables: { id: author },
-  });
-
-  const getSocialPost = useQuery(GET_SOCIAL_POST, {
-    variables: { author, permlink },
-  });
-
-  const getVideo: VideoInterface = getSocialPost?.data?.socialPost;
-
+      variables: { id: author },
+    });
+    
+    const getSocialPost = useQuery(GET_SOCIAL_POST, {
+        variables: { author, permlink },
+    });
+    
+    const getVideo: VideoInterface = getSocialPost?.data?.socialPost;
+    
+    console.log("getVideos", getVideo)
+    
   return (
     <MainLayout>
       <Flex justifyContent={"right"} background={bgColor}>
@@ -83,7 +87,9 @@ export default function Watch() {
               >
                 {/* iska kala color overlap kr rha hai   */}
 
-                <VideoPlayer getVideo={getVideo} />
+                <Box>
+                  <VideoPlayer getVideo={getVideo} />
+                </Box>
                 <Box>
                   <Flex flexDirection={"column"} bgColor={bgColor}>
                     <Box bgColor={bgColor}>
@@ -109,7 +115,7 @@ export default function Watch() {
                         bgColor={bgColor}
                         colorMode={colorMode}
                       />
-                      <Reactions />
+                      <Reactions bgColor={bgColor} colorMode={colorMode} />
                     </Flex>
                   </Flex>
                 </Box>
@@ -123,7 +129,7 @@ export default function Watch() {
               />
             </Box>
             <Box>
-              <Comment bgColor={bgColor} colorMode={colorMode} />
+              <Comment getVideo={getVideo} bgColor={bgColor} colorMode={colorMode} />
             </Box>
           </Box>
           {getSuggestionFeed.loading ? (

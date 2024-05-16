@@ -1,52 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Box, Collapse, Text } from "@chakra-ui/react";
 import CommentFooter from "../CommentFooter";
 import { commentsData } from "./CommentData";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
+import { VideoInterface } from "types";
 
 type Props = {
+  getVideo: VideoInterface;
   bgColor: string;
   colorMode: string;
 };
 
-
-const Comment = ({ bgColor, colorMode }: Props) => {
-  const [isCollapsed, setIsCollapsed] = useState<{ [key: number]: boolean }>(
+const Comment = ({ getVideo,  bgColor, colorMode }: Props) => {
+   
+    const [isCollapsed, setIsCollapsed] = useState<{ [key: number]: boolean }>(
     {}
   );
 
   const toggleCollapse = (commentId: number, isParent = false) => {
     setIsCollapsed((prevState) => {
-       const newState = { ...prevState };
-       if (isParent) {
-         const replies =
-           commentsData.find((comment) => comment.id === commentId)?.replies || [];
-         const allReplies = getAllReplies(replies);
-   
-         allReplies.forEach((reply) => {
-           newState[reply.id] = !prevState[commentId];
-         });
-       }
-       newState[commentId] = !prevState[commentId];
-       return newState;
-    });
-   };
-   
+      const newState = { ...prevState };
+      if (isParent) {
+        const replies =
+          commentsData.find((comment) => comment.id === commentId)?.replies ||
+          [];
+        const allReplies = getAllReplies(replies);
 
-   const getAllReplies = (replies: any): any[] => {
+        allReplies.forEach((reply) => {
+          newState[reply.id] = !prevState[commentId];
+        });
+      }
+      newState[commentId] = !prevState[commentId];
+      return newState;
+    });
+  };
+
+  const getAllReplies = (replies: any): any[] => {
     let allReplies: any[] = [];
     replies.forEach((reply: any) => {
-       allReplies.push(reply);    
-       if (reply.replies) {
-         allReplies = [...allReplies, ...getAllReplies(reply.replies)];
-       }
+      allReplies.push(reply);
+      if (reply.replies) {
+        allReplies = [...allReplies, ...getAllReplies(reply.replies)];
+      }
     });
     return allReplies;
-   };
-   
+  };
 
-  const renderReplies = (replies: any, depth = 1) => { 
-    
+  const renderReplies = (replies: any, depth = 1) => {
     return replies.map((reply: any) => (
       <Box key={reply.id} marginLeft={`${depth * 28}px`}>
         <Box
@@ -213,8 +213,8 @@ const Comment = ({ bgColor, colorMode }: Props) => {
                 </Box>
               </Box>
               <Collapse in={!isCollapsed[commentData.id]} unmountOnExit>
-              {commentData.replies && renderReplies(commentData.replies)}
-              </Collapse> 
+                {commentData.replies && renderReplies(commentData.replies)}
+              </Collapse>
             </Box>
           ))}
         </Box>

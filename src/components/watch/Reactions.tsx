@@ -5,7 +5,7 @@ import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
 import MenuButtons from "./MenuButtons";
 import Views from "./Views";
 
-const Reactions = ({ getVideo }: any) => {
+const Reactions = ({ bgColor, colorMode,  getVideo }: any) => {
   return (
     <Flex justifyContent={"center"}>
       <Flex justifyContent={"center"} alignItems="center" className="mr-4">
@@ -41,7 +41,7 @@ const Reactions = ({ getVideo }: any) => {
       </Flex>
       <Flex justifyContent={"center"} alignItems="center" marginLeft={"15px"}>
         {/* views */}
-        <MenuButtons />
+        <MenuButtons bgColor={bgColor} colorMode={colorMode} />
       </Flex>
     </Flex>
   );
