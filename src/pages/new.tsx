@@ -1,3 +1,5 @@
+
+ 
 import {
   Box,
   Flex,
@@ -33,14 +35,6 @@ const NewContentPage = () => {
               New Content
             </Text>
           </Box>
-          <Text>
-            <Switch
-              isChecked={colorMode === "dark"}
-              onChange={toggleColorMode}
-            />{" "}
-            {colorMode === "dark" && <MoonIcon />}{" "}
-            {colorMode !== "dark" && <SunIcon />}
-          </Text>
         </Flex>
         {getFeed.loading ? (
           <Flex justifyContent={"center"} alignItems={"center"} h="70vh">
