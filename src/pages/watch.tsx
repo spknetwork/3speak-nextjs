@@ -42,30 +42,31 @@ export default function Watch() {
   const router = useRouter();
   const [profile, setProfile] = useState<any>(null);
   console.log("router", router.query.v);
-  
+
   const author = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
-      "/"
-    )[0];
-    const permlink = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
-        "/"
-    )[1];
-    
+    "/"
+  )[0];
+  const permlink = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
+    "/"
+  )[1];
+
   const getSuggestionFeed = useQuery(GET_RELATED, {
     variables: { author: author, permlink: permlink },
   });
-  
+
   const getUserProfile = useQuery(GET_PROFILE, {
-      variables: { id: author },
-    });
-    
-    const getSocialPost = useQuery(GET_SOCIAL_POST, {
-        variables: { author, permlink },
-    });
-    
-    const getVideo: VideoInterface = getSocialPost?.data?.socialPost;
-    
-    console.log("getVideos", getVideo)
-    
+    variables: { id: author },
+  });
+
+  const getSocialPost = useQuery(GET_SOCIAL_POST, {
+    variables: { author, permlink },
+    ssr: true,
+  });
+
+  const getVideo: VideoInterface = getSocialPost?.data?.socialPost;
+
+  console.log("getVideos", getVideo);
+
   return (
     <MainLayout>
       <Flex justifyContent={"right"} background={bgColor}>
@@ -129,7 +130,11 @@ export default function Watch() {
               />
             </Box>
             <Box>
-              <Comment getVideo={getVideo} bgColor={bgColor} colorMode={colorMode} />
+              <Comment
+                getVideo={getVideo}
+                bgColor={bgColor}
+                colorMode={colorMode}
+              />
             </Box>
           </Box>
           {getSuggestionFeed.loading ? (

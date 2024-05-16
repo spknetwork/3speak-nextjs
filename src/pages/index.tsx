@@ -23,7 +23,7 @@ const IndexPage = () => {
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
-  const getTrendingFeed = useQuery(GET_TRENDING_FEED);
+  const getTrendingFeed = useQuery(GET_TRENDING_FEED, { ssr: true });
 
   return (
     <MainLayout>
