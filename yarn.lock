@@ -2025,24 +2025,15 @@
     ethers "^6.11.1"
     node-fetch "^2.6.7"
 
-"@magic-sdk/commons@^13.4.0":
-  version "13.4.0"
-  resolved "https://registry.yarnpkg.com/@magic-sdk/commons/-/commons-13.4.0.tgz#6217fd8e7346f5029c7c584d98578c36d26ec3db"
-  integrity sha512-F6XG0r0XEZmGB8OTPNFrRz6IgDhb39YxUrG2n/4hajb0vJuA28QjoexG/d7f6Rklvxq9oIBR1wMuqUzGs3oSnA==
-
 "@magic-sdk/commons@^23.0.0":
   version "23.0.0"
   resolved "https://registry.yarnpkg.com/@magic-sdk/commons/-/commons-23.0.0.tgz#05304a5cd38602ce8d7419495c21ec2257372109"
   integrity sha512-y94UJG9WRrSnxTh6+WnLAvSRjYmE1/kJtTABD/MWJcIIN/qY7LV3mBdY6PzcYbhXvcz2jedmZ2YPnzVWJgJCrA==
 
-"@magic-sdk/provider@^17.4.0":
-  version "17.4.0"
-  resolved "https://registry.yarnpkg.com/@magic-sdk/provider/-/provider-17.4.0.tgz#f22174899f36664fcebd47781b3c497479abe671"
-  integrity sha512-DvroR5qCumGtS8TY8wr/4bI9bvkUD222ghbNTsu9MFAgybksc6/ARUX8ttjFZVQXMIIe07PpZroxnxI+ih5mlA==
-  dependencies:
-    "@magic-sdk/types" "^15.4.0"
-    eventemitter3 "^4.0.4"
-    web3-core "1.5.2"
+"@magic-sdk/commons@^24.0.2":
+  version "24.0.2"
+  resolved "https://registry.yarnpkg.com/@magic-sdk/commons/-/commons-24.0.2.tgz#5a6d74dc0aed862bf4d0395cafd0bfdd353317c6"
+  integrity sha512-xIfaDnGfkzcgT4TolvBujfsJiBrFh5ZD3mGQdAGonfYzIJZW5g4k9fEdTy9wWDq6GQOuGH6SWXKXCK5qGlniLQ==
 
 "@magic-sdk/provider@^27.0.0":
   version "27.0.0"
@@ -2050,6 +2041,15 @@
   integrity sha512-k2haK2zhYkqf+cbMF+/HKvqa8qPWqdZbW10qgN6AdqaOE750ceC3GDQCUwAfkzdofmWrRtFgW5jVAVCVz5WklQ==
   dependencies:
     "@magic-sdk/types" "^23.0.0"
+    eventemitter3 "^4.0.4"
+    web3-core "1.5.2"
+
+"@magic-sdk/provider@^28.0.2":
+  version "28.0.2"
+  resolved "https://registry.yarnpkg.com/@magic-sdk/provider/-/provider-28.0.2.tgz#86052563d3563d6343cf32cb0e7f1d665168e341"
+  integrity sha512-QonHCnSDu2nn8yBY2/rKliU55OLZJtEJO0bJStIPlTiiCuV+qmjs96BLjKdDczT3NBa0weedSugPK9UuCp0c2Q==
+  dependencies:
+    "@magic-sdk/types" "^24.0.1"
     eventemitter3 "^4.0.4"
     web3-core "1.5.2"
 
@@ -2062,6 +2062,11 @@
   version "23.0.0"
   resolved "https://registry.yarnpkg.com/@magic-sdk/types/-/types-23.0.0.tgz#2a5ced56a511a006d603b207ff0d49e30186997c"
   integrity sha512-NTjgGPJVYxoncSrHtDZLDiJzdSbxHV0jCy6J+YvT+LY7QUiGY3zzu+NhLqgLxE6KZODXERhSLYSimotcokZbmw==
+
+"@magic-sdk/types@^24.0.1":
+  version "24.0.1"
+  resolved "https://registry.yarnpkg.com/@magic-sdk/types/-/types-24.0.1.tgz#f74dba5ab811c1db3da6b7d5832910c97f7150e0"
+  integrity sha512-MM3UbIJoc5fQOnA6/X7TcuIToSApmNPoEJSPpL2m41IQ0DwpbTsgdynNhxM3e8g6Bx6BsDrkQk9h+tjJ0qDhrw==
 
 "@metamask/abi-utils@^2.0.2":
   version "2.0.2"
@@ -6894,16 +6899,6 @@ magic-link-popup@^0.1.0:
     "@magic-ext/oauth" "^21.0.0"
     magic-sdk "^27.0.0"
 
-magic-sdk@^17.1.3:
-  version "17.4.0"
-  resolved "https://registry.yarnpkg.com/magic-sdk/-/magic-sdk-17.4.0.tgz#ed5a71c1308b484b2e7615eb39d10194907ac6ed"
-  integrity sha512-oIsj0D01pSDhiuscZ4KCUcT07pWlg2+wsqZHzs5IAYbd1d4PM6+ZvYjTeob9W0Cl5FB8NNE0W8GUumvTd4fqqA==
-  dependencies:
-    "@magic-sdk/commons" "^13.4.0"
-    "@magic-sdk/provider" "^17.4.0"
-    "@magic-sdk/types" "^15.4.0"
-    localforage "^1.7.4"
-
 magic-sdk@^27.0.0:
   version "27.0.0"
   resolved "https://registry.yarnpkg.com/magic-sdk/-/magic-sdk-27.0.0.tgz#95c6842c5c36c0ab18fab2851942a82195d60c98"
@@ -6912,6 +6907,16 @@ magic-sdk@^27.0.0:
     "@magic-sdk/commons" "^23.0.0"
     "@magic-sdk/provider" "^27.0.0"
     "@magic-sdk/types" "^23.0.0"
+    localforage "^1.7.4"
+
+magic-sdk@^28.0.3:
+  version "28.0.3"
+  resolved "https://registry.yarnpkg.com/magic-sdk/-/magic-sdk-28.0.3.tgz#fbb2e486f7fd181a9d3bf2bddbf9125f3b05c425"
+  integrity sha512-w8OxduN8PoFGKYs1EHsxbPaEIfHy61Ha3STsrT8IuhYZ2kQrDarK4lBVxNCKxvilhcMVzTd5FUSEUaFGrgonjA==
+  dependencies:
+    "@magic-sdk/commons" "^24.0.2"
+    "@magic-sdk/provider" "^28.0.2"
+    "@magic-sdk/types" "^24.0.1"
     localforage "^1.7.4"
 
 map-stream@0.0.7:
@@ -8868,7 +8873,16 @@ strict-uri-encode@^1.0.0:
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
   integrity sha512-R3f198pcvnB+5IpnBlRkphuE9n46WyVl8I39W/ZUTZLz4nqSP/oLYUrcnJrw462Ds8he4YKMov2efsTIw1BDGQ==
 
-"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
+
+string-width@^4.1.0:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -8939,7 +8953,14 @@ string_decoder@^1.1.1:
   dependencies:
     safe-buffer "~5.2.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
