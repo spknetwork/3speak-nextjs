@@ -1,7 +1,4 @@
 //TODO: fetch comments and limit them to 2
-//TODO: fetch body as description
-//TODO: limit the total hive_rewards to 3 decimal zeroes
-
 import Video from "@/components/watch/video/Video";
 import {
   Box,
@@ -24,12 +21,17 @@ import Tags from "@/components/watch/Tags";
 import Title from "@/components/watch/Title";
 import VideoPlayer from "@/components/watch/VideoPlayer";
 import Community from "@/components/watch/Community";
-import { css } from "@emotion/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import MainLayout from "@/components/Layouts/main_layout";
 import { useQuery } from "@apollo/client";
-import { GET_PROFILE, GET_RELATED, GET_SOCIAL_POST } from "@/graphql/queries";
-import { VideoInterface } from "types";
+import {
+  GET_PROFILE,
+  GET_RELATED,
+  GET_SOCIAL_POST,
+  GET_VIDEO,
+  GET_VIDEO_DETAILS,
+} from "@/graphql/queries";
+import { SpkVideoInterface, VideoDetails, VideoInterface } from "types";
 import { useRouter } from "next/router";
 import { useAppStore } from "@/lib/store";
 import Suggestions from "@/components/suggestions/Suggestions";
@@ -40,7 +42,7 @@ export default function Watch() {
   const bgColor = useColorModeValue("white", "gray.800");
 
   const router = useRouter();
-  const [profile, setProfile] = useState<any>(null);
+
   console.log("router", router.query.v);
 
   const author = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
@@ -50,22 +52,21 @@ export default function Watch() {
     "/"
   )[1];
 
+
   const getSuggestionFeed = useQuery(GET_RELATED, {
     variables: { author: author, permlink: permlink },
   });
 
-  const getUserProfile = useQuery(GET_PROFILE, {
-    variables: { id: author },
-  });
-
-  const getSocialPost = useQuery(GET_SOCIAL_POST, {
+  //call the query video details here
+  const getVideoDetails = useQuery(GET_VIDEO_DETAILS, {
     variables: { author, permlink },
-    ssr: true,
   });
 
-  const getVideo: VideoInterface = getSocialPost?.data?.socialPost;
+//   console.log("getVideoDetails", getVideoDetails);
 
-  console.log("getVideos", getVideo);
+  const videoDetails: VideoDetails = getVideoDetails?.data?.socialPost;
+
+//   console.log("videoDetails", videoDetails);
 
   return (
     <MainLayout>
@@ -89,18 +90,14 @@ export default function Watch() {
                 {/* iska kala color overlap kr rha hai   */}
 
                 <Box>
-                  <VideoPlayer getVideo={getVideo} />
+                  <VideoPlayer author={author} permlink={permlink} />
                 </Box>
                 <Box>
                   <Flex flexDirection={"column"} bgColor={bgColor}>
                     <Box bgColor={bgColor}>
-                      <Title
-                        getVideo={getVideo}
-                        bgColor={bgColor}
-                        colorMode={colorMode}
-                      />
+                      <Title getVideo={videoDetails} colorMode={colorMode} />
                       <Tags
-                        tags={getVideo?.tags}
+                        videoDetails={videoDetails}
                         bgColor={bgColor}
                         colorMode={colorMode}
                       />
@@ -111,12 +108,11 @@ export default function Watch() {
                       bgColor={bgColor}
                     >
                       <Profile
-                        profile={profile}
-                        getVideo={getVideo}
+                        author={author}
                         bgColor={bgColor}
                         colorMode={colorMode}
                       />
-                      <Reactions bgColor={bgColor} colorMode={colorMode} />
+                      <Reactions bgColor={bgColor} colorMode={colorMode} getVideo={videoDetails}/>
                     </Flex>
                   </Flex>
                 </Box>
@@ -124,14 +120,15 @@ export default function Watch() {
             </Box>
             <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg={bgColor}>
               <About
-                getVideo={getVideo}
+                getVideo={videoDetails}
                 bgColor={bgColor}
                 colorMode={colorMode}
               />
             </Box>
             <Box>
               <Comment
-                getVideo={getVideo}
+                author={author}
+                permlink={permlink}
                 bgColor={bgColor}
                 colorMode={colorMode}
               />

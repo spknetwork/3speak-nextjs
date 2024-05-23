@@ -1,5 +1,92 @@
 import { gql } from "@apollo/client";
 
+
+//TODO: include the skip 
+export const USER_DETAILS = gql`
+query MyQuery2($id: String) {
+    profile(id: $id) {
+      ... on HiveProfile {
+        id
+        name
+        about
+        username
+        did
+      }
+      ... on CeramicProfile {
+        id
+        name
+        did
+      }
+    }
+  }
+`   
+
+export const GET_VIDEO = gql`
+  query VideoInfo($permlink: String, $author: String) {
+    socialPost(author: $author, permlink: $permlink) {
+      ... on HivePost {
+        spkvideo
+      }
+    }
+  }
+`;
+export const GET_VIDEO_DETAILS = gql`
+  query VideoDetails($permlink: String, $author: String) {
+    socialPost(author: $author, permlink: $permlink) {
+      ... on HivePost {
+        body
+        stats {
+          num_comments
+          num_votes
+          total_hive_reward
+        }
+        community
+        created_at
+        tags
+        title
+        parent_permlink
+      }
+    }
+  }
+`;
+
+export const GET_COMMENTS = gql`
+  query CommentsInfo($permlink: String = "", $author: String = "") {
+    socialPost(author: $author, permlink: $permlink) {
+      ... on HivePost {
+        children {
+            author {
+                profile {
+              ... on HiveProfile {
+                name
+                images {
+                  avatar
+                }
+              }
+            }
+        }
+        body
+        permlink
+          children {
+            author {
+              profile {
+                ... on HiveProfile {
+                  name
+                  images {
+                    avatar
+                  }
+                }
+              }
+            }
+            body
+            permlink
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const GET_LEADER_BOARD = gql`
   query MyQuery {
     leaderBoard {
@@ -44,7 +131,7 @@ export const GET_SOCIAL_FEED_BY_CREATOR = gql`
     socialFeed(feedOptions: { byCreator: { _eq: $id } }) {
       items {
         ... on HivePost {
-          spkvideo 
+          spkvideo
           body
           title
           stats {
@@ -189,6 +276,7 @@ export const GET_SYNC_STATE = gql`
   }
 `;
 
+//TODO: update this query to fetch the children as comments
 export const GET_SOCIAL_POST = gql`
   query MyQuery($author: String, $permlink: String) {
     socialPost(author: $author, permlink: $permlink) {
@@ -196,6 +284,8 @@ export const GET_SOCIAL_POST = gql`
         parent_author
         parent_permlink
         author {
+          id
+          profile
           username
         }
         json_metadata {
@@ -215,12 +305,18 @@ export const GET_SOCIAL_POST = gql`
         tags
         updated_at
         body
+        children {
+          body
+          children
+        }
         community
         created_at
       }
     }
   }
 `;
+
+// export const GET_COMMENTS = gql``;
 
 export const GET_PROFILE = gql`
   query MyQuery($id: String) {
@@ -247,32 +343,6 @@ export const GET_PROFILE = gql`
     }
   }
 `;
-// profile {
-//   ... on HiveProfile {
-//     id
-//     name
-//   }
-// }
-// latestFeed {
-//   items {
-//     body
-//     created_at
-//     parent_author
-//     parent_permlink
-//     permlink
-//     title
-//     updated_at
-//     ... on HivePost {
-//       parent_author
-//       parent_permlink
-//       app_metadata
-//       body
-//       community
-//       created_at
-//       flags
-//     }
-//   }
-// }
 
 export const GET_COMMUNITIES = gql`
   query MyQuery($id: String) {

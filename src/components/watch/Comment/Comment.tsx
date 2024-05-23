@@ -1,33 +1,47 @@
+//TODO: use the permlink as the comment id in order to collapse the comment
 import React, { useEffect, useState } from "react";
 import { Avatar, Box, Collapse, Text } from "@chakra-ui/react";
 import CommentFooter from "../CommentFooter";
 import { commentsData } from "./CommentData";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
-import { VideoInterface } from "types";
+import { CommentInterface, VideoInterface } from "types";
+import { useQuery } from "@apollo/client";
+import { GET_COMMENTS } from "@/graphql/queries";
 
 type Props = {
-  getVideo: VideoInterface;
+  author: string;
+  permlink: string;
   bgColor: string;
   colorMode: string;
 };
 
-const Comment = ({ getVideo,  bgColor, colorMode }: Props) => {
-   
-    const [isCollapsed, setIsCollapsed] = useState<{ [key: number]: boolean }>(
+const Comment = ({ author, permlink, bgColor, colorMode }: Props) => {
+  //call the comment query
+  const getComments = useQuery(GET_COMMENTS, {
+    variables: { author, permlink },
+  });
+
+  const commentsData: CommentInterface[] =
+    getComments?.data?.socialPost?.children;
+  console.log("Comments", commentsData);
+
+  const [isCollapsed, setIsCollapsed] = useState<{ [key: string]: boolean }>(
     {}
   );
 
-  const toggleCollapse = (commentId: number, isParent = false) => {
+  const toggleCollapse = (commentId: string, isParent = false) => {
     setIsCollapsed((prevState) => {
       const newState = { ...prevState };
+      //   const commentKey: string = `comment-${commentId}`;
+
       if (isParent) {
         const replies =
-          commentsData.find((comment) => comment.id === commentId)?.replies ||
-          [];
+          commentsData.find((comment) => comment.permlink === commentId)
+            ?.children || [];
         const allReplies = getAllReplies(replies);
 
         allReplies.forEach((reply) => {
-          newState[reply.id] = !prevState[commentId];
+          newState[reply.permlink] = !prevState[commentId];
         });
       }
       newState[commentId] = !prevState[commentId];
@@ -35,20 +49,24 @@ const Comment = ({ getVideo,  bgColor, colorMode }: Props) => {
     });
   };
 
-  const getAllReplies = (replies: any): any[] => {
-    let allReplies: any[] = [];
-    replies.forEach((reply: any) => {
+  const getAllReplies = (replies: CommentInterface[]): CommentInterface[] => {
+    let allReplies: CommentInterface[] = [];
+    replies.forEach((reply: CommentInterface) => {
       allReplies.push(reply);
-      if (reply.replies) {
-        allReplies = [...allReplies, ...getAllReplies(reply.replies)];
+      if (reply.children) {
+        allReplies = [...allReplies, ...getAllReplies(reply.children)];
       }
     });
     return allReplies;
   };
 
-  const renderReplies = (replies: any, depth = 1) => {
-    return replies.map((reply: any) => (
-      <Box key={reply.id} marginLeft={`${depth * 28}px`}>
+  const renderReplies = (
+    replies: CommentInterface[],
+    parentIndex: number,
+    depth = 1
+  ) => {
+    return replies.map((reply: CommentInterface) => (
+      <Box key={reply?.permlink} marginLeft={`${depth * 28}px`}>
         <Box
           background="transparent"
           borderRadius={"4px"}
@@ -70,18 +88,25 @@ const Comment = ({ getVideo,  bgColor, colorMode }: Props) => {
             backgroundColor="#edeff1"
             backgroundClip={"padding-box"}
           >
-            {isCollapsed[reply.id] ? (
-              <Box position={"absolute"} top={3} left={-1}>
-                <CiCirclePlus onClick={() => toggleCollapse(reply.id)} />
+            {isCollapsed[reply?.permlink] ? (
+              <Box position={"absolute"} top={3} left={-1} cursor={"pointer"}>
+                <CiCirclePlus
+                  onClick={() => toggleCollapse(reply?.permlink, true)}
+                />
               </Box>
             ) : (
-              <Box position={"absolute"} top={3} left={-1}>
-                <CiCircleMinus onClick={() => toggleCollapse(reply.id)} />
+              <Box position={"absolute"} top={3} left={-1} cursor={"pointer"}>
+                <CiCircleMinus
+                  onClick={() => toggleCollapse(reply.permlink, true)}
+                />
               </Box>
             )}
           </Box>
           <Box alignSelf={"flex-start"}>
-            <Avatar name={reply.author} src={reply.avatar} />
+            <Avatar
+              name={reply.author?.profile?.name}
+              src={reply?.author?.profile?.images?.avatar}
+            />
           </Box>
           <Box
             marginLeft={"8px"}
@@ -99,30 +124,34 @@ const Comment = ({ getVideo,  bgColor, colorMode }: Props) => {
               fontWeight={"bold"}
               color={colorMode === "dark" ? "white" : "black"}
             >
-              {reply.title}
+              {reply?.author?.profile?.name}
             </Text>
-            <Collapse in={!isCollapsed[reply.id]} unmountOnExit>
+            <Collapse in={!isCollapsed[reply?.permlink]} unmountOnExit>
               <Box
                 padding={"2px 0"}
                 width="100%"
                 color={colorMode === "dark" ? "white" : "black"}
               >
-                {reply.content}
+                {reply?.body}
               </Box>
             </Collapse>
             <CommentFooter
               bgColor={bgColor}
               colorMode={colorMode}
-              commentId={reply.id}
+              commentId={reply?.permlink}
               toggleCollapse={toggleCollapse}
               isCollapsed={isCollapsed}
             />
           </Box>
         </Box>
-        {reply.replies && renderReplies(reply.replies, depth + 1)}
+        {reply.children && renderReplies(reply.children, depth + 1)}
       </Box>
     ));
   };
+
+  if (commentsData === undefined) {
+    return <Box>Loading..</Box>;
+  }
 
   return (
     <Box>
@@ -130,7 +159,7 @@ const Comment = ({ getVideo,  bgColor, colorMode }: Props) => {
         <Box padding={"0px"} paddingTop="20px">
           {commentsData.map((commentData) => (
             <Box
-              key={commentData.id}
+              key={commentData?.permlink}
               paddingLeft={"16px"}
               boxSizing="border-box"
               overflow={"visible"}
@@ -159,22 +188,39 @@ const Comment = ({ getVideo,  bgColor, colorMode }: Props) => {
                   backgroundColor="#edeff1"
                   backgroundClip={"padding-box"}
                 >
-                  {isCollapsed[commentData.id] ? (
-                    <Box position={"absolute"} top={3} left={-1}>
+                  {isCollapsed[commentData?.permlink] ? ( //this would either true or false
+                    <Box
+                      position={"absolute"}
+                      top={3}
+                      left={-1}
+                      cursor={"pointer"}
+                    >
                       <CiCirclePlus
-                        onClick={() => toggleCollapse(commentData.id, true)}
+                        onClick={() =>
+                          toggleCollapse(commentData?.permlink, true)
+                        }
                       />
                     </Box>
                   ) : (
-                    <Box position={"absolute"} top={3} left={-1}>
+                    <Box
+                      position={"absolute"}
+                      top={3}
+                      left={-1}
+                      cursor={"pointer"}
+                    >
                       <CiCircleMinus
-                        onClick={() => toggleCollapse(commentData.id, true)}
+                        onClick={() =>
+                          toggleCollapse(commentData?.permlink, true)
+                        }
                       />
                     </Box>
                   )}
                 </Box>
                 <Box alignSelf={"flex-start"}>
-                  <Avatar name={commentData.author} src={commentData.avatar} />
+                  <Avatar
+                    name={commentData?.author?.profile?.name}
+                    src={commentData?.author?.profile?.images?.avatar}
+                  />
                 </Box>
                 <Box
                   marginLeft={"8px"}
@@ -192,28 +238,33 @@ const Comment = ({ getVideo,  bgColor, colorMode }: Props) => {
                     fontWeight={"bold"}
                     color={colorMode === "dark" ? "white" : "black"}
                   >
-                    {commentData.title}
+                    {commentData?.author?.profile?.name}
                   </Text>
-                  <Collapse in={!isCollapsed[commentData.id]} unmountOnExit>
+                  <Collapse
+                    in={!isCollapsed[commentData.permlink]}
+                    unmountOnExit
+                  >
                     <Box
                       padding={"2px 0"}
                       width="100%"
                       color={colorMode === "dark" ? "white" : "black"}
                     >
-                      {commentData.content}
+                      {commentData?.body}
                     </Box>
-                  </Collapse>
-                  <CommentFooter
-                    bgColor={bgColor}
-                    colorMode={colorMode}
-                    commentId={commentData.id}
-                    toggleCollapse={toggleCollapse}
-                    isCollapsed={isCollapsed}
-                  />
+                    </Collapse>
+                    <CommentFooter
+                      bgColor={bgColor}
+                      colorMode={colorMode}
+                      commentId={commentData?.permlink}
+                      toggleCollapse={toggleCollapse}
+                      isCollapsed={isCollapsed}
+                    />
                 </Box>
               </Box>
-              <Collapse in={!isCollapsed[commentData.id]} unmountOnExit>
-                {commentData.replies && renderReplies(commentData.replies)}
+              {/* Agar ye parent already collapsed hai toh isko bhi collapsed krdo  */}
+              <Collapse in={!isCollapsed[commentData?.permlink]} unmountOnExit>
+                {commentData.children &&
+                  renderReplies(commentData?.children, 0)}
               </Collapse>
             </Box>
           ))}

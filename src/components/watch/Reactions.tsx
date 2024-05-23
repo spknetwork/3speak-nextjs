@@ -1,11 +1,21 @@
+//TODO: downvotes and views field not available 
 import { ViewIcon } from "@chakra-ui/icons";
 import { Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
+import { VideoDetails } from "types";
 import MenuButtons from "./MenuButtons";
-import Views from "./Views";
+
+type Props = {
+    bgColor: string;
+    colorMode: string;
+    getVideo: VideoDetails
+}
 
 const Reactions = ({ bgColor, colorMode,  getVideo }: any) => {
+
+    console.log("videoStats", getVideo);
+
   return (
     <Flex justifyContent={"center"}>
       <Flex justifyContent={"center"} alignItems="center" className="mr-4">
@@ -13,7 +23,7 @@ const Reactions = ({ bgColor, colorMode,  getVideo }: any) => {
         {
           getVideo && getVideo.stats && getVideo.stats.num_votes > 0 && (
             <Text marginBottom={'0px !important'} fontWeight={"bolder"} marginLeft={"10px"}>
-              {getVideo?.stats.num_votes}
+              {getVideo?.stats?.num_votes}
             </Text>
           )
         }

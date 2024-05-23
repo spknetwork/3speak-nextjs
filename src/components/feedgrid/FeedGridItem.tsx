@@ -98,7 +98,9 @@ const FeedGridItem = ({ video }: Props) => {
             fontSize="11px"
             fontWeight={"bold"}
           >
-            {video?.stats?.total_hive_reward}
+            {video?.stats?.total_hive_reward
+              ? video.stats.total_hive_reward.toFixed(3)
+              : "0.000"}
           </Text>
         </Box>
         <Box
@@ -141,7 +143,9 @@ const FeedGridItem = ({ video }: Props) => {
       <Flex alignItems={"center"}>
         <Name username={`${video?.author?.username ?? ""}`} />
         <BsDot />
-        <Text as="p" mt={4}>{moment(video.created_at).fromNow()}</Text>
+        <Text as="p" mt={4}>
+          {moment(video.created_at).fromNow()}
+        </Text>
       </Flex>
     </GridItem>
   );

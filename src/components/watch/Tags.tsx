@@ -1,14 +1,15 @@
 import { Box, Link, Text } from "@chakra-ui/react";
 import React from "react";
+import { VideoDetails } from "types";
 
 type Props = {
   bgColor: string;
   colorMode: string;
-  tags: string[] | null;
+  videoDetails: VideoDetails;
 };
-const Tags = ({ tags, ...props }: Props) => {
+const Tags = ({ videoDetails, ...props }: Props) => {
   // console.log("getVideo TAGS", getVideo)
-  const firstFive = tags?.slice(0, 5);
+  const firstFive = videoDetails?.tags?.slice(0, 5);
   return (
     <Box
       display={"flex"}

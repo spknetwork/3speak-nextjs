@@ -1,4 +1,4 @@
-//TODO: Fix this homepage dark mode and the light mode
+
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
 import { useMemo } from "react";

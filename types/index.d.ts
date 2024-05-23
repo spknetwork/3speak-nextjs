@@ -29,7 +29,7 @@ export interface UserDetails {
 
 export interface VideoInterface {
   author?: Author
-  body: string;
+  body?: string;
   created_at: string;
   permlink: string;
   refs: [item: string];
@@ -37,14 +37,47 @@ export interface VideoInterface {
   stats?: Stats
   title: string;
   index?: number;
-  tags?: any;
+  tags: string[];
   price?: number
+}
+
+export interface VideoDetails {
+    community: {
+        title: string;
+        images: {
+            avatar: string;
+            cover: string;
+        }
+        username: string;
+        _id: string
+    },
+    body: string;
+    created_at: string;
+    parent_permlink: string;
+    stats: Stats;
+    tags: string[];
+    title: string;
+}
+
+export interface CommentInterface {
+  author: {
+    profile: {
+      images: {
+        avatar: string;
+      }
+      name: string;
+    }
+  }
+  body: string;
+  permlink: string;
+  children: CommentInterface[]
 }
 
 export interface Author {
     username: string;
 }
 export interface Stats {
+    //TODO: there are no upvotes and downvotes for now
     num_comments: number;
     num_votes: number;
     total_hive_reward: number
@@ -86,15 +119,15 @@ export interface ProfileImagesInterface{
 }
 
 export interface ProfileInterface {
-  about: string,
+  about?: string,
   did?: string,
   images?: ProfileImagesInterface,
   id?: string,
   json_metadata?: string,
   location?: string,
-  name: string,
+  name?: string,
   src?: string,
-  username: string,
+  username?: string,
   website?: string,
 }
 

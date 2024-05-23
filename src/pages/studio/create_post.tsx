@@ -1,5 +1,5 @@
+//TODO: test the uploading apis and check wether the data is published on chain or not
 import React, { useCallback, useEffect, useRef, useState } from "react";
-
 import fs from "fs";
 import {
   Box,
@@ -78,7 +78,6 @@ const getAccessToken = () => {
   return localStorage.getItem("access_token");
 };
 
-// TODO put the type in plz
 export type CommunityResult = {
   name: string;
   title: string;
@@ -192,7 +191,6 @@ const CreatePost: React.FC = () => {
         return;
       }
 
-      //TODO: check the file type
       const thumbs = await generateVideoThumbnails(file, 3, "url");
       console.log("thumbs", thumbs);
 
