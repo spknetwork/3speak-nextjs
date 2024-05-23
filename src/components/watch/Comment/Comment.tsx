@@ -124,7 +124,7 @@ const Comment = ({ author, permlink, bgColor, colorMode }: Props) => {
               fontWeight={"bold"}
               color={colorMode === "dark" ? "white" : "black"}
             >
-              {reply?.author?.profile?.name}
+              {reply?.author?.profile?.name ?? "undefined user"}
             </Text>
             <Collapse in={!isCollapsed[reply?.permlink]} unmountOnExit>
               <Box
@@ -156,7 +156,7 @@ const Comment = ({ author, permlink, bgColor, colorMode }: Props) => {
   return (
     <Box>
       <Box maxHeight={"2000px"} overflow="hidden" position={"relative"}>
-        <Box padding={"0px"} paddingTop="20px">
+        <Box padding={"5px"} paddingTop="25px">
           {commentsData.map((commentData) => (
             <Box
               key={commentData?.permlink}
@@ -196,6 +196,7 @@ const Comment = ({ author, permlink, bgColor, colorMode }: Props) => {
                       cursor={"pointer"}
                     >
                       <CiCirclePlus
+                        fontSize={"3xl"}
                         onClick={() =>
                           toggleCollapse(commentData?.permlink, true)
                         }
@@ -238,7 +239,7 @@ const Comment = ({ author, permlink, bgColor, colorMode }: Props) => {
                     fontWeight={"bold"}
                     color={colorMode === "dark" ? "white" : "black"}
                   >
-                    {commentData?.author?.profile?.name}
+                    {commentData?.author?.profile?.name ?? "undefined user"}
                   </Text>
                   <Collapse
                     in={!isCollapsed[commentData.permlink]}
@@ -251,14 +252,14 @@ const Comment = ({ author, permlink, bgColor, colorMode }: Props) => {
                     >
                       {commentData?.body}
                     </Box>
-                    </Collapse>
-                    <CommentFooter
-                      bgColor={bgColor}
-                      colorMode={colorMode}
-                      commentId={commentData?.permlink}
-                      toggleCollapse={toggleCollapse}
-                      isCollapsed={isCollapsed}
-                    />
+                  </Collapse>
+                  <CommentFooter
+                    bgColor={bgColor}
+                    colorMode={colorMode}
+                    commentId={commentData?.permlink}
+                    toggleCollapse={toggleCollapse}
+                    isCollapsed={isCollapsed}
+                  />
                 </Box>
               </Box>
               {/* Agar ye parent already collapsed hai toh isko bhi collapsed krdo  */}
