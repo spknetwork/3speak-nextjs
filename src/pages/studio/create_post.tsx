@@ -110,7 +110,6 @@ const base_mentions = [
 const CreatePost: React.FC = () => {
   const BASE_URL = "https://staging.3speak.tv";
   const UPLOAD_URL = "http://127.0.0.1:1080";
-  
 
   //setting a global for the hashtags
   const limitHashtags = 150;
@@ -236,7 +235,7 @@ const CreatePost: React.FC = () => {
   const handleCreatePostRef = useRef<() => Promise<void>>();
 
   /**
-   * HandleCreate function api used : "/upload/create_upload"
+   * HandleCreate function api used : "/upload/create_upload"  
    * @param {void}
    * @returns {status code 201}
    */
@@ -252,11 +251,11 @@ const CreatePost: React.FC = () => {
     }
     // Assuming selectedFile has the state variable where the file and previewUrl are stored
     if (!selectedFile || !selectedFile.file) {
+        //TODO: getting problem here
       console.error("No file selected");
       return;
     }
 
-    //debug
     console.log("hey", createUploadInfo);
 
     const uploadedUrl = await startUpload(
@@ -456,8 +455,8 @@ const CreatePost: React.FC = () => {
         },
       }
     );
-    if(result.status === 201){
-        router.push("/studio/studio_videos")
+    if (result.status === 201) {
+      router.push("/studio/studio_videos");
     }
     console.log("Video Uploaded");
   };
@@ -844,8 +843,8 @@ const CreatePost: React.FC = () => {
                         {uploading && (
                           <Button
                             position={"absolute"}
-                            right={5}
-                            bottom={180}
+                            right={20}
+                            bottom={170}
                             onClick={async () => {
                               try {
                                 await handleCreatePost();
@@ -1237,7 +1236,7 @@ const CreatePost: React.FC = () => {
                             <VStack
                               spacing={1}
                               overflowY={"auto"}
-                              maxHeight="522px"
+                              maxHeight="500px"
                             >
                               {communityData
                                 .filter((item: any) => {
@@ -1261,9 +1260,10 @@ const CreatePost: React.FC = () => {
                       </Flex>
                     </Flex>
                     <Flex
-                      mt={25}
                       justifyContent={"space-between"}
                       alignItems="center"
+                      pt={1}
+                      px={4}
                     >
                       <Button
                         disabled={savingDetails == true ? true : false}

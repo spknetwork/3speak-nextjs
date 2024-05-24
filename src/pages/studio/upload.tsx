@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 import { useAppStore } from "@/lib/store";
+import { useAuth } from "@/hooks/auth";
 
 export default function StudioUploadPage({
   children,
@@ -25,25 +26,7 @@ export default function StudioUploadPage({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
-  const { allowAccess } = useAppStore();
-  // const isMedium = useBreakpointValue({ base: false, md: true });
-  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
-  useEffect(() => {
-    if (allowAccess == true) {
-      setAuthenticated(allowAccess);
-      return
-    } 
-    if (allowAccess == false) {
-      setAuthenticated(false);
-      return
-    }
-  }, [allowAccess]);
-
-  useEffect(() => {
-    if (authenticated == false && authenticated != null) {
-      // router.push("/auth/login");
-    }
-  }, [authenticated, router]);
+  const { authenticated } = useAuth() ?? {};
 
   const colorModeValue = useColorModeValue(
     authenticated ? "gray.100" : "gray.100",
@@ -196,24 +179,6 @@ export default function StudioUploadPage({
                           Create a new video
                         </Text>
                       </Flex>
-                      {/* <Flex
-                        borderRadius={"4px"}
-                        cursor="pointer"
-                        justifyContent={"center"}
-                        alignItems="center"
-                        width={"372px"}
-                        height="332px"
-                        background={"#2E3031"}
-                        color="#fff"
-                      >
-                        <Text
-                          fontWeight={"400"}
-                          lineHeight="43.57px"
-                          fontSize={"36px"}
-                        >
-                          Create a new Post
-                        </Text>
-                      </Flex> */}
                     </Flex>
                   </Flex>
                 </Box>
