@@ -1,3 +1,5 @@
+//TODO: Fixed the dropdown
+
 import {
   Avatar,
   AvatarBadge,
@@ -29,19 +31,23 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { MdClose } from "react-icons/md";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { FiBell, FiChevronDown, FiMenu } from "react-icons/fi";
 import { useAppStore } from "../../lib/store";
 import AccountsList from "../Modal/AccountsList";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import Image from "next/image";
+import { useGetMyQuery } from "@/hooks/getUserDetails";
+import { ProfileInterface } from "types";
+import MenuComponent from "../MenuComponent";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
   requestHiveLogin?: () => void | null;
   setUsername?: () => void | null;
   username?: () => string | number | readonly string[] | undefined | null;
+  bgColor: string;
+  colorMode: string;
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const {
@@ -72,7 +78,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     onCloseModal1();
     onOpenModal2();
   };
-  const { userDetails } = useAppStore();
   const logout = () => {
     localStorage.removeItem("access_token"); //
     // in order to reset the localstorage it needs to refresh the whole page
@@ -80,9 +85,11 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   };
 
   //for the dark mode
-  const bgColor = useColorModeValue("white", "gray.800");
-  const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const getUserProfile: ProfileInterface = useGetMyQuery()?.profile;
+  console.log(getUserProfile);
+  const username = getUserProfile?.username;
 
   return (
     <Flex
@@ -120,6 +127,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           aria-label="open menu"
           icon={<FiBell />}
         />
+        {/* <MenuComponent /> */}
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton
@@ -128,12 +136,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               _focus={{ boxShadow: "none" }}
             >
               <HStack>
-                <Avatar
-                  size={"sm"}
-                  src={
-                    "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                  }
-                />
+                <Avatar size={"sm"} src={getUserProfile?.images?.avatar} />
                 <VStack
                   display={{ base: "none", md: "flex" }}
                   alignItems="flex-start"
@@ -141,10 +144,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   ml="2"
                 >
                   <Text margin={0} fontSize="sm">
-                    {userDetails?.username}
-                  </Text>
-                  <Text margin={0} fontSize="xs" color="gray.600">
-                    Admin
+                    {username}
                   </Text>
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>
@@ -153,21 +153,20 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               </HStack>
             </MenuButton>
             <MenuList
-              bg={useColorModeValue("white", "gray.900")}
+              bg={useColorModeValue("white", "gray.700")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
-              <MenuItem onClick={onOpenModal1}>Switch Account</MenuItem>
-              <MenuDivider />
-              <MenuItem onClick={() => logout()}>Sign out</MenuItem>
+              <MenuItem w={160}>Profile</MenuItem>
+              <MenuItem onClick={onOpenModal1} w={160}>
+                Switch Account
+              </MenuItem>
+              <MenuItem onClick={() => logout()} w={160}>
+                Sign out
+              </MenuItem>
             </MenuList>
           </Menu>
           <Flex px={2} mt={2}>
-            <Text
-              fontSize={["xs", "sm", "md", "xl"]}
-            >
+            <Text fontSize={["xs", "sm", "md", "xl"]}>
               <Switch
                 // size={["sm", "sm", "md", "4xl"]}
                 isChecked={colorMode === "dark"}

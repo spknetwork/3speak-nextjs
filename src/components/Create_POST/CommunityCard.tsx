@@ -53,12 +53,12 @@ const myLoader: ImageLoader = ({width, quality}) => {
         </Box>
       </Flex>
       <Flex>
-        <Flex px={4} py={2} mx={4}>
+        {/* <Flex px={4} py={2} mx={4}>
           <Flex>
             <Text mx={1}>Admins:</Text>
             <Text fontWeight={"bold"}>{info.admins}</Text>
           </Flex>
-        </Flex>
+        </Flex> */}
         <Flex px={4} py={2} mx={4}>
           <Flex>
             <Text mx={1}>Subscribers:</Text>

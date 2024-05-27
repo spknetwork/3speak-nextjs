@@ -11,17 +11,6 @@ interface NavItemProps extends FlexProps {
 const NavItem = ({ icon, route, children, ...rest }: NavItemProps) => {
   const router = useRouter();
   return (
-    // // <Link
-
-    // //   href="#"
-    // //   style={{ textDecoration: "none" }}
-    // //   _focus={{ boxShadow: "none" }}
-    // // >
-    //   {/* _hover=
-    //   {{
-    //     bg: "gray.400",
-    //     color: "white",
-    //   }} */}
     <Flex
       onClick={() => router.push(route)}
       align="center"
@@ -30,6 +19,9 @@ const NavItem = ({ icon, route, children, ...rest }: NavItemProps) => {
       borderRadius="lg"
       role="group"
       cursor="pointer"
+      _groupHover={{
+        color: "grey",
+      }}
       {...rest}
     >
       {icon && (
@@ -37,7 +29,7 @@ const NavItem = ({ icon, route, children, ...rest }: NavItemProps) => {
           mr="4"
           fontSize="16"
           _groupHover={{
-            color: "black",
+            color: "grey",
           }}
           as={icon}
         />

@@ -21,6 +21,8 @@ import NavItem from "../studio_navitem/StudioNavItem";
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
+  bgColor: string;
+  colorMode: string;
 }
 
 interface LinkItemProps {
@@ -37,53 +39,58 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Upload", icon: FaCloudUploadAlt, route: "/studio/upload" },
   { name: "Videos", icon: FaVideo, route: "/studio/studio_videos" },
 
-  { name: "My Channel", icon: FaExternalLinkAlt, route: "/studio/studio_videos" },
+  {
+    name: "My Channel",
+    icon: FaExternalLinkAlt,
+    route: "/studio/studio_videos",
+  },
   { name: "Logout", icon: FaSignOutAlt, route: "/studio/studio_videos" },
 ];
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+const SidebarContent = ({
+  onClose,
+  bgColor,
+  colorMode,
+  ...rest
+}: SidebarProps) => {
   const router = useRouter();
   return (
     <Box
       transition="3s ease"
-      bg={useColorModeValue("white", "gray.900")}
-      borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
+      bgColor={bgColor}
+      boxShadow="lg"
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        {/* <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-            Logo
-          </Text> */}
         <Flex justifyContent="center" alignItems={"center"} width="100%">
-         
-            <Box
-              cursor={'pointer'}
-              onClick={() => router.push("/studio")}
-              display={"flex"}
-              justifyContent="center"
-              alignItems={"center"}
-              width={"180px"}
-            >
-              <Image
-                src="/main_logo.svg"
-                alt="3speak logo"
-                width={100}
-                height={100}
-              />
-            </Box>
+          <Box
+            cursor={"pointer"}
+            onClick={() => router.push("/studio")}
+            display={"flex"}
+            justifyContent="center"
+            alignItems={"center"}
+            width={"180px"}
+          >
+            <Image
+              src="/main_logo.svg"
+              alt="3speak logo"
+              width={100}
+              height={100}
+            />
+          </Box>
         </Flex>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
         <NavItem
           route={link.route}
-          color={"#6e707e"}
+          color={colorMode === "dark" ? "white" : "black"}
           key={link.name}
           icon={link.icon}
+          fontSize={"xl"}
         >
           {link.name}
         </NavItem>

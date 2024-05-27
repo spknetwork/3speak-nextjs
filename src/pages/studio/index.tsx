@@ -1,3 +1,10 @@
+//TODO: fixing this page
+
+/**
+ * fetch the username from the get UserDetails data
+ * added the redirection to the login page
+ */
+
 import React, { ReactNode, useEffect, useState } from "react";
 import { useAppStore } from "../../lib/store";
 
@@ -15,6 +22,11 @@ import {
   CardBody,
   SimpleGrid,
   CardHeader,
+  useColorMode,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  
 } from "@chakra-ui/react";
 import { FaRegEye, FaUsers, FaVideo } from "react-icons/fa";
 import { News } from "@/lib/slices/createStudioSlice";
@@ -22,6 +34,8 @@ import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
+import { useAuth } from "@/hooks/auth";
+import {useGetMyQuery} from "../../hooks/getUserDetails"
 
 export default function StudioPage({ children }: { children: ReactNode }) {
   const { news, video_count, followers_count, views_count } = useAppStore();
@@ -31,20 +45,15 @@ export default function StudioPage({ children }: { children: ReactNode }) {
   const [mViewsCount, setMViewsCount] = useState<Number>();
 
   const router = useRouter();
-  const { allowAccess,userDetails } = useAppStore();
-  // const isMedium = useBreakpointValue({ base: false, md: true });
-  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
-  useEffect(() => {
-    if (allowAccess == true) {
-      setAuthenticated(allowAccess);
-      return
-    } 
-    if (allowAccess == false) {
-      setAuthenticated(false);
-      return
-    }
-  }, [allowAccess]);
+  const { authenticated } = useAuth() ?? {};
+
+  const { colorMode } = useColorMode();
+  const bgColor = useColorModeValue("white", "gray.800");
+
+  const getUserDetails = useGetMyQuery();
+  const username = getUserDetails?.profile?.username;
+
 
   useEffect(() => {
     if (authenticated == false && authenticated != null) {
@@ -73,23 +82,27 @@ export default function StudioPage({ children }: { children: ReactNode }) {
   }, [views_count]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const colorModeValue = useColorModeValue(
-    authenticated ? "gray.100" : "gray.100",
-    authenticated ? "gray.900" : "gray.900"
-  );
-//   if (authenticated === null) {
-//     return <Box>Loading...</Box>;
-//   }
+  if (authenticated === null) {
+    return <Box>Loading...</Box>;
+  }
 
-//   if (authenticated === false) {
-//     return <Box>Unauthorized access, please login first</Box>;
-//   }
+  if (authenticated === false) {
+    router.push("/auth/modals");
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle>Please login first!</AlertTitle>
+      </Alert>
+    );
+  }
 
   return (
-    <Box minH="100vh" bg={colorModeValue}>
+    <Box minH="100vh" bg={bgColor}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
+        bgColor={bgColor}
+        colorMode={colorMode}
       />
       <Drawer
         autoFocus={false}
@@ -101,11 +114,15 @@ export default function StudioPage({ children }: { children: ReactNode }) {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent
+            onClose={onClose}
+            bgColor={bgColor}
+            colorMode={colorMode}
+          />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
+      <MobileNav onOpen={onOpen} bgColor={bgColor} colorMode={colorMode} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">
@@ -125,7 +142,7 @@ export default function StudioPage({ children }: { children: ReactNode }) {
             >
               Dashboard
             </Text>
-  
+
             <Text
               as={"h3"}
               textTransform="inherit"
@@ -134,7 +151,7 @@ export default function StudioPage({ children }: { children: ReactNode }) {
               fontWeight={"400 !important"}
               lineHeight="1.2"
             >
-              Welcome back {userDetails?.username?.toUpperCase()}!
+              Welcome back {username}!
             </Text>
           </Flex>
           <Box
@@ -152,13 +169,6 @@ export default function StudioPage({ children }: { children: ReactNode }) {
               marginTop=".5rem !important"
               maxWidth={{ sm: "100%", md: "100%", lg: "33.33333%" }}
             >
-              {/* <Box
-                borderLeft={"0.25rem solid #4e73df !important"}
-                paddingBottom="0.5rem !important"
-                paddingTop={"0.5rem !important"}
-                boxShadow="0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important"
-
-              ></Box> */}
               <Card
                 borderLeft={"0.25rem solid #4e73df !important"}
                 paddingBottom="0.5rem !important"

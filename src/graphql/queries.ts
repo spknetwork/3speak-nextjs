@@ -1,13 +1,15 @@
 import { gql } from "@apollo/client";
 
-
-//TODO: include the skip 
 export const USER_DETAILS = gql`
-query MyQuery2($id: String) {
+  query MyQuery2($id: String) {
     profile(id: $id) {
       ... on HiveProfile {
         id
         name
+        images {
+          avatar
+          cover
+        }
         about
         username
         did
@@ -15,11 +17,15 @@ query MyQuery2($id: String) {
       ... on CeramicProfile {
         id
         name
+        images {
+          avatar
+          cover
+        }
         did
       }
     }
   }
-`   
+`;
 
 export const GET_VIDEO = gql`
   query VideoInfo($permlink: String, $author: String) {
@@ -55,8 +61,8 @@ export const GET_COMMENTS = gql`
     socialPost(author: $author, permlink: $permlink) {
       ... on HivePost {
         children {
-            author {
-                profile {
+          author {
+            profile {
               ... on HiveProfile {
                 name
                 images {
@@ -64,9 +70,9 @@ export const GET_COMMENTS = gql`
                 }
               }
             }
-        }
-        body
-        permlink
+          }
+          body
+          permlink
           children {
             author {
               profile {
@@ -276,7 +282,6 @@ export const GET_SYNC_STATE = gql`
   }
 `;
 
-//TODO: update this query to fetch the children as comments
 export const GET_SOCIAL_POST = gql`
   query MyQuery($author: String, $permlink: String) {
     socialPost(author: $author, permlink: $permlink) {

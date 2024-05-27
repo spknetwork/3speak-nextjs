@@ -22,11 +22,6 @@ export interface Account {
 }
 
 
-export interface UserDetails {
-  username: string | null;
-}
-
-
 export interface VideoInterface {
   author?: Author
   body?: string;

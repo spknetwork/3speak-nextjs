@@ -1,3 +1,7 @@
+/**
+ * There must be some nav that has these options 
+ */
+
 import React, { ReactNode, useEffect, useState } from "react";
 import { FaUpload } from "react-icons/fa6";
 import {
@@ -10,12 +14,12 @@ import {
   useDisclosure,
   Card,
   CardBody,
+  useColorMode,
 } from "@chakra-ui/react";
 import { SlPicture } from "react-icons/sl";
 import { useRouter } from "next/router";
 import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
-import { useAppStore } from "@/lib/store";
 import { useAuth } from "@/hooks/auth";
 
 export default function StudioUploadPage({
@@ -28,10 +32,9 @@ export default function StudioUploadPage({
 
   const { authenticated } = useAuth() ?? {};
 
-  const colorModeValue = useColorModeValue(
-    authenticated ? "gray.100" : "gray.100",
-    authenticated ? "gray.900" : "gray.900"
-  );
+  const { colorMode } = useColorMode();
+  const bgColor = useColorModeValue("white", "gray.800");
+
   if (authenticated === null) {
     return <Box>Loading...</Box>;
   }
@@ -41,10 +44,12 @@ export default function StudioUploadPage({
   }
 
   return (
-    <Box minH="100vh" bg={colorModeValue}>
+    <Box minH="100vh" bg={bgColor}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
+        bgColor={bgColor}
+        colorMode={colorMode}
       />
       <Drawer
         autoFocus={false}
@@ -56,11 +61,15 @@ export default function StudioUploadPage({
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent
+            onClose={onClose}
+            bgColor={bgColor}
+            colorMode={colorMode}
+          />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
+      <MobileNav onOpen={onOpen} bgColor={bgColor} colorMode={colorMode}/>
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">
@@ -96,60 +105,34 @@ export default function StudioUploadPage({
                         <Text
                           fontSize={{ base: "50px", md: "50px", lg: "70px" }}
                         >
-                          <SlPicture width={"100px"} color="black" />
+                          <SlPicture width={"100px"}  color={colorMode === 'dark' ? 'white' : 'black'} />
                         </Text>
 
                         <Text
                           fontWeight={"400"}
                           lineHeight="43.57px"
                           fontSize={{ base: "25px", md: "25px", lg: "36px" }}
-                          color="gray"
-                        >
+                          color={colorMode === 'dark' ? 'white' : 'black'}
+                          >
                           Edit your draft video
                         </Text>
                         <Text
                           fontWeight={"400"}
                           lineHeight="43.57px"
                           fontSize={{ base: "25px", md: "25px", lg: "36px" }}
-                          color="gray"
-                        >
+                          color={colorMode === 'dark' ? 'white' : 'black'}
+                          >
                           Video title
                         </Text>
                       </Flex>
-                      {/* <Flex
-                        width={"372px"}
-                        height="332px"
-                        background={"#2E3031"}
-                        color="#fff"
-                        justifyContent={"center"}
-                        alignItems="center"
-                        flexDirection={"column"}
-                        cursor="pointer"
-                        borderRadius={"4px"}
-                      >
-                        <Text
-                          fontWeight={"400"}
-                          lineHeight="43.57px"
-                          fontSize={"36px"}
-                        >
-                          Edit your draft post
-                        </Text>
-                        <Text
-                          fontWeight={"400"}
-                          lineHeight="43.57px"
-                          fontSize={"36px"}
-                        >
-                          Post title
-                        </Text>
-                      </Flex> */}
                       <Box>
                         <Text
                           fontWeight={"400"}
                           fontStyle="italic"
                           fontSize={{ base: "25px", md: "25px", lg: "36px" }}
                           lineHeight="44px"
-                          color="gray"
-                        >
+                          color={colorMode === 'dark' ? 'white' : 'black'}
+                          >
                           Or
                         </Text>
                       </Box>
@@ -167,14 +150,14 @@ export default function StudioUploadPage({
                         <Text
                           fontSize={{ base: "50px", md: "50px", lg: "70px" }}
                         >
-                          <FaUpload width={"100px"} color={"black"} />
+                          <FaUpload width={"100px"}  color={colorMode === 'dark' ? 'white' : 'black'} />
                         </Text>
 
                         <Text
                           fontWeight={"400"}
                           lineHeight="43.57px"
                           fontSize={{ base: "25px", md: "25px", lg: "36px" }}
-                          color="gray"
+                          color={colorMode === 'dark' ? 'white' : 'black'}
                         >
                           Create a new video
                         </Text>

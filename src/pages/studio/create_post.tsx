@@ -235,7 +235,7 @@ const CreatePost: React.FC = () => {
   const handleCreatePostRef = useRef<() => Promise<void>>();
 
   /**
-   * HandleCreate function api used : "/upload/create_upload"  
+   * HandleCreate function api used : "/upload/create_upload"
    * @param {void}
    * @returns {status code 201}
    */
@@ -251,7 +251,6 @@ const CreatePost: React.FC = () => {
     }
     // Assuming selectedFile has the state variable where the file and previewUrl are stored
     if (!selectedFile || !selectedFile.file) {
-        //TODO: getting problem here
       console.error("No file selected");
       return;
     }
@@ -601,7 +600,7 @@ const CreatePost: React.FC = () => {
 
   if (authenticated === false) {
     return <Box>Unauthorized access, please login first</Box>;
-    //TODO: redirecting to auth components
+    router.push("/auth/modals");
   }
 
   /**
@@ -617,6 +616,8 @@ const CreatePost: React.FC = () => {
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
+        bgColor={bgColor}
+        colorMode={colorMode}
       />
       <Drawer
         autoFocus={false}
@@ -628,11 +629,16 @@ const CreatePost: React.FC = () => {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent
+            onClose={onClose}
+            bgColor={bgColor}
+            colorMode={colorMode}
+          />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
+      <MobileNav onOpen={onOpen} bgColor={bgColor} colorMode={colorMode} />
+
       <Box
         position={"relative"}
         className="hellotesting"

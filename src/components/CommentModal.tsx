@@ -26,7 +26,7 @@ export default function CommentModal(props: any) {
           </Typography>
           <TextField id="outlined-basic" label="Reply" variant="outlined" multiline minRows={3} style={{width: '100%'}} />
           <Button style={{float: 'right'}} onClick={() => {
-            // TODO: post comment
+            // TODO: make  post comment functional
           }}>
             Post
           </Button>

@@ -99,7 +99,7 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
         >
           FOLLOW
         </Button>
-        <Button
+        {/* <Button
           marginRight={"10px"}
           textTransform="uppercase"
           border={"none"}
@@ -116,7 +116,7 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
           color={colorMode === "dark" ? "white" : "black"}
         >
           DONATE CRYPTO
-        </Button>
+        </Button> */}
       </Flex>
     </Flex>
   );

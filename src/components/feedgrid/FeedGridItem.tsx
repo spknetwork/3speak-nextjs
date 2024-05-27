@@ -1,4 +1,7 @@
-import React from "react";
+//TODO: to ask the suggestion for the widgets on hover
+//TODO: invisible the widgets on the hover over the video component
+
+import React, { useState } from "react";
 import { Box, GridItem, Image, Link, Text, Flex } from "@chakra-ui/react";
 import { MdOutlineThumbUp } from "react-icons/md";
 import { BiDollar } from "react-icons/bi";
@@ -11,7 +14,6 @@ import { InfinitySpin } from "react-loader-spinner";
 import { useColorMode } from "@chakra-ui/react";
 import { BsDot } from "react-icons/bs";
 
-// https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript/34841026#34841026
 var toHHMMSS = (secs: number) => {
   var sec_num = parseInt(secs.toFixed(1), 10);
   var hours = Math.floor(sec_num / 3600);
@@ -36,6 +38,7 @@ const redirect = (permlink: string, username: string) => {
 
 const FeedGridItem = ({ video }: Props) => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const [showDollarComponent, setShowDollarComponent] = useState(true);
 
   if (!video) {
     return (
@@ -45,80 +48,98 @@ const FeedGridItem = ({ video }: Props) => {
     );
   }
 
+  const handleMouseOver = () => {
+    setShowDollarComponent(false);
+  };
+
+  const handleMouseLeave = () => {
+    setShowDollarComponent(true);
+  };
+
   return (
     <GridItem
       w="100%"
       h="100%"
       p={1}
       m={1}
-      backgroundColor={colorMode === "dark" ? "gray.900" : "white"}
+      boxShadow={"0 1px black"}
       borderRadius={"10px"}
+      mb={12}
+      cursor={"pointer"}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
     >
       <Box cursor={"pointer"} position="relative">
-        <Box
-          display={"flex"}
-          justifyContent="center"
-          alignItems={"center"}
-          position={"absolute"}
-          bottom="5px"
-          color={"#000"}
-          left="5px"
-          fontSize="11px"
-          fontWeight={"500"}
-          background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
-          borderRadius="2px"
-          paddingLeft={"4px"}
-          paddingRight={"4px"}
-        >
-          <MdOutlineThumbUp size="15px" color="grey" />
-          <Text as="span" fontSize="11px" fontWeight={"bold"}>
-            {video?.stats?.num_votes}
-          </Text>
-        </Box>
+        {showDollarComponent && (
+          <Box>
+            <Box
+              display={"flex"}
+              justifyContent="center"
+              alignItems={"center"}
+              position={"absolute"}
+              bottom="5px"
+              color={"#000"}
+              left="5px"
+              fontSize="11px"
+              fontWeight={"500"}
+              background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
+              borderRadius="2px"
+              paddingLeft={"4px"}
+              paddingRight={"4px"}
+            >
+              <MdOutlineThumbUp size="15px" color="grey" />
+              <Text as="span" fontSize="11px" fontWeight={"bold"}>
+                {video?.stats?.num_votes}
+              </Text>
+            </Box>
 
-        <Box
-          display={"flex"}
-          justifyContent="center"
-          alignItems={"center"}
-          position={"absolute"}
-          bottom="5px"
-          left="52px"
-          color={"#000"}
-          fontSize="11px"
-          fontWeight={"500"}
-          background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
-          borderRadius="2px"
-          paddingLeft={"4px"}
-          paddingRight={"4px"}
-        >
-          <BiDollar size="12px" color="black" />
-          <Text
-            as="span"
-            marginLeft={"2px"}
-            fontSize="11px"
-            fontWeight={"bold"}
-          >
-            {video?.stats?.total_hive_reward
-              ? video.stats.total_hive_reward.toFixed(3)
-              : "0.000"}
-          </Text>
-        </Box>
-        <Box
-          position={"absolute"}
-          bottom="5px"
-          color={"#000"}
-          fontSize="11px"
-          fontWeight={"bold"}
-          right="5px"
-          background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
-          borderRadius="2px"
-          padding={"0px 6px"}
-        >
-          {/* if(!spkvideo){
-            return null
-        } */}
-          {toHHMMSS(video?.spkvideo?.duration ?? 0)}
-        </Box>
+            <Box
+              className="props"
+              display={"flex"}
+              justifyContent="center"
+              alignItems={"center"}
+              position={"absolute"}
+              bottom="5px"
+              left="52px"
+              color={"#000"}
+              fontSize="11px"
+              fontWeight={"500"}
+              background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
+              borderRadius="2px"
+              paddingLeft={"4px"}
+              paddingRight={"4px"}
+            >
+              <BiDollar size="12px" color="black" />
+              <Text
+                as="span"
+                marginLeft={"2px"}
+                fontSize="11px"
+                fontWeight={"bold"}
+              >
+                {video?.stats?.total_hive_reward
+                  ? video.stats.total_hive_reward.toFixed(3)
+                  : "0.000"}
+              </Text>
+            </Box>
+
+            <Box
+              position={"absolute"}
+              bottom="5px"
+              color={"#000"}
+              fontSize="11px"
+              fontWeight={"bold"}
+              right="5px"
+              background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
+              borderRadius="2px"
+              padding={"0px 6px"}
+            >
+              {/* if(!spkvideo){
+                return null
+            } */}
+              {toHHMMSS(video?.spkvideo?.duration ?? 0)}
+            </Box>
+          </Box>
+        )}
         <Box height="13em !important" width="100% !important">
           <Image
             height="13em !important"
@@ -135,17 +156,21 @@ const FeedGridItem = ({ video }: Props) => {
           />
         </Box>
       </Box>
-      <VideosTitle
-        title={`${video.title}`}
-        author={video.author}
-        permlink={`${video.permlink}`}
-      />
-      <Flex alignItems={"center"}>
-        <Name username={`${video?.author?.username ?? ""}`} />
-        <BsDot />
-        <Text as="p" mt={4}>
-          {moment(video.created_at).fromNow()}
-        </Text>
+
+      {/* TODO: fix this height  */}
+      <Flex flexDirection={"column"} justifyContent={"space-between"} h={"20%"}>
+        <VideosTitle
+          title={`${video.title}`}
+          author={video.author}
+          permlink={`${video.permlink}`}
+        />
+        <Flex alignItems={"center"}>
+          <Name username={`${video?.author?.username ?? ""}`} />
+          <BsDot />
+          <Text as="p" mt={4}>
+            {moment(video.created_at).fromNow()}
+          </Text>
+        </Flex>
       </Flex>
     </GridItem>
   );

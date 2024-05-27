@@ -1,4 +1,4 @@
-//TODO: fetch the username of the user to redirect on my channel page
+//TODO: fixed the logout dropdown 
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@chakra-ui/react";
@@ -56,8 +56,11 @@ import { AiFillAndroid } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 import AccountsList from "./Modal/AccountsList";
 import SignInModal from "./Modal/SignInModal";
-import { useQuery } from "@apollo/client";
-import { USER_DETAILS } from "@/graphql/queries";
+import { useGetMyQuery } from "@/hooks/getUserDetails";
+import { ProfileInterface } from "types";
+
+
+
 const threespeak = {
   filter: "drop-shadow(2px 4px 6px black)",
 };
@@ -79,22 +82,9 @@ const faTelegramIcon = faTelegram as IconProp;
 const faTwitterIcon = faTwitter as IconProp;
 
 export const Sidebar = () => {
-  //call the query here
-  let user_id;
-  if (typeof window !== "undefined") {
-    user_id = window.localStorage.getItem("user_id")  ||  localStorage.getItem("access_token");
-  }
-  const getUserDetails = useQuery(USER_DETAILS, {
-    variables: { id: user_id },
-    skip: !user_id,
-  });
+  const getUserProfile: ProfileInterface = useGetMyQuery()?.profile;
+  console.log(getUserProfile);
 
-  const username = getUserDetails?.data?.profile?.username;
-  const name = getUserDetails?.data?.profile?.name;
-
-  console.log("user details", getUserDetails);
-  console.log("username", username);
-  console.log("name", name);
 
   const bgColor = useColorModeValue("gray.100", "gray.800");
   const { colorMode, toggleColorMode } = useColorMode();
@@ -126,7 +116,6 @@ export const Sidebar = () => {
 
   const {
     allowAccess,
-    userDetails,
     userhiveDetails,
     listAccounts,
     setAccounts,
@@ -157,7 +146,6 @@ export const Sidebar = () => {
       console.log("showNav", showNav);
     }
   }, [isMobile, showNav]);
-
 
   const addAccountsNow = () => {
     console.log("addAccountsNow", addAccountsNow);
@@ -266,11 +254,7 @@ export const Sidebar = () => {
                             alignItems="center"
                           >
                             <Flex
-                              onClick={() =>
-                                router.push(
-                                  `/user/${username}`
-                                )
-                              }
+                              onClick={() => router.push(`/user/${getUserProfile?.username}`)}
                               margin="10px"
                               justifyContent={"center"}
                               alignItems="center"
@@ -283,15 +267,15 @@ export const Sidebar = () => {
                               <Image
                                 alt="sidebar avatar"
                                 loader={() => {
-                                  return userhiveDetails?.profile_image
-                                    ? userhiveDetails?.profile_image
+                                  return getUserProfile?.images?.avatar
+                                    ? getUserProfile?.images?.avatar
                                     : `/images/avatar3.png`;
                                 }}
                                 width="100"
                                 height={"100"}
                                 src={
-                                  userhiveDetails?.profile_image
-                                    ? userhiveDetails?.profile_image
+                                    getUserProfile?.images?.avatar
+                                    ? getUserProfile?.images?.avatar
                                     : `/images/avatar3.png`
                                 }
                                 style={{
@@ -305,18 +289,14 @@ export const Sidebar = () => {
                             </Flex>
 
                             <Text
-                              onClick={() =>
-                                router.push(
-                                  `/user/${username}`
-                                )
-                              }
+                              onClick={() => router.push(`/user/${getUserProfile?.username}`)}
                               marginLeft={"5px"}
                               margin={"0px"}
                               marginRight={"8px"}
                               textAlign={"center"}
                               as="h5"
                             >
-                              {name}
+                              {getUserProfile?.name}
                             </Text>
                             <Menu>
                               <MenuButton
@@ -346,7 +326,7 @@ export const Sidebar = () => {
                             </Menu>
                           </Flex>
                         </ChakraBox>
-                        <Link href="/studio">
+                        <Link href="/studio/upload">
                           <Button
                             bg={bgColor}
                             boxShadow={"0 1px 4px rgb(0 0 0 / 40%)"}
@@ -361,6 +341,7 @@ export const Sidebar = () => {
                       </Flex>
                     )}
                     <Flex
+                      pt={2}
                       cursor={"pointer"}
                       width={"100%"}
                       justifyContent="center"

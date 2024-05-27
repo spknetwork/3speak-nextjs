@@ -3,6 +3,7 @@ import { Row, Col, Container } from "react-bootstrap";
 import { LeaderTile } from "@/components/LeaderTile";
 import { Flex, Text } from "@chakra-ui/react";
 import MainLayout from "@/components/Layouts/main_layout";
+import MenuComponent from "@/components/MenuComponent";
 
 export default function LeaderboardView() {
   const [first, setFirst] = useState<any>();
@@ -75,7 +76,6 @@ export default function LeaderboardView() {
 
     document.title = "3Speak - Tokenised video communities";
     void load();
-
     async function load() {
       let step = 1;
     }

@@ -1,4 +1,3 @@
-//TODO: use the permlink as the comment id in order to collapse the comment
 import React, { useEffect, useState } from "react";
 import { Avatar, Box, Collapse, Text } from "@chakra-ui/react";
 import CommentFooter from "../CommentFooter";
@@ -155,6 +154,9 @@ const Comment = ({ author, permlink, bgColor, colorMode }: Props) => {
 
   return (
     <Box>
+      <Text marginBottom={"10px"} fontSize={"20px"} marginTop={"12px"}>
+        Comments
+      </Text>
       <Box maxHeight={"2000px"} overflow="hidden" position={"relative"}>
         <Box padding={"5px"} paddingTop="25px">
           {commentsData.map((commentData) => (

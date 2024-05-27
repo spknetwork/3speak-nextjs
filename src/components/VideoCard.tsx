@@ -36,7 +36,6 @@ export const VideoCard = (props: IVideo & { payout: number }) => {
               alt={`${props.owner}'s photo for the video titled ${props.title}`}
             />
           </a>
-          {/* TODO: Use the next Image component here (weird it requires a pixel with) */}
         </Link>
         <div>
           <TextCutoff>

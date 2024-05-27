@@ -45,7 +45,9 @@ const VideosTitle = (props: Props) => {
         maxHeight={"6.8rem"}
         overflowWrap={"break-word"}
       >
-        {props.title}
+        {/* {props.title.split(" ").slice(0, 5).join(" ")} 
+         */}
+         {props.title}
       </Text>
     </div>
   );

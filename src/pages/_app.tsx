@@ -1,4 +1,4 @@
-//TODO: integrate the magiclink-react library
+
 
 import "../styles/globals.scss";
 import "../styles/styles.css";

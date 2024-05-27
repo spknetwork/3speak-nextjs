@@ -1,4 +1,5 @@
 //TODO: react markdown render
+//TODO: get the communities section out the decription box
 
 import { Box, Link, Text, Flex, useColorModeValue } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
@@ -39,25 +40,11 @@ const About = ({ getVideo, ...props }: Props) => {
       padding="15px"
       borderRadius={"2px"}
       boxShadow={
-        props.colorMode === "dark" ? "0 0 11px black" : "0 0 11px #ececec;"
+        props.colorMode === "dark" ? "0 0 5px black" : "0 0 5px #ececec;"
       }
       transitionDuration={"0.4s"}
       background={props.bgColor}
     >
-      <Box
-        marginBottom={"30px"}
-        borderRadius={4}
-        // boxShadow="base"
-        mr={2}
-        flex="1"
-        bg={props.bgColor}
-      >
-        <Community
-          bgColor={props.bgColor}
-          colorMode={props.colorMode}
-          getVideo={getVideo}
-        />
-      </Box>
 
       {/* TODO: filtering out body  */}
       <Box
@@ -88,7 +75,6 @@ const About = ({ getVideo, ...props }: Props) => {
           fontSize={"15px"}
           fontWeight="600"
         >
-          {/* TODO: change it from timestamp to date and time */}
           {`Published on ${new Date(
             getVideo?.created_at
           ).toLocaleDateString()} at ${new Date(
@@ -105,12 +91,11 @@ const About = ({ getVideo, ...props }: Props) => {
         </Text>
         <Box display={"flex"} flexWrap="wrap" flexDirection={"row"}>
           {getVideo.tags.slice(5).map((tag: any, index: number) => {
-            //TODO: tags
             return (
               <Box key={index}>
                 <Link
                   href={"/tags/" + `${tag}`}
-                  color={"cyan"}
+                  color={"blue.300"}
                   display={"inline-block"}
                 >
                   #{tag}&nbsp;

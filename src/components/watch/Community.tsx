@@ -3,7 +3,7 @@ import React from "react";
 import { VideoDetails } from "types";
 
 type Props = {
-  getVideo: VideoDetails;
+  videoDetails: VideoDetails;
   bgColor: string;
   colorMode: string;
 };
@@ -15,20 +15,20 @@ const Community = (props: Props) => {
         bg={props.bgColor}
         color={props.colorMode === "dark" ? "white" : "black"}
       >
-        <Text marginBottom={"10px"} fontSize={"11px"} marginTop={"12px"}>
+        <Text marginBottom={"10px"} fontSize={"20px"} marginTop={"12px"}>
           Community
         </Text>
         <Flex alignItems={"center"}>
           <Avatar
-            name={props.getVideo.community?._id}
-            src={props.getVideo?.community?.images?.avatar}
+            name={props.videoDetails?.community?._id}
+            src={props.videoDetails?.community?.images?.avatar}
           />
           <Flex flexDirection={"column"} className="ms-4">
             <Link fontWeight={"bolder"} fontSize={"11px"}>
               {}
             </Link>
           </Flex>
-          <Text>{props.getVideo?.community?.username}</Text>
+          <Text fontSize={"xl"}>{props.videoDetails?.community?.username}</Text>
         </Flex>
       </Box>
     </Flex>

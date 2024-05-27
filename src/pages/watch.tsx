@@ -1,4 +1,4 @@
-//TODO: fetch comments and limit them to 2
+//TODO: Fix this page
 import Video from "@/components/watch/video/Video";
 import {
   Box,
@@ -52,7 +52,6 @@ export default function Watch() {
     "/"
   )[1];
 
-
   const getSuggestionFeed = useQuery(GET_RELATED, {
     variables: { author: author, permlink: permlink },
   });
@@ -62,11 +61,11 @@ export default function Watch() {
     variables: { author, permlink },
   });
 
-//   console.log("getVideoDetails", getVideoDetails);
+  //   console.log("getVideoDetails", getVideoDetails);
 
   const videoDetails: VideoDetails = getVideoDetails?.data?.socialPost;
 
-//   console.log("videoDetails", videoDetails);
+  //   console.log("videoDetails", videoDetails);
 
   return (
     <MainLayout>
@@ -112,20 +111,47 @@ export default function Watch() {
                         bgColor={bgColor}
                         colorMode={colorMode}
                       />
-                      <Reactions bgColor={bgColor} colorMode={colorMode} getVideo={videoDetails}/>
+                      <Reactions
+                        bgColor={bgColor}
+                        colorMode={colorMode}
+                        getVideo={videoDetails}
+                      />
                     </Flex>
                   </Flex>
                 </Box>
               </Box>
             </Box>
+            <Box
+              marginBottom={"30px"}
+              borderRadius={4}
+              boxShadow="0 0 5px black"
+              w="full"
+              pb={4}
+              px={4}
+              flex="1"
+              bg={bgColor}
+            >
+              <Community
+                bgColor={bgColor}
+                colorMode={colorMode}
+                videoDetails={videoDetails}
+              />
+            </Box>
             <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg={bgColor}>
+              {/* TODO: Markdown render all the tags there  */}
               <About
                 getVideo={videoDetails}
                 bgColor={bgColor}
                 colorMode={colorMode}
               />
             </Box>
-            <Box>
+            <Box
+              marginBottom={"30px"}
+              borderRadius={4}
+              boxShadow="0 0 5px black"
+              w="full"
+              p={4}
+            >
               <Comment
                 author={author}
                 permlink={permlink}

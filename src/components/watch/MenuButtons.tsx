@@ -1,3 +1,4 @@
+//TODO: fix the menu item
 import { AddIcon, ChevronDownIcon, WarningTwoIcon } from "@chakra-ui/icons";
 import {
   Button,
@@ -41,13 +42,13 @@ const MenuButtons = (props: Props) => {
         </Text>
       </MenuButton>
       <MenuList w={"full"}>
-        <MenuItem w={"auto"}>
-          <AddIcon marginRight={"10px"} /> ADD TO PLAYLIST
-        </MenuItem>
+        {/* <MenuItem w={"auto"}>
+          <AddIcon marginRight={"10px"} /> ADD TO PLAYLIST 
+  </MenuItem> */}
         <MenuItem w={"auto"}>OPEN IN THE DESKTOP APP</MenuItem>
-        <MenuItem w={"auto"}>
+        {/* <MenuItem w={"auto"}>
           <WarningTwoIcon marginRight={"10px"} /> REPORT
-        </MenuItem>
+        </MenuItem> */}
       </MenuList>
     </Menu>
   );

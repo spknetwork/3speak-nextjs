@@ -1,3 +1,4 @@
+//TODO: make this downvots upvote and reply functional 
 import { Avatar, Box, Button, Flex, Text, Textarea } from "@chakra-ui/react";
 import React, { useState } from "react";
 import {
@@ -104,29 +105,15 @@ const CommentFooter = (props: Props) => {
               {/* <Button onClick={showComment} variant="outline"> */}
               <BiComment fontSize={"14px"} />{" "}
               <Text marginBottom={"0px"} marginLeft={"3px"}>
-                Comments
+                Replies
               </Text>
               {/* </Button> */}
             </Flex>
           </Box>
-          {/* <Flex>
-                        <FaCommentAlt  />{" "}
-                        <Text color={'black'} >
-                          Comments
-                        </Text>
-                      </Flex> */}
           <Box
             color={props.colorMode === "dark" ? "white" : "black"}
             marginLeft={"10px"}
           >
-            <Flex justifyContent={"center"} alignItems="center">
-              {/* <Button variant="outline"> */}
-              <BiShare fontSize={"15px"} />{" "}
-              <Text marginBottom={"0px"} marginLeft={"3px"}>
-                Share
-              </Text>
-              {/* </Button> */}
-            </Flex>
           </Box>
           {/* <Button color={"black"} variant="outline">
                         ...
@@ -159,7 +146,7 @@ const CommentFooter = (props: Props) => {
                   >
                     Cancel
                   </Button>
-                  <Button colorScheme="messenger">Comment</Button>
+                  <Button colorScheme="messenger">Reply</Button>
                 </Flex>
               </Flex>
             </Box>
