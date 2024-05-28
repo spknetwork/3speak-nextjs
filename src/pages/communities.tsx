@@ -1,3 +1,4 @@
+//TODO: Fix the padding and the margin there
 import React, { useEffect, useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import { CommunityTile } from "../components/widgets/CommunityTile";

@@ -6,6 +6,7 @@ import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import { CommentInterface, VideoInterface } from "types";
 import { useQuery } from "@apollo/client";
 import { GET_COMMENTS } from "@/graphql/queries";
+import CustomMarkdown from "@/helper/CustomMarkdown"
 
 type Props = {
   author: string;
@@ -131,7 +132,7 @@ const Comment = ({ author, permlink, bgColor, colorMode }: Props) => {
                 width="100%"
                 color={colorMode === "dark" ? "white" : "black"}
               >
-                {reply?.body}
+                <CustomMarkdown content={reply?.body} />
               </Box>
             </Collapse>
             <CommentFooter
@@ -252,7 +253,7 @@ const Comment = ({ author, permlink, bgColor, colorMode }: Props) => {
                       width="100%"
                       color={colorMode === "dark" ? "white" : "black"}
                     >
-                      {commentData?.body}
+                     <CustomMarkdown content={commentData?.body} /> 
                     </Box>
                   </Collapse>
                   <CommentFooter

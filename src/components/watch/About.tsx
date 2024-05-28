@@ -6,8 +6,8 @@ import React, { useEffect, useState } from "react";
 import Community from "@/components/watch/Community";
 import { InfinitySpin } from "react-loader-spinner";
 import { ProfileInterface, VideoDetails, VideoInterface } from "types";
+import CustomMarkdown from "@/helper/CustomMarkdown";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from 'remark-gfm'
 
 type Props = {
   getVideo: VideoDetails;
@@ -17,6 +17,9 @@ type Props = {
 
 const About = ({ getVideo, ...props }: Props) => {
   const [showLess, setShowLess] = useState(true);
+
+  //custom markdown function
+
   const showLessFunction = () => {
     setShowLess(!showLess);
   };
@@ -45,7 +48,6 @@ const About = ({ getVideo, ...props }: Props) => {
       transitionDuration={"0.4s"}
       background={props.bgColor}
     >
-
       {/* TODO: filtering out body  */}
       <Box
         maxHeight={showLess ? "200px" : "initial"}
@@ -62,10 +64,9 @@ const About = ({ getVideo, ...props }: Props) => {
                     getVideo.body
                 }}
               />*/}
-              <ReactMarkdown>
-                {getVideo?.body}
-              </ReactMarkdown>
-              ,
+
+              <CustomMarkdown content={getVideo?.body} />
+
             </div>
           </Text>
         </span>

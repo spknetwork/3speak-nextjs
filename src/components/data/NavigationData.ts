@@ -91,7 +91,7 @@ export const NAVIGATION= [
     {
       icon: ICONS.FaHandshakeAngle,
       title: "nav.communities",
-      route: "communities",
+      route: "/communities",
     },
     {
       icon: ICONS.MdLeaderboard,

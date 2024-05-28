@@ -21,10 +21,10 @@ export function CommunityTile(props: Props) {
   }, []);
 
   return (
-    <Box w={300}>
+    <Box w={300} p={2} m={2}>
       <a href={`/community/${props.reflink}`} className="font-weight-bold">
         <div
-          className={`community-card channels-card shadow-sm ${
+          className={`community-card channels-card shadow-sm-dark ${
             props.colorMode === "dark"
               ? "bg-dark text-white"
               : "bg-light text-dark"
