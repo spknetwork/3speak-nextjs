@@ -151,6 +151,7 @@ const Comment = ({ author, permlink, bgColor, colorMode }: Props) => {
 
   if (commentsData === undefined) {
     return <Box>Loading..</Box>;
+
   }
 
   return (

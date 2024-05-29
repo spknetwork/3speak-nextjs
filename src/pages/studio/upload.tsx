@@ -1,7 +1,3 @@
-/**
- * There must be some nav that has these options 
- */
-
 import React, { ReactNode, useEffect, useState } from "react";
 import { FaUpload } from "react-icons/fa6";
 import {
@@ -69,7 +65,7 @@ export default function StudioUploadPage({
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} bgColor={bgColor} colorMode={colorMode}/>
+      <MobileNav onOpen={onOpen} bgColor={bgColor} colorMode={colorMode} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">
@@ -101,27 +97,32 @@ export default function StudioUploadPage({
                         alignItems={"center"}
                         flexDirection="column"
                         borderRadius={"10px"}
+                        cursor="pointer"
+                        onClick={() => router.push("/studio/studio_videos")}
                       >
                         <Text
                           fontSize={{ base: "50px", md: "50px", lg: "70px" }}
                         >
-                          <SlPicture width={"100px"}  color={colorMode === 'dark' ? 'white' : 'black'} />
+                          <SlPicture
+                            width={"100px"}
+                            color={colorMode === "dark" ? "white" : "black"}
+                          />
                         </Text>
 
                         <Text
                           fontWeight={"400"}
                           lineHeight="43.57px"
                           fontSize={{ base: "25px", md: "25px", lg: "36px" }}
-                          color={colorMode === 'dark' ? 'white' : 'black'}
-                          >
+                          color={colorMode === "dark" ? "white" : "black"}
+                        >
                           Edit your draft video
                         </Text>
                         <Text
                           fontWeight={"400"}
                           lineHeight="43.57px"
                           fontSize={{ base: "25px", md: "25px", lg: "36px" }}
-                          color={colorMode === 'dark' ? 'white' : 'black'}
-                          >
+                          color={colorMode === "dark" ? "white" : "black"}
+                        >
                           Video title
                         </Text>
                       </Flex>
@@ -131,8 +132,8 @@ export default function StudioUploadPage({
                           fontStyle="italic"
                           fontSize={{ base: "25px", md: "25px", lg: "36px" }}
                           lineHeight="44px"
-                          color={colorMode === 'dark' ? 'white' : 'black'}
-                          >
+                          color={colorMode === "dark" ? "white" : "black"}
+                        >
                           Or
                         </Text>
                       </Box>
@@ -150,14 +151,17 @@ export default function StudioUploadPage({
                         <Text
                           fontSize={{ base: "50px", md: "50px", lg: "70px" }}
                         >
-                          <FaUpload width={"100px"}  color={colorMode === 'dark' ? 'white' : 'black'} />
+                          <FaUpload
+                            width={"100px"}
+                            color={colorMode === "dark" ? "white" : "black"}
+                          />
                         </Text>
 
                         <Text
                           fontWeight={"400"}
                           lineHeight="43.57px"
                           fontSize={{ base: "25px", md: "25px", lg: "36px" }}
-                          color={colorMode === 'dark' ? 'white' : 'black'}
+                          color={colorMode === "dark" ? "white" : "black"}
                         >
                           Create a new video
                         </Text>

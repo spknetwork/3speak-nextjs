@@ -298,7 +298,7 @@ export const Sidebar = () => {
                             >
                               {getUserProfile?.name}
                             </Text>
-                            <Menu>
+                            <Menu >
                               <MenuButton
                                 as={IconButton}
                                 aria-label="Options"
@@ -309,7 +309,7 @@ export const Sidebar = () => {
                           </MenuButton> */}
                               <MenuList>
                                 <MenuItem
-                                  w={12}
+                                  w={160}
                                   onClick={() => {
                                     localStorage.removeItem("access_token"); //
                                     if (colorMode == "dark") {

@@ -1,7 +1,7 @@
 import { api } from "@/utils/api";
 import { API_URL_FROM_WEST } from "@/utils/config";
 import axios from "axios";
-import { HiveLoginInterface, Params, UserDetails } from "types";
+import { HiveLoginInterface, Params, UsernameInterface } from "types";
 import { StateCreator } from "zustand";
 import { useAppStore } from "../store";
 
@@ -11,7 +11,7 @@ export interface AuthUserSlice {
   setAccounts: (data?: any) => void;
   getUserDetails: () => any;
   login_with_hive: (request:HiveLoginInterface) => any;
-  userDetails: UserDetails | null;
+  userDetails: UsernameInterface | null;
   login: (data: Params) => any;
   register: (data: Params) => any;
   listAccounts: any;

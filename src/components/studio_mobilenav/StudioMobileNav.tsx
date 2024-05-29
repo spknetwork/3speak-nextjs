@@ -68,6 +68,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     // show modal list of accounts available
     isOpenModal1;
   };
+
   const addAccounts = () => {
     console.log("addAccounts");
     // show modal list of accounts available
@@ -84,7 +85,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   const getUserProfile: ProfileInterface = useGetMyQuery()?.profile;
-//   console.log(getUserProfile);
+  //   console.log(getUserProfile);
   const username = getUserProfile?.username;
 
   return (

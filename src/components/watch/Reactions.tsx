@@ -1,7 +1,8 @@
 //TODO: downvotes and views field not available 
+//TODO: make the UI optimistic
 import { ViewIcon } from "@chakra-ui/icons";
 import { Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
 import { VideoDetails } from "types";
 import MenuButtons from "./MenuButtons";
@@ -15,6 +16,9 @@ type Props = {
 const Reactions = ({ bgColor, colorMode,  getVideo }: any) => {
 
     console.log("videoStats", getVideo);
+
+    //useStates for the Optimistic UI 
+    const [likes, setLikes] = useState<number | boolean>(0)
 
   return (
     <Flex justifyContent={"center"}>

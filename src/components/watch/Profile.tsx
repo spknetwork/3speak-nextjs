@@ -39,11 +39,15 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
   const [followings_count, setfollowings_count] = useState<any>(null);
   const [followers_count, setfollowers_count] = useState<any>(null);
 
-  // debugger;
-
+  const [FollowState, setFollowState] = useState<string | null>("follow")
+  
   const gotoProfile = () => {
     router.push(`/user/${profile?.username}`);
   };
+
+  const TriggerRender = () => {
+    setFollowState((prevState) => (prevState === "follow" ? "Unfollow" : "follow"))
+  }
   return (
     <Flex justifyContent={"space-between"}>
       <Box
@@ -68,6 +72,7 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
               <Text color={"grey"} fontSize={"12px"} marginRight="10px">
                 followers {followers_count}
               </Text>
+              {/* need to make it functional  */}
               <Text color={"grey"} fontSize={"12px"}>
                 following {followings_count}
               </Text>
@@ -96,8 +101,9 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
           }
           fontWeight={"400"}
           color={colorMode === "dark" ? "white" : "black"}
+          onClick={TriggerRender}
         >
-          FOLLOW
+          {FollowState === "follow" ? "FOLLOW" : "UNFOLLOW"}
         </Button>
         {/* <Button
           marginRight={"10px"}

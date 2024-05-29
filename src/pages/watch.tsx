@@ -1,4 +1,5 @@
-//TODO: Fix this page
+//TODO: Add functionalities to this page
+
 import Video from "@/components/watch/video/Video";
 import {
   Box,
