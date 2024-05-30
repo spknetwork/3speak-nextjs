@@ -26,6 +26,7 @@ import {
   Tbody,
   Td,
   Badge,
+  useColorMode,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -60,6 +61,9 @@ export interface VideoData {
 }
 
 export default function StudioVideos({ children }: { children: ReactNode }) {
+  const {colorMode} = useColorMode();
+  const bgColor = useColorModeValue("white", "gray.800");
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   //useState for confirming the delete and the index of the video to be deleted
@@ -118,6 +122,8 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
+        bgColor={bgColor}
+        colorMode={colorMode}
       />
       <Drawer
         autoFocus={false}
@@ -129,11 +135,15 @@ export default function StudioVideos({ children }: { children: ReactNode }) {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent
+            onClose={onClose}
+            bgColor={bgColor}
+            colorMode={colorMode}
+          />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
+      <MobileNav onOpen={onOpen} bgColor={bgColor} colorMode={colorMode} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">

@@ -17,13 +17,19 @@ const Reactions = ({ bgColor, colorMode,  getVideo }: any) => {
 
     console.log("videoStats", getVideo);
 
-    //useStates for the Optimistic UI 
-    const [likes, setLikes] = useState<number | boolean>(0)
+    // //useStates for the Optimistic UI 
+    // const [likes, setLikes] = useState<number>({getVideo?.stats?.num_votes})
+    // const [isLiked, setIsLiked] =  useState<boolean>(false)
+
+
+    const handleLikes = () => {
+
+    }
 
   return (
     <Flex justifyContent={"center"}>
       <Flex justifyContent={"center"} alignItems="center" className="mr-4">
-        <FaRegThumbsUp />
+        <Flex  cursor='pointer'><FaRegThumbsUp /></Flex>
         {
           getVideo && getVideo.stats && getVideo.stats.num_votes > 0 && (
             <Text marginBottom={'0px !important'} fontWeight={"bolder"} marginLeft={"10px"}>

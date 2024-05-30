@@ -117,7 +117,6 @@ const CreatePost: React.FC = () => {
   //for the dark mode
   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
-  const mentionStyle = getMentionStyle(colorMode);
 
   /**
    * For rendering the chips and edited chips

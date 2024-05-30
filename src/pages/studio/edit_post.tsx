@@ -1,3 +1,4 @@
+//TODO: fix this page and replace the sidebarContent with the actual content
 import React, { ReactNode } from "react";
 import styled from "styled-components";
 
@@ -34,6 +35,7 @@ import {
   Button,
   Input,
   Textarea,
+  useColorMode,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -47,7 +49,6 @@ import {
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { SlCheck, SlPicture } from "react-icons/sl";
-import { ReactText } from "react";
 import {
   FaArchive,
   FaChartLine,
@@ -62,6 +63,8 @@ import {
   FaVideo,
   FaWallet,
 } from "react-icons/fa";
+import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
+import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
 
 interface LinkItemProps {
   name: string;
@@ -82,11 +85,15 @@ export default function SidebarWithHeader({
   children: ReactNode;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode } = useColorMode();
+  const bgColor = useColorModeValue("white", "gray.800");
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box minH="100vh" bg={bgColor}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
+        bgColor={bgColor}
+        colorMode={colorMode}
       />
       <Drawer
         autoFocus={false}
@@ -98,17 +105,22 @@ export default function SidebarWithHeader({
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent
+            onClose={() => onClose}
+            display={{ base: "none", md: "block" }}
+            bgColor={bgColor}
+            colorMode={colorMode}
+          />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
+      <MobileNav onOpen={onOpen} bgColor={bgColor} colorMode={colorMode} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">
           <Box>
-            <Card background={"#ededed"}>
-              <CardBody borderRadius="10px" background={"white"}>
+            <Card background={bgColor}>
+              <CardBody borderRadius="10px" background={bgColor}>
                 <Box
                   height={{ base: "auto", md: "auto", lg: "65vh" }}
                   width={"100%"}
@@ -327,10 +339,10 @@ export default function SidebarWithHeader({
                       </Box>
                     </Flex>
                     <Flex justifyContent={"space-between"} alignItems="center">
-                      <Button size={"lg"} colorScheme="gray" color={"black"}>
+                      <Button size={"lg"} colorScheme="blue" color={colorMode === "dark" ? "white" : "black" }>
                         Go Back
                       </Button>
-                      <Button size={"lg"} colorScheme="blue">
+                      <Button size={"lg"} colorScheme="blue" color={colorMode === "dark" ? "white" : "black" }>
                         Next Step
                       </Button>
                     </Flex>
@@ -339,7 +351,8 @@ export default function SidebarWithHeader({
               </CardBody>
               <Box
                 borderRadius={"10px"}
-                background="white"
+                background={bgColor}
+                boxShadow={"0 0 8px #ececec"}
                 marginTop={"10px"}
                 height={"15vh"}
                 width={"100%"}
@@ -405,8 +418,8 @@ export default function SidebarWithHeader({
                       alignSelf={"center"}
                     ></Box>
                     <Box
-                     width={"32px"}
-                     height="13px"
+                      width={"32px"}
+                      height="13px"
                       border={"1px solid black"}
                       borderRadius="10px"
                     ></Box>
@@ -428,183 +441,183 @@ export default function SidebarWithHeader({
   );
 }
 
-interface SidebarProps extends BoxProps {
-  onClose: () => void;
-}
+// interface SidebarProps extends BoxProps {
+//   onClose: () => void;
+// }
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  return (
-    <Box
-      transition="3s ease"
-      bg={useColorModeValue("white", "gray.900")}
-      borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
-      w={{ base: "full", md: 60 }}
-      pos="fixed"
-      h="full"
-      {...rest}
-    >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        {/* <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text> */}
-        <Flex justifyContent="center" alignItems={"center"} width="100%">
-          <StyledLink href="/">
-            <Box
-              display={"flex"}
-              justifyContent="center"
-              alignItems={"center"}
-              width={"180px"}
-            >
-              <Image
-                src="/main_logo.svg"
-                alt="3speak logo"
-                width={100}
-                height={100}
-              />
-            </Box>
-          </StyledLink>
-        </Flex>
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
-      </Flex>
-      {LinkItems.map((link) => (
-        <NavItem color={"#6e707e"} key={link.name} icon={link.icon}>
-          {link.name}
-        </NavItem>
-      ))}
-    </Box>
-  );
-};
+// const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+//   return (
+//     <Box
+//       transition="3s ease"
+//       bg={useColorModeValue("white", "gray.900")}
+//       borderRight="1px"
+//       borderRightColor={useColorModeValue("gray.200", "gray.700")}
+//       w={{ base: "full", md: 60 }}
+//       pos="fixed"
+//       h="full"
+//       {...rest}
+//     >
+//       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+//         {/* <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+//           Logo
+//         </Text> */}
+//         <Flex justifyContent="center" alignItems={"center"} width="100%">
+//           <StyledLink href="/">
+//             <Box
+//               display={"flex"}
+//               justifyContent="center"
+//               alignItems={"center"}
+//               width={"180px"}
+//             >
+//               <Image
+//                 src="/main_logo.svg"
+//                 alt="3speak logo"
+//                 width={100}
+//                 height={100}
+//               />
+//             </Box>
+//           </StyledLink>
+//         </Flex>
+//         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
+//       </Flex>
+//       {LinkItems.map((link) => (
+//         <NavItem color={"#6e707e"} key={link.name} icon={link.icon}>
+//           {link.name}
+//         </NavItem>
+//       ))}
+//     </Box>
+//   );
+// };
 
-interface NavItemProps extends FlexProps {
-  icon: IconType;
-  children: ReactText;
-}
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
-  return (
-    <Link
-      href="#"
-      style={{ textDecoration: "none" }}
-      _focus={{ boxShadow: "none" }}
-    >
-      {/* _hover=
-      {{
-        bg: "gray.400",
-        color: "white",
-      }} */}
-      <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        {...rest}
-      >
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: "black",
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
-    </Link>
-  );
-};
+// interface NavItemProps extends FlexProps {
+//   icon: IconType;
+//   children: ReactText;
+// }
+// const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+//   return (
+//     <Link
+//       href="#"
+//       style={{ textDecoration: "none" }}
+//       _focus={{ boxShadow: "none" }}
+//     >
+//       {/* _hover=
+//       {{
+//         bg: "gray.400",
+//         color: "white",
+//       }} */}
+//       <Flex
+//         align="center"
+//         p="4"
+//         mx="4"
+//         borderRadius="lg"
+//         role="group"
+//         cursor="pointer"
+//         {...rest}
+//       >
+//         {icon && (
+//           <Icon
+//             mr="4"
+//             fontSize="16"
+//             _groupHover={{
+//               color: "black",
+//             }}
+//             as={icon}
+//           />
+//         )}
+//         {children}
+//       </Flex>
+//     </Link>
+//   );
+// };
 
-interface MobileProps extends FlexProps {
-  onOpen: () => void;
-}
-const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
-  return (
-    <Flex
-      ml={{ base: 0, md: 60 }}
-      px={{ base: 4, md: 4 }}
-      height="20"
-      alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
-      borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue("gray.200", "gray.700")}
-      justifyContent={{ base: "space-between", md: "flex-end" }}
-      {...rest}
-    >
-      <IconButton
-        display={{ base: "flex", md: "none" }}
-        onClick={onOpen}
-        variant="outline"
-        aria-label="open menu"
-        icon={<FiMenu />}
-      />
+// interface MobileProps extends FlexProps {
+//   onOpen: () => void;
+// }
+// const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+//   return (
+//     <Flex
+//       ml={{ base: 0, md: 60 }}
+//       px={{ base: 4, md: 4 }}
+//       height="20"
+//       alignItems="center"
+//       bg={useColorModeValue("white", "gray.900")}
+//       borderBottomWidth="1px"
+//       borderBottomColor={useColorModeValue("gray.200", "gray.700")}
+//       justifyContent={{ base: "space-between", md: "flex-end" }}
+//       {...rest}
+//     >
+//       <IconButton
+//         display={{ base: "flex", md: "none" }}
+//         onClick={onOpen}
+//         variant="outline"
+//         aria-label="open menu"
+//         icon={<FiMenu />}
+//       />
 
-      <Text
-        display={{ base: "flex", md: "none" }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold"
-      >
-        Logo
-      </Text>
+//       <Text
+//         display={{ base: "flex", md: "none" }}
+//         fontSize="2xl"
+//         fontFamily="monospace"
+//         fontWeight="bold"
+//       >
+//         Logo
+//       </Text>
 
-      <HStack spacing={{ base: "0", md: "6" }}>
-        <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
-          icon={<FiBell />}
-        />
-        <Flex alignItems={"center"}>
-          <Menu>
-            <MenuButton
-              py={2}
-              transition="all 0.3s"
-              _focus={{ boxShadow: "none" }}
-            >
-              <HStack>
-                <Avatar
-                  name=""
-                  size={"sm"}
-                  src={
-                    "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                  }
-                />
-                <VStack
-                  display={{ base: "none", md: "flex" }}
-                  alignItems="flex-start"
-                  spacing="1px"
-                  ml="2"
-                >
-                  <Text fontSize="sm">Justina Clark</Text>
-                  <Text fontSize="xs" color="gray.600">
-                    Admin
-                  </Text>
-                </VStack>
-                <Box display={{ base: "none", md: "flex" }}>
-                  <FiChevronDown />
-                </Box>
-              </HStack>
-            </MenuButton>
-            <MenuList
-              bg={useColorModeValue("white", "gray.900")}
-              borderColor={useColorModeValue("gray.200", "gray.700")}
-            >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
-              <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
-            </MenuList>
-          </Menu>
-        </Flex>
-      </HStack>
-    </Flex>
-  );
-};
+//       <HStack spacing={{ base: "0", md: "6" }}>
+//         <IconButton
+//           size="lg"
+//           variant="ghost"
+//           aria-label="open menu"
+//           icon={<FiBell />}
+//         />
+//         <Flex alignItems={"center"}>
+//           <Menu>
+//             <MenuButton
+//               py={2}
+//               transition="all 0.3s"
+//               _focus={{ boxShadow: "none" }}
+//             >
+//               <HStack>
+//                 <Avatar
+//                   name=""
+//                   size={"sm"}
+//                   src={
+//                     "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+//                   }
+//                 />
+//                 <VStack
+//                   display={{ base: "none", md: "flex" }}
+//                   alignItems="flex-start"
+//                   spacing="1px"
+//                   ml="2"
+//                 >
+//                   <Text fontSize="sm">Justina Clark</Text>
+//                   <Text fontSize="xs" color="gray.600">
+//                     Admin
+//                   </Text>
+//                 </VStack>
+//                 <Box display={{ base: "none", md: "flex" }}>
+//                   <FiChevronDown />
+//                 </Box>
+//               </HStack>
+//             </MenuButton>
+//             <MenuList
+//               bg={useColorModeValue("white", "gray.900")}
+//               borderColor={useColorModeValue("gray.200", "gray.700")}
+//             >
+//               <MenuItem>Profile</MenuItem>
+//               <MenuItem>Settings</MenuItem>
+//               <MenuItem>Billing</MenuItem>
+//               <MenuDivider />
+//               <MenuItem>Sign out</MenuItem>
+//             </MenuList>
+//           </Menu>
+//         </Flex>
+//       </HStack>
+//     </Flex>
+//   );
+// };
 
-const StyledLink = styled(Link)`
-  cursor: pointer;
-`;
+// const StyledLink = styled(Link)`
+//   cursor: pointer;
+// `;

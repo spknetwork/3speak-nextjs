@@ -41,6 +41,7 @@ import {
   ModalFooter,
   Spinner,
   useToast,
+  useColorMode,
 } from "@chakra-ui/react";
 import { FiHome } from "react-icons/fi";
 import { IconType } from "react-icons";
@@ -111,11 +112,11 @@ export default function Identities({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (allowAccess == true) {
       setAuthenticated(allowAccess);
-      return
-    } 
+      return;
+    }
     if (allowAccess == false) {
       setAuthenticated(false);
-      return
+      return;
     }
   }, [allowAccess]);
 
@@ -125,10 +126,8 @@ export default function Identities({ children }: { children: ReactNode }) {
     }
   }, [authenticated, router]);
 
-  const colorModeValue = useColorModeValue(
-    authenticated ? "gray.100" : "gray.100",
-    authenticated ? "gray.900" : "gray.900"
-  );
+  const { colorMode } = useColorMode();
+  const bgColor = useColorModeValue("white", "gray.800");
   // if (authenticated === null) {
   //   return <Box>Loading...</Box>;
   // }
@@ -138,7 +137,7 @@ export default function Identities({ children }: { children: ReactNode }) {
   }
 
   return (
-    <Box minH="100vh" bg={colorModeValue}>
+    <Box minH="100vh" bg={bgColor}>
       <Modal isOpen={isOpenModal} onClose={onCloseModal}>
         <ModalOverlay />
         <ModalContent>
@@ -312,6 +311,8 @@ export default function Identities({ children }: { children: ReactNode }) {
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
+        bgColor={bgColor}
+        colorMode={colorMode}
       />
       <Drawer
         autoFocus={false}
@@ -323,11 +324,16 @@ export default function Identities({ children }: { children: ReactNode }) {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent
+            onClose={() => onClose}
+            display={{ base: "none", md: "block" }}
+            bgColor={bgColor}
+            colorMode={colorMode}
+          />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
+      <MobileNav  onOpen={onOpen} bgColor={bgColor} colorMode={colorMode}/>
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">
