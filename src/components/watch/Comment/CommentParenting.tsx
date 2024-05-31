@@ -68,6 +68,8 @@ const CommentParenting = (props: Props) => {
           onClick={handleInputClick}
           minH={isExpanded ? "120px" : "auto"}
           maxH={isExpanded ? "320px" : "auto"}
+          resize="none"
+          overflow={"hidden"}
         />
         <Flex position={"absolute"} bottom={12} right={24}>
           <InputRightElement>
