@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Flex,
   Box,
@@ -29,7 +29,9 @@ type Props = {
   bgColor: string;
   colorMode: string;
 };
+
 const CommentParenting = (props: Props) => {
+  const ref = useRef<HTMLTextAreaElement>(null);
   const getUserProfile: ProfileInterface = useGetMyQuery()?.profile;
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -40,12 +42,12 @@ const CommentParenting = (props: Props) => {
 
   const handleCancel = () => {
     setIsExpanded(false);
-    if(document.getElementById("output") !== null){
-        (document.getElementById("output") as HTMLInputElement).value = ""
+    if(ref.current){
+        ref.current.value = ""
     }
   };
 
-  return (  
+  return (
     <Flex
       bg={props.bgColor}
       py={2}
@@ -60,7 +62,6 @@ const CommentParenting = (props: Props) => {
       </Box>
       <InputGroup size="md">
         <Textarea
-          id="output"
           placeholder={isExpanded ? "" : "Write a comment"}
           borderRadius={isExpanded ? "10px" : "full"}
           pr="4rem"
@@ -70,6 +71,7 @@ const CommentParenting = (props: Props) => {
           maxH={isExpanded ? "320px" : "auto"}
           resize="none"
           overflow={"hidden"}
+          ref={ref}
         />
         <Flex position={"absolute"} bottom={12} right={24}>
           <InputRightElement>
