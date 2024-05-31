@@ -40,9 +40,12 @@ const CommentParenting = (props: Props) => {
 
   const handleCancel = () => {
     setIsExpanded(false);
+    if(document.getElementById("output") !== null){
+        (document.getElementById("output") as HTMLInputElement).value = ""
+    }
   };
 
-  return (
+  return (  
     <Flex
       bg={props.bgColor}
       py={2}
@@ -56,16 +59,8 @@ const CommentParenting = (props: Props) => {
         <Avatar src={getUserProfile?.images?.avatar} boxSize="2.5rem" />
       </Box>
       <InputGroup size="md">
-        <InputLeftElement></InputLeftElement>
-        {/* <Input
-          placeholder={isExpanded ? "" : "Write a comment"}
-          borderRadius={isExpanded ? "10px" : "full"}
-          pr="4rem"
-          _focus={{ boxShadow: "none" }}
-          onClick={handleInputClick}
-          minH={isExpanded ? "120px" : "auto"}
-        /> */}
         <Textarea
+          id="output"
           placeholder={isExpanded ? "" : "Write a comment"}
           borderRadius={isExpanded ? "10px" : "full"}
           pr="4rem"
@@ -73,7 +68,6 @@ const CommentParenting = (props: Props) => {
           onClick={handleInputClick}
           minH={isExpanded ? "120px" : "auto"}
           maxH={isExpanded ? "320px" : "auto"}
-
         />
         <Flex position={"absolute"} bottom={12} right={24}>
           <InputRightElement>
