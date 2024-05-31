@@ -54,7 +54,7 @@ const CommunityDetails = () => {
       </Box>
     );
   }
-
+  
   if (error) return <p>Error: {error.message}</p>;
   const { community } = data;
 

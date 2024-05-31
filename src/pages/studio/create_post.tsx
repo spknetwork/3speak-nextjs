@@ -1,4 +1,5 @@
 //TODO: test the uploading apis and check wether the data is published on chain or not
+//TODO: fetch the previous of the video that is in the draft
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import fs from "fs";
 import {
@@ -220,12 +221,14 @@ const CreatePost: React.FC = () => {
           }
         );
 
+        console.log("data from the create_upload", data)
+
         console.log("upload info created");
 
         return data as {
+          permlink: string;
           upload_id: string;
           video_id: string;
-          permlink: string;
         };
       },
     },

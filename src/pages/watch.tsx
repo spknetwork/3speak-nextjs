@@ -37,6 +37,7 @@ import { useRouter } from "next/router";
 import { useAppStore } from "@/lib/store";
 import Suggestions from "@/components/suggestions/Suggestions";
 import { InfinitySpin } from "react-loader-spinner";
+import CommentParenting from "@/components/watch/Comment/CommentParenting";
 
 export default function Watch() {
   const { colorMode } = useColorMode();
@@ -153,6 +154,10 @@ export default function Watch() {
               w="full"
               p={4}
             >
+              <Flex>
+                <h2>Comments</h2>
+              </Flex>
+              <CommentParenting bgColor={bgColor} colorMode={colorMode} />
               <Comment
                 author={author}
                 permlink={permlink}

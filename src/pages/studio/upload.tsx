@@ -89,6 +89,7 @@ export default function StudioUploadPage({
                       justifyContent={"space-evenly"}
                       alignItems="center"
                     >
+                        {/* TODO: redirect to the create post page with some pre saved details on it */}
                       <Flex
                         width={{ base: "300px", md: "300px", lg: "372px" }}
                         height={{ base: "200px", md: "200px", lg: "332px" }}
@@ -98,7 +99,7 @@ export default function StudioUploadPage({
                         flexDirection="column"
                         borderRadius={"10px"}
                         cursor="pointer"
-                        onClick={() => router.push("/studio/studio_videos")}
+                        onClick={() => router.push("/studio/create_post")}
                       >
                         <Text
                           fontSize={{ base: "50px", md: "50px", lg: "70px" }}
