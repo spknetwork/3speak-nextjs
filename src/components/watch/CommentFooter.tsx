@@ -12,6 +12,8 @@ import {
 import { BiComment, BiShare } from "react-icons/bi";
 import { ProfileInterface } from "types";
 import { useGetMyQuery } from "@/hooks/getUserDetails";
+import CommentParenting from "./Comment/CommentParenting";
+import { bgcolor } from "@mui/system";
 
 type Props = {
   bgColor: string;
@@ -124,37 +126,38 @@ const CommentFooter = (props: Props) => {
         </Flex>
       </Box>
       {comment && (
-        <Box marginTop={"10px"}>
-          <Flex>
-            <Box alignSelf={"flex-start"} marginRight="20px">
-              <Avatar src={getUserProfile?.images?.avatar} boxSize="2.5rem" />
-            </Box>
-            <Box width={"100%"}>
-              <Flex flexDirection={"column"}>
-                <Textarea
-                  width={"100%"}
-                  color={props.colorMode === "dark" ? "white" : "black"}
-                  placeholder="Add comment"
-                />
-                <Flex
-                  marginTop={"10px"}
-                  justifyContent="end"
-                  alignItems={"center"}
-                >
-                  <Button
-                    onClick={hideComment}
-                    colorScheme="gray"
-                    color={props.colorMode === "dark" ? "white" : "black"}
-                    marginRight={"10px"}
-                  >
-                    Cancel
-                  </Button>
-                  <Button colorScheme="messenger">Reply</Button>
-                </Flex>
-              </Flex>
-            </Box>
-          </Flex>
-        </Box>
+        // <Box marginTop={"10px"}>
+        //   <Flex>
+        //     <Box alignSelf={"flex-start"} marginRight="20px">
+        //       <Avatar src={getUserProfile?.images?.avatar} boxSize="2.5rem" />
+        //     </Box>
+        //     <Box width={"100%"}>
+        //       <Flex flexDirection={"column"}>
+        //         <Textarea
+        //           width={"100%"}
+        //           color={props.colorMode === "dark" ? "white" : "black"}
+        //           placeholder="Add comment"
+        //         />
+        //         <Flex
+        //           marginTop={"10px"}
+        //           justifyContent="end"
+        //           alignItems={"center"}
+        //         >
+        //           <Button
+        //             onClick={hideComment}
+        //             colorScheme="gray"
+        //             color={props.colorMode === "dark" ? "white" : "black"}
+        //             marginRight={"10px"}
+        //           >
+        //             Cancel
+        //           </Button>
+        //           <Button colorScheme="messenger">Reply</Button>
+        //         </Flex>
+        //       </Flex>
+        //     </Box>
+        //   </Flex>
+        // </Box>
+        <CommentParenting bgColor={props.bgColor} colorMode={props.colorMode} />
       )}
     </Box>
   );

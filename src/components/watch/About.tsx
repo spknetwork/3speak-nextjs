@@ -70,7 +70,7 @@ const About = ({ getVideo, ...props }: Props) => {
             </div>
           </Text>
         </span>
-        <Text
+        {/* <Text
           marginBottom={"5px"}
           color={props.colorMode === "dark" ? "white" : "black"}
           fontSize={"15px"}
@@ -81,7 +81,7 @@ const About = ({ getVideo, ...props }: Props) => {
           ).toLocaleDateString()} at ${new Date(
             getVideo?.created_at
           ).toLocaleTimeString()}`}
-        </Text>
+        </Text> */}
         <Text
           marginTop={"18px"}
           color={props.colorMode === "dark" ? "white" : "black"}

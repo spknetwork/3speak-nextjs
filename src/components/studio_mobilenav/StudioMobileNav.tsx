@@ -154,8 +154,23 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
               <MenuItem w={160}>Profile</MenuItem>
-              <MenuItem onClick={onOpenModal1} w={160}>
+              <MenuItem
+                onClick={onOpenModal1}
+                w={160}
+                _after={{
+                  content: '""',
+                  display: "block",
+                  width: "50%",
+                  height: "0.2px",
+                  backgroundColor: colorMode === "dark" ? "white" : "black",
+                  position: "absolute",
+                  top: "50%",
+                  left: "10px",
+                  transform: "translateY(-50%)",
+                }}
+              >
                 Switch Account
+                <hr color={colorMode === "dark" ? "white" : "black"} />
               </MenuItem>
               <MenuItem onClick={() => logout()} w={160}>
                 Sign out

@@ -6,7 +6,7 @@ export function SelectorImage({src, selected, select}: {src: string; selected: b
   return (
     <Flex
       onClick={select}
-      minWidth={"fit-content"}
+      minWidth={"150px"}
       marginX={{
         base: "0px",
         md: "0px",

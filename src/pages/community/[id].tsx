@@ -61,7 +61,7 @@ const CommunityDetails = () => {
   const trendingFeed = data.community.trendingFeed.items;
   const latestFeed = data.community.latestFeed.items;
 
-  // console.log("data.community.latestFeed", data.community.latestFeed);
+  
   return (
     <Box background={"#f9f9fa"}>
       <Box

@@ -10,27 +10,32 @@ type Props = {
 
 const Community = (props: Props) => {
   return (
-    <Flex justifyContent={"start"}>
-      <Box
+    <Flex justifyContent={"start"} alignItems="center">
+      <Flex
         bg={props.bgColor}
         color={props.colorMode === "dark" ? "white" : "black"}
       >
-        <Text marginBottom={"10px"} fontSize={"20px"} marginTop={"12px"}>
-          Community
-        </Text>
-        <Flex alignItems={"center"}>
-          <Avatar
-            name={props.videoDetails?.community?._id}
-            src={props.videoDetails?.community?.images?.avatar}
-          />
-          <Flex flexDirection={"column"} className="ms-4">
-            <Link fontWeight={"bolder"} fontSize={"11px"}>
-              {}
-            </Link>
-          </Flex>
-          <Text fontSize={"xl"}>{props.videoDetails?.community?.username}</Text>
+        <Flex marginBottom={"10px"} fontSize={"20px"} marginTop={"12px"}>
+          Community:
         </Flex>
-      </Box>
+        <Flex
+          justifyContent={"space-between"}
+          alignItems="center"
+          px={4}
+          marginTop={"12px"}
+          marginBottom={"10px"}
+        >
+          <Flex alignItems={"center"} px={2}>
+            <Avatar
+              name={props.videoDetails?.community?._id}
+              src={props.videoDetails?.community?.images?.avatar}
+            />
+            <Flex fontSize={"xl"} px={2}>
+              {props.videoDetails?.community?.username}
+            </Flex>
+          </Flex>
+        </Flex>
+      </Flex>
     </Flex>
   );
 };

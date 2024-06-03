@@ -1122,7 +1122,7 @@ const CreatePost: React.FC = () => {
                               </Text>
                             </fieldset>
                             <Flex
-                              overflowX="auto"
+                              overflowX="hidden"
                               flexDirection={{
                                 base: "column",
                                 md: "column",

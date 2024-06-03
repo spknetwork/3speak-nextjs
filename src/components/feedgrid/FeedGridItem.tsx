@@ -62,7 +62,7 @@ const FeedGridItem = ({ video }: Props) => {
       h="100%"
       p={1}
       m={1}
-      boxShadow={"0 1px black"}
+      boxShadow={"0 0 1px black"}
       borderRadius={"10px"}
       mb={12}
       cursor={"pointer"}
