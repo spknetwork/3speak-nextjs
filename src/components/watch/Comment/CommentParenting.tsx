@@ -57,10 +57,11 @@ const CommentParenting = (props: Props) => {
     if (ref.current) {
       ref.current.value = "";
     }
+    setInputValue("")
   };
 
   const handleEmoji = () => {
-    setShowEmoji(!showEmoji);
+    setShowEmoji(prev => !prev);
   };
 
   return (
@@ -107,22 +108,15 @@ const CommentParenting = (props: Props) => {
           </InputRightElement>
         </Flex>
         {isExpanded && (
-          <Flex position="absolute" zIndex={1} bottom={4} left={4} gap={4} >
-            <Popover>
-              <PopoverTrigger>
-                <Flex fontSize={"20px"} onClick={handleEmoji} cursor="pointer">
-                  <BsEmojiSmile cursor="pointer" />
-                </Flex>
-              </PopoverTrigger>
-              <PopoverContent>
-                <PopoverBody zIndex={9991001} width={500}>
-                  <Flex zIndex={1000}>
-                  <EmojiPicker onEmojiClick={onEmojiClick} />
-                  </Flex>
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
-            <Flex></Flex>
+          <Flex position="absolute" zIndex={1} bottom={4} left={4} gap={4}>
+            <Flex fontSize={"20px"} onClick={handleEmoji} cursor="pointer">
+              <BsEmojiSmile cursor="pointer" />
+            </Flex>
+            {showEmoji && (
+              <Box position="absolute" bottom="40px" left="0" zIndex={1000}>
+                <EmojiPicker onEmojiClick={onEmojiClick} reactionsDefaultOpen={false} />
+              </Box>
+            )}
             <Flex>
               <LuImagePlus fontSize={"20px"} cursor="pointer" />
             </Flex>
