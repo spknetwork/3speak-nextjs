@@ -370,7 +370,6 @@ export const GET_COMMUNITIES = gql`
             title
             author {
               username
-              profile
               id
             }
             spkvideo
@@ -387,7 +386,6 @@ export const GET_COMMUNITIES = gql`
             parent_permlink
             author {
               id
-              profile
               username
             }
             community

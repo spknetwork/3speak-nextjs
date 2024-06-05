@@ -1,4 +1,6 @@
+//TODO: Integrate the emoji picker keyboard here
 import React, { useRef, useState } from "react";
+import EmojiPicker from "emoji-picker-react";
 import {
   Flex,
   Box,
@@ -17,6 +19,10 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
 } from "@chakra-ui/react";
 import { useGetMyQuery } from "@/hooks/getUserDetails";
 import { ProfileInterface } from "types";
@@ -35,6 +41,12 @@ const CommentParenting = (props: Props) => {
   const getUserProfile: ProfileInterface = useGetMyQuery()?.profile;
 
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showEmoji, setShowEmoji] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+
+  const onEmojiClick = (emojiObject: any) => {
+    setInputValue((prevInput) => prevInput + emojiObject.emoji);
+  };
 
   const handleInputClick = () => {
     setIsExpanded(true);
@@ -42,9 +54,13 @@ const CommentParenting = (props: Props) => {
 
   const handleCancel = () => {
     setIsExpanded(false);
-    if(ref.current){
-        ref.current.value = ""
+    if (ref.current) {
+      ref.current.value = "";
     }
+  };
+
+  const handleEmoji = () => {
+    setShowEmoji(!showEmoji);
   };
 
   return (
@@ -62,6 +78,8 @@ const CommentParenting = (props: Props) => {
       </Box>
       <InputGroup size="md">
         <Textarea
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
           placeholder={isExpanded ? "" : "Write a comment"}
           borderRadius={isExpanded ? "10px" : "full"}
           pr="4rem"
@@ -89,12 +107,24 @@ const CommentParenting = (props: Props) => {
           </InputRightElement>
         </Flex>
         {isExpanded && (
-          <Flex position="absolute" bottom={4} left={4} gap={4}>
+          <Flex position="absolute" zIndex={1} bottom={4} left={4} gap={4} >
+            <Popover>
+              <PopoverTrigger>
+                <Flex fontSize={"20px"} onClick={handleEmoji} cursor="pointer">
+                  <BsEmojiSmile cursor="pointer" />
+                </Flex>
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverBody zIndex={9991001} width={500}>
+                  <Flex zIndex={1000}>
+                  <EmojiPicker onEmojiClick={onEmojiClick} />
+                  </Flex>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+            <Flex></Flex>
             <Flex>
-              <BsEmojiSmile fontSize={"20px"} />
-            </Flex>
-            <Flex>
-              <LuImagePlus fontSize={"20px"} />
+              <LuImagePlus fontSize={"20px"} cursor="pointer" />
             </Flex>
             <Flex>
               <MdOutlineGif fontSize={"20px"} />

@@ -1,6 +1,7 @@
 //TODO: Add functionalities to this page
 
 import Video from "@/components/watch/video/Video";
+
 import {
   Box,
   Flex,
@@ -14,7 +15,7 @@ import {
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import About from "@/components/watch/About";
 import Profile from "@/components/watch/Profile";
-import Comment from "@/components/watch/Comment/Comment";
+import AllComments from "@/components/watch/Comment/AllComments";
 import MenuButtons from "@/components/watch/MenuButtons";
 import Reactions from "@/components/watch/Reactions";
 // import Views from "@/components/watch/Views";
@@ -158,7 +159,7 @@ export default function Watch() {
                 <h2>Comments</h2>
               </Flex>
               <CommentParenting bgColor={bgColor} colorMode={colorMode} />
-              <Comment
+              <AllComments
                 author={author}
                 permlink={permlink}
                 bgColor={bgColor}

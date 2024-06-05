@@ -1,3 +1,4 @@
+//TODO: fix this page
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -13,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@apollo/client";
 import { GET_COMMUNITIES } from "../../graphql/queries";
+import ErrorComponent from "@/components/ErrorComponent";
 const CommunityDetails = () => {
   const router = useRouter();
   const { id } = router.query; // Access the dynamic ID from the query object
@@ -55,7 +57,7 @@ const CommunityDetails = () => {
     );
   }
   
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <ErrorComponent errorMsg={error.toString()}/>;
   const { community } = data;
 
   const trendingFeed = data.community.trendingFeed.items;
