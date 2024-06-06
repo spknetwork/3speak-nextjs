@@ -155,10 +155,6 @@ export default function Watch() {
               w="full"
               p={4}
             >
-              <Flex>
-                <h2>Comments</h2>
-              </Flex>
-              <CommentParenting bgColor={bgColor} colorMode={colorMode} />
               <AllComments
                 author={author}
                 permlink={permlink}

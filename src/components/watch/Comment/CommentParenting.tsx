@@ -1,6 +1,7 @@
 //TODO: Integrate the emoji picker keyboard here
 import React, { useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
+import Picker from "emoji-picker-react"
 import {
   Flex,
   Box,
@@ -15,14 +16,6 @@ import {
   IconButton,
   Input,
   InputRightElement,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverBody,
 } from "@chakra-ui/react";
 import { useGetMyQuery } from "@/hooks/getUserDetails";
 import { ProfileInterface } from "types";
@@ -57,11 +50,11 @@ const CommentParenting = (props: Props) => {
     if (ref.current) {
       ref.current.value = "";
     }
-    setInputValue("")
+    setInputValue("");
   };
 
   const handleEmoji = () => {
-    setShowEmoji(prev => !prev);
+    setShowEmoji((prev) => !prev);
   };
 
   return (
@@ -108,22 +101,34 @@ const CommentParenting = (props: Props) => {
           </InputRightElement>
         </Flex>
         {isExpanded && (
-          <Flex position="absolute" zIndex={1} bottom={4} left={4} gap={4}>
+          <Flex position="absolute" zIndex={2} bottom={4} left={4} gap={4}>
             <Flex fontSize={"20px"} onClick={handleEmoji} cursor="pointer">
               <BsEmojiSmile cursor="pointer" />
             </Flex>
             {showEmoji && (
-              <Box position="absolute" bottom="40px" left="0" zIndex={1000}>
-                <EmojiPicker onEmojiClick={onEmojiClick} reactionsDefaultOpen={false} />
+              <Box
+                position={"absolute"}
+                bottom="-430px"
+                left="22px"
+                bg="white"
+                borderRadius="md"
+                boxShadow="lg"
+                zIndex={2000000000}
+              >
+                <EmojiPicker
+                  style={{ zIndex: 2000 }}
+                  onEmojiClick={onEmojiClick}
+                  reactionsDefaultOpen={false}
+                />
               </Box>
             )}
-            <Flex>
-              <LuImagePlus fontSize={"20px"} cursor="pointer" />
+            <Flex cursor="pointer">
+              <LuImagePlus fontSize={"20px"}  />
             </Flex>
-            <Flex>
+            <Flex cursor="pointer">
               <MdOutlineGif fontSize={"20px"} />
             </Flex>
-            <Flex>
+            <Flex cursor="pointer">
               <RiText fontSize={"20px"} />
             </Flex>
           </Flex>

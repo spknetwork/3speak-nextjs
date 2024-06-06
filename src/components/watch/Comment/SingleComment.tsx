@@ -8,6 +8,7 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
+import EmojiPicker from "emoji-picker-react";
 import React, { useState } from "react";
 import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
 import { CommentInterface } from "types";
@@ -21,7 +22,12 @@ type Props = {
   defaultIsCollapsed: boolean;
 };
 
-const SingleComment = ({ comment, parentIndex, depth, defaultIsCollapsed }: Props) => {
+const SingleComment = ({
+  comment,
+  parentIndex,
+  depth,
+  defaultIsCollapsed,
+}: Props) => {
   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
 
@@ -37,7 +43,22 @@ const SingleComment = ({ comment, parentIndex, depth, defaultIsCollapsed }: Prop
         transition={"color .5s,fill .5s,background 1s"}
         padding="8px 0 0 8px"
         alignItems={"center"}
+        zIndex={1}
       >
+        <Box
+          position={"absolute"}
+          bottom="-430px"
+          left="22px"
+          bg="white"
+          borderRadius="md"
+          boxShadow="lg"
+          zIndex={2000000000}
+        >
+          <EmojiPicker
+            // onEmojiClick={onEmojiClick}
+            reactionsDefaultOpen={false}
+          />
+        </Box>
         <Box
           display={"block"}
           position="absolute"
@@ -52,15 +73,11 @@ const SingleComment = ({ comment, parentIndex, depth, defaultIsCollapsed }: Prop
         >
           {isCollapsed ? (
             <Box position={"absolute"} top={3} left={-1} cursor={"pointer"}>
-              <CiCirclePlus
-                onClick={() => setIsCollapsed(false)}
-              />
+              <CiCirclePlus onClick={() => setIsCollapsed(false)} />
             </Box>
           ) : (
             <Box position={"absolute"} top={3} left={-1} cursor={"pointer"}>
-              <CiCircleMinus
-                onClick={() => setIsCollapsed(true)}
-              />
+              <CiCircleMinus onClick={() => setIsCollapsed(true)} />
             </Box>
           )}
         </Box>
@@ -104,7 +121,13 @@ const SingleComment = ({ comment, parentIndex, depth, defaultIsCollapsed }: Prop
           />
         </Box>
       </Box>
-      {!isCollapsed && comment.children && <Comments comments={comment.children} parentIndex={depth + 1} depth={depth + 1} />}
+      {!isCollapsed && comment.children && (
+        <Comments
+          comments={comment.children}
+          parentIndex={depth + 1}
+          depth={depth + 1}
+        />
+      )}
     </Box>
   );
 };

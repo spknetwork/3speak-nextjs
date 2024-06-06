@@ -1,4 +1,5 @@
 //TODO: make this downvots upvote and reply functional
+import React, { useState } from "react";
 import {
   Avatar,
   Box,
@@ -6,10 +7,16 @@ import {
   Flex,
   InputGroup,
   InputRightElement,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import EmojiPicker from "emoji-picker-react";
 import {
   FaCommentAlt,
   FaThumbsUp,
@@ -35,12 +42,22 @@ type Props = {
 };
 const CommentFooter = (props: Props) => {
   const [comment, setComment] = useState(false);
+  const [showEmoji, setShowEmoji] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const showComment = () => {
     setComment(true);
   };
   const hideComment = () => {
     setComment(false);
+  };
+
+  const handleEmoji = () => {
+    setShowEmoji((prev) => !prev);
+  };
+
+  const onEmojiClick = (emojiObject: any) => {
+    setInputValue((prevInput) => prevInput + emojiObject.emoji);
   };
 
   const getUserProfile: ProfileInterface = useGetMyQuery()?.profile;
@@ -63,7 +80,6 @@ const CommentFooter = (props: Props) => {
                 alignItems="center"
                 color={props.colorMode === "dark" ? "white" : "black"}
               >
-                {/* <Button variant="outline"> */}
                 <FaRegThumbsUp />
                 <Text
                   color={props.colorMode === "dark" ? "white" : "black"}
@@ -79,7 +95,6 @@ const CommentFooter = (props: Props) => {
                 >
                   1000
                 </Text>
-                {/* </Button> */}
               </Flex>
             </Box>
 
@@ -152,6 +167,8 @@ const CommentFooter = (props: Props) => {
           </Box>
           <InputGroup size="md">
             <Textarea
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
               placeholder={"Write a comment"}
               borderRadius={"10px"}
               pr="4rem"
@@ -171,9 +188,13 @@ const CommentFooter = (props: Props) => {
                 </Flex>
               </InputRightElement>
             </Flex>
-            <Flex position="absolute" bottom={4} left={4} gap={4}>
+            <Flex position="absolute" bottom={4} left={4} gap={4} zIndex={2}>
               <Flex>
-                <BsEmojiSmile fontSize={"20px"} />
+                <BsEmojiSmile
+                  fontSize={"20px"}
+                  cursor={"pointer"}
+                  onClick={handleEmoji}
+                />
               </Flex>
               <Flex>
                 <LuImagePlus fontSize={"20px"} />
@@ -184,6 +205,21 @@ const CommentFooter = (props: Props) => {
               <Flex>
                 <RiText fontSize={"20px"} />
               </Flex>
+              <Box zIndex={1000}>
+                <Modal isOpen={showEmoji} onClose={() => setShowEmoji(false)}>
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader>Modal Title</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      <EmojiPicker
+                        onEmojiClick={onEmojiClick}
+                        reactionsDefaultOpen={false}
+                      />
+                    </ModalBody>
+                  </ModalContent>
+                </Modal>
+              </Box>
             </Flex>
           </InputGroup>
         </Flex>
