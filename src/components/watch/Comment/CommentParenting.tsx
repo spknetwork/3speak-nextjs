@@ -1,7 +1,7 @@
 //TODO: Integrate the emoji picker keyboard here
 import React, { useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
-import Picker from "emoji-picker-react"
+import Picker from "emoji-picker-react";
 import {
   Flex,
   Box,
@@ -16,6 +16,11 @@ import {
   IconButton,
   Input,
   InputRightElement,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import { useGetMyQuery } from "@/hooks/getUserDetails";
 import { ProfileInterface } from "types";
@@ -102,28 +107,38 @@ const CommentParenting = (props: Props) => {
         </Flex>
         {isExpanded && (
           <Flex position="absolute" zIndex={2} bottom={4} left={4} gap={4}>
-            <Flex fontSize={"20px"} onClick={handleEmoji} cursor="pointer">
+            <Flex
+              fontSize={"20px"}
+              onClick={handleEmoji}
+              cursor="pointer"
+              position="relative"
+            >
               <BsEmojiSmile cursor="pointer" />
             </Flex>
             {showEmoji && (
               <Box
-                position={"absolute"}
-                bottom="-430px"
-                left="22px"
-                bg="white"
-                borderRadius="md"
-                boxShadow="lg"
-                zIndex={2000000000}
+                zIndex={1}
+                position="absolute"
+                top="42%"
+                left="11%"
+                transform="translate(-50%, -50%)"
               >
-                <EmojiPicker
-                  style={{ zIndex: 2000 }}
-                  onEmojiClick={onEmojiClick}
-                  reactionsDefaultOpen={false}
-                />
+                <Modal isOpen={showEmoji} onClose={() => setShowEmoji(false)}>
+                  <ModalContent>
+                    <ModalHeader></ModalHeader>
+                    <ModalBody p={2} h={32}>
+                      <ModalCloseButton />
+                      <EmojiPicker
+                        onEmojiClick={onEmojiClick}
+                        reactionsDefaultOpen={false}
+                      />
+                    </ModalBody>
+                  </ModalContent>
+                </Modal>
               </Box>
             )}
             <Flex cursor="pointer">
-              <LuImagePlus fontSize={"20px"}  />
+              <LuImagePlus fontSize={"20px"} />
             </Flex>
             <Flex cursor="pointer">
               <MdOutlineGif fontSize={"20px"} />

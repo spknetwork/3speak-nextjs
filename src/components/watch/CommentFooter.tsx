@@ -5,8 +5,12 @@ import {
   Box,
   Button,
   Flex,
+  IconButton,
   InputGroup,
   InputRightElement,
+  Menu,
+  MenuButton,
+  MenuList,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -24,6 +28,7 @@ import {
   FaShare,
   FaRegThumbsUp,
   FaRegThumbsDown,
+  FaSmile,
 } from "react-icons/fa";
 import { BiComment, BiShare } from "react-icons/bi";
 import { ProfileInterface } from "types";
@@ -205,21 +210,30 @@ const CommentFooter = (props: Props) => {
               <Flex>
                 <RiText fontSize={"20px"} />
               </Flex>
-              <Box zIndex={1000}>
-                <Modal isOpen={showEmoji} onClose={() => setShowEmoji(false)}>
-                  <ModalOverlay />
-                  <ModalContent>
-                    <ModalHeader>Modal Title</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                      <EmojiPicker
+              {showEmoji && (
+                <Box
+                  zIndex={1}
+                  position="absolute"
+                  top="42%"
+                  left="11%"
+                  transform="translate(-50%, -50%)"
+                >
+                  <Menu>
+                    <MenuButton
+                      as={IconButton}
+                      aria-label="Emoji Picker"
+                      icon={<FaSmile />}
+                      variant="outline"
+                    />
+                    <MenuList p={2}>
+                      <EmojiPicker 
                         onEmojiClick={onEmojiClick}
                         reactionsDefaultOpen={false}
                       />
-                    </ModalBody>
-                  </ModalContent>
-                </Modal>
-              </Box>
+                    </MenuList>
+                  </Menu>
+                </Box>
+              )}
             </Flex>
           </InputGroup>
         </Flex>

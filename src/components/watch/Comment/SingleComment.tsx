@@ -46,20 +46,6 @@ const SingleComment = ({
         zIndex={1}
       >
         <Box
-          position={"absolute"}
-          bottom="-430px"
-          left="22px"
-          bg="white"
-          borderRadius="md"
-          boxShadow="lg"
-          zIndex={2000000000}
-        >
-          <EmojiPicker
-            // onEmojiClick={onEmojiClick}
-            reactionsDefaultOpen={false}
-          />
-        </Box>
-        <Box
           display={"block"}
           position="absolute"
           top={"45px"}

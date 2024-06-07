@@ -8308,6 +8308,13 @@ react-clientside-effect@^1.2.6:
   dependencies:
     "@babel/runtime" "^7.12.13"
 
+react-collapsed@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/react-collapsed/-/react-collapsed-4.1.2.tgz#a82e5032eeecc085a05d6ed0be63bbc851f2a517"
+  integrity sha512-vusqVnW/VbFCKJx29KNTnjJrwCbV7k3bB/FiO9/0Fj7JNoNarkU1xU7yK4FZHqPW0Q2izB7o6fYzG16zgdDNMQ==
+  dependencies:
+    tiny-warning "^1.0.3"
+
 react-dom@^18.3.0-canary-a870b2d54-20240314:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.3.1.tgz#c2265d79511b57d479b3dd3fdfa51536494c5cb4"
@@ -9331,7 +9338,7 @@ tiny-invariant@^1.0.6:
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.3.3.tgz#46680b7a873a0d5d10005995eb90a70d74d60127"
   integrity sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==
 
-tiny-warning@^1.0.2:
+tiny-warning@^1.0.2, tiny-warning@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
