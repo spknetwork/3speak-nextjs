@@ -1,5 +1,5 @@
 //TODO: Integrate the emoji picker keyboard here
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import Picker from "emoji-picker-react";
 import {
@@ -28,6 +28,7 @@ import { BsEmojiSmile } from "react-icons/bs";
 import { LuImagePlus } from "react-icons/lu";
 import { MdOutlineGif } from "react-icons/md";
 import { RiText } from "react-icons/ri";
+import { createPortal } from "react-dom";
 
 type Props = {
   bgColor: string;
@@ -58,8 +59,35 @@ const CommentParenting = (props: Props) => {
     setInputValue("");
   };
 
+  const emojiRef = useRef<HTMLDivElement>(null);
+  const [emojiPosition, setEmojiPosition] = useState({ x: 0, y: 0 });
+  const resizeHandler = useCallback((e: UIEvent) => {
+    console.log("resize", e);
+    const emoji = emojiRef.current;
+    if (!emoji) {
+      console.log("no emoji?");
+      return;
+    }
+    const boundingBox = emoji.getBoundingClientRect();
+    setEmojiPosition({ x: boundingBox.left, y: boundingBox.top });
+  }, []);
+
   const handleEmoji = () => {
-    setShowEmoji((prev) => !prev);
+    setShowEmoji((showEmoji) => {
+      if (showEmoji) {
+        window.removeEventListener("resize", resizeHandler);
+        return false;
+      } else {
+        const emoji = emojiRef.current;
+        if (!emoji) {
+          return false;
+        }
+        const boundingBox = emoji.getBoundingClientRect();
+        setEmojiPosition({ x: boundingBox.left, y: boundingBox.top });
+        window.addEventListener("resize", resizeHandler);
+        return true;
+      }
+    });
   };
 
   return (
@@ -108,6 +136,7 @@ const CommentParenting = (props: Props) => {
         {isExpanded && (
           <Flex position="absolute" zIndex={2} bottom={4} left={4} gap={4}>
             <Flex
+              ref={emojiRef}
               fontSize={"20px"}
               onClick={handleEmoji}
               cursor="pointer"
@@ -115,28 +144,19 @@ const CommentParenting = (props: Props) => {
             >
               <BsEmojiSmile cursor="pointer" />
             </Flex>
-            {showEmoji && (
-              <Box
-                zIndex={1}
-                position="absolute"
-                top="42%"
-                left="11%"
-                transform="translate(-50%, -50%)"
-              >
-                <Modal isOpen={showEmoji} onClose={() => setShowEmoji(false)}>
-                  <ModalContent>
-                    <ModalHeader></ModalHeader>
-                    <ModalBody p={2} h={32}>
-                      <ModalCloseButton />
-                      <EmojiPicker
-                        onEmojiClick={onEmojiClick}
-                        reactionsDefaultOpen={false}
-                      />
-                    </ModalBody>
-                  </ModalContent>
-                </Modal>
-              </Box>
-            )}
+            {showEmoji &&
+              createPortal(
+                <Box
+                  zIndex={99}
+                  position="absolute"
+                  // top={1110 - emojiPosition.y}
+                  top={450 + 120 + 162 + 240 + 200 + emojiPosition.y}
+                  left={emojiPosition.x - 12}
+                >
+                  <EmojiPicker />
+                </Box>,
+                document.body
+              )}
             <Flex cursor="pointer">
               <LuImagePlus fontSize={"20px"} />
             </Flex>
