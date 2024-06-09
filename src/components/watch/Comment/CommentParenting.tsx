@@ -6,22 +6,11 @@ import EmojiPicker from "emoji-picker-react";
 import {
   Flex,
   Box,
-  Text,
   Textarea,
   Avatar,
   InputGroup,
-  InputLeftElement,
   Button,
-  FormControl,
-  InputLeftAddon,
-  IconButton,
-  Input,
   InputRightElement,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
 } from "@chakra-ui/react";
 import { useGetMyQuery } from "@/hooks/getUserDetails";
 import { ProfileInterface } from "types";
