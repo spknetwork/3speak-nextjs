@@ -1,71 +1,100 @@
-//TODO: make this downvots upvote and reply functional
-import React, { useState } from "react";
+//TODO: work on this component for optimistic UI 
+import React, { useCallback, useRef, useState, useEffect } from "react";
 import {
   Avatar,
   Box,
   Button,
   Flex,
-  IconButton,
   InputGroup,
   InputRightElement,
-  Menu,
-  MenuButton,
-  MenuList,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
   Text,
   Textarea,
 } from "@chakra-ui/react";
 import EmojiPicker from "emoji-picker-react";
 import {
-  FaCommentAlt,
-  FaThumbsUp,
-  FaThumbsDown,
-  FaShare,
   FaRegThumbsUp,
   FaRegThumbsDown,
-  FaSmile,
+  FaThumbsDown,
+  FaThumbsUp,
 } from "react-icons/fa";
-import { BiComment, BiShare } from "react-icons/bi";
-import { ProfileInterface } from "types";
-import { useGetMyQuery } from "@/hooks/getUserDetails";
-import CommentParenting from "./Comment/CommentParenting";
-import { bgcolor } from "@mui/system";
+import { BiComment } from "react-icons/bi";
 import { BsEmojiSmile } from "react-icons/bs";
 import { LuImagePlus } from "react-icons/lu";
-import { MdOutlineGif } from "react-icons/md";
+import { MdCancel, MdOutlineGif } from "react-icons/md";
 import { RiText } from "react-icons/ri";
+import { createPortal } from "react-dom";
+import { useGetMyQuery } from "@/hooks/getUserDetails";
+import { ProfileInterface } from "types";
 
 type Props = {
   bgColor: string;
   colorMode: string;
   commentId: string;
 };
+
 const CommentFooter = (props: Props) => {
+  const getUserProfile: ProfileInterface = useGetMyQuery()?.profile;
   const [comment, setComment] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [upvoted, setUpvoted] = useState(false);
+  const [downvoted, setDownvoted] = useState(false);
+  
+  const ref = useRef<HTMLTextAreaElement>(null);
+  const showComment = () => setComment(true);
+  const hideComment = () => setComment(false);
 
-  const showComment = () => {
-    setComment(true);
-  };
-  const hideComment = () => {
-    setComment(false);
+
+  const handleUpvote = () => {
+    setUpvoted(!upvoted);
+    if (downvoted) setDownvoted(false); // remove downvote if already downvoted
   };
 
-  const handleEmoji = () => {
-    setShowEmoji((prev) => !prev);
+  const handleDownvote = () => {
+    setDownvoted(!downvoted);
+    if (upvoted) setUpvoted(false); // remove upvote if already upvoted
   };
 
   const onEmojiClick = (emojiObject: any) => {
     setInputValue((prevInput) => prevInput + emojiObject.emoji);
   };
 
-  const getUserProfile: ProfileInterface = useGetMyQuery()?.profile;
+
+  const emojiRef = useRef<HTMLDivElement>(null);
+  const [emojiPosition, setEmojiPosition] = useState({ x: 0, y: 0 });
+
+  const resizeHandler = useCallback(() => {
+    const emoji = emojiRef.current;
+    if (!emoji) return;
+    const boundingBox = emoji.getBoundingClientRect();
+    setEmojiPosition({ x: boundingBox.left, y: boundingBox.top });
+  }, []);
+
+  const handleEmoji = () => {
+    setShowEmoji((prevShowEmoji) => {
+      if (prevShowEmoji) {
+        window.removeEventListener("resize", resizeHandler);
+        return false;
+      } else {
+        const emoji = emojiRef.current;
+        if (!emoji) return false;
+        const boundingBox = emoji.getBoundingClientRect();
+        setEmojiPosition({ x: boundingBox.left, y: boundingBox.top });
+        window.addEventListener("resize", resizeHandler);
+        return true;
+      }
+    });
+  };
+  
+  const handleCancel = () => {
+    setIsExpanded(false);
+    if (ref.current) {
+      ref.current.value = "";
+    }
+    setInputValue("");
+  };
+
 
   return (
     <Box>
@@ -84,8 +113,10 @@ const CommentFooter = (props: Props) => {
                 justifyContent={"center"}
                 alignItems="center"
                 color={props.colorMode === "dark" ? "white" : "black"}
+                cursor="pointer"
+                onClick={handleUpvote}
               >
-                <FaRegThumbsUp />
+                {upvoted ? <FaThumbsUp /> : <FaRegThumbsUp />}
                 <Text
                   color={props.colorMode === "dark" ? "white" : "black"}
                   margin="4px"
@@ -108,14 +139,13 @@ const CommentFooter = (props: Props) => {
               justifyContent={"center"}
               alignItems="center"
               color={props.colorMode === "dark" ? "white" : "black"}
+              cursor="pointer"
+              onClick={handleDownvote}
             >
-              {/* <Button variant="outline"> */}
-              <FaRegThumbsDown />{" "}
+              {downvoted ? <FaThumbsDown /> : <FaRegThumbsDown />}
               <Text marginBottom={"0px"} marginLeft={"5px"}>
-                {" "}
                 Dislike
               </Text>
-              {/* </Button> */}
             </Flex>
           </Box>
 
@@ -128,9 +158,6 @@ const CommentFooter = (props: Props) => {
             fontWeight={"700"}
             lineHeight="16px"
           >
-            {/* <Button color={"black"} variant="outline">
-                        Reply
-                    </Button> */}
             <Box
               color={props.colorMode === "dark" ? "white" : "black"}
               marginLeft={"5px"}
@@ -141,18 +168,12 @@ const CommentFooter = (props: Props) => {
                 justifyContent={"center"}
                 alignItems="center"
               >
-                {/* <Button onClick={showComment} variant="outline"> */}
-                <BiComment fontSize={"14px"} />{" "}
+                <BiComment fontSize={"14px"} />
                 <Text marginBottom={"0px"} marginLeft={"3px"}>
                   Reply
                 </Text>
-                {/* </Button> */}
               </Flex>
             </Box>
-            <Box
-              color={props.colorMode === "dark" ? "white" : "black"}
-              marginLeft={"10px"}
-            ></Box>
           </Box>
         </Flex>
       </Box>
@@ -179,12 +200,12 @@ const CommentFooter = (props: Props) => {
               pr="4rem"
               _focus={{ boxShadow: "none" }}
               resize="none"
+              ref={ref}
             />
             <Flex position={"absolute"} bottom={12} right={24}>
               <InputRightElement>
-                {" "}
                 <Flex>
-                  <Button ml={2} onClick={hideComment}>
+                  <Button ml={2} onClick={handleCancel}>
                     Cancel
                   </Button>
                   <Button colorScheme="blue" ml={2}>
@@ -193,14 +214,37 @@ const CommentFooter = (props: Props) => {
                 </Flex>
               </InputRightElement>
             </Flex>
-            <Flex position="absolute" bottom={4} left={4} gap={4} zIndex={2}>
-              <Flex>
-                <BsEmojiSmile
-                  fontSize={"20px"}
-                  cursor={"pointer"}
-                  onClick={handleEmoji}
-                />
+            <Flex
+              position="absolute"
+              zIndex={2}
+              bottom={4}
+              left={4}
+              gap={4}
+            >
+              <Flex
+                ref={emojiRef}
+                fontSize={"20px"}
+                onClick={handleEmoji}
+                cursor="pointer"
+                position="relative"
+              >
+                <BsEmojiSmile cursor="pointer" />
               </Flex>
+              {showEmoji &&
+                createPortal(
+                  <Box
+                    zIndex={99}
+                    position="absolute"
+                    top={450 + 120 + 162 + 240 + 200 + emojiPosition.y}
+                    left={emojiPosition.x - 12}
+                  >
+                    <Button onClick={() => setShowEmoji(!showEmoji)}>
+                      <MdCancel />
+                    </Button>
+                    <EmojiPicker onEmojiClick={onEmojiClick} />
+                  </Box>,
+                  document.body
+                )}
               <Flex>
                 <LuImagePlus fontSize={"20px"} />
               </Flex>
@@ -210,34 +254,9 @@ const CommentFooter = (props: Props) => {
               <Flex>
                 <RiText fontSize={"20px"} />
               </Flex>
-              {showEmoji && (
-                <Box
-                  zIndex={1}
-                  position="absolute"
-                  top="42%"
-                  left="11%"
-                  transform="translate(-50%, -50%)"
-                >
-                  <Menu>
-                    <MenuButton
-                      as={IconButton}
-                      aria-label="Emoji Picker"
-                      icon={<FaSmile />}
-                      variant="outline"
-                    />
-                    <MenuList p={2}>
-                      <EmojiPicker 
-                        onEmojiClick={onEmojiClick}
-                        reactionsDefaultOpen={false}
-                      />
-                    </MenuList>
-                  </Menu>
-                </Box>
-              )}
             </Flex>
           </InputGroup>
         </Flex>
-        // <CommentParenting bgColor={props.bgColor} colorMode={props.colorMode} />
       )}
     </Box>
   );

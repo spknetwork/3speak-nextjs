@@ -1,7 +1,8 @@
-//TODO: Integrate the emoji picker keyboard here
+//TODO: Work on optimistic UI here in this component
+
 import React, { useCallback, useRef, useState } from "react";
+import { MdCancel } from "react-icons/md";
 import EmojiPicker from "emoji-picker-react";
-import Picker from "emoji-picker-react";
 import {
   Flex,
   Box,
@@ -140,7 +141,6 @@ const CommentParenting = (props: Props) => {
               fontSize={"20px"}
               onClick={handleEmoji}
               cursor="pointer"
-              position="relative"
             >
               <BsEmojiSmile cursor="pointer" />
             </Flex>
@@ -153,7 +153,10 @@ const CommentParenting = (props: Props) => {
                   top={450 + 120 + 162 + 240 + 200 + emojiPosition.y}
                   left={emojiPosition.x - 12}
                 >
-                  <EmojiPicker />
+                  <Button onClick={() => setShowEmoji(!showEmoji)}>
+                    <MdCancel />
+                  </Button>
+                  <EmojiPicker onEmojiClick={onEmojiClick} />
                 </Box>,
                 document.body
               )}

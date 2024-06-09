@@ -33,6 +33,8 @@ const SingleComment = ({
 
   const [isCollapsed, setIsCollapsed] = useState(defaultIsCollapsed);
 
+
+
   return (
     <Box key={comment?.permlink} marginLeft={`${depth * 28}px`}>
       <Box

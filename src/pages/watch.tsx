@@ -64,11 +64,59 @@ export default function Watch() {
     variables: { author, permlink },
   });
 
-  //   console.log("getVideoDetails", getVideoDetails);
-
   const videoDetails: VideoDetails = getVideoDetails?.data?.socialPost;
 
-  //   console.log("videoDetails", videoDetails);
+  //function for date formatting
+  const dateFormatting = (data: string) => {
+    const date = new Date(data);
+    const year = date.getFullYear();
+    let month = String(date.getMonth() + 1).padStart(2, "0");
+    let formattedMonth: string;
+
+    switch (month) {
+      case "01":
+        formattedMonth = "Jan";
+        break;
+      case "02":
+        formattedMonth = "Feb";
+        break;
+      case "03":
+        formattedMonth = "Mar";
+        break;
+      case "04":
+        formattedMonth = "Apr";
+        break;
+      case "05":
+        formattedMonth = "May";
+        break;
+      case "06":
+        formattedMonth = "Jun";
+        break;
+      case "07":
+        formattedMonth = "Jul";
+        break;
+      case "08":
+        formattedMonth = "Aug";
+        break;
+      case "09":
+        formattedMonth = "Sep";
+        break;
+      case "10":
+        formattedMonth = "Oct";
+        break;
+      case "11":
+        formattedMonth = "Nov";
+        break;
+      case "12":
+        formattedMonth = "Dec";
+        break;
+      default:
+        formattedMonth = "";
+    }
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${formattedMonth} ${day}, ${year}`; 
+  };
 
   return (
     <MainLayout>
@@ -104,6 +152,9 @@ export default function Watch() {
                         colorMode={colorMode}
                       />
                     </Box>
+                    <Flex px={2}>
+                      <Text>{dateFormatting(videoDetails?.created_at)}</Text>
+                    </Flex>
                     <Flex
                       justifyContent={"space-between"}
                       marginTop="1rem"
@@ -184,3 +235,7 @@ export default function Watch() {
     </MainLayout>
   );
 }
+function dateFormatting(created_at: string): import("react").ReactNode {
+    throw new Error("Function not implemented.");
+}
+

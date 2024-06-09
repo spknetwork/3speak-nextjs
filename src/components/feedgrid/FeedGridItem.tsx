@@ -2,7 +2,15 @@
 //TODO: invisible the widgets on the hover over the video component
 
 import React, { useState } from "react";
-import { Box, GridItem, Image, Link, Text, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  GridItem,
+  Image,
+  Link,
+  Text,
+  Flex,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { MdOutlineThumbUp } from "react-icons/md";
 import { BiDollar } from "react-icons/bi";
 import VideosTitle from "@/components/VideosTitle";
@@ -13,6 +21,7 @@ import moment from "moment";
 import { InfinitySpin } from "react-loader-spinner";
 import { useColorMode } from "@chakra-ui/react";
 import { BsDot } from "react-icons/bs";
+import Tags from "../watch/Tags";
 
 var toHHMMSS = (secs: number) => {
   var sec_num = parseInt(secs.toFixed(1), 10);
@@ -38,6 +47,8 @@ const redirect = (permlink: string, username: string) => {
 
 const FeedGridItem = ({ video }: Props) => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const bgColor = useColorModeValue("white", "gray.800");
+
   const [showDollarComponent, setShowDollarComponent] = useState(true);
 
   if (!video) {
@@ -56,15 +67,15 @@ const FeedGridItem = ({ video }: Props) => {
     setShowDollarComponent(true);
   };
 
+  console.log("Video details", video);
+
   return (
     <GridItem
       w="100%"
       h="100%"
       p={1}
       m={1}
-      boxShadow={"0 0 1px black"}
       borderRadius={"10px"}
-      mb={12}
       cursor={"pointer"}
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
@@ -157,21 +168,27 @@ const FeedGridItem = ({ video }: Props) => {
         </Box>
       </Box>
 
-      {/* TODO: fix this height  */}
-      <Flex flexDirection={"column"} justifyContent={"space-between"} h={"20%"}>
+      <Flex flexDirection={"column"}>
         <VideosTitle
           title={`${video.title}`}
           author={video.author}
           permlink={`${video.permlink}`}
         />
-        <Flex alignItems={"center"}>
+        <Flex h={12} alignItems={"center"}>
           <Name username={`${video?.author?.username ?? ""}`} />
-          <BsDot />
-          <Text as="p" mt={4}>
-            {moment(video.created_at).fromNow()}
-          </Text>
+          <Flex mb={3}>
+            <BsDot />
+          </Flex>
+          <Text as="p">{moment(video.created_at).fromNow()}</Text>
         </Flex>
       </Flex>
+      {/* <Flex >
+          {video.tags.slice(0, 3).map((tag, index) => (
+            <Flex key={index} px={1}>
+              <Text>{tag}</Text>
+            </Flex>
+          ))}
+        </Flex> */}
     </GridItem>
   );
 };

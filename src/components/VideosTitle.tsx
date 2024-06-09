@@ -29,8 +29,6 @@ const VideosTitle = (props: Props) => {
           word-wrap: break-word;
           overflow: hidden;
           max-height: 2.8em;
-          margin-top: 0.5rem !important;
-          margin-bottom: 0.5rem;
           line-height: 1.4em;
           display: -webkit-box;
           -webkit-box-orient: vertical;
@@ -38,7 +36,7 @@ const VideosTitle = (props: Props) => {
         `}
         fontSize={"13px"}
         fontWeight={"bold"}
-        marginY={"10px"}
+        marginY={"4px"}
         as="h3"
         textOverflow={"ellipsis"}
         overflow={"hidden"}

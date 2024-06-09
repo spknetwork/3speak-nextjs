@@ -46,7 +46,6 @@
     "cmdk": "^1.0.0",
     "dids": "^5.0.2",
     "dotenv": "^16.4.5",
-    "emoji-picker-react": "^4.9.4",
     "ethers": "^6.11.1",
     "formik": "^2.2.9",
     "framer-motion": "^10.2.4",
