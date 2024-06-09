@@ -6,8 +6,8 @@ import {
   Button,
   Flex,
   InputGroup,
-  InputRightElement,
   Text,
+  InputRightElement,
   Textarea,
 } from "@chakra-ui/react";
 import EmojiPicker from "emoji-picker-react";
