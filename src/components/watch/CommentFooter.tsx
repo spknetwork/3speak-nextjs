@@ -1,10 +1,10 @@
-//TODO: work on this component for optimistic UI 
+//TODO: work on this component for optimistic UI
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import {
+  Flex,
   Avatar,
   Box,
   Button,
-  Flex,
   InputGroup,
   InputRightElement,
   Textarea,
@@ -40,15 +40,22 @@ const CommentFooter = (props: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [upvoted, setUpvoted] = useState(false);
   const [downvoted, setDownvoted] = useState(false);
-  
+
+  const [upvotes, setUpvotes] = useState<number>(1000)
+
   const ref = useRef<HTMLTextAreaElement>(null);
   const showComment = () => setComment(true);
   const hideComment = () => setComment(false);
 
-
   const handleUpvote = () => {
     setUpvoted(!upvoted);
-    if (downvoted) setDownvoted(false); // remove downvote if already downvoted
+    if(!upvoted){
+        setUpvotes(prev => prev + 1);
+    }
+    if(upvoted){
+        setUpvotes(prev => prev - 1);
+        setDownvoted(false); // remove downvote if already downvoted
+    } 
   };
 
   const handleDownvote = () => {
@@ -59,7 +66,6 @@ const CommentFooter = (props: Props) => {
   const onEmojiClick = (emojiObject: any) => {
     setInputValue((prevInput) => prevInput + emojiObject.emoji);
   };
-
 
   const emojiRef = useRef<HTMLDivElement>(null);
   const [emojiPosition, setEmojiPosition] = useState({ x: 0, y: 0 });
@@ -86,7 +92,7 @@ const CommentFooter = (props: Props) => {
       }
     });
   };
-  
+
   const handleCancel = () => {
     setIsExpanded(false);
     if (ref.current) {
@@ -94,7 +100,6 @@ const CommentFooter = (props: Props) => {
     }
     setInputValue("");
   };
-
 
   return (
     <Box>
@@ -129,7 +134,7 @@ const CommentFooter = (props: Props) => {
                   pointerEvents="none"
                   wordBreak={"normal"}
                 >
-                  1000
+                  {upvotes}
                 </Text>
               </Flex>
             </Box>
@@ -214,13 +219,7 @@ const CommentFooter = (props: Props) => {
                 </Flex>
               </InputRightElement>
             </Flex>
-            <Flex
-              position="absolute"
-              zIndex={2}
-              bottom={4}
-              left={4}
-              gap={4}
-            >
+            <Flex position="absolute" zIndex={2} bottom={4} left={4} gap={4}>
               <Flex
                 ref={emojiRef}
                 fontSize={"20px"}

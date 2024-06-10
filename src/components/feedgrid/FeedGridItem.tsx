@@ -21,7 +21,7 @@ import moment from "moment";
 import { InfinitySpin } from "react-loader-spinner";
 import { useColorMode } from "@chakra-ui/react";
 import { BsDot } from "react-icons/bs";
-import Tags from "../watch/Tags";
+import { Avatar } from "@chakra-ui/react";
 
 var toHHMMSS = (secs: number) => {
   var sec_num = parseInt(secs.toFixed(1), 10);
@@ -175,6 +175,8 @@ const FeedGridItem = ({ video }: Props) => {
           permlink={`${video.permlink}`}
         />
         <Flex h={12} alignItems={"center"}>
+          <Avatar size={"sm"} mb={4} mr={2}/>
+
           <Name username={`${video?.author?.username ?? ""}`} />
           <Flex mb={3}>
             <BsDot />
