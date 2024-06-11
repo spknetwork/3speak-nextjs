@@ -22,8 +22,8 @@ const CommunityChip = (props: Props) => {
       boxShadow={`0.5px 0.5px 0.5px 0.5px ${
         props.colorMode === "dark" ? "#3f444e" : "black"
       }`}
-      _hover={{ backgroundColor: "#1a202c" }}
-      _active={{ backgroundColor: "#1a202c" }}
+      _hover={props.colorMode === 'dark' ?  {backgroundColor: "#1a202c"} : {backgroundColor: "gray.200"}}
+      _active={props.colorMode === 'dark' ?  {backgroundColor: "#1a202c"} : {backgroundColor: "gray.200"}}
       cursor="pointer"
       onClick={() => props.setCardData(props.item)}
     >

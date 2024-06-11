@@ -47,6 +47,7 @@ const CommentFooter = (props: Props) => {
   const showComment = () => setComment(true);
   const hideComment = () => setComment(false);
 
+  //TODO: both cant work together 
   const handleUpvote = () => {
     setUpvoted(!upvoted);
     if(!upvoted){
@@ -58,6 +59,7 @@ const CommentFooter = (props: Props) => {
     } 
   };
 
+  //
   const handleDownvote = () => {
     setDownvoted(!downvoted);
     if (upvoted) setUpvoted(false); // remove upvote if already upvoted

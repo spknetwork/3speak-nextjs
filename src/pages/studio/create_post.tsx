@@ -764,16 +764,16 @@ const CreatePost: React.FC = () => {
                               borderRadius={"5px"}
                               style={
                                 selectedFile === null
-                                  ? { minHeight: "30vh", minWidth: "30vh" }
+                                  ? { minHeight: "20vh", minWidth: "20vh" }
                                   : { maxHeight: "50vh", maxWidth: "50vh" }
                               }
                               justifyContent="center"
                               alignItems={"center"}
                               border={"1px dotted grey"}
                               fontSize={{
-                                base: "60px",
-                                md: "60px",
-                                lg: "100px",
+                                base: "30px",
+                                md: "50px",
+                                lg: "70px",
                               }}
                             >
                               <input {...getInputProps()} />

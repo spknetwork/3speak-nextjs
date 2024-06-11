@@ -1,4 +1,5 @@
-//TODO: Add functionalities to this page
+0//TODO: Add writeQuery graphql for the optimistic UI
+
 
 import Video from "@/components/watch/video/Video";
 
