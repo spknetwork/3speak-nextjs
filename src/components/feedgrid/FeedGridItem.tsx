@@ -93,7 +93,7 @@ const FeedGridItem = ({ video }: Props) => {
               left="5px"
               fontSize="11px"
               fontWeight={"500"}
-              background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
+            background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
               borderRadius="2px"
               paddingLeft={"4px"}
               paddingRight={"4px"}

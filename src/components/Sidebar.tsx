@@ -58,6 +58,7 @@ import AccountsList from "./Modal/AccountsList";
 import SignInModal from "./Modal/SignInModal";
 import { useGetMyQuery } from "@/hooks/getUserDetails";
 import { ProfileInterface } from "types";
+import { useAuth } from "@/hooks/auth";
 
 
 
@@ -75,15 +76,13 @@ const navblog_light = {
   filter: "brightness(0.50)",
 };
 
-const faAndroidIcon = faAndroid as IconProp;
-const faAppStoreIosIcon = faAppStoreIos as IconProp;
 const faDiscordIcon = faDiscord as IconProp;
 const faTelegramIcon = faTelegram as IconProp;
 const faTwitterIcon = faTwitter as IconProp;
 
 export const Sidebar = () => {
   const getUserProfile: ProfileInterface = useGetMyQuery()?.profile;
-  console.log(getUserProfile);
+  console.log("User profile", getUserProfile);
 
 
   const bgColor = useColorModeValue("gray.100", "gray.800");
@@ -120,21 +119,8 @@ export const Sidebar = () => {
     listAccounts,
     setAccounts,
   } = useAppStore();
-  // const isMedium = useBreakpointValue({ base: false, md: true });
-  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
-  // const { colorMode, toggleColorMode } = useColorMode();
 
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      setAuthenticated(true);
-      // return
-    } else {
-      setAuthenticated(false);
-    }
-
-    console.log("authenticated", authenticated);
-  }, [allowAccess, authenticated]);
+  const authenticated = useAuth()
 
   useEffect(() => {
     console.log("isMobile", isMobile);

@@ -1,17 +1,7 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
-<<<<<<< HEAD
-"typescript.enablePromptUseWorkspaceTsdk": true,
-"editor.fontWeight": "normal",
-"terminal.integrated.fontWeight": "normal",
-"CodeGPT.apiKey": "CodeGPT Plus Beta",
-"CodeGPT.Autocomplete.suggestionDelay": 980
-=======
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "i18n-ally.localesPaths": [
-    "i18n",
-    "src/i18n",
-    "src/i18n/locales"
-  ]
->>>>>>> origin/feature/gql-implementation
+  "editor.fontWeight": "500",
+  "terminal.integrated.fontWeight": "normal",
+  "editor.fontSize": 13
 }

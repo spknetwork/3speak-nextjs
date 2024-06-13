@@ -129,7 +129,14 @@ export default function Watch() {
           padding={"10px"}
         >
           <Box flex="1">
-            <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg={bgColor}>
+            <Box
+              borderRadius={4}
+              boxShadow="base"
+              mr={2}
+              flex="1"
+              bg={bgColor}
+              maxW={"95%"}
+            >
               <Box
                 m={5}
                 bg={bgColor}
@@ -153,7 +160,7 @@ export default function Watch() {
                         colorMode={colorMode}
                       />
                     </Box>
-                    <Flex px={2}>
+                    <Flex>
                       <Text>{dateFormatting(videoDetails?.created_at)}</Text>
                     </Flex>
                     <Flex
@@ -179,7 +186,8 @@ export default function Watch() {
             <Box
               marginBottom={"30px"}
               borderRadius={4}
-              boxShadow="0 0 5px black"
+              boxShadow="base"
+              maxW={"95%"}
               w="full"
               pb={4}
               px={4}
@@ -192,8 +200,13 @@ export default function Watch() {
                 videoDetails={videoDetails}
               />
             </Box>
-            <Box borderRadius={4} boxShadow="base" mr={2} flex="1" bg={bgColor}>
-              {/* TODO: Markdown render all the tags there  */}
+            <Box
+              borderRadius={4}
+              boxShadow="base"
+              flex="1"
+              bg={bgColor}
+              maxW={"95%"}
+            >
               <About
                 getVideo={videoDetails}
                 bgColor={bgColor}
@@ -203,9 +216,10 @@ export default function Watch() {
             <Box
               marginBottom={"30px"}
               borderRadius={4}
-              boxShadow="0 0 5px black"
+              boxShadow={"base"}
               w="full"
               p={4}
+              maxW={"95%"}
             >
               <AllComments
                 author={author}

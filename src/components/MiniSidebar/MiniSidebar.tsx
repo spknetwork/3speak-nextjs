@@ -7,6 +7,7 @@ import {
   Box,
   useColorModeValue,
   useColorMode,
+  ScaleFade,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { NAVIGATION } from "../../components/data/NavigationData";
@@ -38,21 +39,12 @@ const MiniSidebar = () => {
       <Flex
         direction="column"
         height="100vh"
-        w={[8, 10, 12, 16]}
-        position="sticky"
-        left={0}
-        top={0}
+        w={"auto"}
         py={[1, 1, 2, 4]}
         backgroundColor={colorMode === "dark" ? "gray.600" : "gray.300"}
         overflowY="auto"
       >
-        <VStack
-          spacing={8}
-          mt={8}
-          w={[8, 10, 12, 14]}
-          position="relative"
-          top={"112px"}
-        >
+        <VStack spacing={8} mt={8} w="auto" position="relative" top={"112px"}>
           <Sidebar />
           <Box h={[3, 6, 9, 9]} w={[3, 6, 9, 9]} textAlign={"center"}>
             <Image
@@ -69,13 +61,15 @@ const MiniSidebar = () => {
           </Box>
           {NAVIGATION.map((item, index) => (
             <Link key={index} href={`${item.route!}`}>
-              <Icon
-                cursor="pointer"
-                width={["12px", "16px", "18px", "22px"]}
-                height={["12px", "16px", "18px", "22px"]}
-                as={item.icon}
-                color={colorMode === "dark" ? "white" : "black"}
-              />
+              <Flex>
+                <Icon
+                  cursor="pointer"
+                  width={["12px", "16px", "18px", "22px"]}
+                  height={["12px", "16px", "18px", "22px"]}
+                  as={item.icon}
+                  color={colorMode === "dark" ? "white" : "black"}
+                />
+              </Flex>
             </Link>
           ))}
         </VStack>

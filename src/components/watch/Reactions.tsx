@@ -34,6 +34,11 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
     if (!isLiked) {
       setLikes(likes + 1);
       setIsLiked(!isLiked);
+
+      if(isDisLiked){
+        setDisLiked(false);
+        setDislikes(prev => prev + 1)
+      }
     }
     if (isLiked) {
       setLikes(likes - 1);
@@ -45,6 +50,11 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
     if (!isDisLiked) {
       setDislikes(Dislikes - 1);
       setDisLiked(!isDisLiked);
+      
+      if (isLiked) {
+        setLikes(likes - 1);
+        setIsLiked(false);
+      }
     }
 
     if (isDisLiked) {

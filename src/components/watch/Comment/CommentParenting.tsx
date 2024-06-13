@@ -19,10 +19,14 @@ import { LuImagePlus } from "react-icons/lu";
 import { MdOutlineGif } from "react-icons/md";
 import { RiText } from "react-icons/ri";
 import { createPortal } from "react-dom";
+import { handleAddComment} from "@/query/AddComment"
+
 
 type Props = {
   bgColor: string;
   colorMode: string;
+  author: string;
+  permlink: string;
 };
 
 const CommentParenting = (props: Props) => {
@@ -80,6 +84,13 @@ const CommentParenting = (props: Props) => {
     });
   };
 
+  //function for handling the add comments
+  async function handleAddCommentFunc(){
+     handleAddComment(props.author, props.permlink, inputValue);
+     setInputValue("");
+     setIsExpanded(false);
+  }
+
   return (
     <Flex
       bg={props.bgColor}
@@ -113,7 +124,7 @@ const CommentParenting = (props: Props) => {
             {" "}
             {isExpanded && (
               <Flex>
-                <Button colorScheme="blue" ml={2}>
+                <Button colorScheme="blue" ml={2} onClick={handleAddCommentFunc}>
                   Comment
                 </Button>
                 <Button ml={2} onClick={handleCancel}>

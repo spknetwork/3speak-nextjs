@@ -53,7 +53,7 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
       <Box
         cursor={"pointer"}
         bg={bgColor}
-        p={4}
+        py={4}
         color={colorMode === "dark" ? "white" : "black"}
         onClick={() => gotoProfile()}
       >

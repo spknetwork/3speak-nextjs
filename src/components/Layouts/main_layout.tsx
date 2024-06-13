@@ -6,8 +6,6 @@ import {
   useColorModeValue,
   useColorMode,
 } from "@chakra-ui/react";
-import { css } from "@emotion/react";
-import React from "react";
 import Footer from "../footer/Footer";
 import MiniSidebar from "../MiniSidebar/MiniSidebar";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
@@ -24,9 +22,8 @@ const MainLayout = ({ children }: any) => {
     >
       <nav>
           <Box
-            position={["sticky", "sticky", "sticky"]}
+            position={"sticky"}
             top={0}
-            left={0}
             height={["auto", "auto", "100vh"]}
           >
             <MiniSidebar />

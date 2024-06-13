@@ -37,32 +37,38 @@ const CommentFooter = (props: Props) => {
   const [comment, setComment] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [isExpanded, setIsExpanded] = useState(false);
   const [upvoted, setUpvoted] = useState(false);
   const [downvoted, setDownvoted] = useState(false);
 
-  const [upvotes, setUpvotes] = useState<number>(1000)
+  const [upvotes, setUpvotes] = useState<number>(1000);
 
   const ref = useRef<HTMLTextAreaElement>(null);
   const showComment = () => setComment(true);
   const hideComment = () => setComment(false);
 
-  //TODO: both cant work together 
+  const toggleComment = () => {
+     setComment(prev => !prev)
+  }
+
   const handleUpvote = () => {
     setUpvoted(!upvoted);
-    if(!upvoted){
-        setUpvotes(prev => prev + 1);
+    setDownvoted(false);
+    if (!upvoted) {
+      setUpvotes((prev) => prev + 1);
     }
-    if(upvoted){
-        setUpvotes(prev => prev - 1);
-        setDownvoted(false); // remove downvote if already downvoted
-    } 
+    if (upvoted) {
+      setUpvotes((prev) => prev - 1);
+      setDownvoted(false);
+    }
   };
 
-  //
   const handleDownvote = () => {
     setDownvoted(!downvoted);
-    if (upvoted) setUpvoted(false); // remove upvote if already upvoted
+
+    if (upvoted) {
+      setUpvoted(false);
+      setUpvotes((prev) => prev - 1);
+    }
   };
 
   const onEmojiClick = (emojiObject: any) => {
@@ -96,7 +102,7 @@ const CommentFooter = (props: Props) => {
   };
 
   const handleCancel = () => {
-    setIsExpanded(false);
+    hideComment()
     if (ref.current) {
       ref.current.value = "";
     }
@@ -171,7 +177,7 @@ const CommentFooter = (props: Props) => {
             >
               <Flex
                 cursor={"pointer"}
-                onClick={showComment}
+                onClick={toggleComment}
                 justifyContent={"center"}
                 alignItems="center"
               >
@@ -202,21 +208,22 @@ const CommentFooter = (props: Props) => {
             <Textarea
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder={"Write a comment"}
+              placeholder={"Write a reply"}
               borderRadius={"10px"}
               pr="4rem"
               _focus={{ boxShadow: "none" }}
               resize="none"
+              h={"110px"}
               ref={ref}
             />
             <Flex position={"absolute"} bottom={12} right={24}>
               <InputRightElement>
                 <Flex>
-                  <Button ml={2} onClick={handleCancel}>
-                    Cancel
-                  </Button>
                   <Button colorScheme="blue" ml={2}>
                     Comment
+                  </Button>
+                  <Button ml={2} onClick={handleCancel}>
+                    Cancel
                   </Button>
                 </Flex>
               </InputRightElement>

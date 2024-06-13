@@ -1,7 +1,3 @@
-
-import VideosTitle from "@/components/VideosTitle";
-import Name from "@/components/user/Name";
-import { useMemo } from "react";
 import {
   Box,
   Flex,
@@ -23,10 +19,11 @@ const IndexPage = () => {
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
-  const getTrendingFeed = useQuery(GET_TRENDING_FEED, { ssr: true });
+  const getTrendingFeed = useQuery(GET_TRENDING_FEED, { ssr: false });
+
 
   return (
-    <MainLayout>
+          <MainLayout>
       <Box bg={bgColor}>
         <Flex
           marginRight={"30px"}

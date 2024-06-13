@@ -6,8 +6,8 @@ import { MagicLinkPopupActions, useMagicLinkPopup } from "magic-link-popup-react
 export function useAuth() {
   if (typeof window !== "undefined") {
     return {
-      authenticated: !!window.localStorage.getItem("auth-entropy"),
-    //   authenticated: !!window.localStorage.getItem("access_token")
+    //   authenticated: !!window.localStorage.getItem("auth-entropy"),
+      authenticated: !!window.localStorage.getItem("access_token")
     };
   }
 }
