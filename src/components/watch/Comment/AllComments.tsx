@@ -60,7 +60,7 @@ const AllComments = ({ author, permlink, bgColor, colorMode }: Props) => {
           permlink={permlink}
         />
       </Box>
-      <Box maxHeight={"2000px"} overflow="hidden" position={"relative"}>
+      <Box  overflow="hidden" position={"relative"} height={"auto"}>
         <Box padding={"5px"} paddingTop="25px" zIndex={2}>
           <Comments
             comments={commentsData}

@@ -95,7 +95,7 @@ const SingleComment = ({
             fontWeight={"bold"}
             color={colorMode === "dark" ? "white" : "black"}
           >
-            {comment?.author?.profile?.name ?? "undefined user"}
+            {comment?.author?.profile?.name ?? "User"}
           </Text>
           <Collapse in={!isCollapsed} unmountOnExit>
             <Box

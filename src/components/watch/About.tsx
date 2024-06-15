@@ -113,6 +113,8 @@ const About = ({ getVideo, ...props }: Props) => {
       >
         <Text
           textAlign={"center"}
+          fontWeight={"bold"}
+          fontFamily={"system-ui"}
           color={props.colorMode === "dark" ? "white" : "black"}
         >
           {showLess ? "Show more" : "Show less"}

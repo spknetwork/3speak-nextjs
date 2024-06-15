@@ -1,6 +1,7 @@
 import { Avatar, Box, Flex, Link, Text } from "@chakra-ui/react";
 import React from "react";
 import { VideoDetails } from "types";
+import { IoIosArrowForward } from "react-icons/io";
 
 type Props = {
   videoDetails: VideoDetails;
@@ -14,25 +15,28 @@ const Community = (props: Props) => {
       <Flex
         bg={props.bgColor}
         color={props.colorMode === "dark" ? "white" : "black"}
+        gap={3}
       >
-        <Flex alignItems="center">
+        <Flex alignItems="center" mt={2}>
           <h3>Community</h3>
+        </Flex>
+        <Flex alignItems={'center'}>
+          <IoIosArrowForward />
         </Flex>
         <Flex
           justifyContent={"space-between"}
           alignItems="center"
-          px={4}
           marginTop={"12px"}
           marginBottom={"10px"}
         >
-          <Flex alignItems={"center"} px={2}>
+          <Flex alignItems={"center"}>
             <Flex boxShadow={"lg"} borderRadius="50%">
               <Avatar
                 name={props.videoDetails?.community?._id}
                 src={props.videoDetails?.community?.images?.avatar}
               />
             </Flex>
-            <Flex fontSize={"xl"} px={2}>
+            <Flex fontSize={"xl"} px={2} alignItems={"center"} fontWeight={"bold"}>
               {props.videoDetails?.community?.username}
             </Flex>
           </Flex>
