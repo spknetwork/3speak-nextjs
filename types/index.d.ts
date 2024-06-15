@@ -64,8 +64,8 @@ export interface CommentInterface {
     }
   }
   body: string;
-  permlink: string;
   children: CommentInterface[]
+  permlink: string;
 }
 
 export interface Author {

@@ -4,16 +4,20 @@ import { CommentInterface } from 'types';
 import { CiCircleMinus, CiCirclePlus } from 'react-icons/ci';
 import SingleComment from './SingleComment';
 
-type Props = {}
+
 
 const Comments = ({
   comments,
   parentIndex,
   depth = 1,
+  author,
+  permlink,
 }: {
   comments: CommentInterface[];
   parentIndex: number;
   depth?: number;
+  author: string;
+  permlink: string;
 }) => {
   return (
     <>
@@ -24,6 +28,8 @@ const Comments = ({
           parentIndex={parentIndex}
           depth={depth}
           defaultIsCollapsed={false}
+          author={author}
+          permlink={permlink}
         />
       ))}
     </>

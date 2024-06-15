@@ -17,30 +17,32 @@ const MainLayout = ({ children }: any) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Flex
-      justifyContent={"flex-end"}
-    >
+    <Flex w="full">
       <nav>
-          <Box
-            position={"sticky"}
-            top={0}
-            height={["auto", "auto", "100vh"]}
-          >
-            <MiniSidebar />
-          </Box>
-            <Text position={"absolute"} right={[2, 6, 8, 12]} top={[1, 2, 3, 4]} fontSize={["xs", "sm", "md", "xl"]} zIndex={2}>
-              <Switch
-                // size={["sm", "sm", "md", "4xl"]}
-                isChecked={colorMode === "dark"}
-                onChange={toggleColorMode}
-              />{" "}
-              {colorMode === "dark" && <MoonIcon />}{" "}
-              {colorMode !== "dark" && <SunIcon />}
-            </Text>
+        <Box position={"sticky"} top={0} height={["auto", "auto", "100vh"]}>
+          <MiniSidebar />
+        </Box>
+        <Text
+          position={"absolute"}
+          right={[2, 6, 8, 12]}
+          top={[1, 2, 3, 4]}
+          fontSize={["xs", "sm", "md", "xl"]}
+          zIndex={2}
+        >
+          <Switch
+            // size={["sm", "sm", "md", "4xl"]}
+            isChecked={colorMode === "dark"}
+            onChange={toggleColorMode}
+          />{" "}
+          {colorMode === "dark" && <MoonIcon />}{" "}
+          {colorMode !== "dark" && <SunIcon />}
+        </Text>
       </nav>
       <Flex
-        width={"97%"}
-        flexDirection = {{ base: "column", md: "column", lg: "column"}}
+        width={'100%'}
+        justifyContent={'space-between'}
+        // minWidth={"min-content"}
+        flexDirection={{ base: "column", md: "column", lg: "column" }}
       >
         <main>{children}</main>
         <Footer />

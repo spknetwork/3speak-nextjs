@@ -20,6 +20,8 @@ type Props = {
   parentIndex: number;
   depth: number;
   defaultIsCollapsed: boolean;
+  author: string;
+  permlink: string;
 };
 
 const SingleComment = ({
@@ -27,6 +29,8 @@ const SingleComment = ({
   parentIndex,
   depth,
   defaultIsCollapsed,
+  author,
+  permlink
 }: Props) => {
   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
@@ -106,6 +110,8 @@ const SingleComment = ({
             bgColor={bgColor}
             colorMode={colorMode}
             commentId={comment?.permlink}
+            author={author}
+            permlink={permlink}
           />
         </Box>
       </Box>
@@ -114,6 +120,8 @@ const SingleComment = ({
           comments={comment.children}
           parentIndex={depth + 1}
           depth={depth + 1}
+          author={author}
+          permlink={permlink}
         />
       )}
     </Box>

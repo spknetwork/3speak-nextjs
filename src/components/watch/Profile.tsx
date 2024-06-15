@@ -49,8 +49,10 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
     setFollowState((prevState) => (prevState === "follow" ? "Unfollow" : "follow"))
   }
   return (
+    //TODO: fix this css
     <Flex justifyContent={"space-between"}>
       <Box
+        fontFamily={"system-ui"}
         cursor={"pointer"}
         bg={bgColor}
         py={4}
@@ -58,25 +60,32 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
         onClick={() => gotoProfile()}
       >
         {/* src="https://bit.ly/dan-abramov" */}
-        <Flex alignItems={"center"}>
-          <Avatar
-            name={profile?.name || ''}
-            alignSelf={"start"}
-            src={profile?.images?.avatar}
-          />
-          <Flex flexDirection={"column"} className="ms-2">
+        <Flex alignItems={"center"} gap={2}>
+            <Avatar
+              name={profile?.name || ""}
+              alignSelf={"start"}
+              src={profile?.images?.avatar}
+            />
+          <Flex flexDirection={"column"}>
             <Link fontSize={"15px"} fontWeight={"bolder"}>
               {profile?.username}
             </Link>
-            <Box display={"flex"}>
-              <Text color={"grey"} fontSize={"12px"} marginRight="10px">
+            <Flex justifyContent={"center"} alignItems={"center"}>
+              <Text
+                color={colorMode === "dark" ? "white" : "black"}
+                fontSize={"14px"}
+                marginRight="10px"
+              >
                 followers {followers_count}
               </Text>
               {/* need to make it functional  */}
-              <Text color={"grey"} fontSize={"12px"}>
+              <Text
+                color={colorMode === "dark" ? "white" : "black"}
+                fontSize={"14px"}
+              >
                 following {followings_count}
               </Text>
-            </Box>
+            </Flex>
           </Flex>
         </Flex>
       </Box>
@@ -92,14 +101,15 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
           border={"none"}
           boxShadow="0 1px 4px rgb(0 0 0 / 40%)"
           transition={"all 0.4s"}
-          fontSize="0.7109375rem"
           lineHeight={"1.5"}
           background={
             colorMode === "dark"
               ? "black"
               : "#fff linear-gradient(180deg, white, #fff) repeat-x"
           }
-          fontWeight={"400"}
+          fontWeight={"bold"}
+          fontSize={"14px"}
+          fontFamily={"system-ui"}
           color={colorMode === "dark" ? "white" : "black"}
           onClick={TriggerRender}
         >

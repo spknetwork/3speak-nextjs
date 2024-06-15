@@ -21,9 +21,8 @@ const IndexPage = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const getTrendingFeed = useQuery(GET_TRENDING_FEED, { ssr: false });
 
-
   return (
-          <MainLayout>
+    <MainLayout>
       <Box bg={bgColor}>
         <Flex
           marginRight={"30px"}

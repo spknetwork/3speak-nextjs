@@ -1,13 +1,15 @@
 //TODO: downvotes and views field not available
 //TODO: make the UI optimistic
 import { ViewIcon } from "@chakra-ui/icons";
-import { Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Text, Tooltip } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
 import { FaThumbsUp } from "react-icons/fa";
 import { FaThumbsDown } from "react-icons/fa";
 import { VideoDetails } from "types";
 import MenuButtons from "./MenuButtons";
+import {useAuth} from "@/hooks/auth"
+
 
 type Props = {
   bgColor: string;
@@ -16,7 +18,8 @@ type Props = {
 };
 
 const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
-  console.log("videoStats", getVideo);
+
+  const {authenticated} = useAuth();
 
   const [likes, setLikes] = useState<number>(getVideo?.stats?.num_votes | 0);
   const [isLiked, setIsLiked] = useState<boolean>(false);
@@ -27,10 +30,11 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
   );
   const [isDisLiked, setDisLiked] = useState<boolean>(false);
 
-  /**
-   * Function for likes
-   */
+ 
   function handleLikes() {
+    if(!authenticated){
+        return
+    }
     if (!isLiked) {
       setLikes(likes + 1);
       setIsLiked(!isLiked);
@@ -47,6 +51,9 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
   }
 
   function handleDisLikes() {
+    if(!authenticated){
+        return null
+    }
     if (!isDisLiked) {
       setDislikes(Dislikes - 1);
       setDisLiked(!isDisLiked);
@@ -66,9 +73,14 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
   return (
     <Flex justifyContent={"center"}>
       <Flex justifyContent={"center"} alignItems="center" className="mr-4">
-        <Flex cursor="pointer" onClick={handleLikes}>
-          {isLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
-        </Flex>
+        <Tooltip label={authenticated ? "" : "You need to login!"}>
+          <Flex
+            cursor={authenticated ? "pointer" : "not-allowed"}
+            onClick={handleLikes}
+          >
+            {isLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
+          </Flex>
+        </Tooltip>
         {getVideo && getVideo.stats && getVideo.stats.num_votes > 0 && (
           <Text
             marginBottom={"0px !important"}
@@ -80,9 +92,14 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
         )}
       </Flex>
       <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
-      <Flex cursor="pointer" onClick={handleDisLikes}>
-          {isDisLiked ? <FaThumbsDown /> : <FaRegThumbsDown />}
-        </Flex>
+        <Tooltip label={authenticated ? "" : "You need to login!"}>
+          <Flex
+            cursor={authenticated ? "pointer" : "not-allowed"}
+            onClick={handleDisLikes}
+          >
+            {isDisLiked ? <FaThumbsDown /> : <FaRegThumbsDown />}
+          </Flex>
+        </Tooltip>
         <Text
           marginBottom={"0px !important"}
           fontWeight={"bolder"}

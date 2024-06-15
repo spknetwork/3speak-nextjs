@@ -1,5 +1,4 @@
-//TODO: react markdown render
-//TODO: get the communities section out the decription box
+//TODO: remove the hashtags 
 
 import { Box, Link, Text, Flex, useColorModeValue } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";

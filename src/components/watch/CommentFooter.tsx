@@ -1,4 +1,5 @@
-//TODO: work on this component for optimistic UI
+//TODO: you cant really give a reply to the reply if that particualar transaction has not been confirmed
+
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import {
   Flex,
@@ -9,6 +10,7 @@ import {
   InputRightElement,
   Textarea,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import EmojiPicker from "emoji-picker-react";
 import {
@@ -25,14 +27,20 @@ import { RiText } from "react-icons/ri";
 import { createPortal } from "react-dom";
 import { useGetMyQuery } from "@/hooks/getUserDetails";
 import { ProfileInterface } from "types";
+import { handleAddComment } from "@/query/AddComment";
+import { useAuth } from "@/hooks/auth";
+import { useRouter } from "next/router";
 
 type Props = {
   bgColor: string;
   colorMode: string;
   commentId: string;
+  author: string;
+  permlink: string;
 };
 
 const CommentFooter = (props: Props) => {
+  const router = useRouter();
   const getUserProfile: ProfileInterface = useGetMyQuery()?.profile;
   const [comment, setComment] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
@@ -47,10 +55,16 @@ const CommentFooter = (props: Props) => {
   const hideComment = () => setComment(false);
 
   const toggleComment = () => {
-     setComment(prev => !prev)
-  }
+    if(!authenticated){
+        return
+    }
+    setComment((prev) => !prev);
+  };
 
   const handleUpvote = () => {
+    if (!authenticated) {
+      return;
+    }
     setUpvoted(!upvoted);
     setDownvoted(false);
     if (!upvoted) {
@@ -63,6 +77,9 @@ const CommentFooter = (props: Props) => {
   };
 
   const handleDownvote = () => {
+    if (!authenticated) {
+      return;
+    }
     setDownvoted(!downvoted);
 
     if (upvoted) {
@@ -102,16 +119,31 @@ const CommentFooter = (props: Props) => {
   };
 
   const handleCancel = () => {
-    hideComment()
+    hideComment();
     if (ref.current) {
       ref.current.value = "";
     }
     setInputValue("");
   };
 
+  //function for handling the add comments
+  async function handleAddCommentFunc() {
+    handleAddComment(props.author, props.permlink, inputValue);
+    setInputValue("");
+  }
+
+
+  //check for auth
+  const { authenticated } = useAuth();
+
   return (
     <Box>
-      <Box display={"flex"} alignItems="center" flexFlow={"row nowrap"}>
+      <Box
+        display={"flex"}
+        alignItems="center"
+        flexFlow={"row nowrap"}
+        fontFamily={"system-ui"}
+      >
         <Flex alignItems={"center"}>
           <Box
             margin={"3px 4px 4px -4px"}
@@ -120,46 +152,56 @@ const CommentFooter = (props: Props) => {
             display="flex"
             flexDirection={"row"}
           >
-            <Box marginRight={"5px"}>
-              <Flex
-                marginLeft={"5px"}
-                justifyContent={"center"}
-                alignItems="center"
-                color={props.colorMode === "dark" ? "white" : "black"}
-                cursor="pointer"
-                onClick={handleUpvote}
-              >
-                {upvoted ? <FaThumbsUp /> : <FaRegThumbsUp />}
-                <Text
+            <Tooltip label={authenticated ? "" : "You need to login!"}>
+              <Box marginRight={"5px"}>
+                <Flex
+                  marginLeft={"5px"}
+                  justifyContent={"center"}
+                  alignItems="center"
                   color={props.colorMode === "dark" ? "white" : "black"}
-                  margin="4px"
-                  marginBottom={"0px"}
-                  width={"auto"}
-                  lineHeight="15px"
-                  textAlign={"center"}
-                  fontSize="12px"
-                  fontWeight={"700"}
-                  pointerEvents="none"
-                  wordBreak={"normal"}
+                  cursor={authenticated ? "pointer" : "not-allowed"}
+                  onClick={handleUpvote}
                 >
-                  {upvotes}
-                </Text>
-              </Flex>
-            </Box>
+                  {upvoted ? <FaThumbsUp /> : <FaRegThumbsUp />}
+                  <Text
+                    color={props.colorMode === "dark" ? "white" : "black"}
+                    margin="4px"
+                    marginBottom={"0px"}
+                    width={"auto"}
+                    lineHeight="15px"
+                    textAlign={"center"}
+                    fontSize="12px"
+                    fontWeight={"700"}
+                    pointerEvents="none"
+                    wordBreak={"normal"}
+                  >
+                    {upvotes}
+                  </Text>
+                </Flex>
+              </Box>
+            </Tooltip>
 
-            <Flex
-              marginLeft={"5px"}
-              justifyContent={"center"}
-              alignItems="center"
-              color={props.colorMode === "dark" ? "white" : "black"}
-              cursor="pointer"
-              onClick={handleDownvote}
-            >
-              {downvoted ? <FaThumbsDown /> : <FaRegThumbsDown />}
-              <Text marginBottom={"0px"} marginLeft={"5px"}>
-                Dislike
-              </Text>
-            </Flex>
+            <Tooltip label={authenticated ? "" : "You need to login!"}>
+              <Box>
+                <Flex
+                  marginLeft={"5px"}
+                  justifyContent={"center"}
+                  alignItems="center"
+                  color={props.colorMode === "dark" ? "white" : "black"}
+                  cursor={authenticated ? "pointer" : "not-allowed"}
+                  onClick={handleDownvote}
+                >
+                  {downvoted ? <FaThumbsDown /> : <FaRegThumbsDown />}
+                  <Text
+                    marginBottom={"0px"}
+                    marginLeft={"5px"}
+                    fontWeight={"bold"}
+                  >
+                    Dislike
+                  </Text>
+                </Flex>
+              </Box>
+            </Tooltip>
           </Box>
 
           <Box
@@ -170,23 +212,25 @@ const CommentFooter = (props: Props) => {
             fontSize="12px"
             fontWeight={"700"}
             lineHeight="16px"
-          >
-            <Box
-              color={props.colorMode === "dark" ? "white" : "black"}
-              marginLeft={"5px"}
-            >
-              <Flex
-                cursor={"pointer"}
-                onClick={toggleComment}
-                justifyContent={"center"}
-                alignItems="center"
+          >      
+            <Tooltip label={authenticated ? "" : "You need to login!"}>
+              <Box
+                color={props.colorMode === "dark" ? "white" : "black"}
+                marginLeft={"5px"}
               >
-                <BiComment fontSize={"14px"} />
-                <Text marginBottom={"0px"} marginLeft={"3px"}>
-                  Reply
-                </Text>
-              </Flex>
-            </Box>
+                <Flex
+                  cursor={authenticated ? "pointer" : "not-allowed"}
+                  onClick={toggleComment}
+                  justifyContent={"center"}
+                  alignItems="center"
+                >
+                  <BiComment fontSize={"14px"} />
+                  <Text marginBottom={"0px"} marginLeft={"3px"}>
+                    Reply
+                  </Text>
+                </Flex>
+              </Box>
+            </Tooltip>
           </Box>
         </Flex>
       </Box>
@@ -219,7 +263,12 @@ const CommentFooter = (props: Props) => {
             <Flex position={"absolute"} bottom={12} right={24}>
               <InputRightElement>
                 <Flex>
-                  <Button colorScheme="blue" ml={2}>
+                  <Button
+                    colorScheme="blue"
+                    ml={2}
+                    onClick={handleAddCommentFunc}
+                    isDisabled={!authenticated}
+                  >
                     Comment
                   </Button>
                   <Button ml={2} onClick={handleCancel}>

@@ -9,6 +9,10 @@ export function useAuth() {
     //   authenticated: !!window.localStorage.getItem("auth-entropy"),
       authenticated: !!window.localStorage.getItem("access_token")
     };
+  } else {
+    return {
+      authenticated: false,
+    }
   }
 }
 

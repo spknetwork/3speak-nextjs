@@ -10,13 +10,13 @@ type Props = {
 
 const Community = (props: Props) => {
   return (
-    <Flex justifyContent={"start"} alignItems="center">
+    <Flex justifyContent={"start"} alignItems="center" fontFamily={"system-ui"}>
       <Flex
         bg={props.bgColor}
         color={props.colorMode === "dark" ? "white" : "black"}
       >
-        <Flex marginBottom={"10px"} fontSize={"20px"} marginTop={"12px"}>
-          Community:
+        <Flex alignItems="center">
+          <h3>Community</h3>
         </Flex>
         <Flex
           justifyContent={"space-between"}
@@ -26,10 +26,12 @@ const Community = (props: Props) => {
           marginBottom={"10px"}
         >
           <Flex alignItems={"center"} px={2}>
-            <Avatar
-              name={props.videoDetails?.community?._id}
-              src={props.videoDetails?.community?.images?.avatar}
-            />
+            <Flex boxShadow={"lg"} borderRadius="50%">
+              <Avatar
+                name={props.videoDetails?.community?._id}
+                src={props.videoDetails?.community?.images?.avatar}
+              />
+            </Flex>
             <Flex fontSize={"xl"} px={2}>
               {props.videoDetails?.community?.username}
             </Flex>

@@ -45,44 +45,33 @@ const AllComments = ({ author, permlink, bgColor, colorMode }: Props) => {
     return <Box>Loading..</Box>;
   }
   console.log(isAuthenticated)
+
+
   return (
-    <>
-      <Box boxShadow={"bg"}>
-        <Box
-          style={{
-            opacity: !isAuthenticated?.authenticated ? 0.05 : 1,
-            pointerEvents: !isAuthenticated?.authenticated ? "none" : "auto",
-          }}
-          position={"relative"}
-        >
-          <Flex>
-            <h2>Comments</h2>
-          </Flex>
-          <Box>
-            <CommentParenting
-              bgColor={bgColor}
-              colorMode={colorMode}
-              author={author}
-              permlink={permlink}
-            />
-          </Box>
-          <Box maxHeight={"2000px"} overflow="hidden" position={"relative"}>
-            <Box padding={"5px"} paddingTop="25px" zIndex={2}>
-              <Comments comments={commentsData} parentIndex={0} depth={0} />
-            </Box>
-          </Box>
-        </Box>
-        {!isAuthenticated?.authenticated && (
-          <Box position={"absolute"} top={"30%"} left="35%" opacity={1}>
-            <Link href="/auth/modals">
-              <Button colorScheme={"blue"} py={3}>
-                Sign in to see the comments!
-              </Button>
-            </Link>
-          </Box>
-        )}
+    <Box>
+      <Flex fontFamily={"system-ui"} >
+        <h3>Comments</h3>
+      </Flex>
+      <Box>
+        <CommentParenting
+          bgColor={bgColor}
+          colorMode={colorMode}
+          author={author}
+          permlink={permlink}
+        />
       </Box>
-    </>
+      <Box maxHeight={"2000px"} overflow="hidden" position={"relative"}>
+        <Box padding={"5px"} paddingTop="25px" zIndex={2}>
+          <Comments
+            comments={commentsData}
+            parentIndex={0}
+            depth={0}
+            author={author}
+            permlink={permlink}
+          />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

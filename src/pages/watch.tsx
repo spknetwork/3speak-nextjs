@@ -1,5 +1,4 @@
-0//TODO: Add writeQuery graphql for the optimistic UI
-
+0; //TODO: Add writeQuery graphql for the optimistic UI
 
 import Video from "@/components/watch/video/Video";
 
@@ -34,12 +33,11 @@ import {
   GET_VIDEO,
   GET_VIDEO_DETAILS,
 } from "@/graphql/queries";
-import { SpkVideoInterface, VideoDetails, VideoInterface } from "types";
+import { VideoDetails } from "types";
 import { useRouter } from "next/router";
 import { useAppStore } from "@/lib/store";
 import Suggestions from "@/components/suggestions/Suggestions";
 import { InfinitySpin } from "react-loader-spinner";
-import CommentParenting from "@/components/watch/Comment/CommentParenting";
 
 export default function Watch() {
   const { colorMode } = useColorMode();
@@ -116,7 +114,7 @@ export default function Watch() {
     }
     const day = String(date.getDate()).padStart(2, "0");
 
-    return `${formattedMonth} ${day}, ${year}`; 
+    return `${formattedMonth} ${day}, ${year}`;
   };
 
   return (
@@ -152,7 +150,7 @@ export default function Watch() {
                 </Box>
                 <Box>
                   <Flex flexDirection={"column"} bgColor={bgColor}>
-                    <Box bgColor={bgColor}>
+                    <Box bgColor={bgColor} fontFamily={"system-ui"}>
                       <Title getVideo={videoDetails} colorMode={colorMode} />
                       <Tags
                         videoDetails={videoDetails}
@@ -161,7 +159,13 @@ export default function Watch() {
                       />
                     </Box>
                     <Flex>
-                      <Text>{dateFormatting(videoDetails?.created_at)}</Text>
+                      <Text
+                        fontSize={"14px"}
+                        fontFamily={"system-ui"}
+                        fontWeight={"bold"}
+                      >
+                        Published: {dateFormatting(videoDetails?.created_at)}
+                      </Text>
                     </Flex>
                     <Flex
                       justifyContent={"space-between"}
@@ -251,6 +255,5 @@ export default function Watch() {
   );
 }
 function dateFormatting(created_at: string): import("react").ReactNode {
-    throw new Error("Function not implemented.");
+  throw new Error("Function not implemented.");
 }
-

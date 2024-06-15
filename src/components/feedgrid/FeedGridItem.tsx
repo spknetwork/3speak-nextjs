@@ -93,7 +93,7 @@ const FeedGridItem = ({ video }: Props) => {
               left="5px"
               fontSize="11px"
               fontWeight={"500"}
-            background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
+              background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
               borderRadius="2px"
               paddingLeft={"4px"}
               paddingRight={"4px"}
@@ -107,7 +107,7 @@ const FeedGridItem = ({ video }: Props) => {
             <Box
               className="props"
               display={"flex"}
-              justifyContent="center"
+              justifyContent="center"   
               alignItems={"center"}
               position={"absolute"}
               bottom="5px"
@@ -151,13 +151,13 @@ const FeedGridItem = ({ video }: Props) => {
             </Box>
           </Box>
         )}
-        <Box height="13em !important" width="100% !important">
+        <Box  width={"auto"}  aspectRatio={16/9}>
           <Image
-            height="13em !important"
             width="100% !important"
             borderRadius={"10px"}
-            objectFit="cover"
+            objectFit="contain"
             alt="test"
+            aspectRatio={16/9}
             src={`https://images.hive.blog/320x0/${
               video.spkvideo?.thumbnail_url ?? ""
             }`}
