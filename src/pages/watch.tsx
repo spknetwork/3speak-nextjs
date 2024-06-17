@@ -1,7 +1,5 @@
-0; //TODO: Add writeQuery graphql for the optimistic UI
-
-import Video from "@/components/watch/video/Video";
-
+ //TODO: Add writeQuery graphql for the optimistic UI
+ //TODO: make the hashtags in chips
 import {
   Box,
   Flex,

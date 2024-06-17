@@ -11,8 +11,6 @@ const Footer = () => {
   return (
     <Box w={"full"}>
       <Box
-        padding="5px"
-        marginBottom={"10px"}
         paddingTop={"10px"}
         marginTop={"auto"}
       >
@@ -20,10 +18,10 @@ const Footer = () => {
           paddingX={"15px"}
           marginX={"auto"}
           maxWidth="1140px"
-          width={"100%"}
+          width={"auto"}
           margin="auto"
         >
-          <Flex width={"100%"} flexWrap="wrap">
+          <Flex width={"100%"} flexWrap="wrap" justifyContent={"space-between"}>
             <Box
               css={css`
                 @media (max-width: 768px) {
@@ -65,7 +63,7 @@ const Footer = () => {
                 </Flex>
               </Link>
               <Link href="#">
-                <Flex alignItems={"center"}>
+                <Flex w="full" alignItems={"center"}>
                   <BiGlobe />
                   <Text fontWeight={"bold"} margin={"0px"}>
                     3speak.tv
@@ -73,68 +71,33 @@ const Footer = () => {
                 </Flex>
               </Link>
             </Box>
-            <Box
-              css={css`
-                @media (max-width: 768px) {
-                  flex: 0 0 44%;
-                  max-width: 44%;
-                  padding: 0px 20px;
-                }
+              <Box
+                css={css`
+                  @media (max-width: 768px) {
+                    flex: 0 0 44%;
+                    max-width: 44%;
+                  }
 
-                @media (min-width: 769px) {
-                  flex: 0 0 25%;
-                  max-width: 25%;
-                  padding: 0px 20px;
-                }
-              `}
-            >
-              <Text fontWeight={"bold"} margin={"0px"} marginBottom="20px">
-                Company
-              </Text>
-              {FOOTER_TITLE.map((footer: any, index: number) => {
-                return (
-                  <Link key={index} href="#">
-                    <Text fontWeight={"500"} margin={"0px"}>
-                      {footer.name}
-                    </Text>
-                  </Link>
-                );
-              })}
-            </Box>
-            <Box
-              css={css`
-                @media (max-width: 768px) {
-                  flex: 0 0 44%;
-                  max-width: 44%;
-                  padding: 0px 20px;
-                  padding-top: 5px;
-                }
-
-                @media (min-width: 769px) {
-                  flex: 0 0 25%;
-                  max-width: 25%;
-                  padding: 0px 20px;
-                }
-              `}
-            >
-              <Image
-                loader={() =>
-                  `${
-                    colorMode == "dark"
-                      ? "/main_logo_light.svg"
-                      : "/main_logo.svg"
-                  }`
-                }
-                src={
-                  colorMode == "dark"
-                    ? "/main_logo_light.svg"
-                    : "/main_logo.svg"
-                }
-                alt="3speak logo"
-                width={200}
-                height={100}
-              />
-            </Box>
+                  @media (min-width: 769px) {
+                    flex: 0 0 25%;
+                    max-width: 25%;
+                  }
+                `}
+                pt={12}
+              >
+                <Text fontWeight={"bold"} margin={"0px"}>
+                  Company
+                </Text>
+                {FOOTER_TITLE.map((footer: any, index: number) => {
+                  return (
+                    <Link key={index} href="#">
+                      <Text fontWeight={"500"} margin={"0px"}>
+                        {footer.name}
+                      </Text>
+                    </Link>
+                  );
+                })}
+              </Box>
           </Flex>
         </Box>
       </Box>

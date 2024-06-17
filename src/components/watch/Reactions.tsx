@@ -94,7 +94,7 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
       <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
         <Tooltip label={authenticated ? "" : "You need to login!"}>
           <Flex
-            cursor={authenticated ? "pointer" : "not-allowed"}
+            cursor={!authenticated ? "pointer" : "not-allowed"}
             onClick={handleDisLikes}
           >
             {isDisLiked ? <FaThumbsDown /> : <FaRegThumbsDown />}

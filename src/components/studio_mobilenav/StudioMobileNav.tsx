@@ -218,7 +218,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   access safe and decentralized.
                 </Text>
               </Box>
-              <Box mx="auto" maxWidth="9rem">
+              <Box mx="auto" height="auto" maxWidth="9rem">
                 <Image
                   loader={() =>
                     `https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png`
@@ -226,6 +226,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
                   alt="3speak logo"
                   width="100%"
+                  height="auto"
                 />
               </Box>
               <form>

@@ -77,8 +77,8 @@ const SidebarContent = ({
             <Image
               src="/main_logo.svg"
               alt="3speak logo"
-              width={100}
-              height={100}
+              width={"auto"}
+              height={"auto"}
             />
           </Box>
         </Flex>

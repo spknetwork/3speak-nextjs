@@ -57,6 +57,7 @@ function generateProofOfPayload() {
 async function startUpload(video_id, upload_id) {
   return await new Promise((resolve, reject) => {
     const file = "./test.mp4";
+
     const data = fs.readFileSync(file);
     const upload = new tus.Upload(data, {
       endpoint: UPLOAD_URL,
@@ -93,8 +94,8 @@ async function start() {
       username: "piyush0409",
       network: "hive",
       authority_type: "posting",
-      proof_payload: pop[1],
       proof: pop[0],
+      proof_payload: pop[1],
     }
   );
   console.log(dataLogin);
