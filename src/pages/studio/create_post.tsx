@@ -751,7 +751,7 @@ const CreatePost: React.FC = () => {
                             height="100%"
                             justifyContent="center"
                             alignItems={"center"}
-                            border={"1px solid black"}
+                            // border={"1px solid black"}
                             padding="20px"
                             paddingY={"40px"}
                             backgroundColor={bgColor}
@@ -916,7 +916,6 @@ const CreatePost: React.FC = () => {
                                   <Image
                                     src={selectedFile.previewUrl}
                                     alt="Preview"
-                                    // className="preview"
                                   />
                                 ) : (
                                   <Box position={"absolute"}>

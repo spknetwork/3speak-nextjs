@@ -29,6 +29,8 @@ import {
   SpaceProps,
   textAlign,
   TextAlignProps,
+  Theme as StyledTheme,
+  TLengthStyledSystem,
   zIndex,
   ZIndexProps,
 } from "styled-system";
@@ -50,7 +52,7 @@ const boxProps = compose(
   textAlign
 );
 
-export interface BoxProps<T>
+export interface BoxProps<T extends StyledTheme<TLengthStyledSystem>>
   extends BorderProps,
     ColorProps,
     PositionProps<T>,

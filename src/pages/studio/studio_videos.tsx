@@ -1,4 +1,5 @@
 //TODO: make the delete button work
+//TODO: fix this page on the dark mode
 import React, { ReactNode, useEffect, useState } from "react";
 import { UploadedVideoData } from "@/data/UploadedVideoData";
 import {

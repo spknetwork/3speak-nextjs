@@ -1,5 +1,5 @@
-//TODO: 1st problem is that we couldnt collapse the reactions of comment 
-//TODO: 2nd problem is that we are getting the reply as a parent of reply to the child 
+//TODO: 1st problem is that we couldnt collapse the reactions of comment
+//TODO: 2nd discuss the behaviour for comments 
 import CustomMarkdown from "@/helper/CustomMarkdown";
 import {
   Avatar,
@@ -32,17 +32,19 @@ const SingleComment = ({
   depth,
   defaultIsCollapsed,
   author,
-  permlink
+  permlink,
 }: Props) => {
   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
 
   const [isCollapsed, setIsCollapsed] = useState(defaultIsCollapsed);
 
-
-
   return (
-    <Box key={comment?.permlink} marginLeft={`${depth * 28}px`}>
+    <Box
+      key={comment?.permlink}
+      marginLeft={`${depth * 28}px`}
+      position={"relative"}
+    >
       <Box
         background="transparent"
         borderRadius={"4px"}
@@ -54,6 +56,17 @@ const SingleComment = ({
         zIndex={1}
         fontFamily={"system-ui"}
       >
+        {depth != 0 && (
+          <Box
+            backgroundColor="#edeff1"
+            height={18}
+            width={"5px"}
+            position={"absolute"}
+            top={-2}
+            left={0.5}
+            transform="rotate(145deg)"
+          ></Box>
+        )}
         <Box
           display={"block"}
           position="absolute"
@@ -66,17 +79,19 @@ const SingleComment = ({
           backgroundColor="#edeff1"
           backgroundClip={"padding-box"}
         >
-          {isCollapsed ? (
-            <Box position={"absolute"} top={3} left={-1} cursor={"pointer"}>
-              <CiCirclePlus onClick={() => setIsCollapsed(false)} />
-            </Box>
-          ) : (
-            <Box position={"absolute"} top={3} left={-1} cursor={"pointer"}>
-              <CiCircleMinus onClick={() => setIsCollapsed(true)} />
-            </Box>
-          )}
+          <Box position={"relative"}>
+            {/* How to put two conditions here  */}
+            {isCollapsed ? (
+              <Box  cursor={"pointer"}>
+                <CiCirclePlus onClick={() => setIsCollapsed(false)} />
+              </Box>
+            ) : (
+              <Box  cursor={"pointer"}>
+                <CiCircleMinus onClick={() => setIsCollapsed(true)} />
+              </Box>
+            )}
+          </Box>
         </Box>
-        {depth != 0 && <Box backgroundColor="#edeff1" height={12} width={2}></Box>}
         <Box alignSelf={"flex-start"}>
           <Avatar
             name={comment.author?.profile?.name}
@@ -84,13 +99,13 @@ const SingleComment = ({
           />
         </Box>
         <Box
-          marginLeft={"8px"}
+          mt={2}
+          ml={"4px"}
           borderRadius="4px"
           border={"1px solid transparent"}
           boxSizing="border-box"
           maxWidth={"800px"}
           width="calc(100% - 56px)"
-          padding={"0 20px"}
           paddingLeft="0px"
           alignSelf="flex-start"
         >
