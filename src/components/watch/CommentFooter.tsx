@@ -128,7 +128,7 @@ const CommentFooter = (props: Props) => {
 
   //function for handling the add comments
   async function handleAddCommentFunc() {
-    handleAddComment(props.author, props.permlink, inputValue);
+    handleAddComment(props.author, props.permlink, inputValue, props.commentId);
     setInputValue("");
   }
 
@@ -295,7 +295,7 @@ const CommentFooter = (props: Props) => {
                     top={450 + 120 + 162 + 240 + 200 + emojiPosition.y}
                     left={emojiPosition.x - 12}
                   >
-                    <Button onClick={() => setShowEmoji(!showEmoji)}>
+                    <Button onClick={() => setShowEmoji(!showEmoji)} >
                       <MdCancel />
                     </Button>
                     <EmojiPicker onEmojiClick={onEmojiClick} />

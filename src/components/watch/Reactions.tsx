@@ -1,5 +1,4 @@
-//TODO: downvotes and views field not available
-//TODO: make the UI optimistic
+//TODO: cursor not allowed  
 import { ViewIcon } from "@chakra-ui/icons";
 import { Button, Flex, Text, Tooltip } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -19,7 +18,8 @@ type Props = {
 
 const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
 
-  const {authenticated} = useAuth();
+  const {authenticated} = useAuth();  //true
+
 
   const [likes, setLikes] = useState<number>(getVideo?.stats?.num_votes | 0);
   const [isLiked, setIsLiked] = useState<boolean>(false);
@@ -52,7 +52,7 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
 
   function handleDisLikes() {
     if(!authenticated){
-        return null
+        return 
     }
     if (!isDisLiked) {
       setDislikes(Dislikes - 1);
@@ -94,7 +94,7 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
       <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
         <Tooltip label={authenticated ? "" : "You need to login!"}>
           <Flex
-            cursor={!authenticated ? "pointer" : "not-allowed"}
+            cursor={authenticated ? "pointer" : "not-allowed"}
             onClick={handleDisLikes}
           >
             {isDisLiked ? <FaThumbsDown /> : <FaRegThumbsDown />}

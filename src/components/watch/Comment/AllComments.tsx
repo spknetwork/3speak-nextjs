@@ -43,19 +43,20 @@ const AllComments = ({ author, permlink, bgColor, colorMode }: Props) => {
     replies.forEach((reply: CommentInterface) => {
       allReplies.push(reply);
       if (reply.children) {
-        allReplies = [...allReplies, ...getAllReplies(reply.children)];
-      }
+          allReplies = [...allReplies, ...getAllReplies(reply.children)];
+      }debugger
     });
     return allReplies;
   };
 
+  
   if (commentsData === undefined) {
-    return <Box>Loading..</Box>;
-  }
-  console.log(isAuthenticated);
-
-  return (
-    <Box>
+      return <Box>Loading..</Box>;
+    }
+    console.log(isAuthenticated);
+    
+    return (
+        <Box>
       <Flex fontFamily={"system-ui"}>
         <h3>Comments</h3>
       </Flex>

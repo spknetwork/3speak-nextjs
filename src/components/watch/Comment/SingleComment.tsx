@@ -1,3 +1,5 @@
+//TODO: 1st problem is that we couldnt collapse the reactions of comment 
+//TODO: 2nd problem is that we are getting the reply as a parent of reply to the child 
 import CustomMarkdown from "@/helper/CustomMarkdown";
 import {
   Avatar,
@@ -50,6 +52,7 @@ const SingleComment = ({
         padding="8px 0 0 8px"
         alignItems={"center"}
         zIndex={1}
+        fontFamily={"system-ui"}
       >
         <Box
           display={"block"}
@@ -73,6 +76,7 @@ const SingleComment = ({
             </Box>
           )}
         </Box>
+        {depth != 0 && <Box backgroundColor="#edeff1" height={12} width={2}></Box>}
         <Box alignSelf={"flex-start"}>
           <Avatar
             name={comment.author?.profile?.name}

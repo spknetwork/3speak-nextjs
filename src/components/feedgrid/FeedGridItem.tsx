@@ -22,6 +22,8 @@ import { InfinitySpin } from "react-loader-spinner";
 import { useColorMode } from "@chakra-ui/react";
 import { BsDot } from "react-icons/bs";
 import { Avatar } from "@chakra-ui/react";
+import { GET_PROFILE } from "@/graphql/queries";
+import { useQuery } from "@apollo/client";
 
 var toHHMMSS = (secs: number) => {
   var sec_num = parseInt(secs.toFixed(1), 10);
@@ -45,19 +47,25 @@ const redirect = (permlink: string, username: string) => {
   window.location.href = `/watch?v=${username}/${permlink}`;
 };
 
+
+
 const FeedGridItem = ({ video }: Props) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
 
+const getUserProfile = useQuery(GET_PROFILE, {
+    variables: { id: video?.author },
+  });
+  
   const [showDollarComponent, setShowDollarComponent] = useState(true);
-
   if (!video) {
-    return (
-      <Box justifyContent={"center"} alignItems={"center"} h="70vh" w={452}>
+      return (
+          <Box justifyContent={"center"} alignItems={"center"} h="70vh" w={452}>
         <InfinitySpin width="200" color="#6DC5D7" />
       </Box>
     );
-  }
+}
+
 
   const handleMouseOver = () => {
     setShowDollarComponent(false);
@@ -107,7 +115,7 @@ const FeedGridItem = ({ video }: Props) => {
             <Box
               className="props"
               display={"flex"}
-              justifyContent="center"   
+              justifyContent="center"
               alignItems={"center"}
               position={"absolute"}
               bottom="5px"
@@ -151,13 +159,13 @@ const FeedGridItem = ({ video }: Props) => {
             </Box>
           </Box>
         )}
-        <Box  width={"auto"}  aspectRatio={16/9}>
+        <Box width={"auto"} aspectRatio={16 / 9}>
           <Image
             width="100% !important"
             borderRadius={"10px"}
             objectFit="contain"
             alt="test"
-            aspectRatio={16/9}
+            aspectRatio={16 / 9}
             src={`https://images.hive.blog/320x0/${
               video.spkvideo?.thumbnail_url ?? ""
             }`}
@@ -175,7 +183,7 @@ const FeedGridItem = ({ video }: Props) => {
           permlink={`${video.permlink}`}
         />
         <Flex h={12} alignItems={"center"}>
-          <Avatar size={"sm"} mb={4} mr={2}/>
+          <Avatar size={"sm"} mb={4} mr={2} />
 
           <Name username={`${video?.author?.username ?? ""}`} />
           <Flex mb={3}>

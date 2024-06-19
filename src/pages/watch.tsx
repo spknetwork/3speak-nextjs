@@ -166,6 +166,7 @@ export default function Watch() {
                       </Text>
                     </Flex>
                     <Flex
+                      flexWrap={"wrap"}
                       justifyContent={"space-between"}
                       marginTop="1rem"
                       bgColor={bgColor}

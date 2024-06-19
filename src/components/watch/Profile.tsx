@@ -15,7 +15,7 @@ type Props = {
 const Profile = ({ author,  bgColor, colorMode }: Props) => {
   const router = useRouter();
 
-  const getUserProfile = useQuery(GET_PROFILE, {
+   const getUserProfile = useQuery(GET_PROFILE, {
     variables: { id: author },
   });
 
@@ -49,25 +49,29 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
     setFollowState((prevState) => (prevState === "follow" ? "Unfollow" : "follow"))
   }
   return (
-    //TODO: fix this css
     <Flex justifyContent={"space-between"}>
       <Box
         fontFamily={"system-ui"}
-        cursor={"pointer"}
         bg={bgColor}
         py={4}
         color={colorMode === "dark" ? "white" : "black"}
-        onClick={() => gotoProfile()}
       >
         {/* src="https://bit.ly/dan-abramov" */}
         <Flex alignItems={"center"} gap={2}>
-            <Avatar
-              name={profile?.name || ""}
-              alignSelf={"start"}
-              src={profile?.images?.avatar}
-            />
+          <Avatar
+            cursor={"pointer"}
+            name={profile?.name || ""}
+            alignSelf={"start"}
+            src={profile?.images?.avatar}
+            onClick={() => gotoProfile()}
+          />
           <Flex flexDirection={"column"}>
-            <Link fontSize={"15px"} fontWeight={"bolder"}>
+            <Link
+              fontSize={"15px"}
+              fontWeight={"bolder"}
+              cursor={"pointer"}
+              onClick={() => gotoProfile()}
+            >
               {profile?.username}
             </Link>
             <Flex justifyContent={"center"} alignItems={"center"}>

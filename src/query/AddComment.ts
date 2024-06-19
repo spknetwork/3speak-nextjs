@@ -11,7 +11,8 @@ import { dataLength } from "ethers";
 export const handleAddComment = async (
   author: string,
   permlink: string,
-  body: string
+  body: string,
+  replyId?: string,
 ) => {
   if (typeof window === "undefined") {
     return;
@@ -69,15 +70,23 @@ export const handleAddComment = async (
   // console.log('user profile:')
   // console.log(getUserProfile?.name)
 
-  client.writeQuery({
-    query: GET_COMMENTS,
-    data: {
+  const newData = replyId ?
+    {
+      ...data,
+      socialPost:
+    addChildCommentToPostTree(replyId, newComment, data.socialPost),
+    }
+    : {
       ...data,
       socialPost: {
         ...data.socialPost,
         children: [newComment, ...data.socialPost.children],
       },
-    },
+    };
+
+  client.writeQuery({
+    query: GET_COMMENTS,
+    data: newData,
     variables: { author, permlink },
   });
 
@@ -85,3 +94,30 @@ export const handleAddComment = async (
 
   // TODO: refetch the comments once the comment is confirmed
 };
+
+function addChildCommentToPostTree(replyId: string, comment: CommentInterface, post: {permlink: string; children?: CommentInterface[]}) {
+  if (post.permlink === replyId) {
+    // found
+    return {...post, children: [comment, ...(post.children || [])]};
+  }
+
+  if (!post.children) {
+    return undefined;
+  }
+
+  //TODO: understand it whats going on!
+  for (let i = 0; i < post.children.length; i++) {
+    const child = post.children[i];
+    const updatedChild = addChildCommentToPostTree(replyId, comment, child);
+    if (updatedChild) {
+      const children = [...post.children];
+      children[i] = updatedChild as CommentInterface;
+      return {
+        ...post,
+        children,
+      };
+    }
+  }
+
+  return undefined;
+}
