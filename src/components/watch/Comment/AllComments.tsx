@@ -25,9 +25,10 @@ type Props = {
   colorMode: string;
 };
 
-const isAuthenticated = useAuth();
 
 const AllComments = ({ author, permlink, bgColor, colorMode }: Props) => {
+    
+    const isAuthenticated = useAuth();
   //call the comment query
   //TODO: .writeQuery {}
   const getComments = useQuery(GET_COMMENTS, {
@@ -44,7 +45,7 @@ const AllComments = ({ author, permlink, bgColor, colorMode }: Props) => {
       allReplies.push(reply);
       if (reply.children) {
           allReplies = [...allReplies, ...getAllReplies(reply.children)];
-      }debugger
+      }
     });
     return allReplies;
   };

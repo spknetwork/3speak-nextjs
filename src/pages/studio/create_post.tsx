@@ -345,12 +345,7 @@ const CreatePost: React.FC = () => {
     setSelectedThumbnail({ type: "uploaded", index: 0 });
   };
 
-  /**
-   * Function for uploading the thumbnail
-   * Its should be on the second step
-   * @param  {}
-   * @return {}
-   */
+
   const saveThumbnail = async () => {
     if (!createUploadInfo) {
       console.error("create upload info not defined");
@@ -487,9 +482,7 @@ const CreatePost: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
-  /**
-   * Import the useAuth hook
-   */
+
   const { authenticated } = useAuth() ?? {};
 
   const { allowAccess } = useAppStore();
