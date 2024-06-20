@@ -1,12 +1,8 @@
 //TODO: fixing this page
-
-/**
- * fetch the username from the get UserDetails data
- * added the redirection to the login page
- */
-
+"use client";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useAppStore } from "../../lib/store";
+import { useRouter } from "next/router";
 
 import {
   Box,
@@ -26,16 +22,13 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
-  
 } from "@chakra-ui/react";
 import { FaRegEye, FaUsers, FaVideo } from "react-icons/fa";
 import { News } from "@/lib/slices/createStudioSlice";
 import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
-import { api } from "@/utils/api";
-import { useRouter } from "next/router";
 import { useAuth } from "@/hooks/auth";
-import {useGetMyQuery} from "../../hooks/getUserDetails"
+import { useGetMyQuery } from "../../hooks/getUserDetails";
 
 export default function StudioPage({ children }: { children: ReactNode }) {
   const { news, video_count, followers_count, views_count } = useAppStore();
@@ -45,7 +38,6 @@ export default function StudioPage({ children }: { children: ReactNode }) {
   const [mViewsCount, setMViewsCount] = useState<Number>();
 
   const router = useRouter();
-
   const { authenticated } = useAuth() ?? {};
 
   const { colorMode } = useColorMode();
@@ -53,13 +45,6 @@ export default function StudioPage({ children }: { children: ReactNode }) {
 
   const getUserDetails = useGetMyQuery();
   const username = getUserDetails?.profile?.username;
-
-
-  useEffect(() => {
-    if (authenticated == false && authenticated != null) {
-      router.push("/auth/modals");
-    }
-  }, [authenticated, router]);
 
   // get the list of news
   useEffect(() => {
@@ -82,18 +67,13 @@ export default function StudioPage({ children }: { children: ReactNode }) {
   }, [views_count]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   if (authenticated === null) {
     return <Box>Loading...</Box>;
   }
 
   if (authenticated === false) {
     router.push("/auth/modals");
-    return (
-      <Alert status="error">
-        <AlertIcon />
-        <AlertTitle>Please login first!</AlertTitle>
-      </Alert>
-    );
   }
 
   return (

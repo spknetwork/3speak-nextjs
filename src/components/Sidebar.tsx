@@ -107,6 +107,7 @@ export const Sidebar = () => {
     onOpenModal2();
   };
   const router = useRouter();
+  
   const [communitiesPopup, setCommunitiesPopup] = useState(false);
   const [search, setSearch] = useState("");
   const { t } = useTranslation();
