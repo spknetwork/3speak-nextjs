@@ -16,7 +16,7 @@ import { BiDollar } from "react-icons/bi";
 import VideosTitle from "@/components/VideosTitle";
 import Name from "@/components/user/Name";
 import { Video } from "./Video";
-import { VideoInterface } from "types";
+import { ProfileInterface, VideoInterface } from "types";
 import moment from "moment";
 import { InfinitySpin } from "react-loader-spinner";
 import { useColorMode } from "@chakra-ui/react";
@@ -24,6 +24,7 @@ import { BsDot } from "react-icons/bs";
 import { Avatar } from "@chakra-ui/react";
 import { GET_PROFILE } from "@/graphql/queries";
 import { useQuery } from "@apollo/client";
+import { useGetMyQuery } from "@/hooks/getUserDetails";
 
 var toHHMMSS = (secs: number) => {
   var sec_num = parseInt(secs.toFixed(1), 10);
@@ -47,24 +48,20 @@ const redirect = (permlink: string, username: string) => {
   window.location.href = `/watch?v=${username}/${permlink}`;
 };
 
-
-
 const FeedGridItem = ({ video }: Props) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
 
-const getUserProfile = useQuery(GET_PROFILE, {
-    variables: { id: video?.author },
-  });
-  
+
   const [showDollarComponent, setShowDollarComponent] = useState(true);
   if (!video) {
-      return (
-          <Box justifyContent={"center"} alignItems={"center"} h="70vh" w={452}>
+    return (
+      <Box justifyContent={"center"} alignItems={"center"} h="70vh" w={452}>
         <InfinitySpin width="200" color="#6DC5D7" />
       </Box>
     );
-}
+  }
+
 
 
   const handleMouseOver = () => {
@@ -183,7 +180,7 @@ const getUserProfile = useQuery(GET_PROFILE, {
           permlink={`${video.permlink}`}
         />
         <Flex h={12} alignItems={"center"}>
-          <Avatar size={"sm"} mb={4} mr={2} />
+          <Avatar size={"sm"} mb={4} mr={2} src={video?.author?.profile?.images?.avatar} />
 
           <Name username={`${video?.author?.username ?? ""}`} />
           <Flex mb={3}>
@@ -192,15 +189,17 @@ const getUserProfile = useQuery(GET_PROFILE, {
           <Text as="p">{moment(video.created_at).fromNow()}</Text>
         </Flex>
       </Flex>
-      {/* <Flex >
-          {video.tags.slice(0, 3).map((tag, index) => (
-            <Flex key={index} px={1}>
-              <Text>{tag}</Text>
-            </Flex>
-          ))}
-        </Flex> */}
     </GridItem>
   );
 };
 
 export default FeedGridItem;
+
+
+
+
+
+
+
+
+

@@ -5,9 +5,9 @@ declare global {
 }
 
 export interface HiveLoginInterface {
-  username: string,
-  dateNow: string,
-  callback: Function
+  username: string;
+  dateNow: string;
+  callback: Function;
 }
 
 export interface Params {
@@ -21,37 +21,46 @@ export interface Account {
   type: string;
 }
 
-
 export interface VideoInterface {
-  author?: Author
+  author?: {
+    id: string;
+    profile: {
+      id: string;
+      name: string;
+      images: {
+        avatar: string;
+      };
+    };
+    username: string;
+  };
   body?: string;
   created_at: string;
   permlink: string;
   refs: [item: string];
   spkvideo?: SpkVideoInterface;
-  stats?: Stats
+  stats?: Stats;
   title: string;
   index?: number;
   tags: string[];
-  price?: number
+  price?: number;
 }
 
 export interface VideoDetails {
-    community: {
-        title: string;
-        images: {
-            avatar: string;
-            cover: string;
-        }
-        username: string;
-        _id: string
-    },
-    body: string;
-    created_at: string;
-    parent_permlink: string;
-    stats: Stats;
-    tags: string[];
+  community: {
     title: string;
+    images: {
+      avatar: string;
+      cover: string;
+    };
+    username: string;
+    _id: string;
+  };
+  body: string;
+  created_at: string;
+  parent_permlink: string;
+  stats: Stats;
+  tags: string[];
+  title: string;
 }
 
 export interface CommentInterface {
@@ -59,44 +68,53 @@ export interface CommentInterface {
     profile: {
       images: {
         avatar: string;
-      }
+      };
       name: string;
-    }
-  }
+    };
+  };
   body: string;
-  children: CommentInterface[]
+  children: CommentInterface[];
   permlink: string;
 }
 
+export interface HiveProfile {
+  id: string;
+  name: string;
+  images: {
+    avatar: string;
+  };
+}
+
 export interface Author {
-    username: string;
+  id: string;
+  profile: HiveProfile;
+  username: string;
 }
 export interface Stats {
-    //TODO: there are no upvotes and downvotes for now
-    num_comments: number;
-    num_votes: number;
-    total_hive_reward: number
+  //TODO: there are no upvotes and downvotes for now
+  num_comments: number;
+  num_votes: number;
+  total_hive_reward: number;
 }
 
 export interface UsernameInterface {
   username: string;
 }
 export interface SocialFeedInterface {
-  socialFeed: SocialFeedItemInterface
+  socialFeed: SocialFeedItemInterface;
 }
 export interface SocialFeedItemInterface {
-  item : SocialFeedItemsInterface[]
+  item: SocialFeedItemsInterface[];
 }
 export interface SocialFeedItemsInterface {
   body?: string;
   created_at: string;
   title?: string;
-  spkvideo?:SpkVideoInterface
-
+  spkvideo?: SpkVideoInterface;
 }
 
 export interface SpkVideoInterface {
-  body?:string;
+  body?: string;
   duration?: number;
   height?: number;
   is_short?: boolean;
@@ -106,24 +124,24 @@ export interface SpkVideoInterface {
 }
 
 export interface UserInterface {
-  profile: ProfileInterface
+  profile: ProfileInterface;
 }
-export interface ProfileImagesInterface{
-  avatar: string,
-  cover: string,
+export interface ProfileImagesInterface {
+  avatar: string;
+  cover: string;
 }
 
 export interface ProfileInterface {
-  about?: string,
-  did?: string,
-  images?: ProfileImagesInterface,
-  id?: string,
-  json_metadata?: string,
-  location?: string,
-  name?: string,
-  src?: string,
-  username?: string,
-  website?: string,
+  about?: string;
+  did?: string;
+  images?: ProfileImagesInterface;
+  id?: string;
+  json_metadata?: string;
+  location?: string;
+  name?: string;
+  src?: string;
+  username?: string;
+  website?: string;
 }
 
-export {}
+export {};

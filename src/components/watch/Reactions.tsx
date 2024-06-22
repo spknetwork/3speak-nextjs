@@ -33,27 +33,25 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
  
   function handleLikes() {
     if(!authenticated){
-        return
-    }
-    if (!isLiked) {
-      setLikes(likes + 1);
-      setIsLiked(!isLiked);
+        return null
+    }else {
+      if (!isLiked) {
+        setLikes(likes + 1);
+        setIsLiked(!isLiked);
 
-      if(isDisLiked){
-        setDisLiked(false);
-        setDislikes(prev => prev + 1)
+        if (isDisLiked) {
+          setDisLiked(false);
+          setDislikes((prev) => prev + 1);
+        }
       }
-    }
-    if (isLiked) {
-      setLikes(likes - 1);
-      setIsLiked(!isLiked);
+      if (isLiked) {
+        setLikes(likes - 1);
+        setIsLiked(!isLiked);
+      }
     }
   }
 
   function handleDisLikes() {
-    if(!authenticated){
-        return 
-    }
     if (!isDisLiked) {
       setDislikes(Dislikes - 1);
       setDisLiked(!isDisLiked);
@@ -91,11 +89,13 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
           </Text>
         )}
       </Flex>
+      {}
+      {/* TODO: make this issue */}
       <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
         <Tooltip label={authenticated ? "" : "You need to login!"}>
           <Flex
             cursor={authenticated ? "pointer" : "not-allowed"}
-            onClick={handleDisLikes}
+            onClick={authenticated ? handleDisLikes : () => {}}
           >
             {isDisLiked ? <FaThumbsDown /> : <FaRegThumbsDown />}
           </Flex>

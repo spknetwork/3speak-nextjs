@@ -78,20 +78,23 @@ const SingleComment = ({
           borderRight={"4px solid transparent"}
           backgroundColor="#edeff1"
           backgroundClip={"padding-box"}
-        >
-          <Box position={"relative"}>
-            {/* How to put two conditions here  */}
-            {isCollapsed ? (
-              <Box  cursor={"pointer"}>
-                <CiCirclePlus onClick={() => setIsCollapsed(false)} />
-              </Box>
-            ) : (
-              <Box  cursor={"pointer"}>
-                <CiCircleMinus onClick={() => setIsCollapsed(true)} />
-              </Box>
-            )}
-          </Box>
-        </Box>
+        ></Box>
+        {depth != 0 && (
+          <>
+            <Box position={"absolute"} top={-2} left={-1.5} cursor={"pointer"}>
+              {/* How to put two conditions here  */}
+              {isCollapsed ? (
+                <Box>
+                  <CiCirclePlus onClick={() => setIsCollapsed(false)} />
+                </Box>
+              ) : (
+                <Box>
+                  <CiCircleMinus onClick={() => setIsCollapsed(true)} />
+                </Box>
+              )}
+            </Box>
+          </>
+        )}
         <Box alignSelf={"flex-start"}>
           <Avatar
             name={comment.author?.profile?.name}

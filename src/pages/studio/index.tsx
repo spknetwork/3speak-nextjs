@@ -379,7 +379,7 @@ export default function StudioPage({ children }: { children: ReactNode }) {
                                 {news.title}
                               </Text>
                             </Link>
-                            <Text textAlign={"left"} as={"small"}>
+                            <Text textAlign={"left"} fontSize={"md"}>
                               {news.description}
                             </Text>
                           </CardBody>

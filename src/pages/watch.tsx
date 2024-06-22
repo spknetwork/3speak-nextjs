@@ -56,6 +56,8 @@ export default function Watch() {
     variables: { author: author, permlink: permlink },
   });
 
+  console.log("Get suggestions feed",getSuggestionFeed)
+
   //call the query video details here
   const getVideoDetails = useQuery(GET_VIDEO_DETAILS, {
     variables: { author, permlink },
@@ -243,9 +245,11 @@ export default function Watch() {
             </Flex>
           ) : (
             <Suggestions
-              videos={getSuggestionFeed.data.relatedFeed.items}
+              videos={getSuggestionFeed.data.relatedFeed?.items}
               bgColor={bgColor}
               colorMode={colorMode}
+              author={author}
+              permlink={permlink}
             />
           )}
         </Flex>

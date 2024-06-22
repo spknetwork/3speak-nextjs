@@ -37,9 +37,21 @@ export const GET_VIDEO = gql`
   }
 `;
 export const GET_VIDEO_DETAILS = gql`
-  query VideoDetails($permlink: String, $author: String) {
+query VideoDetails($permlink: String, $author: String) {
     socialPost(author: $author, permlink: $permlink) {
       ... on HivePost {
+        author {
+         id
+          profile {
+          ... on HiveProfile {
+            id
+            name
+            images {
+              avatar
+            }
+          }
+        }
+        }
         body
         stats {
           num_comments
@@ -54,7 +66,7 @@ export const GET_VIDEO_DETAILS = gql`
       }
     }
   }
-`;
+`
 
 export const GET_COMMENTS = gql`
   query CommentsInfo($permlink: String = "", $author: String = "") {
@@ -114,7 +126,7 @@ export const GET_LEADER_BOARD = gql`
 
 export const GET_RELATED_FEED = gql`
   query MyQuery {
-    relatedFeed {
+    relatedFeed {   
       items {
         body
         children {
@@ -252,6 +264,16 @@ export const GET_TRENDING_FEED = gql`
           permlink
           spkvideo
           author {
+            id
+            profile {
+              ... on HiveProfile {
+                id
+                name
+                images {
+                  avatar
+                }
+              }
+            }
             username
           }
           body
@@ -290,7 +312,15 @@ export const GET_SOCIAL_POST = gql`
         parent_permlink
         author {
           id
-          profile
+          profile {
+            ... on HiveProfile {
+              id
+              name
+              images {
+                avatar
+              }
+            }
+          }
           username
         }
         json_metadata {
@@ -541,6 +571,16 @@ export const GET_RELATED = gql`
           permlink
           spkvideo
           author {
+            id
+            profile {
+              ... on HiveProfile {
+                id
+                name
+                images {
+                  avatar
+                }
+              }
+            }
             username
           }
           body
@@ -597,6 +637,16 @@ export const NEW_CONTENT = gql`
           permlink
           spkvideo
           author {
+            id
+            profile {
+              ... on HiveProfile {
+                id
+                name
+                images {
+                  avatar
+                }
+              }
+            }
             username
           }
           body
