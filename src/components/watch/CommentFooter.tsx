@@ -1,5 +1,6 @@
 //TODO: you cant really give a reply to the reply if that particualar transaction has not been confirmed
 
+
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import {
   Flex,
@@ -130,6 +131,7 @@ const CommentFooter = (props: Props) => {
   async function handleAddCommentFunc() {
     handleAddComment(props.author, props.permlink, inputValue, props.commentId);
     setInputValue("");
+    hideComment();
   }
 
 
@@ -242,7 +244,7 @@ const CommentFooter = (props: Props) => {
           borderRadius="md"
           position={"relative"}
           h={"120px"}
-          w="95%"
+          w="90%"
           margin="auto"
         >
           <Box position={"absolute"} top={2} left={-10}>

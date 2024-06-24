@@ -1,5 +1,3 @@
-//TODO: parent index comment should be collapsed the content and the footer
-
 import CustomMarkdown from "@/helper/CustomMarkdown";
 import {
   Avatar,
@@ -25,7 +23,7 @@ type Props = {
   permlink: string;
 };
 
-const SingleComment = ({
+const Alt = ({
   comment,
   parentIndex,
   depth,
@@ -38,14 +36,11 @@ const SingleComment = ({
 
   const [isCollapsed, setIsCollapsed] = useState(defaultIsCollapsed);
 
-  console.log(isCollapsed)
-
   return (
     <Box
       key={comment?.permlink}
       marginLeft={`${depth * 28}px`}
       position={"relative"}
-      p={2}
     >
       <Box
         background="transparent"
@@ -58,47 +53,40 @@ const SingleComment = ({
         zIndex={1}
         fontFamily={"system-ui"}
       >
-        {parentIndex === 0 && depth != 0 && (
+        {depth != 0 && (
           <Box
             backgroundColor="#edeff1"
             height={18}
             width={"5px"}
             position={"absolute"}
-            top={2}
-            left={0}
-            transform="rotate(90deg)"
+            top={-2}
+            left={0.5}
+            transform="rotate(145deg)"
           ></Box>
         )}
-        {/* This is the line  */}
         <Box
-          display="block"
+          display={"block"}
           position="absolute"
-          top="45px"
+          top={"45px"}
           left="21px"
-          width="12px"
-          height="calc(100% - 20px)"
+          width={"12px"}
+          height={"calc(100% - 50px)"}
           borderLeft="4px solid transparent"
           borderRight={"4px solid transparent"}
-          backgroundColor="gray.200"
-          _hover={{backgroundColor:"blue.200"}}
+          backgroundColor="#edeff1"
           backgroundClip={"padding-box"}
-          cursor={"pointer"}
-          onClick={() => setIsCollapsed(!isCollapsed)}
         ></Box>
-
-        {isCollapsed && depth != 0 && (
-          <Box
-            position={"absolute"}
-            top={14}
-            left={6}
-            fontSize={"xl"}
-            cursor={"pointer"}
-            onClick={() => setIsCollapsed(false)}
-          >
-            <CiCirclePlus />
-          </Box>
+        {depth != 0 && (
+          <>
+            <Box position={"absolute"} top={-2} left={-1.5} cursor={"pointer"}>
+              {isCollapsed ? (
+                <CiCirclePlus onClick={() => setIsCollapsed(false)} />
+              ) : (
+                <CiCircleMinus onClick={() => setIsCollapsed(true)} />
+              )}
+            </Box>
+          </>
         )}
-
         <Box alignSelf={"flex-start"}>
           <Avatar
             name={comment.author?.profile?.name}
@@ -156,4 +144,4 @@ const SingleComment = ({
   );
 };
 
-export default SingleComment;
+export default Alt;

@@ -9,23 +9,24 @@ import SingleComment from './SingleComment';
 const Comments = ({
   comments,
   parentIndex,
-  depth = 1,
+  depth,
   author,
   permlink,
 }: {
   comments: CommentInterface[];
   parentIndex: number;
-  depth?: number;
+  depth: number;
   author: string;
   permlink: string;
 }) => {
   return (
+    //TODO: yhi kuch jhol krna padega
     <>
-      {comments.map((comment: CommentInterface) => (
+      {comments.map((comment: CommentInterface, index) => (
         <SingleComment
           key={comment.permlink}
           comment={comment}
-          parentIndex={parentIndex}
+          parentIndex={index}
           depth={depth}
           defaultIsCollapsed={false}
           author={author}
