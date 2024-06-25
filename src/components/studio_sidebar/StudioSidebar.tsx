@@ -68,7 +68,7 @@ const SidebarContent = ({
         <Flex justifyContent="center" alignItems={"center"} width="100%">
           <Box
             cursor={"pointer"}
-            onClick={() => router.push("/studio")}
+            onClick={() => router.push("/")}
             display={"flex"}
             justifyContent="center"
             alignItems={"center"}

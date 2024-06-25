@@ -23,6 +23,7 @@ export function SelectorImage({src, selected, select}: {src: string; selected: b
           ? "2px solid red"
           : undefined
       }
+      borderRadius={"xl"}
     >
       <Image
         objectFit={"cover"}

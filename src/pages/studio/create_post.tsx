@@ -1,7 +1,6 @@
 //TODO: test the uploading apis and check wether the data is published on chain or not
 //TODO: fetch the previous of the video that is in the draft
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import fs from "fs";
 import {
   Box,
   Flex,
@@ -35,7 +34,7 @@ import {
 } from "@rajesh896/video-thumbnails-generator";
 import { useTus } from "use-tus";
 import styles from "../../components/ProgressBar.module.css";
-
+import { IoCaretForwardSharp, IoCaretBackSharp } from "react-icons/io5";
 import {
   getMentionInputStyle,
   getMentionStyle,
@@ -640,7 +639,7 @@ const CreatePost: React.FC = () => {
         className="hellotesting"
         ml={{ base: 0, md: 60 }}
         p="4"
-        maxH={"50vh"}
+        height={"auto"}
       >
         {uploadingVideo && (
           <Flex
@@ -856,9 +855,10 @@ const CreatePost: React.FC = () => {
                               }
                             }}
                             size={"lg"}
-                            colorScheme="blue"
+                            colorScheme={"twitter"}
                           >
                             Next
+                            <IoCaretForwardSharp />
                           </Button>
                         )}
                         {/* )} */}
@@ -868,9 +868,9 @@ const CreatePost: React.FC = () => {
                 </CardBody>
               )}
               {steps == 1 && (
-                <CardBody backgroundColor={bgColor} minH={"75vh"}>
+                <CardBody backgroundColor={bgColor} h={"90vh"}>
                   <Box
-                    height={{ base: "auto", md: "auto", lg: "65vh" }}
+                    height={{ base: "auto", md: "auto", lg: "70vh" }}
                     width={"100%"}
                   >
                     <Flex
@@ -1183,13 +1183,15 @@ const CreatePost: React.FC = () => {
                       <Flex
                         justifyContent={"space-between"}
                         alignItems="center"
+                        mx={12}
                       >
                         <Button
                           disabled={savingDetails == true ? true : false}
                           onClick={() => setSteps(0)}
                           size={"lg"}
-                          colorScheme="blue"
+                          colorScheme="twitter"
                         >
+                          <IoCaretBackSharp />
                           Go Back
                         </Button>
                         <Button
@@ -1197,9 +1199,10 @@ const CreatePost: React.FC = () => {
                           disabled={savingDetails == true ? true : false}
                           onClick={handleStep1Complete}
                           size={"lg"}
-                          colorScheme="blue"
+                          colorScheme="twitter"
                         >
                           {savingDetails == true ? "Saving Details" : "Next"}
+                          <IoCaretForwardSharp />
                         </Button>
                       </Flex>
                     </Flex>
@@ -1208,7 +1211,7 @@ const CreatePost: React.FC = () => {
               )}
               {/* From here the new component will start */}
               {steps == 2 && (
-                <CardBody minH={"75vh"}>
+                <CardBody maxH={"90vh"}>
                   <Box
                     overflow="hidden"
                     height={{ base: "auto", md: "auto", lg: "70vh" }}
@@ -1221,7 +1224,7 @@ const CreatePost: React.FC = () => {
                       <Flex w={"50%"} flexDirection={"column"}>
                         {/* the result card will go here  */}
                         <Flex>
-                          <Card w="full" m={2}>
+                          <Card w="full" m={2} h={'60vh'}>
                             <Flex p={2}>
                               <InputGroup>
                                 <InputLeftElement pointerEvents="none">
@@ -1237,7 +1240,6 @@ const CreatePost: React.FC = () => {
                             <VStack
                               spacing={1}
                               overflowY={"auto"}
-                              maxHeight="500px"
                             >
                               {communityData
                                 .filter((item: any) => {
@@ -1263,24 +1265,27 @@ const CreatePost: React.FC = () => {
                     <Flex
                       justifyContent={"space-between"}
                       alignItems="center"
-                      pt={1}
+                      py={8}
                       px={4}
                     >
                       <Button
                         disabled={savingDetails == true ? true : false}
                         onClick={() => setSteps(1)}
                         size={"lg"}
-                        colorScheme="blue"
+                        colorScheme="twitter"
                       >
+                        <IoCaretBackSharp />
                         Go Back
                       </Button>
                       <Button
                         disabled={savingDetails == true ? true : false}
                         onClick={handleStep2Complete}
                         size={"lg"}
-                        colorScheme="blue"
+                        colorScheme="twitter"
                       >
+
                         Next
+                        <IoCaretForwardSharp />
                       </Button>
                     </Flex>
                   </Box>
@@ -1530,12 +1535,14 @@ const CreatePost: React.FC = () => {
                   </Box>
                 </CardBody>
               )}
-              <WizardSteps
-                currentStep={steps}
-                changeCurrentStep={changeCurrentStep}
-                bgColor={bgColor}
-                colorMode={colorMode}
-              />
+              <Box py={4}>
+                <WizardSteps
+                  currentStep={steps}
+                  changeCurrentStep={changeCurrentStep}
+                  bgColor={bgColor}
+                  colorMode={colorMode}
+                />
+              </Box>
             </Card>
           </Box>
         </Box>

@@ -26,7 +26,7 @@ const WizardSteps = ({
       marginTop="10px"
       height="auto"
       width="98%"
-      boxShadow={`0px 0px 1px 1px ${colorMode === "dark" ? "#3f444e" : "black"}`}
+      boxShadow={"0px 0px 4px gray"}
       >
       <Flex
         height="119px"
@@ -40,15 +40,16 @@ const WizardSteps = ({
             <Flex
               onClick={() => changeCurrentStep(index)}
               cursor="pointer"
-              border={currentStep === index ? '1px solid #fff' : '1px solid #000'}
+              border={currentStep === index ? '1px solid #7a7b7d' : '1px solid #7a7b7d'}
               color={currentStep === index ? '#fff' : '#000'}
               background={currentStep >= index ? '#1DA1F2' : '#fff'}
-              borderColor={currentStep >= index ? '#1DA1F2' : '#000'}
+              borderColor={currentStep >= index ? '#7a7b7d' : '#7a7b7d'}
               justifyContent="center"
               alignItems="center"
               borderRadius="50%"
               width="80px"
               height="60px"
+              boxShadow={"base"}
               >
               <Text margin="0px" fontWeight="bold">
                 {step}
@@ -56,12 +57,12 @@ const WizardSteps = ({
             </Flex>
             {index < steps.length - 1 && (
               <Flex
-                border={currentStep > index ? '1px solid #1DA1F2' : '1px solid black'}
+                border={currentStep > index ? '1px solid #1A94DA' : '1px solid #7a7b7d'}
                 borderRight="none"
                 borderLeft="none"
-                background={currentStep > index ? '#1DA1F2' : 'white'}
+                background={currentStep > index ? '#1A94DA' : 'white'}
                 width="25%"
-                height="3px"
+                height="5px"
                 />
                 )}
           </React.Fragment>
