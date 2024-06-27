@@ -145,7 +145,7 @@ export default function Watch() {
               >
                 {/* iska kala color overlap kr rha hai   */}
 
-                <Box>
+                <Box border={"1px"} borderRadius={"10px"}>
                   <VideoPlayer author={author} permlink={permlink} />
                 </Box>
                 <Box>

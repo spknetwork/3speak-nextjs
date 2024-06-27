@@ -81,6 +81,7 @@
     "react-mentions": "^4.4.10",
     "react-redux": "^8.0.2",
     "react-responsive": "^9.0.0-beta.8",
+    "react-tweet": "^3.2.1",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.0",
     "sass": "^1.58.3",

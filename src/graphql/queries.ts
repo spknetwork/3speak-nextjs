@@ -73,9 +73,13 @@ export const GET_COMMENTS = gql`
     socialPost(author: $author, permlink: $permlink) {
       ... on HivePost {
         children {
+          stats {
+            num_comments
+          }
           author {
             profile {
               ... on HiveProfile {
+                username
                 name
                 images {
                   avatar
@@ -85,20 +89,6 @@ export const GET_COMMENTS = gql`
           }
           body
           permlink
-          children {
-            author {
-              profile {
-                ... on HiveProfile {
-                  name
-                  images {
-                    avatar
-                  }
-                }
-              }
-            }
-            body
-            permlink
-          }
         }
       }
     }

@@ -57,10 +57,8 @@ import { TiPlus } from "react-icons/ti";
 import { useAuth } from "@/hooks/auth";
 import CommunityChip from "@/components/Create_POST/CommunityChip";
 
-import { Upload } from "tus-js-client";
 import { useQuery, QueryClient } from "@tanstack/react-query";
 import { SelectorImage } from "@/components/studio/SelectorImage";
-import { log } from "console";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -109,7 +107,7 @@ const base_mentions = [
 
 const CreatePost: React.FC = () => {
   const BASE_URL = "https://staging.3speak.tv";
-  const UPLOAD_URL = "http://127.0.0.1:1080";
+  const UPLOAD_URL = "https://staging.3speak.tv/tusd/files/";
 
   //setting a global for the hashtags
   const limitHashtags = 150;
@@ -165,6 +163,9 @@ const CreatePost: React.FC = () => {
   //tus use for upload
   const { upload, setUpload, isSuccess, error, remove } = useTus({
     autoStart: true,
+    uploadOptions:{
+        endpoint: UPLOAD_URL
+    }
   });
   /**
    * @param acceptedFiles
@@ -291,7 +292,7 @@ const CreatePost: React.FC = () => {
         const token = getAccessToken();
         console.log("token", token);
         setUpload(file, {
-          endpoint: `${UPLOAD_URL}/files`,
+        //   endpoint: `${UPLOAD_URL}`,
           metadata: {
             video_id: video_id,
             upload_id: upload_id,
@@ -462,6 +463,7 @@ const CreatePost: React.FC = () => {
     await publishVideo();
     setSavingDetails(false);
     // TODO take user somewhere when done
+     
   };
 
   const dropzoneOptions: DropzoneOptions = {

@@ -1,5 +1,10 @@
 //TODO: parent index comment should be collapsed the content and the footer
-
+//TOOD: show more num_comments replies
+//TODO: clicking on it we will call the query again (GET_COMMENTS) and pass the permlink and the author
+//TODO: show loading spinner at the loading state
+/**
+ * The author is the username of the author
+ */
 import CustomMarkdown from "@/helper/CustomMarkdown";
 import {
   Avatar,
