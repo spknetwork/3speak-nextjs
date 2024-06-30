@@ -18,6 +18,13 @@ export const handleAddComment = async (
     return;
   }
 
+  console.log("author", author);
+  console.log("permlink", permlink);
+  console.log("body", body);
+  console.log("replyId", replyId);
+
+  
+
   const user_id = window.localStorage.getItem("user_id");
 
   if (!user_id) {
@@ -61,14 +68,14 @@ export const handleAddComment = async (
 
   const pending = newComment.permlink.startsWith("pending");
 
-  // console.log('comment data:')
-  // console.log(data)
+  console.log('comment data:')
+  console.log(data)
 
-  // console.log('example comment:')
-  // console.log(data.socialPost.children[7])
+//   console.log('example comment:')
+//   console.log(data.socialPost.children[7])
 
-  // console.log('user profile:')
-  // console.log(getUserProfile?.name)
+  console.log('user profile:')
+  console.log(getUserProfile?.name)
 
   const newData = replyId ?
     {

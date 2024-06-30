@@ -136,7 +136,6 @@ const CommentFooter = (props: Props) => {
     hideComment();
   }
 
-
   //check for auth
   const { authenticated } = useAuth();
 

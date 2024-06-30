@@ -37,20 +37,20 @@ export const GET_VIDEO = gql`
   }
 `;
 export const GET_VIDEO_DETAILS = gql`
-query VideoDetails($permlink: String, $author: String) {
+  query VideoDetails($permlink: String, $author: String) {
     socialPost(author: $author, permlink: $permlink) {
       ... on HivePost {
         author {
-         id
+          id
           profile {
-          ... on HiveProfile {
-            id
-            name
-            images {
-              avatar
+            ... on HiveProfile {
+              id
+              name
+              images {
+                avatar
+              }
             }
           }
-        }
         }
         body
         stats {
@@ -66,7 +66,7 @@ query VideoDetails($permlink: String, $author: String) {
       }
     }
   }
-`
+`;
 
 export const GET_COMMENTS = gql`
   query CommentsInfo($permlink: String = "", $author: String = "") {
@@ -79,7 +79,6 @@ export const GET_COMMENTS = gql`
           author {
             profile {
               ... on HiveProfile {
-                username
                 name
                 images {
                   avatar
@@ -89,12 +88,25 @@ export const GET_COMMENTS = gql`
           }
           body
           permlink
+          children {
+            author {
+              profile {
+                ... on HiveProfile {
+                  name
+                  images {
+                    avatar
+                  }
+                }
+              }
+            }
+            body
+            permlink
+          }
         }
       }
     }
   }
 `;
-
 export const GET_LEADER_BOARD = gql`
   query MyQuery {
     leaderBoard {
@@ -116,7 +128,7 @@ export const GET_LEADER_BOARD = gql`
 
 export const GET_RELATED_FEED = gql`
   query MyQuery {
-    relatedFeed {   
+    relatedFeed {
       items {
         body
         children {

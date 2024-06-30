@@ -139,13 +139,15 @@ const SingleComment = ({
             <CommentFooter
               bgColor={bgColor}
               colorMode={colorMode}
-              commentId={comment?.permlink}
               author={author}
               permlink={permlink}
-            />
+              commentId={comment?.permlink}
+              />
           </Collapse>
         </Box>
       </Box>
+
+      {/* TODO: do something here  */}
       {!isCollapsed && comment.children && (
         <Collapse in={!isCollapsed} unmountOnExit>
           <Comments

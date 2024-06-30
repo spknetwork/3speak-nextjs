@@ -41,7 +41,7 @@ const AllComments = ({ author, permlink, bgColor, colorMode }: Props) => {
 
   const getAllReplies = (replies: CommentInterface[]): CommentInterface[] => {
     let allReplies: CommentInterface[] = [];
-    replies.forEach((reply: CommentInterface) => {
+    replies?.forEach((reply: CommentInterface) => {
       allReplies.push(reply);
       if (reply.children) {
           allReplies = [...allReplies, ...getAllReplies(reply.children)];
@@ -49,6 +49,8 @@ const AllComments = ({ author, permlink, bgColor, colorMode }: Props) => {
     });
     return allReplies;
   };
+
+  console.log("These are the all replie", getAllReplies(commentsData))
 
   
   if (commentsData === undefined) {

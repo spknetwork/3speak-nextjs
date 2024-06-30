@@ -1,5 +1,4 @@
- //TODO: Add writeQuery graphql for the optimistic UI
- //TODO: make the hashtags in chips
+
 import {
   Box,
   Flex,
@@ -145,7 +144,7 @@ export default function Watch() {
               >
                 {/* iska kala color overlap kr rha hai   */}
 
-                <Box border={"1px"} borderRadius={"10px"}>
+                <Box>
                   <VideoPlayer author={author} permlink={permlink} />
                 </Box>
                 <Box>
