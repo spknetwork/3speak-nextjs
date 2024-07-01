@@ -21,7 +21,12 @@ export function CommunityTile(props: Props) {
   }, []);
 
   return (
-    <Box w={300} p={2} m={2} boxShadow={props.colorMode == "dark" ? "0 0 1px black" : "0 0 1px grey"}>
+    <Box
+      w={300}
+      p={2}
+      m={2}
+      boxShadow={props.colorMode == "dark" ? "0 0 1px black" : "0 0 1px grey"}
+    >
       <a href={`/community/${props.reflink}`} className="font-weight-bold">
         <div
           className={`community-card channels-card shadow-sm ${
@@ -40,8 +45,8 @@ export function CommunityTile(props: Props) {
           >
             <Image
               alt="hive blog"
-              width="40px"
-              height="40px"
+              width="40"
+              height="40"
               style={{
                 width: "40px",
                 height: "40px",

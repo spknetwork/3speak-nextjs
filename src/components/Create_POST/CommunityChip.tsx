@@ -12,8 +12,10 @@ type Props = {
 const CommunityChip = (props: Props) => {
   //function for betterment of the reload
   const handleLoader: ImageLoader = ({ src, width, quality }) => {
-    const finalUrl = `https://images.hive.blog/u/${props.item.name}/avatar?size=icon&w=${width}&q=${quality || 75}`;
-    return finalUrl
+    const finalUrl = `https://images.hive.blog/u/${
+      props.item.name
+    }/avatar?size=icon&w=${width}&q=${quality || 75}`;
+    return finalUrl;
   };
   return (
     <Flex
@@ -22,15 +24,23 @@ const CommunityChip = (props: Props) => {
       boxShadow={`0.5px 0.5px 0.5px 0.5px ${
         props.colorMode === "dark" ? "#3f444e" : "black"
       }`}
-      _hover={props.colorMode === 'dark' ?  {backgroundColor: "#1a202c"} : {backgroundColor: "gray.200"}}
-      _active={props.colorMode === 'dark' ?  {backgroundColor: "#1a202c"} : {backgroundColor: "gray.200"}}
+      _hover={
+        props.colorMode === "dark"
+          ? { backgroundColor: "#1a202c" }
+          : { backgroundColor: "gray.200" }
+      }
+      _active={
+        props.colorMode === "dark"
+          ? { backgroundColor: "#1a202c" }
+          : { backgroundColor: "gray.200" }
+      }
       cursor="pointer"
       onClick={() => props.setCardData(props.item)}
     >
       <Image
         alt="hive blog"
-        width={"35px"}
-        height={"22px"}
+        width={"35"}
+        height={"22"}
         loader={handleLoader}
         src={
           "https://images.hive.blog/u/" + props.item.name + "/avatar?size=icon"

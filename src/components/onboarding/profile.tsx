@@ -121,7 +121,6 @@ const Profile = ({ currentStep, setCurrentStep }: Props) => {
               paddingTop={"10px"}
               margin="auto"
               height={"70vh"}
-
             >
               <Flex
                 flexDirection="column"
@@ -178,7 +177,7 @@ const Profile = ({ currentStep, setCurrentStep }: Props) => {
                     cursor="pointer"
                     borderRadius="50%"
                     border="1px solid"
-                    overflow="hidden" 
+                    overflow="hidden"
                     position="relative"
                   >
                     <input {...getInputPropsProfile()} />
@@ -187,8 +186,8 @@ const Profile = ({ currentStep, setCurrentStep }: Props) => {
                     {!selectedFileProfile && (
                       <Image
                         className={styles.my_Image}
-                        height="80px"
-                        width="80px"
+                        height="80"
+                        width="80"
                         alt="avatar"
                         src={"/images/avatar3.png"}
                       />
@@ -246,4 +245,3 @@ const Profile = ({ currentStep, setCurrentStep }: Props) => {
 };
 
 export default Profile;
-

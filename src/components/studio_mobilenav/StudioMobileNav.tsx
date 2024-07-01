@@ -225,8 +225,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   }
                   src="https://s3.eu-central-1.wasabisys.com/data.int/logo_player.png"
                   alt="3speak logo"
-                  width="100%"
-                  height="auto"
+                  // width="100%"
+                  // height="auto"
+                  // TODO fix this
                 />
               </Box>
               <form>
