@@ -12,10 +12,8 @@ import Image, { ImageLoader } from "next/image";
 import { CommunityResult } from "../../pages/studio/create_post";
 import { width } from "styled-system";
 
-
 const CommunityCard: React.FC<Partial<CommunityResult>> = (info) => {
-
-const myLoader: ImageLoader = ({width, quality}) => {
+  const myLoader: ImageLoader = ({ width, quality }) => {
     return `https://images.hive.blog/u/${
       info.name
     }/avatar?size=icon&w=${width}&q=${quality || 75}`;
@@ -37,12 +35,13 @@ const myLoader: ImageLoader = ({width, quality}) => {
       >
         <Image
           alt="hive blog"
-          width="120px"
-          height="120px"
+          width="120"
+          height="120"
           loader={myLoader}
           src={myLoader({
-              width: 120, quality: 75,
-              src: ""
+            width: 120,
+            quality: 75,
+            src: "",
           })}
         />
         <Box mx={[0, 4]} mt={[2, 0]}>
