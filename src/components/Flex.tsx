@@ -1,4 +1,4 @@
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import {
   compose,
   flexbox,
@@ -14,7 +14,9 @@ import { Theme } from "src/styles/theme";
 
 const flexProps = compose(flexbox, space);
 
-interface Props<T extends StyledTheme<TLengthStyledSystem>> extends FlexboxProps<T>, SpaceProps<T> {}
+interface Props<T extends StyledTheme<TLengthStyledSystem>>
+  extends FlexboxProps<T>,
+    SpaceProps<T> {}
 
 export const Flex = styled(Box)<Props<Theme>>`
   display: flex;
