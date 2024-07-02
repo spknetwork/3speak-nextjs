@@ -10,7 +10,7 @@ export const handleAddComment = async (
   permlink: string,
   body: string,
   parentAuthor: string,
-  parentPermlink: string,
+  parentPermlink: string
 ) => {
   if (typeof window === "undefined") {
     return;
@@ -34,8 +34,8 @@ export const handleAddComment = async (
 
   console.log(getUserProfile);
 
-  console.log("parent author", parentAuthor)
-  console.log("parent permlink", parentPermlink)
+  console.log("parent author", parentAuthor);
+  console.log("parent permlink", parentPermlink);
 
   //tempreary id for the new one
   const tempId = Math.random().toString(36).substring(2, 15);
@@ -53,13 +53,11 @@ export const handleAddComment = async (
     true
   ) || {
     socialPost: {
-    // @ts-ignore satisifies keyword is broken otherwise that should be used
-        __typename: "HivePost",
-        children: []
-    }
+      // @ts-ignore satisifies keyword is broken otherwise that should be used
+      __typename: "HivePost",
+      children: [],
+    },
   };
-
-
 
   //creating a new commment object
   const newComment: CommentInterface = {
@@ -105,38 +103,56 @@ export const handleAddComment = async (
     variables: { author, permlink },
   });
 
+  //we are reading the query
   const parentData = client.readQuery(
     {
       query: GET_COMMENTS,
       variables: { author: parentAuthor, permlink: parentPermlink },
     },
     true
-  )
-  console.log("ParentData", parentData)
-  
+  );
+  console.log("ParentData", parentData);
+
+  console.log('author', author);
+  console.log('permlink', permlink)
+
   //TODO: compare this with get_comments query
   const newParentData = {
     ...parentData,
     socialPost: {
-        ...parentData.socialPost,
-        children: parentData.socialPost.children.map((child: any) => ({
-            ...child,
-            stats: {
+      ...parentData.socialPost,
+      children: parentData.socialPost.children.map((child: any) => {
+        console.log('child.author',child.author)
+        console.log('child.permlink',child.permlink)
+        console.log('author compare',author === child.author.username)
+        console.log('permlink compare',permlink === child.permlink)
+        return author === child.author.username && permlink === child.permlink
+          ? {
+              ...child,
+              stats: {
                 ...child.stats,
-                num_comments: child.stats.num_comments + (author === child.author && permlink === child.permlink ? 1 : 0) 
+                num_comments: child.stats.num_comments + 1,
+              },
             }
-        }) )
-    }
-  }
-
+          : child
+    }),
+    },
+  };
 
   client.writeQuery({
     query: GET_COMMENTS,
     variables: { author: parentAuthor, permlink: parentPermlink },
-    data: newParentData
-  })
+    data: newParentData,
+  });
 
-
+  const parentData2 = client.readQuery(
+    {
+      query: GET_COMMENTS,
+      variables: { author: parentAuthor, permlink: parentPermlink },
+    },
+    true
+  );
+  console.log("ParentData2", parentData2);
 
   // TODO: write comment to backend or Hive
 

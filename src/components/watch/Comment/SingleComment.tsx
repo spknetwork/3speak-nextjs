@@ -10,7 +10,6 @@ import {
   Button,
   Collapse,
   Flex,
-  Spinner,
   Text,
   useColorMode,
   useColorModeValue,
@@ -49,8 +48,6 @@ const SingleComment = ({
 
   console.log(isCollapsed);
 
-
-  //TODO:
   function timeAgo(date: string): string {
     const now = new Date();
 
@@ -72,7 +69,7 @@ const SingleComment = ({
   return (
     <Box
       key={comment?.permlink}
-      marginLeft={`${depth * 30}px`}
+      marginLeft={`${30}px`}
       position={"relative"}
       p={2}
       pb={4}

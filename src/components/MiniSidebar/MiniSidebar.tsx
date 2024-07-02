@@ -35,10 +35,10 @@ const MiniSidebar = () => {
   };
 
   return (
-    <Box position={"relative"} h={"100vh"}>
+    <Box position={"relative"} h={"full"}>
       <Flex
         direction="column"
-        height="100vh"
+        height="full"
         w={"auto"}
         py={[1, 1, 2, 4]}
         backgroundColor={colorMode === "dark" ? "gray.600" : "gray.300"}

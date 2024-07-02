@@ -16,7 +16,7 @@ import { GET_TRENDING_FEED } from "../graphql/queries";
 import FeedGrid from "../components/feedgrid/FeedGrid";
 
 const IndexPage = () => {
-  const bgColor = useColorModeValue("white", "gray.800");
+  const bgColor = useColorModeValue("#e8e8e8", "gray.800");
   const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
   const getTrendingFeed = useQuery(GET_TRENDING_FEED, { ssr: false });
@@ -29,11 +29,6 @@ const IndexPage = () => {
           justifyContent={"space-between"}
           alignItems="center"
         >
-          <Box padding="20px">
-            <Text as="h1" fontWeight={"300 !important"}>
-              &nbsp;
-            </Text>
-          </Box>
         </Flex>
         {getTrendingFeed.loading ? (
           <Flex justifyContent={"center"} alignItems={"center"} h="70vh">
