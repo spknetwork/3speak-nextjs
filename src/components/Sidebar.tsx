@@ -1,4 +1,4 @@
-//TODO: fixed the logout dropdown 
+//TODO: fixed the logout dropdown
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@chakra-ui/react";
@@ -60,8 +60,6 @@ import { useGetMyQuery } from "@/hooks/getUserDetails";
 import { ProfileInterface } from "types";
 import { useAuth } from "@/hooks/auth";
 
-
-
 const threespeak = {
   filter: "drop-shadow(2px 4px 6px black)",
 };
@@ -83,7 +81,6 @@ const faTwitterIcon = faTwitter as IconProp;
 export const Sidebar = () => {
   const getUserProfile: ProfileInterface = useGetMyQuery()?.profile;
   console.log("User profile", getUserProfile);
-
 
   const bgColor = useColorModeValue("gray.100", "gray.800");
   const { colorMode, toggleColorMode } = useColorMode();
@@ -107,21 +104,17 @@ export const Sidebar = () => {
     onOpenModal2();
   };
   const router = useRouter();
-  
+
   const [communitiesPopup, setCommunitiesPopup] = useState(false);
   const [search, setSearch] = useState("");
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const [showNav, setShowNav] = useState(true);
 
-  const {
-    allowAccess,
-    userhiveDetails,
-    listAccounts,
-    setAccounts,
-  } = useAppStore();
+  const { allowAccess, userhiveDetails, listAccounts, setAccounts } =
+    useAppStore();
 
-  const authenticated = useAuth()
+  const { authenticated } = useAuth();
 
   useEffect(() => {
     console.log("isMobile", isMobile);
@@ -241,7 +234,9 @@ export const Sidebar = () => {
                             alignItems="center"
                           >
                             <Flex
-                              onClick={() => router.push(`/user/${getUserProfile?.username}`)}
+                              onClick={() =>
+                                router.push(`/user/${getUserProfile?.username}`)
+                              }
                               margin="10px"
                               justifyContent={"center"}
                               alignItems="center"
@@ -261,7 +256,7 @@ export const Sidebar = () => {
                                 width="100"
                                 height={"100"}
                                 src={
-                                    getUserProfile?.images?.avatar
+                                  getUserProfile?.images?.avatar
                                     ? getUserProfile?.images?.avatar
                                     : `/images/avatar3.png`
                                 }
@@ -276,7 +271,9 @@ export const Sidebar = () => {
                             </Flex>
 
                             <Text
-                              onClick={() => router.push(`/user/${getUserProfile?.username}`)}
+                              onClick={() =>
+                                router.push(`/user/${getUserProfile?.username}`)
+                              }
                               marginLeft={"5px"}
                               margin={"0px"}
                               marginRight={"8px"}
@@ -285,7 +282,7 @@ export const Sidebar = () => {
                             >
                               {getUserProfile?.name}
                             </Text>
-                            <Menu >
+                            <Menu>
                               <MenuButton
                                 as={IconButton}
                                 aria-label="Options"
