@@ -51,6 +51,7 @@ const SigninWithHiveComponent = ({ tab }: any) => {
   const dateNow = new Date().toISOString();
 
   const callback = async (response: any) => {
+    return;
     const result = response;
     const proof_payload = {
       account: username,
@@ -118,6 +119,7 @@ const SigninWithHiveComponent = ({ tab }: any) => {
 
   const requestHiveLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    return;
     setOnboarding(true);
     const request: HiveLoginInterface = {
       username: username,
@@ -131,7 +133,7 @@ const SigninWithHiveComponent = ({ tab }: any) => {
     <Flex justifyContent="center">
       <Flex
         width={"35%"}
-        boxShadow={"5px 5px 3px lightblue"} 
+        boxShadow={"5px 5px 3px lightblue"}
         px="2rem"
         alignItems={{ _: "flex-start", tablet: "flex-start" }}
         paddingBottom="20px"
