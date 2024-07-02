@@ -141,9 +141,8 @@ export const Sidebar = () => {
   const btnRef = useRef<HTMLButtonElement | null>(null);
 
   const handleLogout = () => {
-    AuthActions.logout()
-    window.location.reload()
-  }
+    AuthActions.logout();
+  };
 
   return (
     <Box>
@@ -297,10 +296,7 @@ export const Sidebar = () => {
                               {/* <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                           </MenuButton> */}
                               <MenuList>
-                                <MenuItem
-                                  w={160}
-                                  onClick={handleLogout}
-                                >
+                                <MenuItem w={160} onClick={handleLogout}>
                                   Logout
                                 </MenuItem>
                               </MenuList>
