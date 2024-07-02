@@ -1094,9 +1094,9 @@ const CreatePost: React.FC = () => {
                                     }
                                     onKeyDown={handleAddChipData}
                                   />
-                                  <Text position={"absolute"} top={3} right={2}>
+                                  {/* <Text position={"absolute"} top={3} right={2} onClick={handleAddChipData}>
                                     <TiPlus />
-                                  </Text>
+                                  </Text> */}
                                 </Flex>
                               </Flex>
                             </fieldset>

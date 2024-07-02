@@ -58,7 +58,7 @@ import AccountsList from "./Modal/AccountsList";
 import SignInModal from "./Modal/SignInModal";
 import { useGetMyQuery } from "@/hooks/getUserDetails";
 import { ProfileInterface } from "types";
-import { useAuth } from "@/hooks/auth";
+import { useAuth, AuthActions } from "@/hooks/auth";
 
 const threespeak = {
   filter: "drop-shadow(2px 4px 6px black)",
@@ -139,6 +139,11 @@ export const Sidebar = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement | null>(null);
+
+  const handleLogout = () => {
+    AuthActions.logout()
+    window.location.reload()
+  }
 
   return (
     <Box>
@@ -294,15 +299,7 @@ export const Sidebar = () => {
                               <MenuList>
                                 <MenuItem
                                   w={160}
-                                  onClick={() => {
-                                    localStorage.removeItem("access_token"); //
-                                    if (colorMode == "dark") {
-                                      toggleColorMode();
-                                    }
-
-                                    // in order to reset the localstorage it needs to refresh the whole page
-                                    location.reload();
-                                  }}
+                                  onClick={handleLogout}
                                 >
                                   Logout
                                 </MenuItem>
