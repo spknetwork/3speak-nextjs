@@ -5,7 +5,7 @@ import { Button, Box, Text } from "@chakra-ui/react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Image from "next/image";
 import { AuthActions } from "@/hooks/auth";
-import {Providers} from '@aioha/aioha'
+import { Providers } from "@aioha/aioha";
 
 const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
   return (
