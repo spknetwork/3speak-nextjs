@@ -41,11 +41,9 @@ const About = ({ getVideo, ...props }: Props) => {
       marginBottom={"30px"}
       padding="15px"
       borderRadius={"2px"}
-      boxShadow={
-        props.colorMode === "dark" ? "0 0 5px black" : "0 0 5px #ececec;"
-      }
       transitionDuration={"0.4s"}
       background={props.bgColor}
+      boxShadow={"xs"}
     >
       {/* TODO: filtering out body  */}
       <Box

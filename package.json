@@ -55,6 +55,7 @@
     "graphql": "^16.6.0",
     "i18next": "^19.4.4",
     "i18next-browser-languagedetector": "^4.2.0",
+    "javascript-time-ago": "^2.5.10",
     "key-did-provider-ed25519": "^4.0.2",
     "key-did-resolver": "^4.0.0",
     "keychain-sdk": "^0.4.0",

@@ -1,7 +1,7 @@
 //TODO: you cant really give a reply to the reply if that particualar transaction has not been confirmed
 
 
-import React, { useCallback, useRef, useState, useEffect } from "react";
+import React, { useCallback, useRef, useState, useEffect, SetStateAction, Dispatch } from "react";
 import {
   Flex,
   Avatar,
@@ -35,9 +35,11 @@ import { useRouter } from "next/router";
 type Props = {
   bgColor: string;
   colorMode: string;
-  commentId: string;
   author: string;
   permlink: string;
+  parentAuthor: string;
+  parentPermlink: string;
+  setShowMoreReplies: Dispatch<SetStateAction<boolean>>
 };
 
 const CommentFooter = (props: Props) => {
@@ -131,7 +133,8 @@ const CommentFooter = (props: Props) => {
 
   //function for handling the add comments
   async function handleAddCommentFunc() {
-    handleAddComment(props.author, props.permlink, inputValue, props.commentId);
+    handleAddComment(props.author, props.permlink, inputValue, props.parentAuthor, props.parentPermlink);
+    props.setShowMoreReplies(true)
     setInputValue("");
     hideComment();
   }

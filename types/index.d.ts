@@ -65,6 +65,7 @@ export interface VideoDetails {
 
 export interface CommentInterface {
   author: {
+    username: string;
     profile: {
       images: {
         avatar: string;
@@ -72,9 +73,13 @@ export interface CommentInterface {
       name: string;
     };
   };
+  stats: {
+    num_comments: number
+  }
   body: string;
   children: CommentInterface[];
   permlink: string;
+  created_at: string;
 }
 
 export interface HiveProfile {

@@ -98,7 +98,7 @@ const CommentParenting = (props: Props) => {
   async function handleAddCommentFunc() {
     handleAddComment(props.author, props.permlink, inputValue);
     setInputValue("");
-    setIsExpanded(false);
+    setIsExpanded(false);   
   }
 
   if(!authenticated){

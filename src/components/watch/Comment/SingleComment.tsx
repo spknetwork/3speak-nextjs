@@ -1,25 +1,27 @@
-//TODO: parent index comment should be collapsed the content and the footer
-//TOOD: show more num_comments replies
-//TODO: clicking on it we will call the query again (GET_COMMENTS) and pass the permlink and the author
-//TODO: show loading spinner at the loading state
-/**
- * The author is the username of the author
- */
+// TOOD: show more num_comments replies
+
+//TODO: to add the timestamp of the comment as well
+//TODO: show the tree line when the shoe more replies button is available 
+
 import CustomMarkdown from "@/helper/CustomMarkdown";
 import {
   Avatar,
   Box,
+  Button,
   Collapse,
   Flex,
+  Spinner,
   Text,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
+import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 import { CommentInterface } from "types";
-import CommentFooter from "../CommentFooter";
-import Comments from "./Comment";
+import CommentFooter from "../CommentFooter";;
+import { useGetComments } from "@/hooks/getComments";
+import { BsDot } from "react-icons/bs";
+import AllComments from "./AllComments";
 
 type Props = {
   comment: CommentInterface;
@@ -42,15 +44,38 @@ const SingleComment = ({
   const bgColor = useColorModeValue("white", "gray.800");
 
   const [isCollapsed, setIsCollapsed] = useState(defaultIsCollapsed);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showMoreReplies, setShowMoreReplies] = useState(false);
 
-  console.log(isCollapsed)
+  console.log(isCollapsed);
+
+
+  //TODO:
+  function timeAgo(date: string): string {
+    const now = new Date();
+
+    const nowDate = new Date(date);
+    const ago = now.getTime() - nowDate.getTime();
+
+    const seconds = Math.floor(ago / 1000);
+    const minutes = Math.floor(seconds / 60);
+
+    if (seconds < 60) {
+      return `${seconds} seconds ago`;
+    } else if (minutes < 60) {
+      return `${minutes} minutes ago`;
+    } else {
+      return `Other time unit ago`;
+    }
+  }
 
   return (
     <Box
       key={comment?.permlink}
-      marginLeft={`${depth * 28}px`}
+      marginLeft={`${depth * 30}px`}
       position={"relative"}
       p={2}
+      pb={4}
     >
       <Box
         background="transparent"
@@ -63,48 +88,57 @@ const SingleComment = ({
         zIndex={1}
         fontFamily={"system-ui"}
       >
-        {parentIndex === 0 && depth != 0 && (
+        {depth != 0 && (
           <Box
-            backgroundColor="#edeff1"
-            height={18}
-            width={"5px"}
+            backgroundColor={colorMode === "dark" ? "gray.500" : "#edeff1"}
+            display={"block"}
+            height={7}
+            width="5px"
             position={"absolute"}
-            top={2}
+            top={4}
             left={0}
-            transform="rotate(90deg)"
+            transform="rotate(270deg)"
           ></Box>
         )}
         {/* This is the line  */}
-        <Box
+        {!isCollapsed && <Box
+          backgroundColor={colorMode === "dark" ? "gray.500" : "#edeff1"}
           display="block"
           position="absolute"
           top="45px"
           left="21px"
           width="12px"
-          height="calc(100% - 20px)"
+          height="calc(100%)"
           borderLeft="4px solid transparent"
           borderRight={"4px solid transparent"}
-          backgroundColor="gray.200"
-          _hover={{backgroundColor:"blue.200"}}
+          _hover={{ backgroundColor: "blue.200" }}
           backgroundClip={"padding-box"}
           cursor={"pointer"}
           onClick={() => setIsCollapsed(!isCollapsed)}
-        ></Box>
+        ></Box>}
 
-        {isCollapsed && depth != 0 && (
+        {isCollapsed && (
           <Box
             position={"absolute"}
-            top={14}
+            top={"48px"}
             left={6}
-            fontSize={"xl"}
+            fontSize={"lg"}
             cursor={"pointer"}
             onClick={() => setIsCollapsed(false)}
           >
-            <CiCirclePlus />
+            <FaPlusCircle
+              color={colorMode === "dark" ? "white" : "black"}
+              style={{ fontWeight: "bold" }}
+            />
           </Box>
         )}
 
-        <Box alignSelf={"flex-start"}>
+        <Box
+          alignSelf={"flex-start"}
+          border={colorMode == "dark" ? "1px solid white" : "1px solid black "}
+          borderRadius={"50%"}
+          zIndex={2}
+        >
           <Avatar
             name={comment.author?.profile?.name}
             src={comment?.author?.profile?.images?.avatar}
@@ -121,13 +155,20 @@ const SingleComment = ({
           paddingLeft="0px"
           alignSelf="flex-start"
         >
-          <Text
-            fontSize="xl"
-            fontWeight={"bold"}
-            color={colorMode === "dark" ? "white" : "black"}
-          >
-            {comment?.author?.profile?.name ?? "User"}
-          </Text>
+          <Flex alignItems={"center"} gap={2}>
+            <Text
+              fontSize="xl"
+              fontWeight={"bold"}
+              color={colorMode === "dark" ? "white" : "black"}
+            >
+              {comment?.author?.profile?.name ?? "User"}
+            </Text>
+            <Text>{`@${comment?.author?.username}`}</Text>
+            <Flex alignItems={"center"} mb={2}>
+              <BsDot />
+            </Flex>
+            <Text>{timeAgo(comment?.created_at)}</Text>
+          </Flex>
           <Collapse in={!isCollapsed} unmountOnExit>
             <Box
               padding={"2px 0"}
@@ -139,26 +180,34 @@ const SingleComment = ({
             <CommentFooter
               bgColor={bgColor}
               colorMode={colorMode}
-              author={author}
-              permlink={permlink}
-              commentId={comment?.permlink}
-              />
+              author={comment.author.username}
+              permlink={comment.permlink}
+              setShowMoreReplies={setShowMoreReplies}
+              parentAuthor={author}
+              parentPermlink={permlink}
+            />
           </Collapse>
         </Box>
       </Box>
 
-      {/* TODO: do something here  */}
-      {!isCollapsed && comment.children && (
-        <Collapse in={!isCollapsed} unmountOnExit>
-          <Comments
-            comments={comment.children}
+      {comment.stats.num_comments !== 0 && (showMoreReplies ? (
+        <Collapse in={!isCollapsed}>
+          <AllComments
             parentIndex={depth + 1}
             depth={depth + 1}
-            author={author}
-            permlink={permlink}
+            author={comment.author.username}
+            permlink={comment.permlink}
+            bgColor={bgColor}
+            colorMode={colorMode}
           />
         </Collapse>
-      )}
+      ) : (
+       !isCollapsed && <Box px={12} mt={5} cursor="pointer">
+        <Text onClick={() => setShowMoreReplies(true)}>
+          Show {comment.stats.num_comments} replies
+        </Text>
+        </Box>
+      ))}
     </Box>
   );
 };

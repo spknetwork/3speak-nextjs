@@ -68,15 +68,17 @@ export const GET_VIDEO_DETAILS = gql`
   }
 `;
 
+//TODO: why its not working when removing the repeated code
 export const GET_COMMENTS = gql`
   query CommentsInfo($permlink: String = "", $author: String = "") {
     socialPost(author: $author, permlink: $permlink) {
       ... on HivePost {
         children {
           stats {
-            num_comments
+           num_comments
           }
           author {
+            username
             profile {
               ... on HiveProfile {
                 name
@@ -88,20 +90,7 @@ export const GET_COMMENTS = gql`
           }
           body
           permlink
-          children {
-            author {
-              profile {
-                ... on HiveProfile {
-                  name
-                  images {
-                    avatar
-                  }
-                }
-              }
-            }
-            body
-            permlink
-          }
+          created_at
         }
       }
     }
