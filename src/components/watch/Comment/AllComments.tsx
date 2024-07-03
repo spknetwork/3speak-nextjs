@@ -43,7 +43,7 @@ const AllComments = ({ author, permlink, parentIndex, depth }: Props) => {
     <Box>
       <Box overflow="hidden" position={"relative"} height={"auto"}>
         <Box paddingTop="12px" zIndex={2}>
-          {commentsData?.map((comment: CommentInterface) => (
+          {commentsData?.map((comment: CommentInterface, index) => (
             <SingleComment
               key={comment.permlink}
               comment={comment}
@@ -52,6 +52,7 @@ const AllComments = ({ author, permlink, parentIndex, depth }: Props) => {
               defaultIsCollapsed={false}
               author={author}
               permlink={permlink}
+              isFirstChild={index === 0}
             />
           ))}
         </Box>

@@ -1,7 +1,7 @@
 // TOOD: show more num_comments replies
 
-//TODO: to add the timestamp of the comment as well
-//TODO: show the tree line when the shoe more replies button is available 
+//TODO: shorter the line 
+//TODO: 
 
 import CustomMarkdown from "@/helper/CustomMarkdown";
 import {
@@ -29,15 +29,16 @@ type Props = {
   defaultIsCollapsed: boolean;
   author: string;
   permlink: string;
+  isFirstChild: boolean;
 };
 
 const SingleComment = ({
   comment,
-  parentIndex,
   depth,
   defaultIsCollapsed,
   author,
   permlink,
+  isFirstChild,
 }: Props) => {
   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
@@ -85,7 +86,8 @@ const SingleComment = ({
         zIndex={1}
         fontFamily={"system-ui"}
       >
-        {depth != 0 && (
+        {/* TODO: we just need only one  */}
+        {depth != 0 && isFirstChild && (
           <Box
             backgroundColor={colorMode === "dark" ? "gray.500" : "#edeff1"}
             display={"block"}
