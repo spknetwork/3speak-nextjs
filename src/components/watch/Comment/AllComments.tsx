@@ -16,7 +16,7 @@ type Props = {
 const AllComments = ({ author, permlink, parentIndex, depth }: Props) => {
   const isAuthenticated = useAuth();
   const commentsData = useGetComments(author, permlink);
-
+ console.log("comments data", commentsData )
   const getAllReplies = (
     replies: CommentInterface[] | undefined
   ): CommentInterface[] => {
