@@ -31,7 +31,7 @@ const IndexPage = () => {
         >
         </Flex>
         {getTrendingFeed.loading ? (
-          <Flex justifyContent={"center"} alignItems={"center"} h="70vh">
+          <Flex justifyContent={"center"} alignItems={"center"} h="90vh">
             <InfinitySpin width="200" color="#6DC5D7" />
           </Flex>
         ) : (
