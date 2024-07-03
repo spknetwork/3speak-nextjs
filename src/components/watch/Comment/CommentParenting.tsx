@@ -37,6 +37,7 @@ type Props = {
 };
 
 const CommentParenting = (props: Props) => {
+
   const router = useRouter();
   const ref = useRef<HTMLTextAreaElement>(null);
   const getUserProfile: ProfileInterface = useGetMyQuery()?.profile;
@@ -46,6 +47,13 @@ const CommentParenting = (props: Props) => {
   const [inputValue, setInputValue] = useState("");
 
   const { authenticated } = useAuth();
+
+  const parentAuthor = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
+    "/"
+  )[0];
+  const parentPermlink = ((router.query.v as string) ?? "cttpodcast/zjvcobqa").split(
+    "/"
+  )[1];
 
   const onEmojiClick = (emojiObject: any) => {
     setInputValue((prevInput) => prevInput + emojiObject.emoji);
@@ -96,7 +104,7 @@ const CommentParenting = (props: Props) => {
 
   //function for handling the add comments
   async function handleAddCommentFunc() {
-    handleAddComment(props.author, props.permlink, inputValue);
+    handleAddComment(props.author, props.permlink, inputValue, parentAuthor, parentPermlink);
     setInputValue("");
     setIsExpanded(false);   
   }

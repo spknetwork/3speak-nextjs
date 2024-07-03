@@ -51,9 +51,7 @@ const CommentFooter = (props: Props) => {
   const [upvoted, setUpvoted] = useState(false);
   const [downvoted, setDownvoted] = useState(false);
 
-  const [upvotes, setUpvotes] = useState<number>(
-    100
-  );
+  const [upvotes, setUpvotes] = useState<number>(100);
 
   const ref = useRef<HTMLTextAreaElement>(null);
   const showComment = () => setComment(true);
