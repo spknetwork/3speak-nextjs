@@ -35,13 +35,13 @@ const MiniSidebar = () => {
   };
 
   return (
-    <Box position={"relative"} h={"full"}>
+    <Box position={"relative"} h={"full"} maxW="100px">
       <Flex
         direction="column"
         height="full"
         w={"auto"}
         py={[1, 1, 2, 4]}
-        backgroundColor={colorMode === "dark" ? "gray.600" : "gray.300"}
+        backgroundColor={colorMode === "dark" ? "gray.600" : "gray.100"}
         overflowY="auto"
       >
         <VStack spacing={8} mt={8} w="auto" position="relative" top={"112px"}>
@@ -51,7 +51,7 @@ const MiniSidebar = () => {
               loader={() => (imgUrl ? gifUrl : svgUrl)}
               src={imgUrl ? gifUrl : svgUrl}
               alt=""
-              width={imgUrl ? 24 : 22}
+              width={imgUrl ? 26 : 26}
               height={imgUrl ? 24 : 22}
               objectFit="cover"
               layout="fixed"

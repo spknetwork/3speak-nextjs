@@ -22,8 +22,9 @@ const MainLayout = ({ children }: any) => {
 
   return (
     <Flex w="full">
-      <nav >
-        <Box position={"sticky"} top={0} height={["", "full", "full", "full"]} display={["none", "none", "flex", "flex"]}>
+      <nav>
+        {/* TODO: to make the navbar display none in mobile view */}
+        <Box position={"sticky"} top={0} height={["auto", "auto", "100vh"]} display={"flex"}>
           <MiniSidebar />
         </Box>
         <Text
@@ -32,7 +33,6 @@ const MainLayout = ({ children }: any) => {
           top={[1, 2, 3, 4]}
           fontSize={["xs", "sm", "md", "xl"]}
           zIndex={2}
-          display={["none", "none", "flex", "flex"]}
         >
           <Switch
             // size={["sm", "sm", "md", "4xl"]}
@@ -50,7 +50,7 @@ const MainLayout = ({ children }: any) => {
       >
         <nav>
           <Flex
-            display={["flex", "flex" , "none", "none"]}
+            display={["flex", "flex", "none", "none"]}
             w="100%"
             h={24}
             justifyContent={"space-between"}
@@ -81,7 +81,14 @@ const MainLayout = ({ children }: any) => {
             </Flex>
           </Flex>
         </nav>
-        <main>{children}</main>
+        <Flex
+          width={"100%"}
+          justifyContent={"space-between"}
+          // minWidth={"min-content"}
+          flexDirection={{ base: "column", md: "column", lg: "column" }}
+        >
+          <main>{children}</main>
+        </Flex>
         <Footer />
       </Flex>
     </Flex>
