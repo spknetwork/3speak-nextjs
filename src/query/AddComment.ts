@@ -9,8 +9,8 @@ export const handleAddComment = async (
   author: string,
   permlink: string,
   body: string,
-  parentAuthor: string,
-  parentPermlink: string
+  parentAuthor?: string,
+  parentPermlink?: string
 ) => {
   if (typeof window === "undefined") {
     return;
