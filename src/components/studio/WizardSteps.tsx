@@ -8,18 +8,16 @@ type Props = {
   colorMode: string
 };
 
-
-
 const WizardSteps = ({
   changeCurrentStep,
   currentStep,
   bgColor,
-  colorMode
+  colorMode,
 }: Props) => {
   const steps = ['Upload', 'Details', 'Community', 'Visibility'];
 
   return (
-    <Flex w='full' justifyContent={'center'}>
+    <Flex w='' justifyContent={'center'}>
     <Box
       borderRadius="10px"
       backgroundColor={bgColor}
@@ -46,7 +44,7 @@ const WizardSteps = ({
               borderColor={currentStep >= index ? '#7a7b7d' : '#7a7b7d'}
               justifyContent="center"
               alignItems="center"
-              borderRadius="50%"
+              borderRadius="50%"    
               width="80px"
               height="60px"
               boxShadow={"base"}

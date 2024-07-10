@@ -16,14 +16,14 @@ import { GET_TRENDING_FEED } from "../graphql/queries";
 import FeedGrid from "../components/feedgrid/FeedGrid";
 
 const IndexPage = () => {
-  const bgColor = useColorModeValue("#e8e8e8", "gray.800");
+  const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
   const getTrendingFeed = useQuery(GET_TRENDING_FEED, { ssr: false });
 
   return (
     <MainLayout>
-      <Box bg={bgColor}>
+      <Box bg={bgColor} pt={8}>
         <Flex
           marginRight={"30px"}
           justifyContent={"space-between"}

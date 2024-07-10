@@ -2,11 +2,10 @@ import { Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import { MdCancel } from "react-icons/md";
 
-
 type Props = {
-    label: string;  
-    onDelete: (label: string) => void; 
-    colorMode: string 
+  label: string;
+  onDelete: (label: string) => void;
+  colorMode: string;
 };
 
 const Chips = (props: Props) => {
@@ -26,8 +25,14 @@ const Chips = (props: Props) => {
       position={"relative"}
     >
       <Text>#{props.label}</Text>
-      <Text position={"absolute"} top={-1} right={0} color={props.colorMode === "dark" ? "white" : "black"} borderRadius={10}>
-        <MdCancel size={"10px"} onClick={() => props.onDelete(props.label)}  />
+      <Text
+        position={"absolute"}
+        top={-1}
+        right={0}
+        color={props.colorMode === "dark" ? "white" : "black"}
+        borderRadius={10}
+      >
+        <MdCancel size={"10px"} onClick={() => props.onDelete(props.label)} />
       </Text>
     </Flex>
   );
