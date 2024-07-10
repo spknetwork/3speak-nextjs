@@ -140,11 +140,14 @@ const CreatePost: React.FC = () => {
   const [savingDetails, setSavingDetails] = useState<Boolean | null>(null);
 
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
+  const [fileKey, setFileKey] = useState(0)
   const [fileIdentifier, setFileIdentifier] = useState("");
 
   const [uploadingProgress, setUploadingProgress] = useState<number>(0);
   const [uploadStatus, setUploadStatus] = useState<Boolean | null>(null);
+  //This is the useState for setting the thing to upload
   const [uploading, setUploading] = useState<Boolean>(false);
+
   const [steps, setSteps] = useState<number>(0);
   const [uploadingVideo, setUploadingVideo] = useState<Boolean>(false);
   const [uploadingVideoLabel, setUploadingVideoLabel] =
@@ -163,9 +166,9 @@ const CreatePost: React.FC = () => {
   //tus use for upload
   const { upload, setUpload, isSuccess, error, remove } = useTus({
     autoStart: true,
-    uploadOptions:{
-        endpoint: UPLOAD_URL
-    }
+    uploadOptions: {
+      endpoint: UPLOAD_URL,
+    },
   });
   /**
    * @param acceptedFiles
@@ -197,12 +200,13 @@ const CreatePost: React.FC = () => {
 
       console.log("dropped file check", file);
       setSelectedFile({ file, previewUrl });
+      setFileKey(prevKey => prevKey + 1);
+
       //set uploading state to true
       setUploading(true);
     });
   };
 
-  //TODO: this is giving problem
   const { data: createUploadInfo, error: createUploadError } = useQuery(
     {
       queryKey: ["create_upload"],
@@ -221,7 +225,7 @@ const CreatePost: React.FC = () => {
           }
         );
 
-        console.log("data from the create_upload", data)
+        console.log("data from the create_upload", data);
 
         console.log("upload info created");
 
@@ -258,8 +262,6 @@ const CreatePost: React.FC = () => {
       return;
     }
 
-    console.log("hey", createUploadInfo);
-
     const uploadedUrl = await startUpload(
       selectedFile.file,
       createUploadInfo.upload_id,
@@ -281,6 +283,8 @@ const CreatePost: React.FC = () => {
    * @param {video_id, upload_id}
    * changes made: async & await removed
    */
+
+
   const startUpload = useCallback(
     (
       file: File,
@@ -291,8 +295,9 @@ const CreatePost: React.FC = () => {
         if (!file) return;
         const token = getAccessToken();
         console.log("token", token);
+
         setUpload(file, {
-        //   endpoint: `${UPLOAD_URL}`,
+          //   endpoint: `${UPLOAD_URL}`,
           metadata: {
             video_id: video_id,
             upload_id: upload_id,
@@ -320,6 +325,13 @@ const CreatePost: React.FC = () => {
     [setUpload]
   );
 
+  useEffect(() => {
+    if (selectedFile) {
+        startUpload(selectedFile.file, createUploadInfo?.upload_id, createUploadInfo?.video_id);
+    }
+  }, [fileKey, startUpload, createUploadInfo]);
+  
+
   const handleFileDropThumbnail = async (
     acceptedFiles: File[]
   ): Promise<void> => {
@@ -344,7 +356,6 @@ const CreatePost: React.FC = () => {
     ]);
     setSelectedThumbnail({ type: "uploaded", index: 0 });
   };
-
 
   const saveThumbnail = async () => {
     if (!createUploadInfo) {
@@ -376,6 +387,31 @@ const CreatePost: React.FC = () => {
     });
   };
 
+  //Function for resetting the upload progress
+//   const onFileChange = useCallback(async (file: File) => {
+//     setSelectedFile(file);
+//     setUploadStatus(true);
+//     setUploadingProgress(0);
+
+//     try {
+//       const uploadInfo = await createUploadInfo();
+//       const uploadedUrl = await startUpload(file, uploadInfo.upload_id, uploadInfo.video_id);
+
+//       if (uploadedUrl) {
+//         const uploadedUrlArray = uploadedUrl.split("/");
+//         const fileIdentifier = uploadedUrlArray[uploadedUrlArray.length - 1];
+//         console.log(`File uploaded successfully. Identifier: ${fileIdentifier}`);
+//         setUploadStatus('success');
+//       } else {
+//         console.log("Upload failed or was cancelled");
+//         setUploadStatus('error');
+//       }
+//     } catch (error) {
+//       console.error("Error during upload:", error);
+//       setUploadStatus('error');
+//     }
+//   }, [createUploadInfo, startUpload]);
+
   const handleStep1Complete = async () => {
     setSavingDetails(true);
     await saveThumbnail();
@@ -400,6 +436,8 @@ const CreatePost: React.FC = () => {
     }
 
     const token = getAccessToken();
+
+    console.log("community name", cardData.name);
 
     await axios.post(
       `${BASE_URL}/api/v1/upload/update_post`,
@@ -438,14 +476,19 @@ const CreatePost: React.FC = () => {
       throw new Error("this should not happen");
     }
     const token = getAccessToken();
+
+    console.log("Upload id -> ", createUploadInfo.upload_id);
+    console.log("Video id -> ", createUploadInfo.video_id);
+    console.log("permlink -> ", createUploadInfo.permlink);
+
     // backend initiates hive tx
     const result = await axios.post(
       `${BASE_URL}/api/v1/upload/start_encode`,
-      {
-        video_id: createUploadInfo.video_id,
+      JSON.stringify({
         upload_id: createUploadInfo.upload_id,
+        video_id: createUploadInfo.video_id,
         permlink: createUploadInfo.permlink,
-      },
+      }),
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -463,7 +506,6 @@ const CreatePost: React.FC = () => {
     await publishVideo();
     setSavingDetails(false);
     // TODO take user somewhere when done
-     
   };
 
   const dropzoneOptions: DropzoneOptions = {
@@ -482,7 +524,6 @@ const CreatePost: React.FC = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
-
 
   const { authenticated } = useAuth() ?? {};
 
@@ -606,8 +647,8 @@ const CreatePost: React.FC = () => {
    */
 
   return (
-    <Box maxH="100vh">
-      {/* add the toggle button to the sidebar for opening and close */}
+    <Box maxH="auto">
+      {/* add he toggle button to the sidebar for opening and close */}
       {/* for mobile view is already there  */}
 
       <SidebarContent
@@ -641,7 +682,6 @@ const CreatePost: React.FC = () => {
         className="hellotesting"
         ml={{ base: 0, md: 60 }}
         p="4"
-        height={"auto"}
       >
         {uploadingVideo && (
           <Flex
@@ -657,7 +697,7 @@ const CreatePost: React.FC = () => {
             backgroundColor={"blackAlpha.900"}
             opacity="0.9"
             width="100%"
-            height={"90vh"}
+            height={"auto"}
           >
             <Spinner
               size="xl"
@@ -675,51 +715,52 @@ const CreatePost: React.FC = () => {
          * /upload/create_upload api
          * @params account, userKey
          */}
-        <Box paddingLeft={"1.5rem"} paddingRight="1.5rem">
+        <Box paddingLeft={"1.5rem"} paddingRight="1.5rem" maxH={"70vh"}>
           <Box>
+            {uploading && ( 
+              <div className={styles.progressContainer}>
+                <div
+                  className={styles.progressBar}
+                  style={{ width: `${uploadingProgress}%` }}
+                >
+                  {uploadStatus == true && (
+                    <>
+                      <Text
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        color="white"
+                      >
+                        Upload Complete!
+                      </Text>
+                    </>
+                  )}
+
+                  {uploadStatus == false && (
+                    <>
+                      <Text
+                        position={"absolute"}
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        color="white"
+                      >
+                        Error in uploading!
+                      </Text>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
             <Card backgroundColor={bgColor}>
               {steps == 0 && (
                 <CardBody
                   borderRadius="10px"
                   backgroundColor={bgColor}
-                  minH={"75vh"}
+                  maxH={"75vh"}
+                  minH={"70vh"}
                 >
-                  <Box height={"60vh"} width={"100%"}>
-                    {uploading && ( // TODO show in all steps
-                      <div className={styles.progressContainer}>
-                        <div
-                          className={styles.progressBar}
-                          style={{ width: `${uploadingProgress}%` }}
-                        >
-                          {uploadStatus == true && (
-                            <>
-                              <Text
-                                display="flex"
-                                justifyContent="center"
-                                alignItems="center"
-                                color="white"
-                              >
-                                Upload Complete!
-                              </Text>
-                            </>
-                          )}
-
-                          {uploadStatus == false && (
-                            <>
-                              <Text
-                                position={"absolute"}
-                                display="flex"
-                                justifyContent="center"
-                                alignItems="center"
-                                color="white"
-                              >
-                                Error in uploading!
-                              </Text>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    )}
+                  <Flex maxH={"60vh"} width={"100%"}>
                     <Flex
                       height={"100%"}
                       width={"100%"}
@@ -745,7 +786,6 @@ const CreatePost: React.FC = () => {
                             height="100%"
                             justifyContent="center"
                             alignItems={"center"}
-                            // border={"1px solid black"}
                             padding="20px"
                             paddingY={"40px"}
                             backgroundColor={bgColor}
@@ -850,7 +890,7 @@ const CreatePost: React.FC = () => {
                             bottom={170}
                             onClick={async () => {
                               try {
-                                await handleCreatePost();
+                                handleCreatePost();
                                 setSteps(1);
                               } catch (err) {
                                 console.log(err);
@@ -866,15 +906,12 @@ const CreatePost: React.FC = () => {
                         {/* )} */}
                       </Flex>
                     </Flex>
-                  </Box>
+                  </Flex>
                 </CardBody>
               )}
               {steps == 1 && (
-                <CardBody backgroundColor={bgColor} h={"90vh"}>
-                  <Box
-                    height={{ base: "auto", md: "auto", lg: "70vh" }}
-                    width={"100%"}
-                  >
+                <CardBody backgroundColor={bgColor} maxH={"75vh"} minH={"70vh"}>
+                  <Box width={"100%"}>
                     <Flex
                       height={"100%"}
                       width={"100%"}
@@ -933,7 +970,7 @@ const CreatePost: React.FC = () => {
                             )}
                           </Flex>
                           <Flex
-                            background={colorMode === "dark" ? "grey" : "grey"}
+                            bg={colorMode === "dark" ? "gray.700" : "gray.100"}
                             width={"100%"}
                             height="100px"
                             justifyContent="start"
@@ -946,7 +983,7 @@ const CreatePost: React.FC = () => {
                               fontSize={"12px"}
                               fontWeight="bold"
                               marginLeft="10px"
-                              color={"whiteAlpha.900"}
+                              color={colorMode === "dark" ? "white" : "black"}
                             >
                               File Name
                             </Text>
@@ -958,12 +995,7 @@ const CreatePost: React.FC = () => {
                                   lg: "12px",
                                 }}
                                 fontWeight="bold"
-                                color={"whiteAlpha.900"}
-                                marginLeft={{
-                                  base: "0px",
-                                  md: "0px",
-                                  lg: "10px",
-                                }}
+                                color={colorMode === "dark" ? "white" : "black"}
                                 padding={{
                                   base: "0px 10px",
                                   md: "0px 10px",
@@ -1033,11 +1065,11 @@ const CreatePost: React.FC = () => {
                                 width={{ base: "89%", md: "89%", lg: "97%" }}
                                 value={videoTitle}
                                 onChange={(e) => setVideoTitle(e.target.value)}
+                                border={"none"}
+                                boxShadow={
+                                  colorMode === "dark" ? "dark-lg" : "xs"
+                                }
                               />
-
-                              <Text as={"label"}>
-                                Your video title, 2-55 characters
-                              </Text>
                             </Text>
                             <fieldset className="w-100 mb-4 ">
                               <Text
@@ -1055,9 +1087,13 @@ const CreatePost: React.FC = () => {
                                   setVideoDescription(e.target.value)
                                 }
                                 placeholder="Here is a sample placeholder"
+                                border={"none"}
+                                boxShadow={
+                                  colorMode === "dark" ? "dark-lg" : "xs"
+                                }
                               />
                             </fieldset>
-                            <fieldset className="w-100 mb-4 ">
+                            <fieldset className="w-100 mb-4">
                               <Text
                                 as={"legend"}
                                 fontSize="15px"
@@ -1076,16 +1112,14 @@ const CreatePost: React.FC = () => {
                                 ))}
                                 <Flex
                                   fontSize={"xl"}
-                                  mx={2}
                                   cursor={"pointer"}
                                   alignItems={"center"}
                                   position={"relative"}
                                 >
                                   <Input
-                                    border={
-                                      colorMode === "dark"
-                                        ? "1px solid white"
-                                        : "1px solid black"
+                                    border={"none"}
+                                    boxShadow={
+                                      colorMode === "dark" ? "dark-lg" : "xs"
                                     }
                                     placeholder={"Add tags"}
                                     value={chipInput}
@@ -1213,9 +1247,8 @@ const CreatePost: React.FC = () => {
               )}
               {/* From here the new component will start */}
               {steps == 2 && (
-                <CardBody maxH={"90vh"}>
+                <CardBody maxH={"75vh"}>
                   <Box
-                    overflow="hidden"
                     height={{ base: "auto", md: "auto", lg: "70vh" }}
                     width={"100%"}
                   >
@@ -1226,7 +1259,7 @@ const CreatePost: React.FC = () => {
                       <Flex w={"50%"} flexDirection={"column"}>
                         {/* the result card will go here  */}
                         <Flex>
-                          <Card w="full" m={2} h={'60vh'}>
+                          <Card w="full" m={2} h={"60vh"}>
                             <Flex p={2}>
                               <InputGroup>
                                 <InputLeftElement pointerEvents="none">
@@ -1239,10 +1272,7 @@ const CreatePost: React.FC = () => {
                                 />
                               </InputGroup>
                             </Flex>
-                            <VStack
-                              spacing={1}
-                              overflowY={"auto"}
-                            >
+                            <VStack spacing={1} overflowY={"auto"}>
                               {communityData
                                 .filter((item: any) => {
                                   return search.toLowerCase() === ""
@@ -1285,7 +1315,6 @@ const CreatePost: React.FC = () => {
                         size={"lg"}
                         colorScheme="twitter"
                       >
-
                         Next
                         <IoCaretForwardSharp />
                       </Button>
@@ -1396,13 +1425,13 @@ const CreatePost: React.FC = () => {
                         </Box>
                         <Box
                           paddingTop={"74px"}
-                          width={{ base: "100%", md: "100%", lg: "40%" }}
+                          width={{ base: "100%", md: "100%", lg: "80%" }}
                           paddingX="20px"
                           paddingBottom={"10px"}
                         >
                           <Flex
-                            width={"83%"}
-                            height="260px"
+                            width={"65%"}
+                            height="240px"
                             border={"1px solid"}
                             justifyContent="center"
                             background={"black"}
@@ -1419,7 +1448,11 @@ const CreatePost: React.FC = () => {
                                     position={"relative"}
                                   />
                                 ) : (
-                                  <Box position={"absolute"}>
+                                  <Box
+                                    position={"absolute"}
+                                    height={"250px"}
+                                    width={"250px"}
+                                  >
                                     <video
                                       src={selectedFile.previewUrl}
                                       className="preview_visibility"
@@ -1437,9 +1470,9 @@ const CreatePost: React.FC = () => {
                             )}
                           </Flex>
                           <Flex
-                            background={"grey"}
-                            width={"83%"}
-                            height="70px"
+                            bg={colorMode === "dark" ? "gray.7000" : "gray.100"}
+                            width={"65%"}
+                            height="60px"
                             justifyContent="start"
                             alignItems={"start"}
                             flexDirection="column"
@@ -1450,7 +1483,7 @@ const CreatePost: React.FC = () => {
                               fontSize={"12px"}
                               fontWeight="bold"
                               marginLeft="10px"
-                              color={"whiteAlpha.900"}
+                              color={colorMode === "dark" ? "white" : "black"}
                             >
                               File Name
                             </Text>
@@ -1462,7 +1495,7 @@ const CreatePost: React.FC = () => {
                                   lg: "12px",
                                 }}
                                 fontWeight="bold"
-                                color={"whiteAlpha.900"}
+                                color={colorMode === "dark" ? "white" : "black"}
                                 marginLeft={{
                                   base: "0px",
                                   md: "0px",
@@ -1537,7 +1570,7 @@ const CreatePost: React.FC = () => {
                   </Box>
                 </CardBody>
               )}
-              <Box py={4}>
+              <Box my={4}>
                 <WizardSteps
                   currentStep={steps}
                   changeCurrentStep={changeCurrentStep}

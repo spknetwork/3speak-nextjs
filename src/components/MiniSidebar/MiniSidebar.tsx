@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import {
-  Flex,
-  VStack,
-  Text,
-  Icon,
-  Box,
-  useColorModeValue,
-  useColorMode,
-  ScaleFade,
-} from "@chakra-ui/react";
+    Flex,
+    VStack,
+    Text,
+    Icon,
+    Box,
+    useColorModeValue,
+    useColorMode,
+    ScaleFade,
+  } from "@chakra-ui/react";
 import Link from "next/link";
 import { NAVIGATION } from "../../components/data/NavigationData";
 import { Sidebar } from "../Sidebar";

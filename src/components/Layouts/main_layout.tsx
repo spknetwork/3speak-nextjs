@@ -22,9 +22,9 @@ const MainLayout = ({ children }: any) => {
 
   return (
     <Flex w="full">
-      <nav>
+      <Box as="nav">
         {/* TODO: to make the navbar display none in mobile view */}
-        <Box position={"sticky"} top={0} height={["auto", "auto", "100vh"]} display={"flex"}>
+        <Box position={"sticky"} top={0} left={0} height={"100vh"} display={["none", "none", "flex", "flex"]}>
           <MiniSidebar />
         </Box>
         <Text
@@ -33,6 +33,7 @@ const MainLayout = ({ children }: any) => {
           top={[1, 2, 3, 4]}
           fontSize={["xs", "sm", "md", "xl"]}
           zIndex={2}
+          display={["none", "none", "flex", "flex"]}
         >
           <Switch
             // size={["sm", "sm", "md", "4xl"]}
@@ -42,13 +43,15 @@ const MainLayout = ({ children }: any) => {
           {colorMode === "dark" && <MoonIcon />}{" "}
           {colorMode !== "dark" && <SunIcon />}
         </Text>
-      </nav>
+      </Box>
 
+
+  {/* This is the new component  */}
       <Flex
         width={"100%"}
-        flexDirection={{ base: "column", md: "column", lg: "column" }}
+        flexDirection={"column"}
       >
-        <nav>
+        <Box as="nav">
           <Flex
             display={["flex", "flex", "none", "none"]}
             w="100%"
@@ -80,11 +83,11 @@ const MainLayout = ({ children }: any) => {
               <HamburgerIcon boxSize={"2rem"} />
             </Flex>
           </Flex>
-        </nav>
+        </Box>
         <Flex
           width={"100%"}
           justifyContent={"space-between"}
-          // minWidth={"min-content"}
+        //   minWidth={"max-content"}
           flexDirection={{ base: "column", md: "column", lg: "column" }}
         >
           <main>{children}</main>
