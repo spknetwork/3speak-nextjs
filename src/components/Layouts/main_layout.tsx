@@ -1,21 +1,22 @@
-//TODO: make the code mobile responsive here
-import { useState } from "react";
+//TODO: add a animation here for expanding drawer
+
 import {
   Box,
   Flex,
   Text,
-  Button,
   Switch,
   useColorModeValue,
   useColorMode,
-  Icon
-} from "@chakra-ui/react"; 
+  useDisclosure,
+  Icon,
+  Button,
+} from "@chakra-ui/react";
 import Footer from "../footer/Footer";
 import MiniSidebar from "../MiniSidebar/MiniSidebar";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { HamburgerIcon } from "@chakra-ui/icons";
 import Image from "next/image";
 import { NAVIGATION } from "../data/NavigationData";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 const MainLayout = ({ children }: any) => {
   //for the dark mode
@@ -23,11 +24,7 @@ const MainLayout = ({ children }: any) => {
   const textColor = useColorModeValue("black", "white");
   const { colorMode, toggleColorMode } = useColorMode();
   //use state
-  const [showItems, setShowItems] = useState(false); //initializing it as false
-
-  const handleShowItems = () => {
-    setShowItems((prev) => !prev);
-  };
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
     <Flex w="full">
@@ -61,7 +58,7 @@ const MainLayout = ({ children }: any) => {
       </Box>
 
       {/* This is the new component  */}
-      <Flex width={"100%"} flexDirection={"column"}>
+      <Flex width={"auto"} flexDirection={"column"}>
         <Box as="nav">
           <Flex
             display={["flex", "flex", "none", "none"]}
@@ -86,34 +83,43 @@ const MainLayout = ({ children }: any) => {
                     : "/main_logo.svg"
                 }
                 alt="3speak logo"
-                width={100}
-                height={100}
+                width={150}
+                height={150}
               />
             </Flex>
             <Flex>
-              <HamburgerIcon boxSize={"2rem"} onClick={handleShowItems} />
+              <Icon
+                fontSize={"24px"}
+                as={isOpen ? CloseIcon : HamburgerIcon}
+                onClick={onToggle}
+              />
             </Flex>
           </Flex>
-         
-          {showItems && NAVIGATION.map((item, index) => (
-             <Box key={index} display={["flex", "flex", "none", "none"]}>
-                <Flex gap={5} alignItems={"center"}>
-                <Icon
-                  cursor="pointer"
-                  width={["12px", "16px", "18px", "22px"]}
-                  height={["12px", "16px", "18px", "22px"]}
-                  as={item.icon}
-                  color={colorMode === "dark" ? "white" : "black"}
-                />
-                <Text>{item.title}</Text>
+          {isOpen && (
+            <>
+              <Flex justifyContent={"center"}>
+                <Button w="90%">LOGIN / SIGN UP</Button>
+              </Flex>
+              {NAVIGATION.map((item, index) => (
+                <Flex key={index} alignItems={"center"}>
+                  <Flex gap={5} alignItems={"center"} pl={6} py={4}>
+                    <Icon
+                      cursor="pointer"
+                      width={["12px", "16px", "18px", "22px"]}
+                      height={["12px", "16px", "18px", "22px"]}
+                      as={item.icon}
+                      color={colorMode === "dark" ? "white" : "black"}
+                    />
+                  </Flex>
+                  <Flex alignItems={"center"} px={2} fontSize={"14px"}>{item.title}</Flex>
                 </Flex>
-            </Box>
-          ))}
+              ))}
+            </>
+          )}
         </Box>
         <Flex
           width={"100%"}
           justifyContent={"space-between"}
-          //   minWidth={"max-content"}
           flexDirection={{ base: "column", md: "column", lg: "column" }}
         >
           <main>{children}</main>
