@@ -69,43 +69,43 @@ const ICONS = {
 export const NAVIGATION= [
     {
       icon: ICONS.MdDashboard,
-      title: "nav.home",
+      title: "Home",
       route: "/",
     },
     {
       icon: ICONS.FaRegSmile,
-      title: "nav.first",
+      title: "First",
       route: "/first_upload",
     },
     {
       icon: ICONS.FaFire,
-      title: "nav.trending",
+      title: "Trending",
       route: "/trends",
     },
     {
       icon: ICONS.CgPlayButtonO,
-      title: "nav.new",
+      title: "New",
       route: "/new",
     },
 
     {
       icon: ICONS.FaHandshakeAngle,
-      title: "nav.communities",
+      title: "Communities",
       route: "/communities",
     },
     {
       icon: ICONS.MdLeaderboard,
-      title: "nav.leaderboard",
+      title: "Leaderboard",
       route: "/leaderboard",
     },
     {
       icon: ICONS.FaDownload,
-      title: "download_apps",
+      title: "Download Apps",
       route: "/"
     },
     {
       icon: ICONS.FaRegSmile,
-      title: "about_3speak",
+      title: "About 3Speak",
       route: "/"
     },
   ];
