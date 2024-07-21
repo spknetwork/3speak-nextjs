@@ -325,8 +325,11 @@ const CreatePost: React.FC = () => {
     [setUpload]
   );
 
+  /**
+   * This part is throwing issues on the deployment part 
+   */
   useEffect(() => {
-    if (selectedFile) {
+    if (selectedFile && createUploadInfo) {
         startUpload(selectedFile.file, createUploadInfo?.upload_id, createUploadInfo?.video_id);
     }
   }, [fileKey, startUpload, createUploadInfo]);
