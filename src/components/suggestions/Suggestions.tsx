@@ -3,16 +3,22 @@ import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import FeedGridItem from "../feedgrid/FeedGridItem";
 
 type Props = {
-    videos: any;
-    bgColor: string;
-    colorMode: string;
-    author: string;
-    permlink: string;
-}
-const Suggestions = ({ videos, bgColor, colorMode, author, permlink}: Props) => {
+  videos: any;
+  bgColor: string;
+  colorMode: string;
+  author: string;
+  permlink: string;
+};
+const Suggestions = ({
+  videos,
+  bgColor,
+  colorMode,
+  author,
+  permlink,
+}: Props) => {
   return (
     <Box
-      w={{ base: "100%", md: "25%", lg: "33%" }}
+      w={{ base: "100%", md: "100%", lg: "100%" }}
       backgroundColor={bgColor}
       color={colorMode === "dark" ? "white" : "black"}
       marginTop="15px"
@@ -22,7 +28,7 @@ const Suggestions = ({ videos, bgColor, colorMode, author, permlink}: Props) => 
       paddingTop="10px"
       paddingX={"10px"}
       paddingRight="25px"
-      maxWidth={"25%"}
+      maxWidth={["100%", "75%", "50%", "25%"]}
     >
       <Box margin={"15px"}>
         <Text
@@ -44,7 +50,7 @@ const Suggestions = ({ videos, bgColor, colorMode, author, permlink}: Props) => 
         gap={4}
       >
         {videos.map((video: any, index: number) => (
-          <FeedGridItem video={video} key={index}  />
+          <FeedGridItem video={video} key={index} />
         ))}
       </Grid>
     </Box>

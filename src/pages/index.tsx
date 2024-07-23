@@ -23,15 +23,20 @@ const IndexPage = () => {
 
   return (
     <MainLayout>
-      <Box bg={bgColor} pt={8}>
+      <Box w="full" bg={bgColor} pt={8}>
         <Flex
+          w="full"
           marginRight={"30px"}
           justifyContent={"space-between"}
           alignItems="center"
-        >
-        </Flex>
+        ></Flex>
         {getTrendingFeed.loading ? (
-          <Flex justifyContent={"center"} alignItems={"center"} h="90vh">
+          <Flex
+            justifyContent="center"
+            alignItems={"center"}
+            h="90vh"
+            w="full"
+          >
             <InfinitySpin width="200" color="#6DC5D7" />
           </Flex>
         ) : (
