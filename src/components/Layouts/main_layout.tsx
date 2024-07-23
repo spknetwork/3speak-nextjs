@@ -41,7 +41,7 @@ const MainLayout = ({ children }: any) => {
         </Box>
         <Text
           position={"absolute"}
-          right={[2, 6, 8, 12]}
+          right={[2, 6, 8, 10]}
           top={[1, 2, 3, 4]}
           fontSize={["xs", "sm", "md", "xl"]}
           zIndex={2}
@@ -58,7 +58,7 @@ const MainLayout = ({ children }: any) => {
       </Box>
 
       {/* This is the new component  */}
-      <Flex width={"auto"} flexDirection={"column"}>
+      <Flex width={"full"} flexDirection={"column"}>
         <Box as="nav">
           <Flex
             display={["flex", "flex", "none", "none"]}
@@ -120,7 +120,7 @@ const MainLayout = ({ children }: any) => {
         <Flex
           width={"100%"}
           justifyContent={"space-between"}
-          flexDirection={{ base: "column", md: "column", lg: "column" }}
+          flexDirection={{ base: "column", md: "column", lg: "column", sm: "column" }}
         >
           <main>{children}</main>
         </Flex>

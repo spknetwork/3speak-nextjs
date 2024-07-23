@@ -1,3 +1,6 @@
+//TODO: to wrap up the comments section in the mobile view 
+
+
 import {
   Box,
   Flex,
@@ -117,7 +120,7 @@ export default function Watch() {
   };
 
   return (
-    <Flex>
+     <Flex w={"fit-content"}>
       <MainLayout>
         <Flex justifyContent={"right"} background={bgColor}>
           <Flex
@@ -266,7 +269,7 @@ export default function Watch() {
           </Flex>
         </Flex>
       </MainLayout>
-    </Flex>
+      </Flex>
   );
 }
 
