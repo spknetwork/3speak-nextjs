@@ -36,7 +36,7 @@ const NormalSignup = ({ tab }: any) => {
   return (
     <Flex justifyContent="center">
       <Flex
-        width={"35%"}
+        width={["100%", "100%", "35%", "35%"]}
         boxShadow={"5px 5px 3px lightblue"}
         px="2rem"
         alignItems={{ _: "flex-start", tablet: "flex-start" }}

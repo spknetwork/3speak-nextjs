@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { useRouter } from "next/router";
@@ -36,7 +36,6 @@ const ParentComponent = (props: Props) => {
     <Flex
       margin="auto"
       paddingTop={"30px"}
-    
       css={css`
         @media (max-width: 820px) {
           flex-direction: column;
@@ -47,40 +46,48 @@ const ParentComponent = (props: Props) => {
           flex-direction: column;
           width: 35%;
         }
-        
       `}
     >
       <main>
-        <Box width={"100%"} boxShadow={"5px 0px 5px lightblue"} borderTopLeftRadius={"10px"} borderTopRightRadius={"10px"} >
-          <Tabs.Root className="TabsRoot" >
+        <Box
+          width={"100%"}
+          boxShadow={"5px 0px 5px lightblue"}
+          borderTopLeftRadius={"10px"}
+          borderTopRightRadius={"10px"}
+        >
+          <Tabs.Root className="TabsRoot">
             <Tabs.List className="TabsList" aria-label="Manage your account">
               <Tabs.Trigger
                 onClick={() => updateAuthCurrentPage("tab1")}
                 className="TabsTrigger"
                 value="tab1"
               >
-                Sign In
+                <Text fontSize={["12px", "16px", "8px", "12px"]}>Sign In</Text>
               </Tabs.Trigger>
               <Tabs.Trigger
                 onClick={() => updateAuthCurrentPage("tab2")}
                 className="TabsTrigger text-center"
                 value="tab2"
               >
-                Sign In with Hive
+                <Text fontSize={["12px", "16px", "8px", "12px"]}>
+                  Sign In with Hive
+                </Text>
               </Tabs.Trigger>
               <Tabs.Trigger
                 onClick={() => updateAuthCurrentPage("tab3")}
                 className="TabsTrigger"
                 value="tab3"
               >
-                Sign Up
+                <Text fontSize={["12px", "16px", "8px", "12px"]}>Sign Up</Text>
               </Tabs.Trigger>
               <Tabs.Trigger
                 onClick={() => updateAuthCurrentPage("tab4")}
                 className="TabsTrigger"
                 value="tab4"
               >
-                Sign Up - Hive Referral
+                <Text fontSize={["12px", "16px", "8px", "12px"]}>
+                  Sign Up - Hive Referral
+                </Text>
               </Tabs.Trigger>
             </Tabs.List>
           </Tabs.Root>

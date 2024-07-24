@@ -1,4 +1,5 @@
 //TODO: add a animation here for expanding drawer
+//TODO: make the items functional like normal sidebar
 
 import {
   Box,
@@ -10,7 +11,9 @@ import {
   useDisclosure,
   Icon,
   Button,
+  Link,
 } from "@chakra-ui/react";
+
 import Footer from "../footer/Footer";
 import MiniSidebar from "../MiniSidebar/MiniSidebar";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
@@ -97,9 +100,11 @@ const MainLayout = ({ children }: any) => {
           </Flex>
           {isOpen && (
             <>
-              <Flex justifyContent={"center"}>
-                <Button w="90%">LOGIN / SIGN UP</Button>
-              </Flex>
+              <Link href="/auth/modals">
+                <Flex justifyContent={"center"} w="90%">
+                  <Button w="90%">LOGIN / SIGN UP</Button>
+                </Flex>
+              </Link>
               {NAVIGATION.map((item, index) => (
                 <Flex key={index} alignItems={"center"}>
                   <Flex gap={5} alignItems={"center"} pl={6} py={4}>
@@ -111,7 +116,9 @@ const MainLayout = ({ children }: any) => {
                       color={colorMode === "dark" ? "white" : "black"}
                     />
                   </Flex>
-                  <Flex alignItems={"center"} px={2} fontSize={"14px"}>{item.title}</Flex>
+                  <Flex alignItems={"center"} px={2} fontSize={"14px"}>
+                    {item.title}
+                  </Flex>
                 </Flex>
               ))}
             </>
@@ -120,7 +127,12 @@ const MainLayout = ({ children }: any) => {
         <Flex
           width={"100%"}
           justifyContent={"space-between"}
-          flexDirection={{ base: "column", md: "column", lg: "column", sm: "column" }}
+          flexDirection={{
+            base: "column",
+            md: "column",
+            lg: "column",
+            sm: "column",
+          }}
         >
           <main>{children}</main>
         </Flex>

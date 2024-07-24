@@ -328,11 +328,11 @@ const CreatePost: React.FC = () => {
   /**
    * This part is throwing issues on the deployment part 
    */
-  useEffect(() => {
-    if (selectedFile && createUploadInfo) {
-        startUpload(selectedFile.file, createUploadInfo?.upload_id, createUploadInfo?.video_id);
-    }
-  }, [fileKey, startUpload, createUploadInfo]);
+//   useEffect(() => {
+//     if (selectedFile && createUploadInfo) {
+//         startUpload(selectedFile.file, createUploadInfo?.upload_id, createUploadInfo?.video_id);
+//     }
+//   }, [fileKey, startUpload, createUploadInfo]);
   
 
   const handleFileDropThumbnail = async (
