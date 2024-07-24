@@ -49,11 +49,13 @@ const ParentComponent = (props: Props) => {
       `}
     >
       <main>
-        <Box
+        <Flex
           width={"100%"}
           boxShadow={"5px 0px 5px lightblue"}
           borderTopLeftRadius={"10px"}
           borderTopRightRadius={"10px"}
+          alignItems={"center"}
+          bg="white"
         >
           <Tabs.Root className="TabsRoot">
             <Tabs.List className="TabsList" aria-label="Manage your account">
@@ -62,14 +64,14 @@ const ParentComponent = (props: Props) => {
                 className="TabsTrigger"
                 value="tab1"
               >
-                <Text fontSize={["12px", "16px", "8px", "12px"]}>Sign In</Text>
+                <Text fontSize={["12px", "16px", "8px", "12px"]} pt={4}>Sign In</Text>
               </Tabs.Trigger>
               <Tabs.Trigger
                 onClick={() => updateAuthCurrentPage("tab2")}
                 className="TabsTrigger text-center"
                 value="tab2"
               >
-                <Text fontSize={["12px", "16px", "8px", "12px"]}>
+                <Text fontSize={["12px", "16px", "8px", "12px"]} pt={4}>
                   Sign In with Hive
                 </Text>
               </Tabs.Trigger>
@@ -78,20 +80,20 @@ const ParentComponent = (props: Props) => {
                 className="TabsTrigger"
                 value="tab3"
               >
-                <Text fontSize={["12px", "16px", "8px", "12px"]}>Sign Up</Text>
+                <Text fontSize={["12px", "16px", "8px", "12px"]} pt={4}>Sign Up</Text>
               </Tabs.Trigger>
               <Tabs.Trigger
                 onClick={() => updateAuthCurrentPage("tab4")}
                 className="TabsTrigger"
                 value="tab4"
               >
-                <Text fontSize={["12px", "16px", "8px", "12px"]}>
+                <Text fontSize={["12px", "16px", "8px", "12px"]} pt={4}>
                   Sign Up - Hive Referral
                 </Text>
               </Tabs.Trigger>
             </Tabs.List>
           </Tabs.Root>
-        </Box>
+        </Flex>
       </main>
     </Flex>
   );

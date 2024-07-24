@@ -101,25 +101,27 @@ const MainLayout = ({ children }: any) => {
           {isOpen && (
             <>
               <Link href="/auth/modals">
-                <Flex justifyContent={"center"} w="90%">
+                <Flex justifyContent={"center"} w="95%">
                   <Button w="90%">LOGIN / SIGN UP</Button>
                 </Flex>
               </Link>
               {NAVIGATION.map((item, index) => (
-                <Flex key={index} alignItems={"center"}>
-                  <Flex gap={5} alignItems={"center"} pl={6} py={4}>
-                    <Icon
-                      cursor="pointer"
-                      width={["12px", "16px", "18px", "22px"]}
-                      height={["12px", "16px", "18px", "22px"]}
-                      as={item.icon}
-                      color={colorMode === "dark" ? "white" : "black"}
-                    />
+                <Link key={index} href={`${item.route!}`}>
+                  <Flex alignItems={"center"}>
+                    <Flex gap={5} alignItems={"center"} pl={6} py={4}>
+                      <Icon
+                        cursor="pointer"
+                        width={["12px", "16px", "18px", "22px"]}
+                        height={["12px", "16px", "18px", "22px"]}
+                        as={item.icon}
+                        color={colorMode === "dark" ? "white" : "black"}
+                      />
+                    </Flex>
+                    <Flex alignItems={"center"} px={2} fontSize={"14px"}>
+                      {item.title}
+                    </Flex>
                   </Flex>
-                  <Flex alignItems={"center"} px={2} fontSize={"14px"}>
-                    {item.title}
-                  </Flex>
-                </Flex>
+                </Link>
               ))}
             </>
           )}
