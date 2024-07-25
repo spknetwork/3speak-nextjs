@@ -70,7 +70,7 @@ const SingleComment = ({
   return (
     <Box
       key={comment?.permlink}
-      marginLeft={`${30}px`}
+      marginLeft={"30px"}
       position={"relative"}
       p={2}
       pb={4}

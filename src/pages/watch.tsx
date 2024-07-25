@@ -1,4 +1,5 @@
 //TODO: to wrap up the comments section in the mobile view 
+//TOOD: add the redirection to the login hook 
 
 
 import {
@@ -122,7 +123,7 @@ export default function Watch() {
   return (
      <Flex w={"fit-content"}>
       <MainLayout>
-        <Flex justifyContent={"right"} background={bgColor}>
+        <Flex  background={bgColor}>
           <Flex
             width={"100%"}
             flexDirection={["column", "row"]}
@@ -133,10 +134,9 @@ export default function Watch() {
               <Box
                 borderRadius={4}
                 boxShadow="base"
-                mr={2}
                 flex="1"
                 bg={bgColor}
-                maxW={"95%"}
+                maxW={"100%"}
               >
                 <Box
                   m={5}
@@ -195,7 +195,7 @@ export default function Watch() {
                 marginBottom={"30px"}
                 borderRadius={4}
                 boxShadow="base"
-                maxW={"95%"}
+                maxW={"100%"}
                 w="full"
                 pb={4}
                 px={4}
@@ -213,7 +213,7 @@ export default function Watch() {
                 boxShadow="base"
                 flex="1"
                 bg={bgColor}
-                maxW={"95%"}
+                maxW={"100%"}
               >
                 <About
                   getVideo={videoDetails}
@@ -227,7 +227,7 @@ export default function Watch() {
                 boxShadow={"base"}
                 w="full"
                 p={4}
-                maxW={"95%"}
+                maxW={"100%"}
               >
                 <Flex fontFamily={"system-ui"}>
                   <h3>Comments</h3>
