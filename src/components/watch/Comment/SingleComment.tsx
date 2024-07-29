@@ -1,8 +1,4 @@
 // TOOD: show more num_comments replies
-
-//TODO: shorter the line 
-//TODO: 
-
 import CustomMarkdown from "@/helper/CustomMarkdown";
 import {
   Avatar,

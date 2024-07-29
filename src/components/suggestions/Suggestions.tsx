@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
-import FeedGridItem from "../feedgrid/FeedGridItem";
+import FeedGridItem2 from "../feedgrid/FeedGridItem2";
 
 type Props = {
   videos: any;
@@ -41,16 +41,11 @@ const Suggestions = ({
         </Text>
       </Box>
       <Grid
-        display={{
-          base: "inline-table",
-          md: "inline-table",
-          lg: "inline-table",
-        }}
         templateColumns="repeat(1, 1fr)"
         gap={4}
       >
         {videos.map((video: any, index: number) => (
-          <FeedGridItem video={video} key={index} />
+          <FeedGridItem2 video={video} key={index} />
         ))}
       </Grid>
     </Box>

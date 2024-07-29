@@ -219,19 +219,6 @@ const SignIn = () => {
                 )}
               </fieldset>
             </Box>
-            {/* <Box
-              width="100%"
-              borderRadius="0.25rem"
-              mt="1.5rem"
-              py="0.75rem"
-              px="1.25rem"
-              backgroundColor="#f8d7da"
-              border="1px solid #f5c6cb"
-            >
-              <Typography textAlign="center" color="#721c24">
-                {t("login.disclaimer")}
-              </Typography>
-            </Box> */}
             <Flex width="100%" justifyContent="center" mt="1rem">
               <StyledButton type="submit">Log in</StyledButton>
             </Flex>

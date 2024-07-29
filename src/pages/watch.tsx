@@ -1,6 +1,5 @@
-//TODO: to wrap up the comments section in the mobile view 
-//TOOD: add the redirection to the login hook 
-
+//TODO: to wrap up the comments section in the mobile view
+//TOOD: add the redirection to the login hook
 
 import {
   Box,
@@ -23,7 +22,6 @@ import Tags from "@/components/watch/Tags";
 import Title from "@/components/watch/Title";
 import VideoPlayer from "@/components/watch/VideoPlayer";
 import Community from "@/components/watch/Community";
-import { useState, useEffect, SetStateAction } from "react";
 import MainLayout from "@/components/Layouts/main_layout";
 import { useQuery } from "@apollo/client";
 import {
@@ -39,6 +37,7 @@ import { useAppStore } from "@/lib/store";
 import Suggestions from "@/components/suggestions/Suggestions";
 import { InfinitySpin } from "react-loader-spinner";
 import CommentParenting from "@/components/watch/Comment/CommentParenting";
+import CommentSection from "../components/mobileView/watch/CommentSection";
 
 export default function Watch() {
   const { colorMode } = useColorMode();
@@ -121,9 +120,9 @@ export default function Watch() {
   };
 
   return (
-     <Flex w={"fit-content"}>
+    <Flex>
       <MainLayout>
-        <Flex  background={bgColor}>
+        <Flex background={bgColor}>
           <Flex
             width={"100%"}
             flexDirection={["column", "row"]}
@@ -148,13 +147,14 @@ export default function Watch() {
                 >
                   {/* iska kala color overlap kr rha hai   */}
 
-                  <Box>
+                  <Box boxSize={"auto"}>
                     <VideoPlayer author={author} permlink={permlink} />
                   </Box>
                   <Box>
                     <Flex flexDirection={"column"} bgColor={bgColor}>
                       <Box bgColor={bgColor} fontFamily={"system-ui"}>
                         <Title getVideo={videoDetails} colorMode={colorMode} />
+                        {/* <CommentSection /> */}
                         <Tags
                           videoDetails={videoDetails}
                           bgColor={bgColor}
@@ -163,7 +163,7 @@ export default function Watch() {
                       </Box>
                       <Flex>
                         <Text
-                          fontSize={"14px"}
+                          fontSize={["18px", "16px", "14px"]}
                           fontFamily={"system-ui"}
                           fontWeight={"bold"}
                         >
@@ -232,7 +232,7 @@ export default function Watch() {
                 <Flex fontFamily={"system-ui"}>
                   <h3>Comments</h3>
                 </Flex>
-                <Box>
+                <Box display={['none', 'none', 'block', 'block']}>
                   <CommentParenting
                     bgColor={bgColor}
                     colorMode={colorMode}
@@ -240,20 +240,30 @@ export default function Watch() {
                     permlink={permlink}
                   />
                 </Box>
-                <AllComments
-                  author={author}
-                  permlink={permlink}
-                  bgColor={bgColor}
-                  colorMode={colorMode}
-                />
+                <Box display={['block', 'block', 'none', 'none']}>
+                  <CommentSection
+                    author={author}
+                    permlink={permlink}
+                    bgColor={bgColor}
+                    colorMode={colorMode}
+                  />
+                </Box>
+                <Box display={['none', 'none', 'block', 'block']}>
+                  <AllComments
+                    author={author}
+                    permlink={permlink}
+                    bgColor={bgColor}
+                    colorMode={colorMode}
+                  />
+                </Box>
               </Box>
             </Box>
             {getSuggestionFeed.loading ? (
               <Flex
                 justifyContent={"center"}
                 alignItems={"center"}
-                h="70vh"
-                w={452}
+                h="full"
+                w={"auto"}
               >
                 <InfinitySpin width="200" color="#6DC5D7" />
               </Flex>
@@ -269,7 +279,7 @@ export default function Watch() {
           </Flex>
         </Flex>
       </MainLayout>
-      </Flex>
+    </Flex>
   );
 }
 

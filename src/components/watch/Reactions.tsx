@@ -1,14 +1,11 @@
-//TODO: cursor not allowed  
-import { ViewIcon } from "@chakra-ui/icons";
-import { Button, Flex, Text, Tooltip } from "@chakra-ui/react";
+import { Button, Flex, Text, Tooltip, Icon } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
 import { FaThumbsUp } from "react-icons/fa";
 import { FaThumbsDown } from "react-icons/fa";
 import { VideoDetails } from "types";
 import MenuButtons from "./MenuButtons";
-import {useAuth} from "@/hooks/auth"
-
+import { useAuth } from "@/hooks/auth";
 
 type Props = {
   bgColor: string;
@@ -17,9 +14,7 @@ type Props = {
 };
 
 const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
-
-  const {authenticated} = useAuth();  //true
-
+  const { authenticated } = useAuth(); //true
 
   const [likes, setLikes] = useState<number>(getVideo?.stats?.num_votes | 0);
   const [isLiked, setIsLiked] = useState<boolean>(false);
@@ -30,11 +25,10 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
   );
   const [isDisLiked, setDisLiked] = useState<boolean>(false);
 
- 
   function handleLikes() {
-    if(!authenticated){
-        return null
-    }else {
+    if (!authenticated) {
+      return null;
+    } else {
       if (!isLiked) {
         setLikes(likes + 1);
         setIsLiked(!isLiked);
@@ -55,7 +49,7 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
     if (!isDisLiked) {
       setDislikes(Dislikes - 1);
       setDisLiked(!isDisLiked);
-      
+
       if (isLiked) {
         setLikes(likes - 1);
         setIsLiked(false);
@@ -68,15 +62,53 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
     }
   }
 
+  const [FollowState, setFollowState] = useState<string | null>("follow");
+
+  const TriggerRender = () => {
+    setFollowState((prevState) =>
+      prevState === "follow" ? "Unfollow" : "follow"
+    );
+  };
+
   return (
     <Flex justifyContent={"center"}>
+      <Flex
+        alignItems={"center"}
+        bg={bgColor}
+        px={2}
+        color={colorMode === "dark" ? "white" : "black"}
+      >
+        <Button
+          marginRight={"10px"}
+          textTransform="uppercase"
+          border={"none"}
+          boxShadow="0 1px 4px rgb(0 0 0 / 40%)"
+          transition={"all 0.4s"}
+          lineHeight={"1.5"}
+          background={
+            colorMode === "dark"
+              ? "black"
+              : "#fff linear-gradient(180deg, white, #fff) repeat-x"
+          }
+          fontWeight={"bold"}
+          fontSize={"14px"}
+          fontFamily={"system-ui"}
+          color={colorMode === "dark" ? "white" : "black"}
+          onClick={TriggerRender}
+        >
+          {FollowState === "follow" ? "FOLLOW" : "UNFOLLOW"}
+        </Button>
+      </Flex>
       <Flex justifyContent={"center"} alignItems="center" className="mr-4">
         <Tooltip label={authenticated ? "" : "You need to login!"}>
           <Flex
             cursor={authenticated ? "pointer" : "not-allowed"}
             onClick={handleLikes}
           >
-            {isLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
+            <Icon 
+             as={isLiked ? FaThumbsUp : FaRegThumbsUp}
+             boxSize={6}
+            />
           </Flex>
         </Tooltip>
         {getVideo && getVideo.stats && getVideo.stats.num_votes > 0 && (
@@ -84,32 +116,35 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
             marginBottom={"0px !important"}
             fontWeight={"bolder"}
             marginLeft={"10px"}
+            fontSize={"lg"}
           >
             {likes}
           </Text>
         )}
       </Flex>
       {}
-      {/* TODO: make this issue */}
-      <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
+      <Flex justifyContent="center" alignItems="center" marginLeft="24px">
         <Tooltip label={authenticated ? "" : "You need to login!"}>
           <Flex
             cursor={authenticated ? "pointer" : "not-allowed"}
             onClick={authenticated ? handleDisLikes : () => {}}
           >
-            {isDisLiked ? <FaThumbsDown /> : <FaRegThumbsDown />}
+            <Icon
+              as={isDisLiked ? FaThumbsDown : FaRegThumbsDown}
+              boxSize={6} 
+            />
           </Flex>
         </Tooltip>
         <Text
-          marginBottom={"0px !important"}
-          fontWeight={"bolder"}
-          marginLeft={"8px"}
+          marginBottom="0px !important"
+          fontWeight="bolder"
+          marginLeft="10px"
+          fontSize="lg" 
         >
           {Dislikes}
         </Text>
       </Flex>
-      <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
-        {/* views */}
+      {/* <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
         <ViewIcon fontSize={"20px"} />
         <Text
           marginBottom={"0px !important"}
@@ -118,7 +153,7 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
         >
           38
         </Text>
-      </Flex>
+      </Flex> */}
       <Flex justifyContent={"center"} alignItems="center" marginLeft={"15px"}>
         {/* views */}
         <MenuButtons bgColor={bgColor} colorMode={colorMode} />

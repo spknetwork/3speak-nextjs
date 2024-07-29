@@ -23,21 +23,24 @@ const Tags = ({ videoDetails, ...props }: Props) => {
         {firstFive?.map((tag: any, index: number) => {
           return (
             <Flex
+             alignItems={"center"}
               key={index}
               backgroundColor={
                 props.colorMode === "dark" ? "gray.500" : "gray.300"
               }
               px={2}
               mx={1}
+              my={2}
               borderRadius={10}
-              h={6}
+              h={["10", "9", "8", "8"]}
               cursor={"pointer"}
               position={"relative"}
             >
               <Link
                 href={"/tags/" + `${tag}`}
                 display={"inline-block"}
-                color={props.colorMode === "dark" ? "blue.50" : "blue.500"}               
+                color={props.colorMode === "dark" ? "blue.50" : "blue.500"}       
+                fontSize={["12px", "20px", "16px", "12px"]}        
               >
                 #{tag}
               </Link>

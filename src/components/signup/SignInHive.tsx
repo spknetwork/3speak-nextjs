@@ -6,8 +6,10 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import Image from "next/image";
 import { AuthActions } from "@/hooks/auth";
 import {Providers} from "@aioha/aioha"
+import {useRouter} from 'next/router'
 
 const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
+  const router = useRouter();
   return (
     <Box width="100%">
       <Box>
@@ -70,7 +72,11 @@ const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
               type="submit"
               height={"92%"}
               onClick={() =>
-                AuthActions.login("Hive", Providers.Keychain, username)
+                AuthActions.login("Hive", Providers.Keychain, username).then(() => {
+                  router.push('/')
+                }).catch(err => {
+                  console.error(err)
+                })
               }
             >
               <FaLongArrowAltRight />

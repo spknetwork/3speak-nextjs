@@ -1,21 +1,19 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Text, Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 
 type Props = {
-    username: string;
-}
+  username: string;
+};
 const Name = (props: Props) => {
   const router = useRouter();
   const redirectUserPage = () => {
-    router.push("/user")
-  }
+    router.push("/user");
+  };
   return (
-    <Flex>
-      <Text cursor={'pointer'} onClick={() => redirectUserPage()}  fontWeight={"bold"} >
-        {props.username}
-      </Text>
-    </Flex>
+    <Text cursor={"pointer"} fontSize={"12px"} fontWeight={"bold"} onClick={() => redirectUserPage()}>
+      {props.username}
+    </Text>
   );
 };
 

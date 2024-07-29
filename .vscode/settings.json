@@ -1,7 +1,7 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "editor.fontWeight": "bold",
+  "editor.fontWeight": "normal",
   "terminal.integrated.fontWeight": "normal",
   "editor.fontSize": 13
 }
