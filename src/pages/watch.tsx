@@ -1,5 +1,3 @@
-//TODO: to wrap up the comments section in the mobile view
-//TOOD: add the redirection to the login hook
 
 import {
   Box,

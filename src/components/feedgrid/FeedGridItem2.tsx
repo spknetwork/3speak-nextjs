@@ -141,11 +141,11 @@ const FeedGridItem2 = ({ video }: Props) => {
               </Box>
             </Box>
           )}
-          <Box width={["auto", "48", "48", "48"]} aspectRatio={16 / 9}>
+          <Box width={["22", "48", "48", "48"]} aspectRatio={16 / 9}>
             <Image
               width="100% !important"
               borderRadius={"10px"}
-              objectFit="cover"
+              objectFit="fill"
               alt="test"
               aspectRatio={16 / 9}
               src={`https://images.hive.blog/320x0/${

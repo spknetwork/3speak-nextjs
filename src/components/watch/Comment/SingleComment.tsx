@@ -66,7 +66,7 @@ const SingleComment = ({
   return (
     <Box
       key={comment?.permlink}
-      marginLeft={"30px"}
+      marginLeft={depth === 0 ? "0px" : "30px"}
       position={"relative"}
       p={2}
       pb={4}
@@ -140,7 +140,7 @@ const SingleComment = ({
           />
         </Box>
         <Box
-          mt={2}
+          mt={["2","0"]}
           ml={"4px"}
           borderRadius="4px"
           border={"1px solid transparent"}
@@ -150,19 +150,19 @@ const SingleComment = ({
           paddingLeft="0px"
           alignSelf="flex-start"
         >
-          <Flex alignItems={"center"} gap={2}>
+          <Flex alignItems={"center"} gap={1}>
             <Text
-              fontSize="xl"
+              fontSize={["14px","24px"]}
               fontWeight={"bold"}
               color={colorMode === "dark" ? "white" : "black"}
             >
               {comment?.author?.profile?.name ?? "User"}
             </Text>
-            <Text>{`@${comment?.author?.username}`}</Text>
+            <Text fontSize={["12px","18px"]}>{`@${comment?.author?.username}`}</Text>
             <Flex alignItems={"center"} mb={2}>
               <BsDot />
             </Flex>
-            <Text>{timeAgo(comment?.created_at)}</Text>
+            <Text fontSize={["10px", "12px"]}>{timeAgo(comment?.created_at)}</Text>
           </Flex>
           <Collapse in={!isCollapsed} unmountOnExit>
             <Box

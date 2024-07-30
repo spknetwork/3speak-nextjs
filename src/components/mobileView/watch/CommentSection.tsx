@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+//TODO: to all the 
+import React, { useState, useRef,  } from "react";
 import { useGetComments } from "@/hooks/getComments";
 import { CommentInterface } from "types";
 import {
@@ -14,13 +15,13 @@ import {
   DrawerCloseButton,
   DrawerBody,
   useDisclosure,
+  Button
 } from "@chakra-ui/react";
 import { BsDot } from "react-icons/bs";
 import CustomMarkdown from "@/helper/CustomMarkdown";
 import AllComments from "@/components/watch/Comment/AllComments";
 import CommentParenting from "@/components/watch/Comment/CommentParenting";
 
-//TODO: include the parent level commenting in the pop over
 
 type Props = {
   author: string;
@@ -91,20 +92,20 @@ const CommentSection = (props: Props) => {
                         src={comment?.author?.profile?.images?.avatar}
                       />
                     </Box>
-                    <Flex px={2} gap={2} alignItems={"center"} mt={2}>
-                      <Text fontWeight={"bold"} fontSize={"xl"}>
+                    <Flex px={2} gap={1} alignItems={"center"} mt={2}>
+                      <Text fontWeight={"bold"} fontSize={"md"}>
                         {comment?.author?.profile?.name}
                       </Text>
-                      <Text>{`@${comment?.author?.username}`}</Text>
+                      <Text fontSize={["12px"]}>{`@${comment?.author?.username}`}</Text>
                       <Flex alignItems={"center"} mb={2}>
                         <BsDot />
                       </Flex>
-                      <Text>{timeAgo(comment?.created_at)}</Text>
+                      <Text fontSize={"10px"}>{timeAgo(comment?.created_at)}</Text>
                     </Flex>
                   </Flex>
                   <Flex>
                     <Box
-                      padding={"0px 40px"}
+                      padding={"0px 50px"}
                       width="100%"
                       color={props.colorMode === "dark" ? "white" : "black"}
                     >
@@ -121,8 +122,10 @@ const CommentSection = (props: Props) => {
           onClose={onClose}
           finalFocusRef={btnRef}
         >
-          <DrawerContent>
+          <DrawerContent h="70vh">
+            <Button zIndex={12}>
             <DrawerCloseButton />
+            </Button>
             <DrawerBody>
              <CommentParenting 
               author={props.author}

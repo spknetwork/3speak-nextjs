@@ -71,15 +71,16 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
   };
 
   return (
-    <Flex justifyContent={"center"}>
+    <Flex justifyContent={['center']} gap={2}>
       <Flex
         alignItems={"center"}
+        justifyContent={"space-evenly"}
         bg={bgColor}
         px={2}
         color={colorMode === "dark" ? "white" : "black"}
       >
         <Button
-          marginRight={"10px"}
+          mx={12}
           textTransform="uppercase"
           border={"none"}
           boxShadow="0 1px 4px rgb(0 0 0 / 40%)"
@@ -99,7 +100,7 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
           {FollowState === "follow" ? "FOLLOW" : "UNFOLLOW"}
         </Button>
       </Flex>
-      <Flex justifyContent={"center"} alignItems="center" className="mr-4">
+      <Flex justifyContent={"center"} alignItems="center" className="mr-4" gap={1}>
         <Tooltip label={authenticated ? "" : "You need to login!"}>
           <Flex
             cursor={authenticated ? "pointer" : "not-allowed"}
@@ -135,14 +136,14 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
             />
           </Flex>
         </Tooltip>
-        <Text
+        {/* <Text
           marginBottom="0px !important"
           fontWeight="bolder"
           marginLeft="10px"
           fontSize="lg" 
         >
           {Dislikes}
-        </Text>
+        </Text> */}
       </Flex>
       {/* <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
         <ViewIcon fontSize={"20px"} />
