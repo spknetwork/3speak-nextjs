@@ -1,4 +1,4 @@
-
+//TODO: work on this page for the user details
 import MainLayout from "@/components/Layouts/main_layout";
 import About from "@/components/user/About";
 import Achievements from "@/components/user/Achievements";
@@ -80,6 +80,7 @@ const UserPage = () => {
     <MainLayout>
       <Box backgroundColor={bgColor}>
         <Box minHeight={"280px"} position={"relative"} bgColor={bgColor}>
+            {/* TODO: What we have for cover image */}
           <Flex
             w={"full"}
             h={"32vh"}
@@ -101,7 +102,7 @@ const UserPage = () => {
             <Image
               alt="image"
               background={"#fff none repeat scroll 0 0"}
-              src="https://images.hive.blog/u/thestrollingmind/avatar"
+              src={`https://images.hive.blog/u/${author}/avatar`}
               border={"2px solid #fff"}
               borderRadius="50px"
               height={"90px"}
@@ -174,7 +175,7 @@ const UserPage = () => {
                 backgroundColor="transparent"
                 textDecoration={"none !important"}
               >
-                thestrollingmind
+                {author}
               </Link>
               {isMobile && (
                 <Button

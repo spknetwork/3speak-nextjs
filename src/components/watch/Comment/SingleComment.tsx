@@ -150,9 +150,9 @@ const SingleComment = ({
           paddingLeft="0px"
           alignSelf="flex-start"
         >
-          <Flex alignItems={"center"} gap={1}>
+          <Flex alignItems={"center"} gap={1} flexWrap={"wrap"}>
             <Text
-              fontSize={["14px","24px"]}
+              fontSize={["14px","20px"]}
               fontWeight={"bold"}
               color={colorMode === "dark" ? "white" : "black"}
             >

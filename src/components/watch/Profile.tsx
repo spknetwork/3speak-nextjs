@@ -47,11 +47,11 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
 
 
   return (
-    <Flex justifyContent={"space-between"}>
+    <Flex justifyContent={"space-between"} w={["300px", "auto"]}>
       <Box
         fontFamily={"system-ui"}
         bg={bgColor}
-        py={4}
+        py={["2","4"]}
         color={colorMode === "dark" ? "white" : "black"}
       >
         {/* src="https://bit.ly/dan-abramov" */}
@@ -62,10 +62,11 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
             alignSelf={"start"}
             src={profile?.images?.avatar}
             onClick={() => gotoProfile()}
+            
           />
-          <Flex flexDirection={"column"}>
+          <Flex flexDirection={"column"} justifyContent={"center"}>
             <Link
-              fontSize={"15px"}
+              fontSize={["18px"]}
               fontWeight={"bolder"}
               cursor={"pointer"}
               onClick={() => gotoProfile()}

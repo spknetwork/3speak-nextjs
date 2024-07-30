@@ -71,16 +71,14 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
   };
 
   return (
-    <Flex justifyContent={['center']} gap={2}>
+    <Flex justifyContent={["space-between", "center"]} w="full">
       <Flex
         alignItems={"center"}
-        justifyContent={"space-evenly"}
         bg={bgColor}
         px={2}
         color={colorMode === "dark" ? "white" : "black"}
       >
         <Button
-          mx={12}
           textTransform="uppercase"
           border={"none"}
           boxShadow="0 1px 4px rgb(0 0 0 / 40%)"
@@ -100,64 +98,48 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
           {FollowState === "follow" ? "FOLLOW" : "UNFOLLOW"}
         </Button>
       </Flex>
-      <Flex justifyContent={"center"} alignItems="center" className="mr-4" gap={1}>
-        <Tooltip label={authenticated ? "" : "You need to login!"}>
-          <Flex
-            cursor={authenticated ? "pointer" : "not-allowed"}
-            onClick={handleLikes}
-          >
-            <Icon 
-             as={isLiked ? FaThumbsUp : FaRegThumbsUp}
-             boxSize={6}
-            />
-          </Flex>
-        </Tooltip>
-        {getVideo && getVideo.stats && getVideo.stats.num_votes > 0 && (
-          <Text
-            marginBottom={"0px !important"}
-            fontWeight={"bolder"}
-            marginLeft={"10px"}
-            fontSize={"lg"}
-          >
-            {likes}
-          </Text>
-        )}
-      </Flex>
-      {}
-      <Flex justifyContent="center" alignItems="center" marginLeft="24px">
-        <Tooltip label={authenticated ? "" : "You need to login!"}>
-          <Flex
-            cursor={authenticated ? "pointer" : "not-allowed"}
-            onClick={authenticated ? handleDisLikes : () => {}}
-          >
-            <Icon
-              as={isDisLiked ? FaThumbsDown : FaRegThumbsDown}
-              boxSize={6} 
-            />
-          </Flex>
-        </Tooltip>
-        {/* <Text
-          marginBottom="0px !important"
-          fontWeight="bolder"
-          marginLeft="10px"
-          fontSize="lg" 
-        >
-          {Dislikes}
-        </Text> */}
-      </Flex>
-      {/* <Flex justifyContent={"center"} alignItems="center" marginLeft={"25px"}>
-        <ViewIcon fontSize={"20px"} />
-        <Text
-          marginBottom={"0px !important"}
-          fontWeight={"bolder"}
-          marginLeft={"10px"}
-        >
-          38
-        </Text>
-      </Flex> */}
-      <Flex justifyContent={"center"} alignItems="center" marginLeft={"15px"}>
-        {/* views */}
-        <MenuButtons bgColor={bgColor} colorMode={colorMode} />
+
+      <Flex gap={2}  justifyContent={"center"}>
+        <Flex alignItems="center">
+          <Tooltip label={authenticated ? "" : "You need to login!"}>
+            <Flex
+              justifyContent={"center"}
+              cursor={authenticated ? "pointer" : "not-allowed"}
+              onClick={handleLikes}
+            >
+              <Icon as={isLiked ? FaThumbsUp : FaRegThumbsUp} boxSize={6} />
+            </Flex>
+          </Tooltip>
+          {getVideo && getVideo.stats && getVideo.stats.num_votes > 0 && (
+            <Text
+              marginBottom={"0px !important"}
+              fontWeight={"bolder"}
+              marginLeft={"10px"}
+              fontSize={"lg"}
+            >
+              {likes}
+            </Text>
+          )}
+        </Flex>
+        <Flex justifyContent="center" alignItems="center" marginLeft="24px">
+          <Tooltip label={authenticated ? "" : "You need to login!"}>
+            <Flex
+              justifyContent={"center"}
+              cursor={authenticated ? "pointer" : "not-allowed"}
+              onClick={authenticated ? handleDisLikes : () => {}}
+            >
+              <Icon
+                as={isDisLiked ? FaThumbsDown : FaRegThumbsDown}
+                boxSize={6}
+              />
+            </Flex>
+          </Tooltip>
+        </Flex>
+
+        <Flex justifyContent={"center"} alignItems="center">
+          {/* views */}
+          <MenuButtons bgColor={bgColor} colorMode={colorMode} />
+        </Flex>
       </Flex>
     </Flex>
   );

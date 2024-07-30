@@ -246,7 +246,7 @@ export default function Watch() {
                     colorMode={colorMode}
                   />
                 </Box>
-                <Box display={['none', 'none', 'block', 'block']}>
+                <Box display={['none', 'none', 'block', 'block']} h={"fit-content"}>
                   <AllComments
                     author={author}
                     permlink={permlink}
@@ -260,7 +260,7 @@ export default function Watch() {
               <Flex
                 justifyContent={"center"}
                 alignItems={"center"}
-                h="full"
+                h="fit-content"
                 w={"auto"}
               >
                 <InfinitySpin width="200" color="#6DC5D7" />
