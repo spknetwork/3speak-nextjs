@@ -1,4 +1,4 @@
-// TOOD: show more num_comments replies
+//TODO: take care of the bar thing that is connecting from one comment to another 
 import CustomMarkdown from "@/helper/CustomMarkdown";
 import {
   Avatar,
@@ -17,6 +17,7 @@ import CommentFooter from "../CommentFooter";;
 import { useGetComments } from "@/hooks/getComments";
 import { BsDot } from "react-icons/bs";
 import AllComments from "./AllComments";
+import moment from "moment"
 
 type Props = {
   comment: CommentInterface;
@@ -44,24 +45,6 @@ const SingleComment = ({
   const [showMoreReplies, setShowMoreReplies] = useState(false);
 
   console.log(isCollapsed);
-
-  function timeAgo(date: string): string {
-    const now = new Date();
-
-    const nowDate = new Date(date);
-    const ago = now.getTime() - nowDate.getTime();
-
-    const seconds = Math.floor(ago / 1000);
-    const minutes = Math.floor(seconds / 60);
-
-    if (seconds < 60) {
-      return `${seconds} seconds ago`;
-    } else if (minutes < 60) {
-      return `${minutes} minutes ago`;
-    } else {
-      return `Other time unit ago`;
-    }
-  }
 
   return (
     <Box
@@ -158,11 +141,11 @@ const SingleComment = ({
             >
               {comment?.author?.profile?.name ?? "User"}
             </Text>
-            <Text fontSize={["12px","18px"]}>{`@${comment?.author?.username}`}</Text>
+            <Text fontSize={["12px","14px"]}>{`@${comment?.author?.username}`}</Text>
             <Flex alignItems={"center"} mb={2}>
               <BsDot />
             </Flex>
-            <Text fontSize={["10px", "12px"]}>{timeAgo(comment?.created_at)}</Text>
+            <Text fontSize={["10px", "12px"]}>{moment(comment?.created_at).fromNow()}</Text>
           </Flex>
           <Collapse in={!isCollapsed} unmountOnExit>
             <Box

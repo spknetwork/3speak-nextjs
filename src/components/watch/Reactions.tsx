@@ -71,11 +71,13 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
   };
 
   return (
-    <Flex justifyContent={["space-between", "center"]} w="full">
+    <Flex justifyContent={["space-between", "flex-start"]} w="full" gap={["0", "2"]}>
       <Flex
+        justifyContent={"center"}
         alignItems={"center"}
         bg={bgColor}
         px={2}
+        w={["auto", "122px"]}
         color={colorMode === "dark" ? "white" : "black"}
       >
         <Button
@@ -99,7 +101,7 @@ const Reactions = ({ bgColor, colorMode, getVideo }: any) => {
         </Button>
       </Flex>
 
-      <Flex gap={2}  justifyContent={"center"}>
+      <Flex gap={2} justifyContent={"center"}>
         <Flex alignItems="center">
           <Tooltip label={authenticated ? "" : "You need to login!"}>
             <Flex

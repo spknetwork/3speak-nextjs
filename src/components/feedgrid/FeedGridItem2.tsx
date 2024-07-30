@@ -1,5 +1,3 @@
-//TODO: restructure the layout for the suggestions feed
-
 import React, { useState } from "react";
 import {
   Box,
@@ -132,7 +130,8 @@ const FeedGridItem2 = ({ video }: Props) => {
                 bottom="5px"
                 fontSize="8px"
                 fontWeight={"bold"}
-                left="120px"
+                right="5px"
+                color={"#000"}
                 background={"none 0px 0px repeat scroll rgb(232, 232, 232)"}
                 borderRadius="2px"
                 padding={"0px 6px"}
@@ -141,11 +140,10 @@ const FeedGridItem2 = ({ video }: Props) => {
               </Box>
             </Box>
           )}
-          <Box width={["22", "48", "48", "48"]} aspectRatio={16 / 9}>
+          <Box width={["48"]} aspectRatio={16 / 9}>
             <Image
               width="100% !important"
               borderRadius={"10px"}
-              objectFit="fill"
               alt="test"
               aspectRatio={16 / 9}
               src={`https://images.hive.blog/320x0/${

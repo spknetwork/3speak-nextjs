@@ -18,11 +18,8 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
    const getUserProfile = useQuery(GET_PROFILE, {
     variables: { id: author },
   });
-
   
   const profile: ProfileInterface | undefined = getUserProfile.data?.profile;
-
-  console.log("profile" , profile);
   
   const { loading, error, data } = useQuery(GET_TOTAL_COUNT_OF_FOLLOWING, {
     variables: { id: router.query.username },
@@ -40,7 +37,6 @@ const Profile = ({ author,  bgColor, colorMode }: Props) => {
   const [followers_count, setfollowers_count] = useState<any>(null);
 
 
-  
   const gotoProfile = () => {
     router.push(`/user/${profile?.username}`);
   };

@@ -29,7 +29,7 @@ const Suggestions = ({
       paddingX={"10px"}
       paddingRight="25px"
       maxWidth={["100%", "75%", "50%", "25%"]}
-      height={"auto"}
+      height={"fit-content"}
     >
       <Box margin={"15px"}>
         <Text

@@ -21,6 +21,7 @@ import { BsDot } from "react-icons/bs";
 import CustomMarkdown from "@/helper/CustomMarkdown";
 import AllComments from "@/components/watch/Comment/AllComments";
 import CommentParenting from "@/components/watch/Comment/CommentParenting";
+import moment from "moment";
 
 
 type Props = {
@@ -100,7 +101,7 @@ const CommentSection = (props: Props) => {
                       <Flex alignItems={"center"} mb={2}>
                         <BsDot />
                       </Flex>
-                      <Text fontSize={"10px"}>{timeAgo(comment?.created_at)}</Text>
+                      <Text fontSize={"10px"}>{moment(comment?.created_at).fromNow()}</Text>
                     </Flex>
                   </Flex>
                   <Flex>

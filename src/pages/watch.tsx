@@ -171,7 +171,6 @@ export default function Watch() {
                       <Flex
                         flexWrap={"wrap"}
                         justifyContent={"space-between"}
-                        marginTop="1rem"
                         bgColor={bgColor}
                       >
                         <Profile
@@ -260,8 +259,7 @@ export default function Watch() {
               <Flex
                 justifyContent={"center"}
                 alignItems={"center"}
-                h="fit-content"
-                w={"auto"}
+                w="full"
               >
                 <InfinitySpin width="200" color="#6DC5D7" />
               </Flex>
