@@ -1,4 +1,4 @@
-//TODO: fixing this page 
+//TODO: refactor the code in this file today!
 import React, { ReactNode, useEffect, useState } from "react";
 import { useAppStore } from "../../lib/store";
 import { useRouter } from "next/router";
@@ -77,6 +77,10 @@ export default function StudioPage({ children }: { children: ReactNode }) {
 
 
   return (
+    /*
+    <Nav />
+    <Title />
+    */
     <Box minH="100vh" bg={bgColor}>
       <SidebarContent
         onClose={() => onClose}

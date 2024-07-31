@@ -1314,7 +1314,7 @@ const CreatePost: React.FC = () => {
                       </Button>
                       <Button
                         disabled={savingDetails == true ? true : false}
-                        onClick={handleStep2Complete}
+                        onClick={handleStep2Complete} 
                         size={"lg"}
                         colorScheme="twitter"
                       >
