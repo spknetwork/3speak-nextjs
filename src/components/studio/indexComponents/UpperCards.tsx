@@ -1,3 +1,4 @@
+//TODO: to make a separate map component 
 import React, { useState, useEffect } from "react";
 import {
   Text,
@@ -117,7 +118,7 @@ const UpperCards = (props: Props) => {
                     fontSize={"1.25rem"}
                     lineHeight="1.2"
                   >
-                    <>{mVideoCount}</>
+                    <>{item.number}</>
                   </Text>
                 </Box>
                 <Box

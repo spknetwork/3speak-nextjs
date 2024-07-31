@@ -1,4 +1,4 @@
-//TODO: refactor the code in this file today!
+//TODO: shift the useGetMyQuery to the Title component and fetch the username from there
 import React, { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
@@ -15,11 +15,11 @@ import {
   CardHeader,
   useColorMode,
 } from "@chakra-ui/react";
-import Nav from "./components/indexComponents/Nav";
-import Title from "./components/indexComponents/Title";
-import UpperCards from "./components/indexComponents/UpperCards";
-import NewsComponent from "./components/indexComponents/NewsComponent";
-import TwitterFeed from "./components/indexComponents/TwitterFeed"
+import Nav from "../../components/studio/indexComponents/Nav";
+import Title from "../../components/studio/indexComponents/Title";
+import UpperCards from "../../components/studio/indexComponents/UpperCards";
+import NewsComponent from "../../components/studio/indexComponents/NewsComponent";
+import TwitterFeed from "../../components/studio/indexComponents/TwitterFeed"
 import { useAuth } from "@/hooks/auth";
 import { useGetMyQuery } from "../../hooks/getUserDetails";
 
@@ -27,7 +27,7 @@ export default function StudioPage({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { authenticated } = useAuth() ?? {};
 
-  const { colorMode } = useColorMode();
+//   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
 
   const getUserDetails = useGetMyQuery();
@@ -59,7 +59,6 @@ export default function StudioPage({ children }: { children: ReactNode }) {
               <NewsComponent />
               <TwitterFeed />
             </SimpleGrid>
-            {/* for left content and right content */}
           </Box>
         </Box>
       </Box>
