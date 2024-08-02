@@ -1,5 +1,7 @@
 //TODO: test the uploading apis and check wether the data is published on chain or not
 //TODO: fetch the previous of the video that is in the draft
+//TODO: renname the child compoents with a good name 
+
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Box,
@@ -56,9 +58,9 @@ const { Client: HiveClient } = require("@hiveio/dhive");
 import { TiPlus } from "react-icons/ti";
 import { useAuth } from "@/hooks/auth";
 import CommunityChip from "@/components/Create_POST/CommunityChip";
-
 import { useQuery, QueryClient } from "@tanstack/react-query";
-import { SelectorImage } from "@/components/studio/SelectorImage";
+import Step0 from "@/components/studio/create_postComponents/Step0";
+import Step1 from "@/components/studio/create_postComponents/Step1";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -87,7 +89,7 @@ export type CommunityResult = {
   num_authors: number;
 };
 
-type FilePreview = {
+export type FilePreview = {
   file: File;
   previewUrl: string;
 };
@@ -108,7 +110,6 @@ const base_mentions = [
 const CreatePost: React.FC = () => {
   const BASE_URL = "https://staging.3speak.tv";
   const UPLOAD_URL = "https://staging.3speak.tv/tusd/files/";
-
   //setting a global for the hashtags
   const limitHashtags = 150;
 
@@ -138,8 +139,8 @@ const CreatePost: React.FC = () => {
   const [getpermLink, setPermLink] = useState("");
 
   const [savingDetails, setSavingDetails] = useState<Boolean | null>(null);
-
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
+
   const [fileKey, setFileKey] = useState(0)
   const [fileIdentifier, setFileIdentifier] = useState("");
 
@@ -157,6 +158,7 @@ const CreatePost: React.FC = () => {
   const [previewManualThumbnails, setPreviewManualThumbnails] = useState<
     { file: File; previewUrl: string }[]
   >([]);
+
   const [selectedThumbnail, setSelectedThumbnail] = useState<{
     type: "generated" | "uploaded";
     index: number;
@@ -179,17 +181,16 @@ const CreatePost: React.FC = () => {
       const file = acceptedFiles[0];
       const previewUrl = URL.createObjectURL(file);
 
-      if (!file?.type?.startsWith("video/")) {
-        console.log("Cant upload file, Select a video type only");
+    if (!file?.type?.startsWith("video/")) {
+      console.log("Cant upload file, select a video type only");
         toast({
           position: "top-right",
-          title: "Cant Upload.",
-          description: "select a video type only",
+        title: "Cant Upload Thumbnail.",
+        description: "Select a image type only",
           status: "error",
           duration: 9000,
           isClosable: true,
         });
-        reject("Invalid file type");
         return;
       }
 
@@ -206,6 +207,7 @@ const CreatePost: React.FC = () => {
       setUploading(true);
     });
   };
+
 
   const { data: createUploadInfo, error: createUploadError } = useQuery(
     {
@@ -680,6 +682,8 @@ const CreatePost: React.FC = () => {
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} bgColor={bgColor} colorMode={colorMode} />
 
+      
+
       <Box
         position={"relative"}
         className="hellotesting"
@@ -757,496 +761,39 @@ const CreatePost: React.FC = () => {
             )}
             <Card backgroundColor={bgColor}>
               {steps == 0 && (
-                <CardBody
-                  borderRadius="10px"
-                  backgroundColor={bgColor}
-                  maxH={"75vh"}
-                  minH={"70vh"}
-                >
-                  <Flex maxH={"60vh"} width={"100%"}>
-                    <Flex
-                      height={"100%"}
-                      width={"100%"}
-                      flexDirection="column"
-                      justifyContent={"center"}
-                    >
-                      <Flex
-                        height={"100%"}
-                        flexDirection={{
-                          base: "column-reverse",
-                          md: "column-reverse",
-                          lg: "row",
-                        }}
-                      >
-                        <Box
-                          width={{ base: "100%", md: "100%", lg: "40%" }}
-                          height={{ base: "100%", md: "100%", lg: "100%" }}
-                          padding="20px"
-                          paddingY={{ base: "5px", md: "5px", lg: "40px" }}
-                        >
-                          <Flex
-                            width={"100%"}
-                            height="100%"
-                            justifyContent="center"
-                            alignItems={"center"}
-                            padding="20px"
-                            paddingY={"40px"}
-                            backgroundColor={bgColor}
-                            borderRadius={"5px"}
-                          >
-                            {/* <div {...getRootProps()} className="dropzone"> */}
-                            <Flex
-                              {...getRootProps()}
-                              className="dropzone"
-                              borderRadius={"5px"}
-                              style={
-                                selectedFile === null
-                                  ? { minHeight: "20vh", minWidth: "20vh" }
-                                  : { maxHeight: "50vh", maxWidth: "50vh" }
-                              }
-                              justifyContent="center"
-                              alignItems={"center"}
-                              border={"1px dotted grey"}
-                              fontSize={{
-                                base: "30px",
-                                md: "50px",
-                                lg: "70px",
-                              }}
-                            >
-                              <input {...getInputProps()} />
-                              {selectedFile ? (
-                                <>
-                                  {selectedFile.file.type.startsWith(
-                                    "image/"
-                                  ) ? (
-                                    <Image
-                                      src={selectedFile.previewUrl}
-                                      alt="Preview"
-                                      className="preview"
-                                    />
-                                  ) : (
-                                    <video
-                                      src={selectedFile.previewUrl}
-                                      className="preview"
-                                      controls
-                                    />
-                                  )}
-                                </>
-                              ) : (
-                                <FaUpload color="grey" />
-                              )}
-                            </Flex>
-                          </Flex>
-                        </Box>
-                        <Box
-                          width={{ base: "100%", md: "100%", lg: "60%" }}
-                          padding="20px"
-                          paddingY={{ base: "5px", md: "5px", lg: "40px" }}
-                        >
-                          <Flex
-                            width={"100%"}
-                            height="100%"
-                            justifyContent="center"
-                            alignItems={"start"}
-                            flexDirection="column"
-                          >
-                            <Text
-                              as={"h1"}
-                              fontSize={{
-                                base: "25px !important",
-                                sm: "25px !important",
-                                lg: "39px",
-                              }}
-                            >
-                              Drag and drop video files to upload
-                            </Text>
-                            <Text
-                              fontSize={{
-                                base: "12px",
-                                md: "12px",
-                                lg: "16px",
-                              }}
-                            >
-                              your videos will be private until you publish them
-                            </Text>
-                            <Button
-                              {...getRootProps()}
-                              size={"lg"}
-                              colorScheme="twitter"
-                            >
-                              Select media
-                            </Button>
-                          </Flex>
-                        </Box>
-                      </Flex>
-                      <Flex
-                        justifyContent={"space-between"}
-                        alignItems="center"
-                        w={"full"}
-                      >
-                        {/* {selectedFile && uploadStatus == true && ( */}
-                        {/* Note: Only here use create_upload apis and rest all other places update_post api  */}
-                        {uploading && (
-                          <Button
-                            position={"absolute"}
-                            right={20}
-                            bottom={170}
-                            onClick={async () => {
-                              try {
-                                handleCreatePost();
-                                setSteps(1);
-                              } catch (err) {
-                                console.log(err);
-                              }
-                            }}
-                            size={"lg"}
-                            colorScheme={"twitter"}
-                          >
-                            Next
-                            <IoCaretForwardSharp />
-                          </Button>
-                        )}
-                        {/* )} */}
-                      </Flex>
-                    </Flex>
-                  </Flex>
-                </CardBody>
+                  <Step0 uploading={uploading} setUploading={setUploading} selectedFile={selectedFile} setSelectedFile={setSelectedFile} 
+                   setPreviewThumbnails={setPreviewThumbnails}
+                   setFileKey={setFileKey}
+                   startUpload={startUpload}
+                   getRootProps={getRootProps}
+                   getInputProps={getInputProps}
+                   handleCreatePost={handleCreatePost}
+                   setSteps={setSteps}
+                  />
               )}
               {steps == 1 && (
-                <CardBody backgroundColor={bgColor} maxH={"75vh"} minH={"70vh"}>
-                  <Box width={"100%"}>
-                    <Flex
-                      height={"100%"}
-                      width={"100%"}
-                      flexDirection="column"
-                      justifyContent={"center"}
-                    >
-                      <Flex
-                        flexDirection={{
-                          base: "column",
-                          md: "column",
-                          lg: "row",
-                        }}
-                        height={"100%"}
-                      >
-                        <Box
-                          paddingTop={"50px"}
-                          width={{ base: "100%", md: "100%", lg: "30%" }}
-                          paddingX="20px"
-                          paddingBottom={"10px"}
-                        >
-                          <Flex
-                            width={"100%"}
-                            height="250px"
-                            border={"1px solid"}
-                            justifyContent="center"
-                            background={"black"}
-                            alignItems={"center"}
-                            borderRadius="10px 10px 0px 0px"
-                            position={"relative"}
-                          >
-                            {selectedFile ? (
-                              <>
-                                {selectedFile.file.type.startsWith("image/") ? (
-                                  <Image
-                                    src={selectedFile.previewUrl}
-                                    alt="Preview"
-                                  />
-                                ) : (
-                                  <Box position={"absolute"}>
-                                    <video
-                                      height={100}
-                                      width={112}
-                                      src={selectedFile.previewUrl}
-                                      className="preview"
-                                      controls
-                                    />
-                                  </Box>
-                                )}
-                              </>
-                            ) : (
-                              <SlPicture
-                                width={"100px"}
-                                color="white"
-                                fontSize="70px"
-                              />
-                            )}
-                          </Flex>
-                          <Flex
-                            bg={colorMode === "dark" ? "gray.700" : "gray.100"}
-                            width={"100%"}
-                            height="100px"
-                            justifyContent="start"
-                            alignItems={"start"}
-                            flexDirection="column"
-                            borderRadius="0px 0px 10px 10px"
-                          >
-                            <Text
-                              marginTop={{ base: "5px", md: "5px", lg: "5px" }}
-                              fontSize={"12px"}
-                              fontWeight="bold"
-                              marginLeft="10px"
-                              color={colorMode === "dark" ? "white" : "black"}
-                            >
-                              File Name
-                            </Text>
-                            {selectedFile?.file?.name && (
-                              <Text
-                                fontSize={{
-                                  base: "10px",
-                                  md: "10px",
-                                  lg: "12px",
-                                }}
-                                fontWeight="bold"
-                                color={colorMode === "dark" ? "white" : "black"}
-                                padding={{
-                                  base: "0px 10px",
-                                  md: "0px 10px",
-                                  lg: "10px",
-                                }}
-                                width={{ base: "100%", md: "100%", lg: "100%" }}
-                              >
-                                {selectedFile?.file?.name
-                                  ? selectedFile.file.name
-                                  : ""}
-                              </Text>
-                            )}
-                            <Flex
-                              marginTop={{ base: "5px", md: "5px", lg: "20px" }}
-                              justifyContent="center"
-                              alignItems={"center"}
-                              marginLeft={{
-                                base: "2px",
-                                md: "2px",
-                                lg: "10px",
-                              }}
-                            >
-                              <SlCheck fontSize={"20px"} color="white" />
-                              <Text
-                                mt={2}
-                                fontSize={{
-                                  base: "12px",
-                                  md: "12px",
-                                  lg: "15px",
-                                }}
-                                fontWeight="bold"
-                                color={"whiteAlpha.900"}
-                                marginLeft={{
-                                  base: "5px",
-                                  md: "5px",
-                                  lg: "10px",
-                                }}
-                              >
-                                Video upload complete. No issues found.
-                              </Text>
-                            </Flex>
-                          </Flex>
-                        </Box>
-                        <Box
-                          width={{ base: "100%", md: "100%", lg: "70%" }}
-                          padding="20px"
-                          paddingY={"10px"}
-                        >
-                          <Flex
-                            width={"100%"}
-                            height="100%"
-                            justifyContent="start"
-                            alignItems={"start"}
-                            flexDirection="column"
-                          >
-                            <Text as={"fieldset"} className="w-100 mb-3">
-                              <Text
-                                as={"legend"}
-                                fontSize="15px"
-                                className="fw-bold"
-                              >
-                                Video Title
-                              </Text>
-                              <Input
-                                disabled={savingDetails == true ? true : false}
-                                placeholder="Video Title"
-                                width={{ base: "89%", md: "89%", lg: "97%" }}
-                                value={videoTitle}
-                                onChange={(e) => setVideoTitle(e.target.value)}
-                                border={"none"}
-                                boxShadow={
-                                  colorMode === "dark" ? "dark-lg" : "xs"
-                                }
-                              />
-                            </Text>
-                            <fieldset className="w-100 mb-4 ">
-                              <Text
-                                as={"legend"}
-                                fontSize="15px"
-                                className="fw-bold"
-                              >
-                                Video Description
-                              </Text>
-
-                              <Textarea
-                                disabled={savingDetails == true ? true : false}
-                                value={videoDescription}
-                                onChange={(e) =>
-                                  setVideoDescription(e.target.value)
-                                }
-                                placeholder="Here is a sample placeholder"
-                                border={"none"}
-                                boxShadow={
-                                  colorMode === "dark" ? "dark-lg" : "xs"
-                                }
-                              />
-                            </fieldset>
-                            <fieldset className="w-100 mb-4">
-                              <Text
-                                as={"legend"}
-                                fontSize="15px"
-                                className="fw-bold"
-                              >
-                                Tags
-                              </Text>
-                              <Flex alignItems={"center"}>
-                                {chipData.map((chip, index) => (
-                                  <Chips
-                                    key={index}
-                                    label={chip.label}
-                                    onDelete={() => chipDataDelete(chip.label)}
-                                    colorMode={colorMode}
-                                  />
-                                ))}
-                                <Flex
-                                  fontSize={"xl"}
-                                  cursor={"pointer"}
-                                  alignItems={"center"}
-                                  position={"relative"}
-                                >
-                                  <Input
-                                    border={"none"}
-                                    boxShadow={
-                                      colorMode === "dark" ? "dark-lg" : "xs"
-                                    }
-                                    placeholder={"Add tags"}
-                                    value={chipInput}
-                                    onChange={(e) =>
-                                      setChipInput(e.target.value)
-                                    }
-                                    onKeyDown={handleAddChipData}
-                                  />
-                                  {/* <Text position={"absolute"} top={3} right={2} onClick={handleAddChipData}>
-                                    <TiPlus />
-                                  </Text> */}
-                                </Flex>
-                              </Flex>
-                            </fieldset>
-                            <fieldset className="w-100 mb-3">
-                              <Text
-                                as={"legend"}
-                                fontSize="15px"
-                                className="fw-bold"
-                                marginBottom={"0px"}
-                              >
-                                Thumbnail
-                              </Text>
-                              <Text fontSize={"15px"}>
-                                Select or upload a picture that shows what`s in
-                                your video. A good thumbnail stands out and
-                                draws viewer`s attention
-                              </Text>
-                            </fieldset>
-                            <Flex
-                              overflowX="hidden"
-                              flexDirection={{
-                                base: "column",
-                                md: "column",
-                                lg: "row",
-                              }}
-                              width={"100%"}
-                              height={{ base: "100%", md: "100%", lg: "150px" }}
-                            >
-                              <input {...getInputPropsThumbnail()} />
-
-                              <Flex
-                                {...getRootPropsThumbnail()}
-                                minWidth={"200px"}
-                                height="100%"
-                                border={"2px dotted"}
-                                justifyContent="center"
-                                alignItems={"center"}
-                                flexDirection="column"
-                                borderRadius={"10px"}
-                              >
-                                <SlPicture
-                                  width={"100px"}
-                                  color="black"
-                                  fontSize="70px"
-                                />
-                                <Text>Upload Thumbnail</Text>
-                              </Flex>
-
-                              {previewManualThumbnails.map((e, index) => (
-                                <SelectorImage
-                                  key={e.previewUrl}
-                                  src={e.previewUrl}
-                                  selected={
-                                    selectedThumbnail?.type === "uploaded" &&
-                                    selectedThumbnail.index === index
-                                  }
-                                  select={() =>
-                                    setSelectedThumbnail({
-                                      type: "uploaded",
-                                      index,
-                                    })
-                                  }
-                                />
-                              ))}
-
-                              {previewThumbnails.map((e, index) => (
-                                <SelectorImage
-                                  key={e}
-                                  src={e}
-                                  selected={
-                                    selectedThumbnail?.type === "generated" &&
-                                    selectedThumbnail.index === index
-                                  }
-                                  select={() =>
-                                    setSelectedThumbnail({
-                                      type: "generated",
-                                      index,
-                                    })
-                                  }
-                                />
-                              ))}
-                            </Flex>
-                          </Flex>
-                        </Box>
-                      </Flex>
-                      <Flex
-                        justifyContent={"space-between"}
-                        alignItems="center"
-                        mx={12}
-                      >
-                        <Button
-                          disabled={savingDetails == true ? true : false}
-                          onClick={() => setSteps(0)}
-                          size={"lg"}
-                          colorScheme="twitter"
-                        >
-                          <IoCaretBackSharp />
-                          Go Back
-                        </Button>
-                        <Button
-                          id="btn_details"
-                          disabled={savingDetails == true ? true : false}
-                          onClick={handleStep1Complete}
-                          size={"lg"}
-                          colorScheme="twitter"
-                        >
-                          {savingDetails == true ? "Saving Details" : "Next"}
-                          <IoCaretForwardSharp />
-                        </Button>
-                      </Flex>
-                    </Flex>
-                  </Box>
-                </CardBody>
+                <Step1 
+                 selectedFile={selectedFile}
+                 savingDetails={savingDetails}
+                 videoTitle={videoTitle}
+                 setVideoTitle={setVideoTitle}
+                 videoDescription={videoDescription}
+                 setVideoDescription={setVideoDescription}
+                 chipData={chipData}
+                 setChipData={setChipData}
+                 chipInput={chipInput}
+                 setChipInput={setChipInput}
+                 chipDataDelete={chipDataDelete}
+                 handleAddChipData={handleAddChipData}
+                 getInputPropsThumbnail={getInputPropsThumbnail}
+                 getRootPropsThumbnail={getRootPropsThumbnail}
+                 previewManualThumbnails={previewManualThumbnails}
+                 previewThumbnails={previewThumbnails}
+                 selectedThumbnail={selectedThumbnail}
+                 setSelectedThumbnail={setSelectedThumbnail}
+                 setSteps={setSteps}
+                 handleStep1Complete={handleStep1Complete}
+                />
               )}
               {/* From here the new component will start */}
               {steps == 2 && (
