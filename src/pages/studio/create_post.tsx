@@ -1,7 +1,5 @@
 //TODO: test the uploading apis and check wether the data is published on chain or not
 //TODO: fetch the previous of the video that is in the draft
-//TODO: renname the child compoents with a good name 
-
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Box,
@@ -36,14 +34,6 @@ import {
 } from "@rajesh896/video-thumbnails-generator";
 import { useTus } from "use-tus";
 import styles from "../../components/ProgressBar.module.css";
-import { IoCaretForwardSharp, IoCaretBackSharp } from "react-icons/io5";
-import {
-  getMentionInputStyle,
-  getMentionStyle,
-} from "../../styles/pages/studio/defaultStyle";
-
-import { FaUpload } from "react-icons/fa";
-import { SlCheck, SlPicture } from "react-icons/sl";
 import { useRouter } from "next/router";
 import SidebarContent from "@/components/studio_sidebar/StudioSidebar";
 import MobileNav from "@/components/studio_mobilenav/StudioMobileNav";
@@ -51,16 +41,17 @@ import { api } from "@/utils/api";
 import { useAppStore } from "@/lib/store";
 import WizardSteps from "@/components/studio/WizardSteps";
 import {} from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
-import CommunityCard from "../../components/Create_POST/CommunityCard";
+
 import Chips from "@/components/Create_POST/Chips";
 const { Client: HiveClient } = require("@hiveio/dhive");
 import { TiPlus } from "react-icons/ti";
 import { useAuth } from "@/hooks/auth";
 import CommunityChip from "@/components/Create_POST/CommunityChip";
 import { useQuery, QueryClient } from "@tanstack/react-query";
-import Step0 from "@/components/studio/create_postComponents/Step0";
-import Step1 from "@/components/studio/create_postComponents/Step1";
+import UploadVideo from "@/components/studio/create_postComponents/UploadVideo";
+import UploadDetails from "@/components/studio/create_postComponents/UploadDetails";
+import AddCommunity from '@/components/studio/create_postComponents/AddCommunity'
+import PublishVideo from "@/components/studio/create_postComponents/PublishVideo";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -94,11 +85,6 @@ export type FilePreview = {
   previewUrl: string;
 };
 
-const hashRegex = /#\w+(-?\w+)*/gm;
-
-const HASHTAG_LIMIT = 2;
-
-const SHOW_HASHTAG_LIMIT_ERROR_TIME_MS = 3000;
 
 //data for the hashtags
 const base_mentions = [
@@ -682,8 +668,6 @@ const CreatePost: React.FC = () => {
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} bgColor={bgColor} colorMode={colorMode} />
 
-      
-
       <Box
         position={"relative"}
         className="hellotesting"
@@ -761,7 +745,8 @@ const CreatePost: React.FC = () => {
             )}
             <Card backgroundColor={bgColor}>
               {steps == 0 && (
-                  <Step0 uploading={uploading} setUploading={setUploading} selectedFile={selectedFile} setSelectedFile={setSelectedFile} 
+                  <UploadVideo
+                   uploading={uploading} setUploading={setUploading} selectedFile={selectedFile} setSelectedFile={setSelectedFile} 
                    setPreviewThumbnails={setPreviewThumbnails}
                    setFileKey={setFileKey}
                    startUpload={startUpload}
@@ -772,7 +757,7 @@ const CreatePost: React.FC = () => {
                   />
               )}
               {steps == 1 && (
-                <Step1 
+                <UploadDetails 
                  selectedFile={selectedFile}
                  savingDetails={savingDetails}
                  videoTitle={videoTitle}
@@ -797,328 +782,26 @@ const CreatePost: React.FC = () => {
               )}
               {/* From here the new component will start */}
               {steps == 2 && (
-                <CardBody maxH={"75vh"}>
-                  <Box
-                    height={{ base: "auto", md: "auto", lg: "70vh" }}
-                    width={"100%"}
-                  >
-                    <Flex w={"full"}>
-                      <Flex w={"50%"}>
-                        <CommunityCard {...cardData} />
-                      </Flex>
-                      <Flex w={"50%"} flexDirection={"column"}>
-                        {/* the result card will go here  */}
-                        <Flex>
-                          <Card w="full" m={2} h={"60vh"}>
-                            <Flex p={2}>
-                              <InputGroup>
-                                <InputLeftElement pointerEvents="none">
-                                  <SearchIcon color="gray.300" />
-                                </InputLeftElement>
-                                <Input
-                                  type="tel"
-                                  placeholder="Search"
-                                  onChange={(e) => setSearch(e.target.value)}
-                                />
-                              </InputGroup>
-                            </Flex>
-                            <VStack spacing={1} overflowY={"auto"}>
-                              {communityData
-                                .filter((item: any) => {
-                                  return search.toLowerCase() === ""
-                                    ? item
-                                    : item.title
-                                        .toLowerCase()
-                                        .includes(search.toLowerCase());
-                                })
-                                .map((item: any, index) => (
-                                  <CommunityChip
-                                    key={index}
-                                    item={item}
-                                    colorMode={colorMode}
-                                    setCardData={setCardData}
-                                  />
-                                ))}
-                            </VStack>
-                          </Card>
-                        </Flex>
-                      </Flex>
-                    </Flex>
-                    <Flex
-                      justifyContent={"space-between"}
-                      alignItems="center"
-                      py={8}
-                      px={4}
-                    >
-                      <Button
-                        disabled={savingDetails == true ? true : false}
-                        onClick={() => setSteps(1)}
-                        size={"lg"}
-                        colorScheme="twitter"
-                      >
-                        <IoCaretBackSharp />
-                        Go Back
-                      </Button>
-                      <Button
-                        disabled={savingDetails == true ? true : false}
-                        onClick={handleStep2Complete} 
-                        size={"lg"}
-                        colorScheme="twitter"
-                      >
-                        Next
-                        <IoCaretForwardSharp />
-                      </Button>
-                    </Flex>
-                  </Box>
-                </CardBody>
+                 <AddCommunity
+                 cardData={cardData}
+                 setSearch={setSearch}
+                 communityData={communityData}
+                 savingDetails={savingDetails}
+                 handleStep2Complete={handleStep2Complete}
+                 setSteps={setSteps}
+                 setCardData={setCardData}
+                 search={search}
+                 />
               )}
               {steps == 3 && (
-                <CardBody backgroundColor={bgColor} minH={"75vh"}>
-                  <Box
-                    height={{ base: "auto", md: "auto", lg: "65vh" }}
-                    width={"100%"}
-                  >
-                    <Flex
-                      margin={"auto"}
-                      height={"100%"}
-                      width={"100%"}
-                      flexDirection="column"
-                      justifyContent={"center"}
-                    >
-                      <Flex
-                        flexDirection={{
-                          base: "column",
-                          md: "column",
-                          lg: "row",
-                        }}
-                        height={"100%"}
-                      >
-                        <Box
-                          width={{ base: "100%", md: "100%", lg: "70%" }}
-                          padding="20px"
-                          paddingY={"10px"}
-                        >
-                          <Flex
-                            width={"100%"}
-                            height="100%"
-                            justifyContent="start"
-                            alignItems={"start"}
-                            flexDirection="column"
-                          >
-                            <Text textAlign={"start"} as="h3">
-                              Visibility
-                            </Text>
-                            <Text marginBottom={"10px"} as="label">
-                              Choose when to publish and who can see your video
-                            </Text>
-                            <Box
-                              borderRadius={"10px"}
-                              height={"300px"}
-                              border="1px solid"
-                              width={{ base: "100%", md: "100%", lg: "100%" }}
-                            >
-                              <RadioGroup
-                                onChange={setPublishValue}
-                                value={publishValue}
-                              >
-                                <Box
-                                  marginTop={"40px"}
-                                  width="80%"
-                                  marginX={"auto"}
-                                >
-                                  <Box marginBottom={"15px"}>
-                                    <Text as="h3">Publish</Text>
-                                    <Text as="label">
-                                      Make your video public now or schedule a
-                                      date
-                                    </Text>
-                                  </Box>
-                                  <Box
-                                    marginBottom={"15px"}
-                                    marginLeft={"20px"}
-                                  >
-                                    <Stack spacing={5} direction="row">
-                                      <Radio value="1">Publish Now</Radio>
-                                    </Stack>
-
-                                    <Text as="label">
-                                      Publish after encoding and everyone can
-                                      watch the video
-                                    </Text>
-                                  </Box>
-                                  <Box
-                                    marginBottom={"15px"}
-                                    marginLeft={"20px"}
-                                  >
-                                    <Stack spacing={5} direction="row">
-                                      <Radio value="2">Schedule</Radio>
-                                    </Stack>
-                                    <Box>
-                                      <Text as="label">
-                                        Set a date and time
-                                      </Text>
-                                    </Box>
-
-                                    {publishValue == "2" && (
-                                      <Input
-                                        alignItems={"center"}
-                                        width={"50%"}
-                                        type="datetime-local"
-                                        placeholder="select date"
-                                      />
-                                    )}
-                                  </Box>
-                                </Box>
-                              </RadioGroup>
-                            </Box>
-                          </Flex>
-                        </Box>
-                        <Box
-                          paddingTop={"74px"}
-                          width={{ base: "100%", md: "100%", lg: "80%" }}
-                          paddingX="20px"
-                          paddingBottom={"10px"}
-                        >
-                          <Flex
-                            width={"65%"}
-                            height="240px"
-                            border={"1px solid"}
-                            justifyContent="center"
-                            background={"black"}
-                            alignItems={"center"}
-                            borderRadius="10px 10px 0px 0px"
-                          >
-                            {selectedFile ? (
-                              <>
-                                {selectedFile.file.type.startsWith("image/") ? (
-                                  <Image
-                                    src={selectedFile.previewUrl}
-                                    alt="Preview"
-                                    className="preview"
-                                    position={"relative"}
-                                  />
-                                ) : (
-                                  <Box
-                                    position={"absolute"}
-                                    height={"250px"}
-                                    width={"250px"}
-                                  >
-                                    <video
-                                      src={selectedFile.previewUrl}
-                                      className="preview_visibility"
-                                      controls
-                                    />
-                                  </Box>
-                                )}
-                              </>
-                            ) : (
-                              <SlPicture
-                                width={"100px"}
-                                color="white"
-                                fontSize="70px"
-                              />
-                            )}
-                          </Flex>
-                          <Flex
-                            bg={colorMode === "dark" ? "gray.7000" : "gray.100"}
-                            width={"65%"}
-                            height="60px"
-                            justifyContent="start"
-                            alignItems={"start"}
-                            flexDirection="column"
-                            borderRadius="0px 0px 10px 10px"
-                          >
-                            <Text
-                              marginTop={{ base: "5px", md: "5px", lg: "5px" }}
-                              fontSize={"12px"}
-                              fontWeight="bold"
-                              marginLeft="10px"
-                              color={colorMode === "dark" ? "white" : "black"}
-                            >
-                              File Name
-                            </Text>
-                            {selectedFile?.file?.name && (
-                              <Text
-                                fontSize={{
-                                  base: "10px",
-                                  md: "10px",
-                                  lg: "12px",
-                                }}
-                                fontWeight="bold"
-                                color={colorMode === "dark" ? "white" : "black"}
-                                marginLeft={{
-                                  base: "0px",
-                                  md: "0px",
-                                  lg: "10px",
-                                }}
-                                // padding={{
-                                //   base: "0px 10px",
-                                //   md: "0px 10px",
-                                //   lg:"10px",
-                                // }}
-                                width={{ base: "100%", md: "100%", lg: "100%" }}
-                              >
-                                {selectedFile?.file?.name
-                                  ? selectedFile.file.name
-                                  : ""}
-                              </Text>
-                            )}
-                            <Flex
-                              marginTop={{ base: "5px", md: "5px", lg: "20px" }}
-                              justifyContent="center"
-                              alignItems={"center"}
-                              marginLeft={{
-                                base: "2px",
-                                md: "2px",
-                                lg: "10px",
-                              }}
-                            >
-                              <SlCheck fontSize={"20px"} color="white" />
-                              <Text
-                                fontSize={{
-                                  base: "12px",
-                                  md: "12px",
-                                  lg: "15px",
-                                }}
-                                fontWeight="bold"
-                                color={"whiteAlpha.900"}
-                                mt={2}
-                                marginLeft={{
-                                  base: "5px",
-                                  md: "5px",
-                                  lg: "10px",
-                                }}
-                              >
-                                Video upload complete. No issues found.
-                              </Text>
-                            </Flex>
-                          </Flex>
-                        </Box>
-                      </Flex>
-                      <Flex
-                        justifyContent={"space-between"}
-                        alignItems="center"
-                      >
-                        <Button
-                          disabled={!!savingDetails}
-                          onClick={() => setSteps((step) => step - 1)}
-                          size={"lg"}
-                          colorScheme="blue"
-                        >
-                          Go Back
-                        </Button>
-                        <Button
-                          disabled={!!savingDetails}
-                          onClick={handleStep3Complete}
-                          size={"lg"}
-                          colorScheme="blue"
-                        >
-                          Save
-                        </Button>
-                      </Flex>
-                    </Flex>
-                  </Box>
-                </CardBody>
+                 <PublishVideo 
+                   setPublishValue={setPublishValue}
+                   publishValue={publishValue}
+                   selectedFile={selectedFile}
+                   savingDetails={savingDetails}
+                   handleStep3Complete={handleStep3Complete}
+                   setSteps={setSteps}
+                 />
               )}
               <Box my={4}>
                 <WizardSteps

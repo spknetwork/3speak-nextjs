@@ -43,7 +43,7 @@ type Props = {
   setSteps: React.Dispatch<SetStateAction<number>>
 };
 
-const Step0 = ({
+const UploadVideo = ({
   uploading,
   setUploading,
   selectedFile,
@@ -210,4 +210,4 @@ const Step0 = ({
   );
 };
 
-export default Step0;
+export default UploadVideo;

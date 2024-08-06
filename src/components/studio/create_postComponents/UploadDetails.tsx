@@ -53,7 +53,7 @@ type Props = {
   handleStep1Complete: () => Promise<void>;
 };
 
-const Step1 = ({ selectedFile, savingDetails, videoTitle, setVideoTitle, videoDescription, setVideoDescription, chipData, setChipData, chipInput, setChipInput, chipDataDelete, handleAddChipData, getInputPropsThumbnail, getRootPropsThumbnail, previewManualThumbnails, previewThumbnails, selectedThumbnail, setSelectedThumbnail, setSteps, handleStep1Complete }: Props) => {
+const UploadDetails = ({ selectedFile, savingDetails, videoTitle, setVideoTitle, videoDescription, setVideoDescription, chipData, setChipData, chipInput, setChipInput, chipDataDelete, handleAddChipData, getInputPropsThumbnail, getRootPropsThumbnail, previewManualThumbnails, previewThumbnails, selectedThumbnail, setSelectedThumbnail, setSteps, handleStep1Complete }: Props) => {
   //useState hooks
   const { colorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.800");
@@ -356,4 +356,4 @@ const Step1 = ({ selectedFile, savingDetails, videoTitle, setVideoTitle, videoDe
   );
 };
 
-export default Step1;
+export default UploadDetails;
