@@ -18,10 +18,15 @@ enum AuthPage {
   Tab3 = "tab3",
   Tab4 = "tab4",
 }
+
 const Modals = (props: Props) => {
-    const [currentAuthPage, setCurrentAuthPage] = useState<string>("tab1");
-  const token = localStorage.getItem("access_token");
-  if (!token) {
+  const [currentAuthPage, setCurrentAuthPage] = useState<string>("tab1");
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const token = window.localStorage.getItem("access_token");
+  if (token) {
     return (
       <>
         <ErrorComponent errorMsg="You are already logged in" />
