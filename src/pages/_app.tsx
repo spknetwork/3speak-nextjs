@@ -1,5 +1,3 @@
-
-
 import "../styles/globals.scss";
 import "../styles/styles.css";
 import type { AppProps } from "next/app";
@@ -14,23 +12,8 @@ import { MagicLinkPopupProvider } from "magic-link-popup-react";
 import { useAppStore } from "../lib/store";
 import * as Tabs from "@radix-ui/react-tabs";
 import {
-  Avatar,
-  Box,
-  Button,
   ChakraProvider,
   extendTheme,
-  Flex,
-  Image,
-  Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Switch,
-  Text,
   useColorMode,
   useDisclosure,
 } from "@chakra-ui/react";

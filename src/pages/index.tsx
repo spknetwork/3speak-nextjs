@@ -7,7 +7,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { InfinitySpin } from "react-loader-spinner";
 import MainLayout from "@/components/Layouts/main_layout";
 
@@ -21,6 +20,8 @@ const IndexPage = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const getTrendingFeed = useQuery(GET_TRENDING_FEED, { ssr: false });
 
+  console.log("get Trending feed", getTrendingFeed);
+
   return (
     <MainLayout>
       <Box w="full" bg={bgColor} pt={8}>
@@ -31,12 +32,7 @@ const IndexPage = () => {
           alignItems="center"
         ></Flex>
         {getTrendingFeed.loading ? (
-          <Flex
-            justifyContent="center"
-            alignItems={"center"}
-            h="90vh"
-            w="full"
-          >
+          <Flex justifyContent="center" alignItems={"center"} h="90vh" w="full">
             <InfinitySpin width="200" color="#6DC5D7" />
           </Flex>
         ) : (

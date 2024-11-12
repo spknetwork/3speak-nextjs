@@ -5,8 +5,8 @@ import { Button, Box, Text } from "@chakra-ui/react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Image from "next/image";
 import { AuthActions } from "@/hooks/auth";
-import {Providers} from "@aioha/aioha"
-import {useRouter} from 'next/router'
+import { Providers } from "@aioha/aioha";
+import { useRouter } from "next/router";
 
 const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
   const router = useRouter();
@@ -72,11 +72,14 @@ const SignInHive = ({ requestHiveLogin, username, setUsername }: any) => {
               type="submit"
               height={"92%"}
               onClick={() =>
-                AuthActions.login("Hive", Providers.Keychain, username).then(() => {
-                  router.push('/')
-                }).catch(err => {
-                  console.error(err)
-                })
+                AuthActions.login("Hive", Providers.Keychain, username)
+                  .then(() => {
+                    router.push("/");
+                  })
+                  .catch((err) => {
+                    console.log("Username", username); //already logged in
+                    console.error(err); //already logged in
+                  })
               }
             >
               <FaLongArrowAltRight />

@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { IconType } from "react-icons";
+import { hive } from "@/hooks/auth/hive";
 import {
   FaCloudUploadAlt,
   FaExternalLinkAlt,
@@ -44,7 +45,9 @@ const LinkItems: Array<LinkItemProps> = [
     icon: FaExternalLinkAlt,
     route: "/studio/studio_videos",
   },
-  { name: "Logout", icon: FaSignOutAlt, route: "/studio/studio_videos" },
+
+  //TODO: assign it a function named as hive.logout
+  { name: "Logout", icon: FaSignOutAlt, route: "/" },
 ];
 
 const SidebarContent = ({

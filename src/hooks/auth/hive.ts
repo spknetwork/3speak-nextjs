@@ -58,3 +58,9 @@ export const hive = {
     return aioha.logout();
   },
 } satisfies Authenticator;
+
+
+// import hive from 'hive.ts'
+
+
+// hive.logout()

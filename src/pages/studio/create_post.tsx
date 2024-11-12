@@ -50,8 +50,9 @@ import CommunityChip from "@/components/Create_POST/CommunityChip";
 import { useQuery, QueryClient } from "@tanstack/react-query";
 import UploadVideo from "@/components/studio/create_postComponents/UploadVideo";
 import UploadDetails from "@/components/studio/create_postComponents/UploadDetails";
-import AddCommunity from '@/components/studio/create_postComponents/AddCommunity'
+import AddCommunity from "@/components/studio/create_postComponents/AddCommunity";
 import PublishVideo from "@/components/studio/create_postComponents/PublishVideo";
+import ErrorComponent from "@/components/ErrorComponent";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -84,7 +85,6 @@ export type FilePreview = {
   file: File;
   previewUrl: string;
 };
-
 
 //data for the hashtags
 const base_mentions = [
@@ -127,7 +127,7 @@ const CreatePost: React.FC = () => {
   const [savingDetails, setSavingDetails] = useState<Boolean | null>(null);
   const [selectedFile, setSelectedFile] = useState<FilePreview | null>(null);
 
-  const [fileKey, setFileKey] = useState(0)
+  const [fileKey, setFileKey] = useState(0);
   const [fileIdentifier, setFileIdentifier] = useState("");
 
   const [uploadingProgress, setUploadingProgress] = useState<number>(0);
@@ -167,12 +167,12 @@ const CreatePost: React.FC = () => {
       const file = acceptedFiles[0];
       const previewUrl = URL.createObjectURL(file);
 
-    if (!file?.type?.startsWith("video/")) {
-      console.log("Cant upload file, select a video type only");
+      if (!file?.type?.startsWith("video/")) {
+        console.log("Cant upload file, select a video type only");
         toast({
           position: "top-right",
-        title: "Cant Upload Thumbnail.",
-        description: "Select a image type only",
+          title: "Cant Upload Thumbnail.",
+          description: "Select a image type only",
           status: "error",
           duration: 9000,
           isClosable: true,
@@ -187,13 +187,12 @@ const CreatePost: React.FC = () => {
 
       console.log("dropped file check", file);
       setSelectedFile({ file, previewUrl });
-      setFileKey(prevKey => prevKey + 1);
+      setFileKey((prevKey) => prevKey + 1);
 
       //set uploading state to true
       setUploading(true);
     });
   };
-
 
   const { data: createUploadInfo, error: createUploadError } = useQuery(
     {
@@ -272,7 +271,6 @@ const CreatePost: React.FC = () => {
    * changes made: async & await removed
    */
 
-
   const startUpload = useCallback(
     (
       file: File,
@@ -314,14 +312,13 @@ const CreatePost: React.FC = () => {
   );
 
   /**
-   * This part is throwing issues on the deployment part 
+   * This part is throwing issues on the deployment part
    */
-//   useEffect(() => {
-//     if (selectedFile && createUploadInfo) {
-//         startUpload(selectedFile.file, createUploadInfo?.upload_id, createUploadInfo?.video_id);
-//     }
-//   }, [fileKey, startUpload, createUploadInfo]);
-  
+  //   useEffect(() => {
+  //     if (selectedFile && createUploadInfo) {
+  //         startUpload(selectedFile.file, createUploadInfo?.upload_id, createUploadInfo?.video_id);
+  //     }
+  //   }, [fileKey, startUpload, createUploadInfo]);
 
   const handleFileDropThumbnail = async (
     acceptedFiles: File[]
@@ -379,29 +376,29 @@ const CreatePost: React.FC = () => {
   };
 
   //Function for resetting the upload progress
-//   const onFileChange = useCallback(async (file: File) => {
-//     setSelectedFile(file);
-//     setUploadStatus(true);
-//     setUploadingProgress(0);
+  //   const onFileChange = useCallback(async (file: File) => {
+  //     setSelectedFile(file);
+  //     setUploadStatus(true);
+  //     setUploadingProgress(0);
 
-//     try {
-//       const uploadInfo = await createUploadInfo();
-//       const uploadedUrl = await startUpload(file, uploadInfo.upload_id, uploadInfo.video_id);
+  //     try {
+  //       const uploadInfo = await createUploadInfo();
+  //       const uploadedUrl = await startUpload(file, uploadInfo.upload_id, uploadInfo.video_id);
 
-//       if (uploadedUrl) {
-//         const uploadedUrlArray = uploadedUrl.split("/");
-//         const fileIdentifier = uploadedUrlArray[uploadedUrlArray.length - 1];
-//         console.log(`File uploaded successfully. Identifier: ${fileIdentifier}`);
-//         setUploadStatus('success');
-//       } else {
-//         console.log("Upload failed or was cancelled");
-//         setUploadStatus('error');
-//       }
-//     } catch (error) {
-//       console.error("Error during upload:", error);
-//       setUploadStatus('error');
-//     }
-//   }, [createUploadInfo, startUpload]);
+  //       if (uploadedUrl) {
+  //         const uploadedUrlArray = uploadedUrl.split("/");
+  //         const fileIdentifier = uploadedUrlArray[uploadedUrlArray.length - 1];
+  //         console.log(`File uploaded successfully. Identifier: ${fileIdentifier}`);
+  //         setUploadStatus('success');
+  //       } else {
+  //         console.log("Upload failed or was cancelled");
+  //         setUploadStatus('error');
+  //       }
+  //     } catch (error) {
+  //       console.error("Error during upload:", error);
+  //       setUploadStatus('error');
+  //     }
+  //   }, [createUploadInfo, startUpload]);
 
   const handleStep1Complete = async () => {
     setSavingDetails(true);
@@ -628,7 +625,8 @@ const CreatePost: React.FC = () => {
   }
 
   if (authenticated === false) {
-    return <Box>Unauthorized access, please login first</Box>;
+    return <ErrorComponent errorMsg="Please login first!" />
+    //
     router.push("/auth/modals");
   }
 
@@ -708,7 +706,7 @@ const CreatePost: React.FC = () => {
          */}
         <Box paddingLeft={"1.5rem"} paddingRight="1.5rem" maxH={"70vh"}>
           <Box>
-            {uploading && ( 
+            {uploading && (
               <div className={styles.progressContainer}>
                 <div
                   className={styles.progressBar}
@@ -745,63 +743,66 @@ const CreatePost: React.FC = () => {
             )}
             <Card backgroundColor={bgColor}>
               {steps == 0 && (
-                  <UploadVideo
-                   uploading={uploading} setUploading={setUploading} selectedFile={selectedFile} setSelectedFile={setSelectedFile} 
-                   setPreviewThumbnails={setPreviewThumbnails}
-                   setFileKey={setFileKey}
-                   startUpload={startUpload}
-                   getRootProps={getRootProps}
-                   getInputProps={getInputProps}
-                   handleCreatePost={handleCreatePost}
-                   setSteps={setSteps}
-                  />
+                <UploadVideo
+                  uploading={uploading}
+                  setUploading={setUploading}
+                  selectedFile={selectedFile}
+                  setSelectedFile={setSelectedFile}
+                  setPreviewThumbnails={setPreviewThumbnails}
+                  setFileKey={setFileKey}
+                  startUpload={startUpload}
+                  getRootProps={getRootProps}
+                  getInputProps={getInputProps}
+                  handleCreatePost={handleCreatePost}
+                  setSteps={setSteps}
+                />
               )}
               {steps == 1 && (
-                <UploadDetails 
-                 selectedFile={selectedFile}
-                 savingDetails={savingDetails}
-                 videoTitle={videoTitle}
-                 setVideoTitle={setVideoTitle}
-                 videoDescription={videoDescription}
-                 setVideoDescription={setVideoDescription}
-                 chipData={chipData}
-                 setChipData={setChipData}
-                 chipInput={chipInput}
-                 setChipInput={setChipInput}
-                 chipDataDelete={chipDataDelete}
-                 handleAddChipData={handleAddChipData}
-                 getInputPropsThumbnail={getInputPropsThumbnail}
-                 getRootPropsThumbnail={getRootPropsThumbnail}
-                 previewManualThumbnails={previewManualThumbnails}
-                 previewThumbnails={previewThumbnails}
-                 selectedThumbnail={selectedThumbnail}
-                 setSelectedThumbnail={setSelectedThumbnail}
-                 setSteps={setSteps}
-                 handleStep1Complete={handleStep1Complete}
+                <UploadDetails
+                  selectedFile={selectedFile}
+                  savingDetails={savingDetails}
+                  videoTitle={videoTitle}
+                  setVideoTitle={setVideoTitle}
+                  videoDescription={videoDescription}
+                  setVideoDescription={setVideoDescription}
+                  chipData={chipData}
+                  setChipData={setChipData}
+                  chipInput={chipInput}
+                  setChipInput={setChipInput}
+                  chipDataDelete={chipDataDelete}
+                  handleAddChipData={handleAddChipData}
+                  getInputPropsThumbnail={getInputPropsThumbnail}
+                  getRootPropsThumbnail={getRootPropsThumbnail}
+                  previewManualThumbnails={previewManualThumbnails}
+                  previewThumbnails={previewThumbnails}
+                  selectedThumbnail={selectedThumbnail}
+                  setSelectedThumbnail={setSelectedThumbnail}
+                  setSteps={setSteps}
+                  handleStep1Complete={handleStep1Complete}
                 />
               )}
               {/* From here the new component will start */}
               {steps == 2 && (
-                 <AddCommunity
-                 cardData={cardData}
-                 setSearch={setSearch}
-                 communityData={communityData}
-                 savingDetails={savingDetails}
-                 handleStep2Complete={handleStep2Complete}
-                 setSteps={setSteps}
-                 setCardData={setCardData}
-                 search={search}
-                 />
+                <AddCommunity
+                  cardData={cardData}
+                  setSearch={setSearch}
+                  communityData={communityData}
+                  savingDetails={savingDetails}
+                  handleStep2Complete={handleStep2Complete}
+                  setSteps={setSteps}
+                  setCardData={setCardData}
+                  search={search}
+                />
               )}
               {steps == 3 && (
-                 <PublishVideo 
-                   setPublishValue={setPublishValue}
-                   publishValue={publishValue}
-                   selectedFile={selectedFile}
-                   savingDetails={savingDetails}
-                   handleStep3Complete={handleStep3Complete}
-                   setSteps={setSteps}
-                 />
+                <PublishVideo
+                  setPublishValue={setPublishValue}
+                  publishValue={publishValue}
+                  selectedFile={selectedFile}
+                  savingDetails={savingDetails}
+                  handleStep3Complete={handleStep3Complete}
+                  setSteps={setSteps}
+                />
               )}
               <Box my={4}>
                 <WizardSteps
